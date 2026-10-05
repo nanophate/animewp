@@ -17,8 +17,21 @@
             inspect(wp.blocks.parse(canonical[name]), name + '/resaved', failures);
             results.push({ name: name, blocks: blocks.length, invalid: failures });
         }
+        function attributeAt(value, path) {
+            return path.split('.').reduce(function (current, key) { return current && current[key]; }, value);
+        }
+        function reportAttributes(name, block, expected) {
+            var failures = [];
+            expected.forEach(function (item) {
+                if (attributeAt(block && block.attributes, item.path) !== item.value) {
+                    failures.push({ name: item.path, expected: item.value, actual: attributeAt(block && block.attributes, item.path) });
+                }
+            });
+            results.push({ name: name, blocks: block ? 1 : 0, invalid: failures });
+        }
         Object.entries(window.animewpQAData).forEach(function (entry) { check(entry[0], entry[1]); });
         Object.entries(window.animewpLegacyContent).forEach(function (entry) { check('legacy/' + entry[0], entry[1]); });
+        Object.entries(window.animewpVideoLegacyContent || {}).forEach(function (entry) { check('legacy/video/' + entry[0], entry[1]); });
         var make = wp.blocks.createBlock;
         function paragraph(text, className) { return make('core/paragraph', { content: text || '入れ子本文を保持します。', className: className }); }
         function heading(text) { return make('core/heading', { level: 2, content: text }); }
@@ -55,10 +68,18 @@
             make('animewp/panel', { backdropEnabled: true, backgroundOpacity: 100 }, [paragraph('背景の不透明度100%')])
         ];
         variants.push(
+            make('animewp/panel', {className:'qa-support-preset-gradient',gradient:'animewp-wash',style:{typography:{textAlign:'center'}}}, [paragraph('プリセットgradientと文字揃えを保持します。')]),
+            make('animewp/panel', {className:'qa-support-custom-gradient',style:{color:{gradient:'linear-gradient(135deg, rgb(20, 20, 20) 0%, rgb(245, 245, 245) 100%)'},typography:{textAlign:'right'}}}, [paragraph('任意gradientと文字揃えを保持します。')]),
             make('animewp/panel', {backdropEnabled:true,backdropColorMode:'preset',backdropPreset:'accent',highlight:'panel',highlightColorMode:'role',highlightRole:'surface'}, [paragraph('配色追従')]),
             make('animewp/media', {className:'qa-media-parent',crop:true,imageHeight:600,mobileImageHeight:420,imageWidth:70,focalX:80,focalY:20,style:{spacing:{blockGap:"3rem"}}}, [make('core/image',{url:location.origin+'/wp-content/themes/animewp/assets/images/animewp-character-a.svg',alt:'QA'}),make('core/group',{},[make('animewp/media', {className:'qa-media-child',crop:true}, [make('core/image',{url:location.origin+'/wp-content/themes/animewp/assets/images/animewp-character-a.svg',alt:'QA child'}),make('core/group',{},[paragraph('内側の既定値')])])])]),
             make('animewp/video', {videoUrl:location.origin+'/animewp-artifacts/test-video.mp4',trackUrl:location.origin+'/animewp-artifacts/test-captions.vtt',crossOriginMode:'anonymous',description:'字幕CORS変換テスト'}, [paragraph('本文')]),
             make('animewp/video', {source:'youtube',videoUrl:'https://www.youtube.com/watch?v=jNQXAC9IVRw&t=2',description:'外部接続の同意を検証するサンプル'}, [paragraph('外部映像サンプル・作品素材ではありません。')]),
+            make('animewp/video', {source:'youtube',videoUrl:'https://www.youtube.com/watch?v=jNQXAC9IVRw&t=2',posterUrl:'/wp-content/uploads/animewp-local-poster.jpg',buttonLabel:'この動画の内容を説明する長い再生ボタンの文言',style:{color:{text:'#202020',background:'#eeeeee'}}}, [heading('複数行になっても個別編集できる動画タイトル'),paragraph('説明や文字起こしを標準ブロックで追加できます。')]),
+            make('core/group', {}, [
+                make('animewp/video', {source:'youtube',videoUrl:'https://youtu.be/jNQXAC9IVRw',posterUrl:'/wp-content/uploads/animewp-local-poster-a.jpg',buttonLabel:'YouTubeで再生'}, [paragraph('一つ目の動画')]),
+                make('animewp/video', {source:'youtube',videoUrl:'https://www.youtube.com/shorts/jNQXAC9IVRw',posterUrl:'/wp-content/uploads/animewp-local-poster-b.jpg',buttonLabel:'別の動画を再生'}, [paragraph('二つ目の動画')])
+            ]),
+            make('animewp/video', {source:'youtube',posterUrl:'/wp-content/uploads/animewp-local-poster.jpg',buttonLabel:'YouTubeで再生'}, [heading('URL未設定'),paragraph('動画ページのURLを入力してください。')]),
             make('animewp/video', {source:'vimeo',videoUrl:'https://vimeo.com/76979871',description:'Vimeoサンプル'}, []),
             make('animewp/video', {source:'youtube',videoUrl:'https://youtube.com.evil.invalid/watch?v=jNQXAC9IVRw'}, []),
             textGroup(3, 'デスクトップのみ', 'qa-desktop-only'),
@@ -68,12 +89,30 @@
             make('animewp/panel',{className:'qa-role-contrast',heading:'読みやすい濃い面',backdropEnabled:true,backdropColorMode:'role',backdropRole:'contrast'},[paragraph('対応する前景')])
         );
         variants.forEach(function (block, index) {
-            check('rotation/' + index, wp.blocks.serialize([block]));
+            var serializedBlock = wp.blocks.serialize([block]);
+            check('rotation/' + index, serializedBlock);
+            var gradientCases = {
+                'qa-support-preset-gradient': [
+                    {path:'gradient',value:'animewp-wash'},
+                    {path:'style.typography.textAlign',value:'center'}
+                ],
+                'qa-support-custom-gradient': [
+                    {path:'style.color.gradient',value:'linear-gradient(135deg, rgb(20, 20, 20) 0%, rgb(245, 245, 245) 100%)'},
+                    {path:'style.typography.textAlign',value:'right'}
+                ]
+            };
+            var gradientExpectations = gradientCases[block.attributes.className];
+            if (gradientExpectations) {
+                reportAttributes('attributes/roundtrip/' + block.attributes.className, wp.blocks.parse(serializedBlock)[0], gradientExpectations);
+            }
             var type = wp.blocks.getBlockType(block.name);
             ((type.transforms && type.transforms.to) || []).forEach(function (transform, offset) {
                 var transformed = transform.transform(block.attributes, block.innerBlocks);
                 var savedTransform = wp.blocks.serialize(Array.isArray(transformed) ? transformed : [transformed]);
                 check('transform/' + index + '/' + offset, savedTransform);
+                if (gradientExpectations) {
+                    reportAttributes('attributes/transform/' + block.attributes.className, wp.blocks.parse(savedTransform)[0], gradientExpectations);
+                }
                 if (block.name === 'animewp/video' && block.attributes.crossOriginMode === 'anonymous') {
                     results.push({name:'CORS transformed video content survives',blocks:1,invalid:/<video[^>]*crossorigin="anonymous"/.test(savedTransform)&&/<track/.test(savedTransform)?[]:[{name:'missing video or track'}]});
                 }

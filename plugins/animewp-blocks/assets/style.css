@@ -191,20 +191,83 @@
 .wp-block-animewp-video video { display: block; width: 100%; height: auto; max-height: 75vh; }
 .wp-block-animewp-video .animewp-video__frame { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; }
 .wp-block-animewp-video .animewp-video__fallback > img { display: block; max-width: 100%; height: auto; }
+.wp-block-animewp-video .animewp-video__poster,
+.wp-block-animewp-video .animewp-video__preview-frame {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: min(100%, 48rem);
+    max-width: 100%;
+    background: #e5e5e5;
+}
+.wp-block-animewp-video .animewp-video__poster::before,
+.wp-block-animewp-video .animewp-video__preview-frame::before {
+    content: "";
+    grid-area: 1 / 1;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+}
+.wp-block-animewp-video .animewp-video__poster > img,
+.wp-block-animewp-video .animewp-video__preview-frame > img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+}
+.wp-block-animewp-video .animewp-video__poster > .animewp-video__trigger,
+.wp-block-animewp-video .animewp-video__preview-cta {
+    grid-area: 1 / 1;
+    position: relative;
+    z-index: 1;
+    align-self: center;
+    justify-self: center;
+    display: block;
+    box-sizing: border-box;
+    width: min(calc(100% - 2rem), 32rem);
+    max-width: 100%;
+    margin: 1rem;
+    inset: auto;
+    transform: none;
+    white-space: normal;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
 .wp-block-animewp-video .animewp-video__trigger,
 .wp-block-animewp-video .animewp-video__close {
     appearance: none;
     cursor: pointer;
     font: inherit;
     line-height: 1.4;
-    color: var(--animewp-video-button-color, #fff);
-    background: var(--animewp-video-button-background, #222);
+    color: var(--animewp-video-button-color, inherit);
+    background: var(--animewp-video-button-background, transparent);
     border: 1px solid currentColor;
     border-radius: var(--animewp-video-button-radius, 0);
     padding: 0.7em 1.2em;
     min-height: 44px;
     max-width: 100%;
     overflow-wrap: anywhere;
+}
+.wp-block-animewp-video .animewp-video__preview {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+    width: min(100%, 48rem);
+    max-width: 100%;
+    margin-block: 1rem;
+}
+.wp-block-animewp-video .animewp-video__preview-hint {
+    width: min(calc(100% - 2rem), 32rem);
+    max-width: 100%;
+    justify-self: center;
+    margin: 0;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+.wp-block-animewp-video .animewp-video__preview-cta {
+    pointer-events: none;
 }
 .wp-block-animewp-video .animewp-video__trigger:focus-visible,
 .wp-block-animewp-video .animewp-video__close:focus-visible {

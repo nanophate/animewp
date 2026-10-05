@@ -14,6 +14,27 @@
             var provider = trigger && trigger.dataset.animewpProvider;
             var embed = provider && window.animewpVideoProviders && window.animewpVideoProviders.embedUrl(provider, trigger.dataset.animewpVideoId || '', Number(trigger.dataset.animewpStart || 0));
             if (!trigger || !fallback || (!embed && (!video || !video.getAttribute('src')))) { return; }
+            var posterImage = null;
+            var poster = null;
+            if (embed && !video) {
+                posterImage = Array.prototype.find.call(fallback.querySelectorAll(':scope > img'), function (image) {
+                    var source = image.getAttribute('src');
+                    if (!source || /[\\\u0000-\u0020\u007f<>"`]/.test(source)) { return false; }
+                    try {
+                        var imageUrl = new URL(source, document.baseURI);
+                        return /^(?:http:|https:)$/.test(imageUrl.protocol) &&
+                            !imageUrl.username && !imageUrl.password &&
+                            imageUrl.origin === window.location.origin;
+                    } catch (error) { return false; }
+                }) || null;
+                if (posterImage) {
+                    poster = document.createElement('div');
+                    poster.className = 'animewp-video__poster';
+                    fallback.insertBefore(poster, posterImage);
+                    poster.appendChild(posterImage);
+                    poster.appendChild(trigger);
+                }
+            }
             var frame = null;
 
             var dialog = document.createElement('dialog');
@@ -57,7 +78,6 @@
                 fallback.hidden = false;
                 trigger.hidden = true;
                 dialog.remove();
-                delete root.dataset.animewpEnhanced;
             }
             trigger.addEventListener('click', function () {
                 try {

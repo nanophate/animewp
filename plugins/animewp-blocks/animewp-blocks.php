@@ -2,7 +2,7 @@
 /**
  * Plugin Name: AnimeWP Blocks
  * Description: 保存HTMLを残す装飾パネル、文字グループ、画像と本文、動画ダイアログの任意ブロック。
- * Version: 1.2.1
+ * Version: 1.3.0
  * Requires at least: 6.6
  * Requires PHP: 8.0
  * Author: AnimeWP
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /** Register assets once; metadata supplies both PHP and browser definitions. */
 function register_blocks(): void {
-	$animewp_version = '1.2.1';
+	$animewp_version = '1.3.0';
 	wp_register_script( 'animewp-video-providers', plugins_url( 'assets/providers.js', __FILE__ ), array(), $animewp_version, true );
 	wp_register_script(
 		'animewp-blocks-editor',

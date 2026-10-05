@@ -47,9 +47,17 @@
         var url = safeUrl(value);
         return !!url && new URL(url, window.location.origin).origin === window.location.origin;
     }
+    function localPosterUrl(value) {
+        var url = safeUrl(value);
+        if (!url) { return ''; }
+        try {
+            var parsed = new URL(url, window.location.origin);
+            return parsed.origin === window.location.origin ? parsed.pathname + parsed.search + parsed.hash : '';
+        } catch (error) { return ''; }
+    }
     function coreAttributes(attributes) {
         var result = {};
-        ['align', 'anchor', 'backgroundColor', 'textColor', 'fontSize', 'style'].forEach(function (key) {
+        ['align', 'anchor', 'backgroundColor', 'textColor', 'gradient', 'fontSize', 'style'].forEach(function (key) {
             if (attributes[key] !== undefined) { result[key] = attributes[key]; }
         });
         return result;
@@ -348,6 +356,9 @@
     }
     function videoEdit(props) {
         var a = props.attributes;
+        var posterSelectionState = wp.element.useState(false);
+        var posterSelectionError = posterSelectionState[0];
+        var setPosterSelectionError = posterSelectionState[1];
         var set = function (update) {
             if ((update.source === 'youtube' || update.source === 'vimeo') && isSameOrigin(a.posterUrl)) {
                 var poster = new URL(a.posterUrl, window.location.href);
@@ -362,6 +373,39 @@
         var url = safeUrl(a.videoUrl);
         var external = a.source === 'youtube' || a.source === 'vimeo';
         var provider = external && window.animewpVideoProviders.normalize(a.source, a.videoUrl);
+        var localPoster = external ? localPosterUrl(a.posterUrl) : '';
+        function posterPicker() {
+            var mediaUpload = el(editor.MediaUpload, {
+                allowedTypes: ['image'],
+                onSelect: function (media) {
+                    var selectedPoster = localPosterUrl(media && media.url);
+                    if (!selectedPoster) { setPosterSelectionError(true); return; }
+                    setPosterSelectionError(false);
+                    set({ posterUrl: selectedPoster });
+                },
+                render: function (control) {
+                    return el(components.Button, { variant: 'secondary', onClick: control.open }, __(localPoster ? 'ポスター画像を変更' : 'サイト内のポスター画像を選択', domain));
+                }
+            });
+            return el(Fragment, null,
+                el(editor.MediaUploadCheck, null, mediaUpload),
+                a.posterUrl && el(components.Button, {
+                    variant: 'tertiary', isDestructive: true,
+                    onClick: function () { setPosterSelectionError(false); set({ posterUrl: '' }); }
+                }, __('ポスター画像をクリア', domain)),
+                a.posterUrl && !localPoster && el(components.Notice, { status: 'warning', isDismissible: false }, __('YouTubeとVimeoではサイト内メディアライブラリーの画像だけを使えます。外部画像は読み込みません。', domain)),
+                posterSelectionError && el(components.Notice, { status: 'warning', isDismissible: false }, __('選択した画像はサイト内URLではありません。YouTubeとVimeoにはサイト内の画像を選んでください。', domain))
+            );
+        }
+        function externalPreview() {
+            return el('div', { className: 'animewp-video__preview', role: 'group', 'aria-label': __('ポスターと再生ボタンの見本', domain) },
+                el('div', { className: 'animewp-video__preview-frame' },
+                    localPoster && el('img', { src: localPoster, alt: '', loading: 'lazy' }),
+                    el('span', { className: 'animewp-video__trigger animewp-video__preview-cta' }, safeText(a.buttonLabel, '動画を開く', 100))
+                ),
+                !localPoster && el('p', { className: 'animewp-video__preview-hint' }, __('サイト内ポスターを選ぶと、ここに見本を表示します。', domain))
+            );
+        }
         function field(key, label, help) {
             return el(components.TextControl, {
                 label: __(label, domain), help: help ? __(help, domain) : undefined, value: a[key] || '',
@@ -380,11 +424,11 @@
                 el(components.PanelBody, { title: __('動画と字幕', domain) },
                     select(a, set, 'source', '動画の種類', [{ label: '動画ファイル', value: 'file' }, { label: 'YouTube', value: 'youtube' }, { label: 'Vimeo（公開動画）', value: 'vimeo' }], 'file'),
                     field('videoUrl', external ? '動画ページのURL' : '動画ファイルのURL', external ? '選んだサービスのHTTPS URLを入力します。再生開始秒のt/start指定にも対応します。非公開・限定公開Vimeoは元リンクで案内してください。' : 'HTTP(S)またはサイト内の / で始まるパス。再生可能な動画ファイルを指定します。'),
+                    external && !a.videoUrl && el(components.Notice, { status: 'info', isDismissible: false }, __('動画ページのURLを入力してください。編集画面では外部サービスへ接続しません。', domain)),
                     external && !provider && a.videoUrl && el(components.Notice, { status: 'warning', isDismissible: false }, __('このサービスの対応URLではありません。元のリンクのみ保存します。', domain)),
-                    external && el('p', null, __('外部動画は「接続して開く」操作後に読み込み、閉じるとプレーヤーを削除します。YouTubeのプライバシー強化モードやVimeoのdnt指定でも、接続後は外部サービスに通信します。字幕は配信サービス側で設定します。', domain)),
+                    external && provider && el('p', null, __('外部動画は「接続して開く」操作後に読み込み、閉じるとプレーヤーを削除します。接続後は外部サービスに通信します。字幕は配信サービス側で設定します。', domain)),
                     a.videoUrl && !url && el(components.Notice, { status: 'warning', isDismissible: false }, __('このURLは保存時に無効化されます。正しい動画URLを入力してください。', domain)),
-                    field('posterUrl', 'ポスター画像のURL（任意）', external ? 'サイト内URLは / で始まるパスに変換します。URL変更後も同じ保存形式を使います。' : ''),
-                    external && a.posterUrl && !isSameOrigin(a.posterUrl) && el(components.Notice, { status: 'warning', isDismissible: false }, __('外部動画のポスターにはサイト内の画像を指定してください。外部の画像は読み込みません。', domain)),
+                    external ? posterPicker() : field('posterUrl', 'ポスター画像のURL（任意）'),
                     field('buttonLabel', '開くボタンの文言'),
                     field('closeLabel', '閉じるボタンの文言'),
                     !external && field('trackUrl', '字幕ファイルのURL（WebVTT・任意）', '初期設定では、このページと同じ配信元の字幕を使います。'),
@@ -409,7 +453,8 @@
                         render: function (control) { return el(components.Button, { variant: 'secondary', onClick: control.open }, __(url ? '動画を変更' : 'メディアから動画を選択', domain)); }
                     })
                 ),
-                external ? el('p', null, __(provider ? '外部動画のURLを設定済みです。編集画面では接続しません。' : '動画ページのURLを入力してください。', domain)) : (url ? videoElement(a) : el('p', null, __('動画を選択するか、設定欄に動画URLを入力してください。', domain))),
+                external ? el('p', null, __(provider ? '動画ページのURLを設定済みです。編集画面では接続しません。' : 'YouTubeまたはVimeoの動画ページURLを設定してください。', domain)) : (url ? videoElement(a) : el('p', null, __('動画を選択するか、設定欄に動画URLを入力してください。', domain))),
+                external && externalPreview(),
                 el('p', { className: 'animewp-video__editor-note' }, __('公開ページではボタンを押すと開きます。説明や文字起こしは下に標準ブロックで追加できます。', domain)),
                 a.description && el('p', { className: 'animewp-video__description' }, a.description),
                 el('div', innerProps)
