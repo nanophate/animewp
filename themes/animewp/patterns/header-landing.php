@@ -7,8 +7,8 @@
  * Description: 作品紹介ページの各セクションへ移動する上部メニューです。リンク先のHTMLアンカーを合わせて使います。
  */
 ?>
-<!-- wp:group {"layout":{"type":"flex"},"className":"animewp-header animewp-header--top","align":"full"} -->
-<div class="wp-block-group alignfull animewp-header animewp-header--top">
+<!-- wp:group {"layout":{"type":"flex"},"className":"animewp-header animewp-header--top","align":"full","anchor":"top"} -->
+<div id="top" class="wp-block-group alignfull animewp-header animewp-header--top">
 <!-- wp:group {"layout":{"type":"flex"},"className":"animewp-brand"} -->
 <div class="wp-block-group animewp-brand">
 <!-- wp:site-logo {"width":42} /-->

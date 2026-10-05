@@ -7,8 +7,8 @@
  * Description: メニューボタンを押すと画面全体にナビゲーションを表示します。
  */
 ?>
-<!-- wp:group {"layout":{"type":"flex"},"className":"animewp-header animewp-header--overlay","align":"full"} -->
-<div class="wp-block-group alignfull animewp-header animewp-header--overlay">
+<!-- wp:group {"layout":{"type":"flex"},"className":"animewp-header animewp-header--overlay","align":"full","anchor":"top"} -->
+<div id="top" class="wp-block-group alignfull animewp-header animewp-header--overlay">
 <!-- wp:group {"layout":{"type":"flex"},"className":"animewp-brand"} -->
 <div class="wp-block-group animewp-brand">
 <!-- wp:site-logo {"width":42} /-->

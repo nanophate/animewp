@@ -1,0 +1,46 @@
+{
+  "aliases": {
+    "base": "animewp-base",
+    "surface": "animewp-surface",
+    "contrast": "animewp-ink",
+    "muted": "animewp-muted",
+    "accent": "animewp-accent",
+    "border": "animewp-line"
+  },
+  "labels": {
+    "base": "基本背景",
+    "surface": "淡い背景",
+    "contrast": "基本文字・濃い面",
+    "muted": "補助文字",
+    "accent": "強調",
+    "border": "罫線",
+    "on-accent": "強調面の文字",
+    "on-contrast": "濃い面の文字",
+    "badge-info": "情報ラベル背景",
+    "badge-info-text": "情報ラベル文字",
+    "badge-media": "メディアラベル背景",
+    "badge-media-text": "メディアラベル文字",
+    "badge-event": "イベントラベル背景",
+    "badge-event-text": "イベントラベル文字",
+    "badge-music": "音楽ラベル背景",
+    "badge-music-text": "音楽ラベル文字"
+  },
+  "colors": {
+    "base": "#ffffff",
+    "surface": "#f3f3f3",
+    "contrast": "#202020",
+    "muted": "#595959",
+    "accent": "#262626",
+    "border": "#d5d5d5",
+    "on-accent": "#ffffff",
+    "on-contrast": "#ffffff",
+    "badge-info": "#414141",
+    "badge-info-text": "#ffffff",
+    "badge-media": "#555555",
+    "badge-media-text": "#ffffff",
+    "badge-event": "#333333",
+    "badge-event-text": "#ffffff",
+    "badge-music": "#666666",
+    "badge-music-text": "#ffffff"
+  }
+}

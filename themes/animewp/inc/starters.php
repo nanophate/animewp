@@ -11,6 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function animewp_starters() {
 	return array(
+		'showcase'      => array( 'pattern' => 'animewp/home-showcase', 'title' => __( '作品紹介 — 余白の作品紹介', 'animewp' ), 'template' => 'animewp-showcase' ),
 		'composition-a' => array( 'pattern' => 'animewp/composition-a', 'title' => __( '作品紹介 — カードと3列', 'animewp' ), 'template' => 'animewp-landing' ),
 		'composition-b' => array( 'pattern' => 'animewp/composition-b', 'title' => __( '作品紹介 — 画像と2列', 'animewp' ), 'template' => 'animewp-landing' ),
 		'characters'    => array( 'pattern' => 'animewp/characters-page', 'title' => __( '登場人物', 'animewp' ), 'template' => 'default' ),
@@ -71,7 +72,18 @@ function animewp_starter_screen() {
 				<input type="hidden" name="animewp_starter" value="<?php echo esc_attr( $key ); ?>">
 				<?php wp_nonce_field( 'animewp_import_starter', 'animewp_nonce' ); ?>
 				<p><label><?php esc_html_e( 'ページ名', 'animewp' ); ?> <input type="text" name="animewp_title" maxlength="200" value="<?php echo esc_attr( $starter['title'] ); ?>" class="regular-text"></label></p>
-				<?php submit_button( __( '下書きとして追加・開く', 'animewp' ), 'primary', 'submit', false ); ?>
+				<?php
+				$imports = get_option( 'animewp_starter_imports_v1', array() );
+				$record  = isset( $imports[ $key ] ) && is_array( $imports[ $key ] ) ? $imports[ $key ] : array();
+				$previous = animewp_find_starter_page( $record );
+				if ( $previous && 'trash' === get_post_status( $previous ) ) :
+				?>
+					<p><?php esc_html_e( '前に追加したページはゴミ箱にあります。復元すると下書きになります。内容を残したまま、新しい見本を追加することもできます。', 'animewp' ); ?></p>
+					<button type="submit" name="animewp_recovery" value="restore" class="button button-primary"><?php esc_html_e( '前のページを下書きへ復元', 'animewp' ); ?></button>
+					<button type="submit" name="animewp_recovery" value="new" class="button"><?php esc_html_e( '新しい下書きを追加', 'animewp' ); ?></button>
+				<?php else : ?>
+					<?php submit_button( __( '下書きとして追加・開く', 'animewp' ), 'primary', 'submit', false ); ?>
+				<?php endif; ?>
 			</form>
 		</div>
 		<?php endforeach; ?>
@@ -103,19 +115,37 @@ function animewp_starter_screen() {
 	<?php
 }
 
-/** An option INSERT is atomic. Compare-and-delete only the expired value. */
+/** Invalidate both positive and negative option caches after direct lock SQL. */
+function animewp_clear_import_lock_cache() {
+	wp_cache_delete( 'animewp_starter_import_lock', 'options' );
+	wp_cache_delete( 'notoptions', 'options' );
+}
+
+/** INSERT IGNORE never overwrites a competing request's lock. */
+function animewp_insert_import_lock( $lock ) {
+	global $wpdb;
+	$result = $wpdb->query( $wpdb->prepare(
+		"INSERT IGNORE INTO {$wpdb->options} (option_name, option_value, autoload) VALUES (%s, %s, %s)",
+		'animewp_starter_import_lock', maybe_serialize( $lock ), 'no'
+	) );
+	animewp_clear_import_lock_cache();
+	return 1 === $result;
+}
+
+/** Read lock ownership from the database; caches cannot authorize takeover. */
 function animewp_acquire_import_lock() {
 	global $wpdb;
 	$option = 'animewp_starter_import_lock';
 	$lock   = array( 'token' => wp_generate_uuid4(), 'time' => time() );
-	if ( add_option( $option, $lock, '', false ) ) {
+	if ( animewp_insert_import_lock( $lock ) ) {
 		return $lock;
 	}
-	$old = get_option( $option );
+	$old_value = $wpdb->get_var( $wpdb->prepare( "SELECT option_value FROM {$wpdb->options} WHERE option_name = %s", $option ) );
+	$old = maybe_unserialize( $old_value );
 	if ( is_array( $old ) && isset( $old['time'] ) && time() - (int) $old['time'] > 120 ) {
-		$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->options} WHERE option_name = %s AND option_value = %s", $option, maybe_serialize( $old ) ) );
-		wp_cache_delete( $option, 'options' );
-		if ( add_option( $option, $lock, '', false ) ) {
+		$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->options} WHERE option_name = %s AND option_value = %s", $option, $old_value ) );
+		animewp_clear_import_lock_cache();
+		if ( animewp_insert_import_lock( $lock ) ) {
 			return $lock;
 		}
 	}
@@ -126,11 +156,28 @@ function animewp_release_import_lock( $lock ) {
 	global $wpdb;
 	$option = 'animewp_starter_import_lock';
 	$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->options} WHERE option_name = %s AND option_value = %s", $option, maybe_serialize( $lock ) ) );
-	wp_cache_delete( $option, 'options' );
+	animewp_clear_import_lock_cache();
+}
+
+/** Find both normal and trashed pages, including an interrupted import. */
+function animewp_find_starter_page( $record ) {
+	if ( ! empty( $record['post_id'] ) && 'page' === get_post_type( (int) $record['post_id'] ) ) {
+		return (int) $record['post_id'];
+	}
+	if ( empty( $record['job_slug'] ) || ! is_string( $record['job_slug'] ) ) {
+		return 0;
+	}
+	$args = array( 'post_type' => 'page', 'posts_per_page' => 1, 'fields' => 'ids', 'no_found_rows' => true );
+	$found = get_posts( array_merge( $args, array( 'name' => $record['job_slug'], 'post_status' => array( 'draft', 'pending', 'publish', 'private', 'future', 'trash' ) ) ) );
+	if ( ! $found ) {
+		// WordPress suffixes trashed slugs and records the original in this meta.
+		$found = get_posts( array_merge( $args, array( 'post_status' => 'trash', 'meta_key' => '_wp_desired_post_slug', 'meta_value' => $record['job_slug'] ) ) );
+	}
+	return $found ? (int) $found[0] : 0;
 }
 
 /** Called only after permission and nonce checks, or by controlled tests. */
-function animewp_import_starter_draft( $key, $title = '' ) {
+function animewp_import_starter_draft( $key, $title = '', $recovery = 'ask' ) {
 	$starters = animewp_starters();
 	if ( ! animewp_can_import() || ! isset( $starters[ $key ] ) ) {
 		return new WP_Error( 'animewp_not_allowed', __( 'この見本を追加できません。', 'animewp' ) );
@@ -143,8 +190,28 @@ function animewp_import_starter_draft( $key, $title = '' ) {
 		$imports = get_option( 'animewp_starter_imports_v1', array() );
 		$imports = is_array( $imports ) ? $imports : array();
 		$record  = isset( $imports[ $key ] ) && is_array( $imports[ $key ] ) ? $imports[ $key ] : array();
-		if ( ! empty( $record['post_id'] ) && 'page' === get_post_type( (int) $record['post_id'] ) ) {
-			return (int) $record['post_id'];
+		$previous = animewp_find_starter_page( $record );
+		if ( $previous && 'trash' === get_post_status( $previous ) ) {
+			if ( 'restore' === $recovery && current_user_can( 'edit_post', $previous ) ) {
+				$draft_status = static function () { return 'draft'; };
+				add_filter( 'wp_untrash_post_status', $draft_status, PHP_INT_MAX );
+				try { $restored = wp_untrash_post( $previous ); }
+				finally { remove_filter( 'wp_untrash_post_status', $draft_status, PHP_INT_MAX ); }
+				if ( ! $restored || 'draft' !== get_post_status( $previous ) ) {
+					return new WP_Error( 'animewp_restore_failed', __( 'ページを復元できませんでした。ゴミ箱から状態を確認してください。', 'animewp' ) );
+				}
+			} elseif ( 'new' === $recovery ) {
+				$record = array();
+				$previous = 0;
+			} else {
+				return new WP_Error( 'animewp_starter_trashed', __( '前のページはゴミ箱にあります。「animewp をはじめる」で復元または新しい下書きを選んでください。', 'animewp' ) );
+			}
+		}
+		if ( $previous ) {
+			$record['post_id'] = $previous;
+			$imports[ $key ] = $record;
+			update_option( 'animewp_starter_imports_v1', $imports, false );
+			return $previous;
 		}
 		if ( empty( $record['job_slug'] ) ) {
 			$record = array( 'job_slug' => 'animewp-' . $key . '-' . substr( wp_generate_uuid4(), 0, 8 ) );
@@ -156,9 +223,9 @@ function animewp_import_starter_draft( $key, $title = '' ) {
 			}
 		}
 		// Recover a page created just before a previous request stopped.
-		$existing = get_posts( array( 'name' => $record['job_slug'], 'post_type' => 'page', 'post_status' => array( 'draft', 'pending', 'publish', 'private', 'future', 'trash' ), 'posts_per_page' => 1, 'fields' => 'ids', 'no_found_rows' => true ) );
+		$existing = animewp_find_starter_page( $record );
 		if ( $existing ) {
-			$post_id = (int) $existing[0];
+			$post_id = $existing;
 		} else {
 			$content = animewp_pattern_content( $starters[ $key ]['pattern'] );
 			if ( '' === trim( $content ) ) {
@@ -193,7 +260,8 @@ function animewp_import_starter_action() {
 	check_admin_referer( 'animewp_import_starter', 'animewp_nonce' );
 	$key   = isset( $_POST['animewp_starter'] ) && is_string( $_POST['animewp_starter'] ) ? sanitize_key( wp_unslash( $_POST['animewp_starter'] ) ) : '';
 	$title = isset( $_POST['animewp_title'] ) && is_string( $_POST['animewp_title'] ) ? sanitize_text_field( wp_unslash( $_POST['animewp_title'] ) ) : '';
-	$result = animewp_import_starter_draft( $key, $title );
+	$recovery = isset( $_POST['animewp_recovery'] ) && is_string( $_POST['animewp_recovery'] ) ? sanitize_key( wp_unslash( $_POST['animewp_recovery'] ) ) : 'ask';
+	$result = animewp_import_starter_draft( $key, $title, $recovery );
 	if ( is_wp_error( $result ) ) {
 		wp_die( esc_html( $result->get_error_message() ), '', array( 'response' => 400, 'back_link' => true ) );
 	}
@@ -215,9 +283,11 @@ function animewp_starter_preview() {
 	nocache_headers();
 	header( 'X-Robots-Tag: noindex, nofollow', true );
 	$header_slug = 'animewp-landing' === $starters[ $key ]['template'] ? 'header-landing' : 'header';
+	$header_slug = 'animewp-showcase' === $starters[ $key ]['template'] ? 'header-glass' : $header_slug;
+	$footer_slug = 'animewp-showcase' === $starters[ $key ]['template'] ? 'footer-visual' : 'footer';
 	$header  = do_blocks( '<!-- wp:template-part ' . wp_json_encode( array( 'slug' => $header_slug, 'theme' => 'animewp', 'tagName' => 'header' ) ) . ' /-->' );
 	$content = do_blocks( animewp_pattern_content( $starters[ $key ]['pattern'] ) );
-	$footer  = do_blocks( '<!-- wp:template-part {"slug":"footer","theme":"animewp","tagName":"footer"} /-->' );
+	$footer  = do_blocks( '<!-- wp:template-part ' . wp_json_encode( array( 'slug' => $footer_slug, 'theme' => 'animewp', 'tagName' => 'footer' ) ) . ' /-->' );
 	?><!doctype html><html <?php language_attributes(); ?>><head><title><?php echo esc_html( get_bloginfo( 'name' ) . ' — ' . __( '見本のプレビュー', 'animewp' ) ); ?></title><meta charset="<?php bloginfo( 'charset' ); ?>"><meta name="viewport" content="width=device-width, initial-scale=1"><?php wp_head(); ?></head><body <?php body_class(); ?>><?php wp_body_open(); ?><div class="wp-site-blocks"><?php echo $header; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- rendered trusted theme blocks. ?><main id="animewp-main" class="wp-block-group animewp-preview-main"><?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- rendered trusted theme blocks. ?></main><?php echo $footer; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- rendered trusted theme blocks. ?></div><?php wp_footer(); ?></body></html><?php
 	exit;
 }

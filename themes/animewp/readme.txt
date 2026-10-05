@@ -1,4 +1,4 @@
-animewp 1.0.0
+animewp 1.2.0
 WordPress 6.6 以上 / PHP 8.0 以上
 ライセンス: GPL-2.0-or-later
 

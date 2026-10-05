@@ -38,6 +38,10 @@ def main():
         elif path.suffix == ".py":
             ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
             counts["py"] += 1
+    run([sys.executable, "scripts/design_tokens.py", "--check"])
+    run([sys.executable, "scripts/assets_manifest.py", "--check"])
+    run(["node", "tests/providers.test.js"])
+    run([sys.executable, "tests/palette_contrast.py"])
     run([sys.executable, "scripts/package.py", "--check"])
     print(f"Source checks passed: {counts}; PHP skipped={args.skip_php}")
 

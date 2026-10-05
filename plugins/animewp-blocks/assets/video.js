@@ -11,7 +11,10 @@
             var trigger = root.querySelector(':scope > .animewp-video__trigger');
             var fallback = root.querySelector(':scope > .animewp-video__fallback');
             var video = fallback && fallback.querySelector('video');
-            if (!trigger || !fallback || !video || !video.getAttribute('src')) { return; }
+            var provider = trigger && trigger.dataset.animewpProvider;
+            var embed = provider && window.animewpVideoProviders && window.animewpVideoProviders.embedUrl(provider, trigger.dataset.animewpVideoId || '', Number(trigger.dataset.animewpStart || 0));
+            if (!trigger || !fallback || (!embed && (!video || !video.getAttribute('src')))) { return; }
+            var frame = null;
 
             var dialog = document.createElement('dialog');
             var close = document.createElement('button');
@@ -25,7 +28,7 @@
             close.className = 'animewp-video__close';
             close.textContent = trigger.dataset.animewpCloseLabel || '閉じる';
             dialog.appendChild(close);
-            dialog.appendChild(video);
+            if (video) { dialog.appendChild(video); }
             if (description && description.textContent.trim()) {
                 var dialogDescription = document.createElement('p');
                 dialogDescription.id = id + '-description';
@@ -38,7 +41,7 @@
             trigger.setAttribute('aria-haspopup', 'dialog');
             trigger.setAttribute('aria-controls', id);
             trigger.setAttribute('aria-expanded', 'false');
-            fallback.hidden = true;
+            fallback.hidden = !!video;
             trigger.hidden = false;
             root.dataset.animewpEnhanced = 'true';
 
@@ -49,8 +52,8 @@
             }
             function restoreFallback() {
                 document.removeEventListener('focusin', guardFocus);
-                video.pause();
-                fallback.appendChild(video);
+                if (video) { video.pause(); fallback.appendChild(video); }
+                if (frame) { frame.remove(); frame = null; }
                 fallback.hidden = false;
                 trigger.hidden = true;
                 dialog.remove();
@@ -59,6 +62,16 @@
             trigger.addEventListener('click', function () {
                 try {
                     dialog.showModal();
+                    if (embed && !frame) {
+                        frame = document.createElement('iframe');
+                        frame.className = 'animewp-video__frame';
+                        frame.title = trigger.textContent.trim() || '動画プレーヤー';
+                        frame.allow = 'fullscreen; picture-in-picture';
+                        frame.setAttribute('allowfullscreen', '');
+                        frame.referrerPolicy = 'strict-origin-when-cross-origin';
+                        frame.src = embed;
+                        close.insertAdjacentElement('afterend', frame);
+                    }
                     trigger.setAttribute('aria-expanded', 'true');
                     document.addEventListener('focusin', guardFocus);
                     close.focus({ preventScroll: true });
@@ -68,10 +81,11 @@
             });
             close.addEventListener('click', function () { dialog.close(); });
             // Escape dispatches native cancel, then close. Do not suppress it.
-            dialog.addEventListener('cancel', function () { video.pause(); });
+            dialog.addEventListener('cancel', function () { if (video) { video.pause(); } });
             dialog.addEventListener('close', function () {
                 document.removeEventListener('focusin', guardFocus);
-                video.pause();
+                if (video) { video.pause(); }
+                if (frame) { frame.remove(); frame = null; }
                 trigger.setAttribute('aria-expanded', 'false');
                 if (trigger.isConnected) { trigger.focus({ preventScroll: true }); }
             });

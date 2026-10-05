@@ -1,0 +1,78 @@
+{
+  "bundled_font_files": 0,
+  "bundled_font_bytes": 0,
+  "assets": [
+    {
+      "path": "assets/images/animewp-character-a.svg",
+      "mime": "image/svg+xml",
+      "bytes": 487,
+      "sha256": "d80dcb65c61c21f8c08c6c63ab9d44ef62ff2d0c5adb6012ea6f0edfb37daa1f",
+      "license": "GPL-2.0-or-later",
+      "source": "Original animewp placeholder artwork / theme preview; no reference-site art",
+      "modifications": "Authored for this kit; replace with licensed project materials before launch"
+    },
+    {
+      "path": "assets/images/animewp-character-b.svg",
+      "mime": "image/svg+xml",
+      "bytes": 488,
+      "sha256": "9bcf79819adc9cc9bac987a0f68c8f6d97e2183ec597423377873c3b97ebb1ff",
+      "license": "GPL-2.0-or-later",
+      "source": "Original animewp placeholder artwork / theme preview; no reference-site art",
+      "modifications": "Authored for this kit; replace with licensed project materials before launch"
+    },
+    {
+      "path": "assets/images/animewp-character-c.svg",
+      "mime": "image/svg+xml",
+      "bytes": 489,
+      "sha256": "5b060c502a721714ddeb97cc367e4c167cbf174127e67420efc4f6a37e775add",
+      "license": "GPL-2.0-or-later",
+      "source": "Original animewp placeholder artwork / theme preview; no reference-site art",
+      "modifications": "Authored for this kit; replace with licensed project materials before launch"
+    },
+    {
+      "path": "assets/images/animewp-character-d.svg",
+      "mime": "image/svg+xml",
+      "bytes": 488,
+      "sha256": "89fe6e4cb5a24fb87c8b7aaa1d469c86a8409a68acdfb82c372fc1e6ed9a47fa",
+      "license": "GPL-2.0-or-later",
+      "source": "Original animewp placeholder artwork / theme preview; no reference-site art",
+      "modifications": "Authored for this kit; replace with licensed project materials before launch"
+    },
+    {
+      "path": "assets/images/animewp-character-e.svg",
+      "mime": "image/svg+xml",
+      "bytes": 489,
+      "sha256": "d371f475553f0b92c1883fa54190b598b19313877527ce3a775f07ffb88cd07b",
+      "license": "GPL-2.0-or-later",
+      "source": "Original animewp placeholder artwork / theme preview; no reference-site art",
+      "modifications": "Authored for this kit; replace with licensed project materials before launch"
+    },
+    {
+      "path": "assets/images/animewp-key-visual-a.svg",
+      "mime": "image/svg+xml",
+      "bytes": 1285,
+      "sha256": "59eb91fe51d829345efe74e20da110f2c70d5f97061f22c08cbd2e6de4e257b2",
+      "license": "GPL-2.0-or-later",
+      "source": "Original animewp placeholder artwork / theme preview; no reference-site art",
+      "modifications": "Authored for this kit; replace with licensed project materials before launch"
+    },
+    {
+      "path": "assets/images/animewp-key-visual-b.svg",
+      "mime": "image/svg+xml",
+      "bytes": 1287,
+      "sha256": "b83f89b7ce55be318ddbe15f9cdc452e12443114f15fdd20b90516112d5baf33",
+      "license": "GPL-2.0-or-later",
+      "source": "Original animewp placeholder artwork / theme preview; no reference-site art",
+      "modifications": "Authored for this kit; replace with licensed project materials before launch"
+    },
+    {
+      "path": "screenshot.png",
+      "mime": "image/png",
+      "bytes": 110598,
+      "sha256": "2834f80944af24c40321603fa7730060ec155babc9cc2a4c2d90fcf0d87623ef",
+      "license": "GPL-2.0-or-later",
+      "source": "Original animewp placeholder artwork / theme preview; no reference-site art",
+      "modifications": "Authored for this kit; replace with licensed project materials before launch"
+    }
+  ]
+}

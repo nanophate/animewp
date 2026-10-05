@@ -1,12 +1,946 @@
 {
-  "release": "1.1.0",
+  "version": "1.2.0",
   "date": "2026-10-05",
-  "locale": "ja",
-  "environments": {
-    "current": {
+  "results": {
+    "roundtrip-current-v12": [
+      {
+        "name": "animewp/books-merch",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/character-profile",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/characters-five",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/characters-four",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/characters-page",
+        "blocks": 2,
+        "invalid": []
+      },
+      {
+        "name": "animewp/composition-a",
+        "blocks": 9,
+        "invalid": []
+      },
+      {
+        "name": "animewp/composition-b",
+        "blocks": 8,
+        "invalid": []
+      },
+      {
+        "name": "animewp/contact-page",
+        "blocks": 2,
+        "invalid": []
+      },
+      {
+        "name": "animewp/credits",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/features",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/footer-minimal",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/footer-visual",
+        "blocks": 2,
+        "invalid": []
+      },
+      {
+        "name": "animewp/gallery",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/header-glass",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/header-landing",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/header-left",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/header-overlay",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/header-right",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/header",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/hero-atmosphere",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/hero-card",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/hero-plain",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/home-intro",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/home-showcase",
+        "blocks": 11,
+        "invalid": []
+      },
+      {
+        "name": "animewp/introduction",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/legal-page",
+        "blocks": 4,
+        "invalid": []
+      },
+      {
+        "name": "animewp/music-release",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/news-and-pv",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/news-index",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/news",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/onair-schedule",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/optional-info",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/quote-interlude",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/rss-feed",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/social-cards",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/story-bleed",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/video",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp-blocks/tilted-heading-upright-body",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp-blocks/independent-text-groups",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "expanded/showcase",
+        "blocks": 11,
+        "invalid": []
+      },
+      {
+        "name": "expanded/composition-a",
+        "blocks": 9,
+        "invalid": []
+      },
+      {
+        "name": "expanded/composition-b",
+        "blocks": 8,
+        "invalid": []
+      },
+      {
+        "name": "expanded/characters",
+        "blocks": 2,
+        "invalid": []
+      },
+      {
+        "name": "expanded/contact",
+        "blocks": 2,
+        "invalid": []
+      },
+      {
+        "name": "expanded/legal",
+        "blocks": 4,
+        "invalid": []
+      },
+      {
+        "name": "legacy/wp71",
+        "blocks": 5,
+        "invalid": []
+      },
+      {
+        "name": "legacy/wp66",
+        "blocks": 5,
+        "invalid": []
+      },
+      {
+        "name": "legacy/v110",
+        "blocks": 8,
+        "invalid": []
+      },
+      {
+        "name": "legacy/v110wp66",
+        "blocks": 8,
+        "invalid": []
+      },
+      {
+        "name": "rotation/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/0/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/1",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/2",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/2/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/3",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/3/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/4",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/4/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/5",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/5/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/6",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/6/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/7",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/7/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/8",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/8/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/9",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/9/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/10",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/10/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/11",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/11/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/11/1",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/12",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/12/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "CORS transformed video content survives",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/13",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/13/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/14",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/14/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/15",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/15/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/16",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/16/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/17",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/17/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/18",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/18/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/19",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/19/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/20",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/20/0",
+        "blocks": 1,
+        "invalid": []
+      }
+    ],
+    "roundtrip-min-v12": [
+      {
+        "name": "animewp/books-merch",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/character-profile",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/characters-five",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/characters-four",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/characters-page",
+        "blocks": 2,
+        "invalid": []
+      },
+      {
+        "name": "animewp/composition-a",
+        "blocks": 9,
+        "invalid": []
+      },
+      {
+        "name": "animewp/composition-b",
+        "blocks": 8,
+        "invalid": []
+      },
+      {
+        "name": "animewp/contact-page",
+        "blocks": 2,
+        "invalid": []
+      },
+      {
+        "name": "animewp/credits",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/features",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/footer-minimal",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/footer-visual",
+        "blocks": 2,
+        "invalid": []
+      },
+      {
+        "name": "animewp/gallery",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/header-glass",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/header-landing",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/header-left",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/header-overlay",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/header-right",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/header",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/hero-atmosphere",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/hero-card",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/hero-plain",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/home-intro",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/home-showcase",
+        "blocks": 11,
+        "invalid": []
+      },
+      {
+        "name": "animewp/introduction",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/legal-page",
+        "blocks": 4,
+        "invalid": []
+      },
+      {
+        "name": "animewp/music-release",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/news-and-pv",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/news-index",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/news",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/onair-schedule",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/optional-info",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/quote-interlude",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/rss-feed",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/social-cards",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/story-bleed",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp/video",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp-blocks/tilted-heading-upright-body",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "animewp-blocks/independent-text-groups",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "expanded/showcase",
+        "blocks": 11,
+        "invalid": []
+      },
+      {
+        "name": "expanded/composition-a",
+        "blocks": 9,
+        "invalid": []
+      },
+      {
+        "name": "expanded/composition-b",
+        "blocks": 8,
+        "invalid": []
+      },
+      {
+        "name": "expanded/characters",
+        "blocks": 2,
+        "invalid": []
+      },
+      {
+        "name": "expanded/contact",
+        "blocks": 2,
+        "invalid": []
+      },
+      {
+        "name": "expanded/legal",
+        "blocks": 4,
+        "invalid": []
+      },
+      {
+        "name": "legacy/wp71",
+        "blocks": 5,
+        "invalid": []
+      },
+      {
+        "name": "legacy/wp66",
+        "blocks": 5,
+        "invalid": []
+      },
+      {
+        "name": "legacy/v110",
+        "blocks": 8,
+        "invalid": []
+      },
+      {
+        "name": "legacy/v110wp66",
+        "blocks": 8,
+        "invalid": []
+      },
+      {
+        "name": "rotation/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/0/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/1",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/2",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/2/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/3",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/3/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/4",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/4/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/5",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/5/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/6",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/6/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/7",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/7/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/8",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/8/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/9",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/9/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/10",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/10/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/11",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/11/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/11/1",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/12",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/12/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "CORS transformed video content survives",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/13",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/13/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/14",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/14/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/15",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/15/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/16",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/16/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/17",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/17/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/18",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/18/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/19",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/19/0",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "rotation/20",
+        "blocks": 1,
+        "invalid": []
+      },
+      {
+        "name": "transform/20/0",
+        "blocks": 1,
+        "invalid": []
+      }
+    ],
+    "backend-current-v12": {
       "wordpress": "7.1.2",
       "php": "8.3.35",
-      "backend": [
+      "existing_page": 139,
+      "navigation": 140,
+      "author_id": 2,
+      "imports": {
+        "showcase": 83,
+        "composition-a": 8,
+        "composition-b": 9,
+        "characters": 10,
+        "contact": 11,
+        "legal": 120
+      },
+      "results": [
         {
           "test": "existing static homepage option preserved on theme switch",
           "pass": true
@@ -20,7 +954,23 @@
           "pass": true
         },
         {
-          "test": "starter composition-a creates a draft",
+          "test": "starter showcase creates draft or preserves existing status",
+          "pass": true
+        },
+        {
+          "test": "starter showcase repeated import reuses one page",
+          "pass": true
+        },
+        {
+          "test": "starter showcase stores editable blocks without pattern references",
+          "pass": true
+        },
+        {
+          "test": "starter showcase has unique saved IDs",
+          "pass": true
+        },
+        {
+          "test": "starter composition-a creates draft or preserves existing status",
           "pass": true
         },
         {
@@ -36,7 +986,7 @@
           "pass": true
         },
         {
-          "test": "starter composition-b creates a draft",
+          "test": "starter composition-b creates draft or preserves existing status",
           "pass": true
         },
         {
@@ -52,7 +1002,7 @@
           "pass": true
         },
         {
-          "test": "starter characters creates a draft",
+          "test": "starter characters creates draft or preserves existing status",
           "pass": true
         },
         {
@@ -68,7 +1018,7 @@
           "pass": true
         },
         {
-          "test": "starter contact creates a draft",
+          "test": "starter contact creates draft or preserves existing status",
           "pass": true
         },
         {
@@ -84,7 +1034,7 @@
           "pass": true
         },
         {
-          "test": "starter legal creates a draft",
+          "test": "starter legal creates draft or preserves existing status",
           "pass": true
         },
         {
@@ -175,397 +1125,23 @@
           "test": "site editor customization survives theme switching",
           "pass": true
         }
-      ],
-      "http": [
-        {
-          "test": "admin import without nonce rejected",
-          "pass": true,
-          "status": 403
-        },
-        {
-          "test": "admin import invalid nonce rejected",
-          "pass": true,
-          "status": 403
-        },
-        {
-          "test": "admin valid nonce reopens existing draft",
-          "pass": true,
-          "status": 302
-        },
-        {
-          "test": "author import with own valid nonce rejected",
-          "pass": true,
-          "status": 403
-        },
-        {
-          "test": "unauthenticated preview rejected",
-          "pass": true,
-          "status": 403
-        },
-        {
-          "test": "admin invalid preview nonce rejected",
-          "pass": true,
-          "status": 403
-        },
-        {
-          "test": "admin valid preview available",
-          "pass": true,
-          "status": 200
-        },
-        {
-          "test": "preview noindex header",
-          "pass": true
-        },
-        {
-          "test": "preview has exactly one document title",
-          "pass": true
-        }
-      ],
-      "render": [
-        {
-          "test": "home one title",
-          "pass": true
-        },
-        {
-          "test": "home",
-          "pass": true,
-          "status": 200
-        },
-        {
-          "test": "page one title",
-          "pass": true
-        },
-        {
-          "test": "page",
-          "pass": true,
-          "status": 200
-        },
-        {
-          "test": "news comments one title",
-          "pass": true
-        },
-        {
-          "test": "news comments",
-          "pass": true,
-          "status": 200
-        },
-        {
-          "test": "archive one title",
-          "pass": true
-        },
-        {
-          "test": "archive",
-          "pass": true,
-          "status": 200
-        },
-        {
-          "test": "search match one title",
-          "pass": true
-        },
-        {
-          "test": "search match",
-          "pass": true,
-          "status": 200
-        },
-        {
-          "test": "search empty one title",
-          "pass": true
-        },
-        {
-          "test": "search empty",
-          "pass": true,
-          "status": 200
-        },
-        {
-          "test": "pagination one title",
-          "pass": true
-        },
-        {
-          "test": "pagination",
-          "pass": true,
-          "status": 200
-        },
-        {
-          "test": "password one title",
-          "pass": true
-        },
-        {
-          "test": "password",
-          "pass": true,
-          "status": 200
-        },
-        {
-          "test": "not found one title",
-          "pass": true
-        },
-        {
-          "test": "not found",
-          "pass": true,
-          "status": 404
-        }
-      ],
-      "block_serialization": [
-        {
-          "name": "animewp/characters-five",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/characters-four",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/characters-page",
-          "blocks": 2,
-          "invalid": []
-        },
-        {
-          "name": "animewp/composition-a",
-          "blocks": 9,
-          "invalid": []
-        },
-        {
-          "name": "animewp/composition-b",
-          "blocks": 8,
-          "invalid": []
-        },
-        {
-          "name": "animewp/contact-page",
-          "blocks": 2,
-          "invalid": []
-        },
-        {
-          "name": "animewp/credits",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/features",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/gallery",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/header-landing",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/header-left",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/header-overlay",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/header-right",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/header",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/hero-card",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/hero-plain",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/home-intro",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/introduction",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/legal-page",
-          "blocks": 4,
-          "invalid": []
-        },
-        {
-          "name": "animewp/news-index",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/news",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/optional-info",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/video",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp-blocks/tilted-heading-upright-body",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp-blocks/independent-text-groups",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "expanded/composition-a",
-          "blocks": 9,
-          "invalid": []
-        },
-        {
-          "name": "expanded/composition-b",
-          "blocks": 8,
-          "invalid": []
-        },
-        {
-          "name": "expanded/characters",
-          "blocks": 2,
-          "invalid": []
-        },
-        {
-          "name": "expanded/contact",
-          "blocks": 2,
-          "invalid": []
-        },
-        {
-          "name": "expanded/legal",
-          "blocks": 4,
-          "invalid": []
-        },
-        {
-          "name": "legacy/v1.0.0/wp71",
-          "blocks": 5,
-          "invalid": []
-        },
-        {
-          "name": "legacy/v1.0.0/wp66",
-          "blocks": 5,
-          "invalid": []
-        },
-        {
-          "name": "rotation/0",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "transform/0/0",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "rotation/1",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "rotation/2",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "transform/2/0",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "rotation/3",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "transform/3/0",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "rotation/4",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "transform/4/0",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "rotation/5",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "transform/5/0",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "rotation/6",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "transform/6/0",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "rotation/7",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "transform/7/0",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "rotation/8",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "transform/8/0",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "rotation/9",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "transform/9/0",
-          "blocks": 1,
-          "invalid": []
-        }
       ]
     },
-    "minimum": {
+    "backend-min-v12": {
       "wordpress": "6.6",
       "php": "8.0.30",
-      "backend": [
+      "existing_page": 96,
+      "navigation": 97,
+      "author_id": 2,
+      "imports": {
+        "showcase": 56,
+        "composition-a": 6,
+        "composition-b": 7,
+        "characters": 8,
+        "contact": 9,
+        "legal": 85
+      },
+      "results": [
         {
           "test": "existing static homepage option preserved on theme switch",
           "pass": true
@@ -579,7 +1155,23 @@
           "pass": true
         },
         {
-          "test": "starter composition-a creates a draft",
+          "test": "starter showcase creates draft or preserves existing status",
+          "pass": true
+        },
+        {
+          "test": "starter showcase repeated import reuses one page",
+          "pass": true
+        },
+        {
+          "test": "starter showcase stores editable blocks without pattern references",
+          "pass": true
+        },
+        {
+          "test": "starter showcase has unique saved IDs",
+          "pass": true
+        },
+        {
+          "test": "starter composition-a creates draft or preserves existing status",
           "pass": true
         },
         {
@@ -595,7 +1187,7 @@
           "pass": true
         },
         {
-          "test": "starter composition-b creates a draft",
+          "test": "starter composition-b creates draft or preserves existing status",
           "pass": true
         },
         {
@@ -611,7 +1203,7 @@
           "pass": true
         },
         {
-          "test": "starter characters creates a draft",
+          "test": "starter characters creates draft or preserves existing status",
           "pass": true
         },
         {
@@ -627,7 +1219,7 @@
           "pass": true
         },
         {
-          "test": "starter contact creates a draft",
+          "test": "starter contact creates draft or preserves existing status",
           "pass": true
         },
         {
@@ -643,7 +1235,7 @@
           "pass": true
         },
         {
-          "test": "starter legal creates a draft",
+          "test": "starter legal creates draft or preserves existing status",
           "pass": true
         },
         {
@@ -734,622 +1326,856 @@
           "test": "site editor customization survives theme switching",
           "pass": true
         }
-      ],
-      "http": [
+      ]
+    },
+    "regressions-current-v12": {
+      "wordpress": "7.1.2",
+      "php": "8.3.35",
+      "results": [
         {
-          "test": "admin import without nonce rejected",
-          "pass": true,
-          "status": 403
-        },
-        {
-          "test": "admin import invalid nonce rejected",
-          "pass": true,
-          "status": 403
-        },
-        {
-          "test": "admin valid nonce reopens existing draft",
-          "pass": true,
-          "status": 302
-        },
-        {
-          "test": "author import with own valid nonce rejected",
-          "pass": true,
-          "status": 403
-        },
-        {
-          "test": "unauthenticated preview rejected",
-          "pass": true,
-          "status": 403
-        },
-        {
-          "test": "admin invalid preview nonce rejected",
-          "pass": true,
-          "status": 403
-        },
-        {
-          "test": "admin valid preview available",
-          "pass": true,
-          "status": 200
-        },
-        {
-          "test": "preview noindex header",
+          "test": "F5 trashed import requires an explicit choice",
           "pass": true
         },
         {
-          "test": "preview has exactly one document title",
-          "pass": true
-        }
-      ],
-      "render": [
-        {
-          "test": "home one title",
+          "test": "F5 interrupted import finds a renamed trashed slug",
           "pass": true
         },
         {
-          "test": "home",
-          "pass": true,
-          "status": 200
-        },
-        {
-          "test": "page one title",
+          "test": "F5 explicit restore keeps edited content and forces draft",
           "pass": true
         },
         {
-          "test": "page",
-          "pass": true,
-          "status": 200
-        },
-        {
-          "test": "news comments one title",
+          "test": "F5 new draft leaves old page in trash",
           "pass": true
         },
         {
-          "test": "news comments",
-          "pass": true,
-          "status": 200
-        },
-        {
-          "test": "archive one title",
+          "test": "F5 stale repeat form reuses replacement draft",
           "pass": true
         },
         {
-          "test": "archive",
-          "pass": true,
-          "status": 200
-        },
-        {
-          "test": "search match one title",
+          "test": "F3 wrong owner cannot release live lock",
           "pass": true
         },
         {
-          "test": "search match",
-          "pass": true,
-          "status": 200
-        },
-        {
-          "test": "search empty one title",
+          "test": "F3 expired lock takeover retains new ownership",
           "pass": true
         },
         {
-          "test": "search empty",
-          "pass": true,
-          "status": 200
-        },
-        {
-          "test": "pagination one title",
+          "test": "F3 cached missing option cannot authorize a second owner",
           "pass": true
         },
         {
-          "test": "pagination",
-          "pass": true,
-          "status": 200
-        },
-        {
-          "test": "password one title",
+          "test": "Font Library merged families have no fixed cap",
           "pass": true
         },
         {
-          "test": "password",
-          "pass": true,
-          "status": 200
-        },
-        {
-          "test": "not found one title",
+          "test": "Role slugs use Core variable normalization",
           "pass": true
         },
         {
-          "test": "not found",
-          "pass": true,
-          "status": 404
-        }
-      ],
-      "block_serialization": [
-        {
-          "name": "animewp/characters-five",
-          "blocks": 1,
-          "invalid": []
+          "test": "Core percent-encoded Japanese font slugs remain selectable",
+          "pass": true
         },
         {
-          "name": "animewp/characters-four",
-          "blocks": 1,
-          "invalid": []
+          "test": "Invalid font role is rejected without partial writes",
+          "pass": true
         },
         {
-          "name": "animewp/characters-page",
-          "blocks": 2,
-          "invalid": []
+          "test": "Added font faces default to swap in rendered settings",
+          "pass": true
         },
         {
-          "name": "animewp/composition-a",
-          "blocks": 9,
-          "invalid": []
+          "test": "Native color edit retains custom swatches",
+          "pass": true
         },
         {
-          "name": "animewp/composition-b",
-          "blocks": 8,
-          "invalid": []
+          "test": "Native color edit retains complete font settings",
+          "pass": true
         },
         {
-          "name": "animewp/contact-page",
-          "blocks": 2,
-          "invalid": []
+          "test": "Native color edit retains explicit typography styles",
+          "pass": true
         },
         {
-          "name": "animewp/credits",
-          "blocks": 1,
-          "invalid": []
+          "test": "Native color edit retains role map",
+          "pass": true
         },
         {
-          "name": "animewp/features",
-          "blocks": 1,
-          "invalid": []
+          "test": "No custom palette switching action or function exists",
+          "pass": true
         },
         {
-          "name": "animewp/gallery",
-          "blocks": 1,
-          "invalid": []
+          "test": "Deleted assigned families fall back without broken role CSS",
+          "pass": true
         },
         {
-          "name": "animewp/header-landing",
-          "blocks": 1,
-          "invalid": []
+          "test": "F4 author filtered markup retains anonymous crossorigin",
+          "pass": true
         },
         {
-          "name": "animewp/header-left",
-          "blocks": 1,
-          "invalid": []
+          "test": "Author cannot change font roles",
+          "pass": true
         },
         {
-          "name": "animewp/header-overlay",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/header-right",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/header",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/hero-card",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/hero-plain",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/home-intro",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/introduction",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/legal-page",
-          "blocks": 4,
-          "invalid": []
-        },
-        {
-          "name": "animewp/news-index",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/news",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/optional-info",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp/video",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp-blocks/tilted-heading-upright-body",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "animewp-blocks/independent-text-groups",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "expanded/composition-a",
-          "blocks": 9,
-          "invalid": []
-        },
-        {
-          "name": "expanded/composition-b",
-          "blocks": 8,
-          "invalid": []
-        },
-        {
-          "name": "expanded/characters",
-          "blocks": 2,
-          "invalid": []
-        },
-        {
-          "name": "expanded/contact",
-          "blocks": 2,
-          "invalid": []
-        },
-        {
-          "name": "expanded/legal",
-          "blocks": 4,
-          "invalid": []
-        },
-        {
-          "name": "legacy/v1.0.0/wp71",
-          "blocks": 5,
-          "invalid": []
-        },
-        {
-          "name": "legacy/v1.0.0/wp66",
-          "blocks": 5,
-          "invalid": []
-        },
-        {
-          "name": "rotation/0",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "transform/0/0",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "rotation/1",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "rotation/2",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "transform/2/0",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "rotation/3",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "transform/3/0",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "rotation/4",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "transform/4/0",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "rotation/5",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "transform/5/0",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "rotation/6",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "transform/6/0",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "rotation/7",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "transform/7/0",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "rotation/8",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "transform/8/0",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "rotation/9",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "transform/9/0",
-          "blocks": 1,
-          "invalid": []
+          "test": "Role reset clears the option",
+          "pass": true
         }
       ]
-    }
-  },
-  "rotation_desktop": {
-    "items": [
-      {
-        "cls": "qa-separated",
-        "margin": "48px",
-        "opacity": "1",
-        "radius": "0px",
-        "skew": "-2deg",
-        "transform": "matrix(1, 0, 0, 1, 0, 0)"
-      },
-      {
-        "cls": "qa-heading-only",
-        "margin": "0px",
-        "opacity": "1",
-        "radius": "0px",
-        "skew": "-2deg",
-        "transform": "matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)"
-      },
-      {
-        "cls": "qa-upright",
-        "margin": "16px",
-        "opacity": "1",
-        "radius": "0px",
-        "skew": "-2deg",
-        "transform": "none"
-      },
-      {
-        "cls": "qa-angle-a",
-        "margin": "0px",
-        "opacity": "1",
-        "radius": "0px",
-        "skew": "",
-        "transform": "matrix(0.99863, -0.052336, 0.052336, 0.99863, 0, 0)"
-      },
-      {
-        "cls": "qa-angle-b",
-        "margin": "24px",
-        "opacity": "1",
-        "radius": "0px",
-        "skew": "",
-        "transform": "matrix(0.997564, 0.0697565, -0.0697565, 0.997564, 0, 0)"
-      },
-      {
-        "cls": "qa-nested-parent",
-        "margin": "48px",
-        "opacity": "0.4",
-        "radius": "30px",
-        "skew": "5deg",
-        "transform": "matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)"
-      },
-      {
-        "cls": "qa-nested-child",
-        "margin": "0px",
-        "opacity": "1",
-        "radius": "0px",
-        "skew": "0deg",
-        "transform": "matrix(1, 0, 0, 1, 0, 0)"
-      },
-      {
-        "cls": "qa-text-child",
-        "margin": "0px",
-        "opacity": "1",
-        "radius": "0px",
-        "skew": "",
-        "transform": "matrix(1, 0, 0, 1, 0, 0)"
-      },
-      {
-        "cls": "qa-panel-gap-child",
-        "margin": "48px",
-        "opacity": "1",
-        "radius": "0px",
-        "skew": "0deg",
-        "transform": "matrix(1, 0, 0, 1, 0, 0)"
-      },
-      {
-        "cls": "qa-text-gap-child",
-        "margin": "48px",
-        "opacity": "1",
-        "radius": "0px",
-        "skew": "",
-        "transform": "matrix(1, 0, 0, 1, 0, 0)"
-      },
-      {
-        "cls": "qa-inner-panel-gap",
-        "margin": "16px",
-        "opacity": "1",
-        "radius": "0px",
-        "skew": "0deg",
-        "transform": "none"
-      },
-      {
-        "cls": "qa-inner-text-gap",
-        "margin": "16px",
-        "opacity": "1",
-        "radius": "0px",
-        "skew": "",
-        "transform": "none"
-      }
-    ],
-    "lang": "ja",
-    "scrollWidth": 1477,
-    "width": 1477
-  },
-  "rotation_mobile": {
-    "groups": [
-      {
-        "cls": "wp-block-animewp-text-group qa-heading-only",
-        "transform": "matrix(1, 0, 0, 1, 0, 0)"
-      },
-      {
-        "cls": "wp-block-animewp-text-group qa-angle-a",
-        "transform": "matrix(1, 0, 0, 1, 0, 0)"
-      },
-      {
-        "cls": "wp-block-animewp-text-group qa-angle-b",
-        "transform": "matrix(1, 0, 0, 1, 0, 0)"
-      },
-      {
-        "cls": "wp-block-animewp-text-group qa-nested-text",
-        "transform": "matrix(0.999848, 0.0174524, -0.0174524, 0.999848, 0, 0)"
-      },
-      {
-        "cls": "wp-block-animewp-text-group qa-text-child",
-        "transform": "matrix(1, 0, 0, 1, 0, 0)"
-      },
-      {
-        "cls": "wp-block-animewp-text-group qa-default-text",
-        "transform": "matrix(1, 0, 0, 1, 0, 0)"
-      },
-      {
-        "cls": "wp-block-animewp-text-group alignwide qa-styled-text has-text-color has-animewp-large-font-size",
-        "transform": "matrix(1, 0, 0, 1, 0, 0)"
-      },
-      {
-        "cls": "wp-block-animewp-text-group qa-text-gap",
-        "transform": "matrix(1, 0, 0, 1, 0, 0)"
-      },
-      {
-        "cls": "wp-block-animewp-text-group qa-text-gap-child",
-        "transform": "matrix(1, 0, 0, 1, 0, 0)"
-      }
-    ],
-    "scrollWidth": 320,
-    "width": 320
-  },
-  "rotation_minimum_desktop": {
-    "items": [
-      {
-        "cls": "qa-heading-only",
-        "margin": "0px",
-        "opacity": "1",
-        "radius": "0px",
-        "transform": "matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)"
-      },
-      {
-        "cls": "qa-upright",
-        "margin": "16px",
-        "opacity": "1",
-        "radius": "0px",
-        "transform": "none"
-      },
-      {
-        "cls": "qa-angle-a",
-        "margin": "0px",
-        "opacity": "1",
-        "radius": "0px",
-        "transform": "matrix(0.99863, -0.052336, 0.052336, 0.99863, 0, 0)"
-      },
-      {
-        "cls": "qa-angle-b",
-        "margin": "24px",
-        "opacity": "1",
-        "radius": "0px",
-        "transform": "matrix(0.997564, 0.0697565, -0.0697565, 0.997564, 0, 0)"
-      },
-      {
-        "cls": "qa-nested-parent",
-        "margin": "48px",
-        "opacity": "0.4",
-        "radius": "30px",
-        "transform": "matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)"
-      },
-      {
-        "cls": "qa-nested-child",
-        "margin": "0px",
-        "opacity": "1",
-        "radius": "0px",
-        "transform": "matrix(1, 0, 0, 1, 0, 0)"
-      },
-      {
-        "cls": "qa-panel-gap-child",
-        "margin": "48px",
-        "opacity": "1",
-        "radius": "0px",
-        "transform": "matrix(1, 0, 0, 1, 0, 0)"
-      },
-      {
-        "cls": "qa-text-gap-child",
-        "margin": "48px",
-        "opacity": "1",
-        "radius": "0px",
-        "transform": "matrix(1, 0, 0, 1, 0, 0)"
-      }
-    ],
-    "lang": "ja",
-    "scrollWidth": 1477,
-    "width": 1477
-  },
-  "zip_update_preservation": {
-    "current": {
-      "items": 20,
-      "all_hashes_preserved": true
     },
-    "minimum": {
-      "items": 19,
-      "all_hashes_preserved": true
-    }
+    "regressions-min-v12": {
+      "wordpress": "6.6",
+      "php": "8.0.30",
+      "results": [
+        {
+          "test": "F5 trashed import requires an explicit choice",
+          "pass": true
+        },
+        {
+          "test": "F5 interrupted import finds a renamed trashed slug",
+          "pass": true
+        },
+        {
+          "test": "F5 explicit restore keeps edited content and forces draft",
+          "pass": true
+        },
+        {
+          "test": "F5 new draft leaves old page in trash",
+          "pass": true
+        },
+        {
+          "test": "F5 stale repeat form reuses replacement draft",
+          "pass": true
+        },
+        {
+          "test": "F3 wrong owner cannot release live lock",
+          "pass": true
+        },
+        {
+          "test": "F3 expired lock takeover retains new ownership",
+          "pass": true
+        },
+        {
+          "test": "F3 cached missing option cannot authorize a second owner",
+          "pass": true
+        },
+        {
+          "test": "Font Library merged families have no fixed cap",
+          "pass": true
+        },
+        {
+          "test": "Role slugs use Core variable normalization",
+          "pass": true
+        },
+        {
+          "test": "Core percent-encoded Japanese font slugs remain selectable",
+          "pass": true
+        },
+        {
+          "test": "Invalid font role is rejected without partial writes",
+          "pass": true
+        },
+        {
+          "test": "Added font faces default to swap in rendered settings",
+          "pass": true
+        },
+        {
+          "test": "Native color edit retains custom swatches",
+          "pass": true
+        },
+        {
+          "test": "Native color edit retains complete font settings",
+          "pass": true
+        },
+        {
+          "test": "Native color edit retains explicit typography styles",
+          "pass": true
+        },
+        {
+          "test": "Native color edit retains role map",
+          "pass": true
+        },
+        {
+          "test": "No custom palette switching action or function exists",
+          "pass": true
+        },
+        {
+          "test": "Deleted assigned families fall back without broken role CSS",
+          "pass": true
+        },
+        {
+          "test": "F4 author filtered markup retains anonymous crossorigin",
+          "pass": true
+        },
+        {
+          "test": "Author cannot change font roles",
+          "pass": true
+        },
+        {
+          "test": "Role reset clears the option",
+          "pass": true
+        }
+      ]
+    },
+    "http-current-v12": [
+      {
+        "test": "admin import without nonce rejected",
+        "pass": true,
+        "status": 403
+      },
+      {
+        "test": "admin import invalid nonce rejected",
+        "pass": true,
+        "status": 403
+      },
+      {
+        "test": "admin valid nonce reopens existing draft",
+        "pass": true,
+        "status": 302
+      },
+      {
+        "test": "author import with own valid nonce rejected",
+        "pass": true,
+        "status": 403
+      },
+      {
+        "test": "unauthenticated preview rejected",
+        "pass": true,
+        "status": 403
+      },
+      {
+        "test": "admin invalid preview nonce rejected",
+        "pass": true,
+        "status": 403
+      },
+      {
+        "test": "admin valid preview available",
+        "pass": true,
+        "status": 200
+      },
+      {
+        "test": "preview noindex header",
+        "pass": true
+      },
+      {
+        "test": "preview has exactly one document title",
+        "pass": true
+      }
+    ],
+    "http-min-v12": [
+      {
+        "test": "admin import without nonce rejected",
+        "pass": true,
+        "status": 403
+      },
+      {
+        "test": "admin import invalid nonce rejected",
+        "pass": true,
+        "status": 403
+      },
+      {
+        "test": "admin valid nonce reopens existing draft",
+        "pass": true,
+        "status": 302
+      },
+      {
+        "test": "author import with own valid nonce rejected",
+        "pass": true,
+        "status": 403
+      },
+      {
+        "test": "unauthenticated preview rejected",
+        "pass": true,
+        "status": 403
+      },
+      {
+        "test": "admin invalid preview nonce rejected",
+        "pass": true,
+        "status": 403
+      },
+      {
+        "test": "admin valid preview available",
+        "pass": true,
+        "status": 200
+      },
+      {
+        "test": "preview noindex header",
+        "pass": true
+      },
+      {
+        "test": "preview has exactly one document title",
+        "pass": true
+      }
+    ],
+    "render-current-v12": [
+      {
+        "test": "home one title",
+        "pass": true
+      },
+      {
+        "test": "home",
+        "pass": true,
+        "status": 200
+      },
+      {
+        "test": "page one title",
+        "pass": true
+      },
+      {
+        "test": "page",
+        "pass": true,
+        "status": 200
+      },
+      {
+        "test": "news comments one title",
+        "pass": true
+      },
+      {
+        "test": "news comments",
+        "pass": true,
+        "status": 200
+      },
+      {
+        "test": "archive one title",
+        "pass": true
+      },
+      {
+        "test": "archive",
+        "pass": true,
+        "status": 200
+      },
+      {
+        "test": "search match one title",
+        "pass": true
+      },
+      {
+        "test": "search match",
+        "pass": true,
+        "status": 200
+      },
+      {
+        "test": "search empty one title",
+        "pass": true
+      },
+      {
+        "test": "search empty",
+        "pass": true,
+        "status": 200
+      },
+      {
+        "test": "pagination one title",
+        "pass": true
+      },
+      {
+        "test": "pagination",
+        "pass": true,
+        "status": 200
+      },
+      {
+        "test": "password one title",
+        "pass": true
+      },
+      {
+        "test": "password",
+        "pass": true,
+        "status": 200
+      },
+      {
+        "test": "not found one title",
+        "pass": true
+      },
+      {
+        "test": "not found",
+        "pass": true,
+        "status": 404
+      }
+    ],
+    "render-min-v12": [
+      {
+        "test": "home one title",
+        "pass": true
+      },
+      {
+        "test": "home",
+        "pass": true,
+        "status": 200
+      },
+      {
+        "test": "page one title",
+        "pass": true
+      },
+      {
+        "test": "page",
+        "pass": true,
+        "status": 200
+      },
+      {
+        "test": "news comments one title",
+        "pass": true
+      },
+      {
+        "test": "news comments",
+        "pass": true,
+        "status": 200
+      },
+      {
+        "test": "archive one title",
+        "pass": true
+      },
+      {
+        "test": "archive",
+        "pass": true,
+        "status": 200
+      },
+      {
+        "test": "search match one title",
+        "pass": true
+      },
+      {
+        "test": "search match",
+        "pass": true,
+        "status": 200
+      },
+      {
+        "test": "search empty one title",
+        "pass": true
+      },
+      {
+        "test": "search empty",
+        "pass": true,
+        "status": 200
+      },
+      {
+        "test": "pagination one title",
+        "pass": true
+      },
+      {
+        "test": "pagination",
+        "pass": true,
+        "status": 200
+      },
+      {
+        "test": "password one title",
+        "pass": true
+      },
+      {
+        "test": "password",
+        "pass": true,
+        "status": 200
+      },
+      {
+        "test": "not found one title",
+        "pass": true
+      },
+      {
+        "test": "not found",
+        "pass": true,
+        "status": 404
+      }
+    ],
+    "concurrency-current-v12": {
+      "wordpress": "7.1.2",
+      "php": "8.3.35",
+      "requests": [
+        {
+          "status": 409,
+          "response": {
+            "result": "animewp_busy",
+            "started": 1791192257.046231,
+            "ended": 1791192257.049498
+          }
+        },
+        {
+          "status": 200,
+          "response": {
+            "result": 102,
+            "started": 1791192257.046232,
+            "ended": 1791192258.384218
+          }
+        }
+      ],
+      "drafts_before": 7,
+      "drafts_after": 8,
+      "pass": true
+    },
+    "concurrency-min-v12": {
+      "wordpress": "6.6",
+      "php": "8.0.30",
+      "requests": [
+        {
+          "status": 200,
+          "response": {
+            "result": 74,
+            "started": 1791192260.957725,
+            "ended": 1791192262.286346
+          }
+        },
+        {
+          "status": 409,
+          "response": {
+            "result": "animewp_busy",
+            "started": 1791192260.958556,
+            "ended": 1791192260.960004
+          }
+        }
+      ],
+      "drafts_before": 8,
+      "drafts_after": 9,
+      "pass": true
+    },
+    "custom-color-v12": [
+      {
+        "mode": "standard-palette",
+        "background": "rgb(255, 255, 255)",
+        "button": "rgb(120, 40, 76)",
+        "font": "\"Cormorant Garamond\", serif",
+        "panel": "rgb(120, 40, 76)"
+      },
+      {
+        "mode": "standard-additional-css",
+        "background": "rgb(255, 255, 255)",
+        "button": "rgb(40, 92, 78)",
+        "font": "\"Cormorant Garamond\", serif",
+        "panel": "rgb(40, 92, 78)"
+      }
+    ],
+    "external-video-v12": {
+      "beforeExternal": [],
+      "afterHosts": [
+        "127.0.0.1",
+        "www.youtube-nocookie.com"
+      ],
+      "afterCloseFrames": 0
+    },
+    "monochrome-contrast-v12": {
+      "pairs": 11,
+      "minimum": 5.742,
+      "results": [
+        {
+          "palette": "monochrome",
+          "foreground": "contrast",
+          "background": "base",
+          "ratio": 16.293
+        },
+        {
+          "palette": "monochrome",
+          "foreground": "contrast",
+          "background": "surface",
+          "ratio": 14.684
+        },
+        {
+          "palette": "monochrome",
+          "foreground": "muted",
+          "background": "base",
+          "ratio": 7.005
+        },
+        {
+          "palette": "monochrome",
+          "foreground": "muted",
+          "background": "surface",
+          "ratio": 6.313
+        },
+        {
+          "palette": "monochrome",
+          "foreground": "accent",
+          "background": "base",
+          "ratio": 15.134
+        },
+        {
+          "palette": "monochrome",
+          "foreground": "on-accent",
+          "background": "accent",
+          "ratio": 15.134
+        },
+        {
+          "palette": "monochrome",
+          "foreground": "on-contrast",
+          "background": "contrast",
+          "ratio": 16.293
+        },
+        {
+          "palette": "monochrome",
+          "foreground": "badge-info-text",
+          "background": "badge-info",
+          "ratio": 10.208
+        },
+        {
+          "palette": "monochrome",
+          "foreground": "badge-media-text",
+          "background": "badge-media",
+          "ratio": 7.455
+        },
+        {
+          "palette": "monochrome",
+          "foreground": "badge-event-text",
+          "background": "badge-event",
+          "ratio": 12.635
+        },
+        {
+          "palette": "monochrome",
+          "foreground": "badge-music-text",
+          "background": "badge-music",
+          "ratio": 5.742
+        }
+      ]
+    },
+    "responsive-v12": [
+      {
+        "hero": 320,
+        "scrollWidth": 320,
+        "width": 320
+      },
+      {
+        "hero": 390,
+        "scrollWidth": 390,
+        "width": 390
+      },
+      {
+        "hero": 768,
+        "scrollWidth": 768,
+        "width": 768
+      },
+      {
+        "hero": 781,
+        "scrollWidth": 781,
+        "width": 781
+      },
+      {
+        "hero": 782,
+        "scrollWidth": 782,
+        "width": 782
+      },
+      {
+        "hero": 1024,
+        "scrollWidth": 1024,
+        "width": 1024
+      },
+      {
+        "hero": 1440,
+        "scrollWidth": 1440,
+        "width": 1440
+      }
+    ],
+    "mobile-menu-v12": {
+      "focus": "wp-block-navigation-item__content",
+      "headerFilter": "none",
+      "height": 844,
+      "menu": {
+        "height": 844,
+        "width": 390,
+        "x": 0,
+        "y": 0
+      },
+      "width": 390
+    },
+    "geometry-v12": [
+      {
+        "defaultPanel": "none",
+        "defaultText": "none",
+        "desktop": "none",
+        "fixed": {
+          "bottom": 11,
+          "height": 2,
+          "left": 7,
+          "right": 9,
+          "top": 9,
+          "width": 2,
+          "x": 7,
+          "y": 9
+        },
+        "fixedText": {
+          "bottom": 15,
+          "height": 2,
+          "left": 11,
+          "right": 13,
+          "top": 13,
+          "width": 2,
+          "x": 11,
+          "y": 13
+        },
+        "media": [
+          {
+            "focus": "80% 20%",
+            "gap": "1.5rem",
+            "height": "600px",
+            "mobileHeight": "420px",
+            "s": ".qa-media-parent",
+            "width": "70%"
+          },
+          {
+            "focus": "50% 50%",
+            "gap": "1.5rem",
+            "height": "400px",
+            "mobileHeight": "280px",
+            "s": ".qa-media-child",
+            "width": "50%"
+          }
+        ],
+        "mobile": "matrix(0.999391, 0.0348995, -0.0348995, 0.999391, 0, 0)",
+        "role": {
+          "background": "rgb(28, 51, 72)",
+          "text": "rgb(248, 251, 255)"
+        },
+        "width": 390
+      },
+      {
+        "defaultPanel": "none",
+        "defaultText": "none",
+        "desktop": "matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)",
+        "fixed": {
+          "bottom": 11,
+          "height": 2,
+          "left": 7,
+          "right": 9,
+          "top": 9,
+          "width": 2,
+          "x": 7,
+          "y": 9
+        },
+        "fixedText": {
+          "bottom": 15,
+          "height": 2,
+          "left": 11,
+          "right": 13,
+          "top": 13,
+          "width": 2,
+          "x": 11,
+          "y": 13
+        },
+        "media": [
+          {
+            "focus": "80% 20%",
+            "gap": "1.5rem",
+            "height": "600px",
+            "mobileHeight": "420px",
+            "s": ".qa-media-parent",
+            "width": "70%"
+          },
+          {
+            "focus": "50% 50%",
+            "gap": "1.5rem",
+            "height": "400px",
+            "mobileHeight": "280px",
+            "s": ".qa-media-child",
+            "width": "50%"
+          }
+        ],
+        "mobile": "none",
+        "role": {
+          "background": "rgb(28, 51, 72)",
+          "text": "rgb(248, 251, 255)"
+        },
+        "width": 782
+      },
+      {
+        "defaultPanel": "none",
+        "defaultText": "none",
+        "desktop": "matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)",
+        "fixed": {
+          "bottom": 11,
+          "height": 2,
+          "left": 7,
+          "right": 9,
+          "top": 9,
+          "width": 2,
+          "x": 7,
+          "y": 9
+        },
+        "fixedText": {
+          "bottom": 15,
+          "height": 2,
+          "left": 11,
+          "right": 13,
+          "top": 13,
+          "width": 2,
+          "x": 11,
+          "y": 13
+        },
+        "media": [
+          {
+            "focus": "80% 20%",
+            "gap": "1.5rem",
+            "height": "600px",
+            "mobileHeight": "420px",
+            "s": ".qa-media-parent",
+            "width": "70%"
+          },
+          {
+            "focus": "50% 50%",
+            "gap": "1.5rem",
+            "height": "400px",
+            "mobileHeight": "280px",
+            "s": ".qa-media-child",
+            "width": "50%"
+          }
+        ],
+        "mobile": "none",
+        "role": {
+          "background": "rgb(28, 51, 72)",
+          "text": "rgb(248, 251, 255)"
+        },
+        "width": 1440
+      }
+    ],
+    "font-library-v12": {
+      "faces": [
+        "@font-face { font-family: \"Cormorant Garamond\"; font-style: normal; font-weight: 400; font-display: swap; src: url(\"http://127.0.0.1:8873/wp-content/uploads/fonts/co3umX5slCNuHLi8bLeY9MK7whWMhyjypVO7abI26QOD_v86GnbEi_s4Mfs.woff2\") format(\"woff2\"); }"
+      ],
+      "font": "\"Cormorant Garamond\", serif",
+      "responses": [
+        {
+          "url": "http://127.0.0.1:8873/wp-content/uploads/fonts/co3umX5slCNuHLi8bLeY9MK7whWMhyjypVO7abI26QOD_v86GnbEi_s4Mfs.woff2",
+          "status": 200,
+          "mime": "font/woff2",
+          "encodedLength": 290
+        }
+      ]
+    },
+    "accessibility-v12": {
+      "hiddenReveals": 0,
+      "transitions": [],
+      "print": {
+        "hiddenReveals": 0,
+        "sticky": "static"
+      },
+      "noJS": {
+        "headings": 24,
+        "hiddenReveals": 0
+      }
+    },
+    "geometry-gap-v12": [
+      {
+        "gap": "3rem",
+        "selector": ".qa-media-parent"
+      },
+      {
+        "gap": "1.5rem",
+        "selector": ".qa-media-child"
+      }
+    ]
   },
-  "manual_checks": {
-    "current_editor_save_reload": true,
-    "minimum_editor_save_reload": true,
-    "legacy_px_save_normalized": "0.7",
-    "legacy_editor_invalid_warning": false,
-    "current_frontend_editor_angle_degrees": -4,
-    "minimum_mobile_width": 320,
-    "minimum_mobile_scroll_width": 320,
-    "minimum_plugin_stopped_text_groups_retained": 9,
-    "japanese_site_editor_font_labels": true,
-    "native_ime_composition_tested": false
+  "independent_review": {
+    "model": "Astra",
+    "reasoning": "xhigh",
+    "release_blocking_P1_P2": 0,
+    "read_only": true,
+    "verified_fixes": [
+      "menu containing block",
+      "role foreground and fallback",
+      "Font Library normalized slugs",
+      "origin-independent external poster save",
+      "source-change poster normalization",
+      "WP7 custom HTML content",
+      "packaged image reference",
+      "custom palette literal swatches"
+    ]
+  },
+  "font_editor_iframe": {
+    "family": "Cormorant Garamond, serif",
+    "wordpress": "7.1.2",
+    "verified": true
+  },
+  "page_top_link": {
+    "href": "#",
+    "scroll_y_after_click": 0
   }
 }

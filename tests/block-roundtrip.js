@@ -18,7 +18,7 @@
             results.push({ name: name, blocks: blocks.length, invalid: failures });
         }
         Object.entries(window.animewpQAData).forEach(function (entry) { check(entry[0], entry[1]); });
-        Object.entries(window.animewpLegacyContent).forEach(function (entry) { check('legacy/v1.0.0/' + entry[0], entry[1]); });
+        Object.entries(window.animewpLegacyContent).forEach(function (entry) { check('legacy/' + entry[0], entry[1]); });
         var make = wp.blocks.createBlock;
         function paragraph(text, className) { return make('core/paragraph', { content: text || '入れ子本文を保持します。', className: className }); }
         function heading(text) { return make('core/heading', { level: 2, content: text }); }
@@ -54,12 +54,29 @@
             make('animewp/panel', { backdropEnabled: true, backgroundOpacity: 0 }, [paragraph('背景の不透明度0%')]),
             make('animewp/panel', { backdropEnabled: true, backgroundOpacity: 100 }, [paragraph('背景の不透明度100%')])
         ];
+        variants.push(
+            make('animewp/panel', {backdropEnabled:true,backdropColorMode:'preset',backdropPreset:'accent',highlight:'panel',highlightColorMode:'role',highlightRole:'surface'}, [paragraph('配色追従')]),
+            make('animewp/media', {className:'qa-media-parent',crop:true,imageHeight:600,mobileImageHeight:420,imageWidth:70,focalX:80,focalY:20,style:{spacing:{blockGap:"3rem"}}}, [make('core/image',{url:location.origin+'/wp-content/themes/animewp/assets/images/animewp-character-a.svg',alt:'QA'}),make('core/group',{},[make('animewp/media', {className:'qa-media-child',crop:true}, [make('core/image',{url:location.origin+'/wp-content/themes/animewp/assets/images/animewp-character-a.svg',alt:'QA child'}),make('core/group',{},[paragraph('内側の既定値')])])])]),
+            make('animewp/video', {videoUrl:location.origin+'/animewp-artifacts/test-video.mp4',trackUrl:location.origin+'/animewp-artifacts/test-captions.vtt',crossOriginMode:'anonymous',description:'字幕CORS変換テスト'}, [paragraph('本文')]),
+            make('animewp/video', {source:'youtube',videoUrl:'https://www.youtube.com/watch?v=jNQXAC9IVRw&t=2',description:'外部接続の同意を検証するサンプル'}, [paragraph('外部映像サンプル・作品素材ではありません。')]),
+            make('animewp/video', {source:'vimeo',videoUrl:'https://vimeo.com/76979871',description:'Vimeoサンプル'}, []),
+            make('animewp/video', {source:'youtube',videoUrl:'https://youtube.com.evil.invalid/watch?v=jNQXAC9IVRw'}, []),
+            textGroup(3, 'デスクトップのみ', 'qa-desktop-only'),
+            textGroup(0, 'モバイルのみ', 'qa-mobile-only', {mobileRotation:2}),
+            make('animewp/panel',{className:'qa-fixed-parent'},[wp.blocks.parse('<!-- wp:html --><div class="qa-fixed" style="position:fixed;left:7px;top:9px;width:2px;height:2px"></div><!-- /wp:html -->')[0],paragraph('0度パネル')]),
+            make('animewp/text-group',{className:'qa-fixed-text-parent'},[wp.blocks.parse('<!-- wp:html --><div class="qa-fixed-text" style="position:fixed;left:11px;top:13px;width:2px;height:2px"></div><!-- /wp:html -->')[0],paragraph('0度文字')]),
+            make('animewp/panel',{className:'qa-role-contrast',heading:'読みやすい濃い面',backdropEnabled:true,backdropColorMode:'role',backdropRole:'contrast'},[paragraph('対応する前景')])
+        );
         variants.forEach(function (block, index) {
             check('rotation/' + index, wp.blocks.serialize([block]));
             var type = wp.blocks.getBlockType(block.name);
             ((type.transforms && type.transforms.to) || []).forEach(function (transform, offset) {
                 var transformed = transform.transform(block.attributes, block.innerBlocks);
-                check('transform/' + index + '/' + offset, wp.blocks.serialize(Array.isArray(transformed) ? transformed : [transformed]));
+                var savedTransform = wp.blocks.serialize(Array.isArray(transformed) ? transformed : [transformed]);
+                check('transform/' + index + '/' + offset, savedTransform);
+                if (block.name === 'animewp/video' && block.attributes.crossOriginMode === 'anonymous') {
+                    results.push({name:'CORS transformed video content survives',blocks:1,invalid:/<video[^>]*crossorigin="anonymous"/.test(savedTransform)&&/<track/.test(savedTransform)?[]:[{name:'missing video or track'}]});
+                }
             });
         });
         canonical['rotation-fixture'] = variants.map(function (block) { return wp.blocks.serialize([block]); }).join('\n\n');

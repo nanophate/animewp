@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.wp.org/wp/6.6/theme.json",
+  "version": 3,
+  "title": "濃い色面",
+  "slug": "animewp-contrast",
+  "blockTypes": [
+    "core/group",
+    "core/columns"
+  ],
+  "styles": {
+    "color": {
+      "background": "var:preset|color|contrast",
+      "text": "var:preset|color|on-contrast"
+    },
+    "spacing": {
+      "padding": {
+        "top": "var:preset|spacing|40",
+        "right": "var:preset|spacing|40",
+        "bottom": "var:preset|spacing|40",
+        "left": "var:preset|spacing|40"
+      }
+    },
+    "elements": {
+      "heading": {
+        "color": {
+          "text": "inherit"
+        }
+      },
+      "link": {
+        "color": {
+          "text": "inherit"
+        }
+      }
+    }
+  }
+}

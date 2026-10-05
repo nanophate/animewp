@@ -2,24 +2,48 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "animewp/text-group",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "title": "AnimeWP 文字グループ",
   "category": "design",
   "icon": "editor-textcolor",
   "description": "段落や見出しなどをまとめ、このグループだけ回転。モバイルの角度も個別に設定できます。",
-  "keywords": ["文字", "回転", "グループ"],
+  "keywords": [
+    "文字",
+    "回転",
+    "グループ"
+  ],
   "textdomain": "animewp-blocks",
   "attributes": {
-    "rotation": { "type": "number", "default": 0 },
-    "mobileRotation": { "type": "number", "default": 0 }
+    "rotation": {
+      "type": "number",
+      "default": 0
+    },
+    "mobileRotation": {
+      "type": "number",
+      "default": 0
+    }
   },
   "supports": {
     "html": false,
     "anchor": true,
-    "align": ["wide", "full"],
-    "color": { "background": true, "text": true, "gradients": false },
-    "spacing": { "margin": true, "padding": true, "blockGap": true },
-    "typography": { "fontSize": true, "lineHeight": true }
+    "align": [
+      "wide",
+      "full"
+    ],
+    "color": {
+      "background": true,
+      "text": true,
+      "gradients": false
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true,
+      "blockGap": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
   },
   "editorScript": "animewp-blocks-editor",
   "style": "animewp-blocks-style",

@@ -2,7 +2,7 @@
 
 作品紹介サイトを標準Gutenbergで編集する、単独インストール可能なWordPressブロックテーマです。親テーマや有料ビルダーは必要ありません。
 
-- `themes/animewp/`：通常の投稿・固定ページ・検索・アーカイブと、再利用できる2構成のLP、ヘッダー、セクションのパターン。
+- `themes/animewp/`：通常の投稿・固定ページ・検索・アーカイブと、再利用できる3構成のLP、ヘッダー、セクションのパターン。
 - `plugins/animewp-blocks/`：任意の装飾パネル、回転する文字グループ、画像と本文、動画ダイアログ。テーマだけでも利用できます。
 - [INSTALL-ja.txt](INSTALL-ja.txt)：ZIP導入、初期編集、更新、停止時の手順。
 - [設計](docs/architecture.md) と [任意ブロックの仕様](plugins/animewp-blocks/README.md)。
@@ -29,7 +29,7 @@ PHP・JavaScript・Pythonの構文、JSON、メタデータ、必須テンプレ
 
 別ランタイムでPHPを検査する場合だけ、`python3 scripts/validate.py --skip-php`を利用できます。出力にPHPを省略したことが表示されます。`tests/wp-smoke.php`はデータを書き換えるため、使い捨てのWordPressデータベース専用です。
 
-外部参照の例外は機械用JSONスキーマ、SVGのXML名前空間、内容の一致を検査する同梱GPL全文です。ローカルQA環境と生成物はソース監査・配布対象から除外します。
+外部参照の例外は機械用JSONスキーマ、SVGのXML名前空間、同梱GPL全文、明示操作後だけ使う動画プロバイダーの許可済みURLです。テスト用URLはインストールZIPに入りません。ローカルQA環境と生成物はソース監査・配布対象から除外します。
 
 ## 配布ZIPの作成
 
@@ -40,8 +40,8 @@ python3 scripts/package.py
 
 `artifacts/releases/`へ次を生成します。番号は各パッケージのVersionヘッダーから読み取ります。
 
-- `animewp-1.1.0.zip`：最上位フォルダーは`animewp/`のみ。
-- `animewp-blocks-1.1.0.zip`：最上位フォルダーは`animewp-blocks/`のみ。
+- `animewp-1.2.0.zip`：最上位フォルダーは`animewp/`のみ。
+- `animewp-blocks-1.2.0.zip`：最上位フォルダーは`animewp-blocks/`のみ。
 - `SHA256SUMS`：2つのZIPのSHA-256。
 
 ファイル順、ZIP日時、権限、格納方式を固定しています。同じソースなら環境の更新日時に左右されず同じZIPになります。各ZIPは格納方式を使い、圧縮ライブラリの違いによる出力差を避けます。ソースやQA環境を含むリポジトリ全体をWordPressへアップロードしないでください。
@@ -58,3 +58,11 @@ GitHub ActionsはPHP 8.0/8.3の構文検査と同じソース・パッケージ�
 ## ライセンス
 
 GPL-2.0-or-later。全文は[LICENSE](LICENSE)です。見本のSVGはこのキット用の独自図版です。
+
+## 1.2.0
+
+白・黒・グレーのシンプルな土台を維持します。追加の配色スキンや着せ替え画面はありません。色は標準Global Styles、各ブロックの色設定、追加CSSから調整します。既存の色・書体・本文を有効化や更新だけで変更しません。
+
+WordPress標準Font Libraryの追加書体を利用でき、任意の3用途（英字・大見出し／短いアクセント／等幅文字）にも割り当てられます。書体数の上限は設けません。標準ブロックで編集できる余白の大きいホーム、画像付きフッター、作品紹介、人物プロフィール、放送表、音楽、書籍・商品、手動SNSカードを追加しました。
+
+[1.2の仕様と対応表](docs/v1.2-design.md)、[検証結果](docs/verification.md)、[画像の来歴・容量・ハッシュ](themes/animewp/assets-manifest.json)。

@@ -22,10 +22,13 @@ animewp_test( 'no overriding front page template', ! file_exists( get_theme_file
 $animewp_option_snapshot = array( get_option( 'show_on_front' ), get_option( 'page_on_front' ), get_option( 'page_for_posts' ) );
 $animewp_imports = array();
 foreach ( array_keys( animewp_starters() ) as $animewp_key ) {
+	$animewp_records = get_option( 'animewp_starter_imports_v1', array() );
+	$animewp_prior = isset( $animewp_records[ $animewp_key ] ) ? animewp_find_starter_page( $animewp_records[ $animewp_key ] ) : 0;
+	$animewp_expected_status = $animewp_prior ? get_post_status( $animewp_prior ) : 'draft';
 	$animewp_id = animewp_import_starter_draft( $animewp_key );
 	$animewp_repeat = animewp_import_starter_draft( $animewp_key );
 	$animewp_ok = ! is_wp_error( $animewp_id );
-	animewp_test( 'starter ' . $animewp_key . ' creates a draft', $animewp_ok && 'draft' === get_post_status( $animewp_id ) );
+	animewp_test( 'starter ' . $animewp_key . ' creates draft or preserves existing status', $animewp_ok && $animewp_expected_status === get_post_status( $animewp_id ) );
 	animewp_test( 'starter ' . $animewp_key . ' repeated import reuses one page', $animewp_ok && $animewp_id === $animewp_repeat );
 	if ( $animewp_ok ) {
 		$animewp_imports[ $animewp_key ] = $animewp_id;

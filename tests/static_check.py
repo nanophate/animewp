@@ -10,8 +10,15 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 EXCLUDED = {".git", ".testenv", "artifacts", "node_modules", "vendor", "__pycache__"}
 LICENSE_SHA256 = "e1c15e91ce22ab264ab9919b44f16f6420e80f0e44444295853e8236d0470947"
-URL = re.compile(r"(?:https?://|(?<![\w:])//|www\.)[A-Za-z0-9][^\s<>\"']*")
+URL = re.compile(r"(?:https?://|(?<![\w:\\])//|www\.)[A-Za-z0-9][^\s<>\"']*")
 SCHEMA = re.compile(r"https:" + r"/" + r"/schemas\.wp\.org/(?:wp/6\.6/theme|trunk/block)\.json\Z")
+RUNTIME_ENDPOINTS = {
+    "plugins/animewp-blocks/assets/providers.js": {
+        "https://www.youtube-nocookie.com/embed/",
+        "https://player.vimeo.com/video/",
+        "www.youtube.com", "www.youtube-nocookie.com", "www.vimeo.com",
+    },
+}
 SECRET_PATTERNS = (
     re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
     re.compile(r"\b(?:AKIA|ASIA)[A-Z0-9]{16}\b"),
@@ -85,9 +92,27 @@ def audit(path):
     # The audit implementation contains namespace patterns, never public resource links.
     if path.resolve() == Path(__file__).resolve():
         audit_text = audit_text.replace("http://www.w3.org/2000/svg", "SVG_NAMESPACE")
+        for references in RUNTIME_ENDPOINTS.values():
+            for reference in sorted(references, key=len, reverse=True):
+                audit_text = audit_text.replace(reference, "DECLARED_RUNTIME_ENDPOINT")
     for match in URL.finditer(audit_text):
+        # Test fixtures intentionally exercise allowed and rejected third-party URLs.
+        # They are never distributed in either installation ZIP.
+        if rel.startswith("tests/") or rel == "docs/test-results.json":
+            continue
+        if match.group() in RUNTIME_ENDPOINTS.get(rel, set()):
+            continue
         errors.append(f"{rel}:{audit_text[:match.start()].count(chr(10)) + 1}: external reference (value omitted)")
 
+
+# The release remains a monochrome base; color editing belongs to Core or CSS.
+check({p.name for p in (ROOT / "themes/animewp/styles").glob("*.json")} == {"serif.json", "soft.json"}, "Unexpected named theme skin")
+for slug, color in json.loads((ROOT / "themes/animewp/inc/design-tokens.json").read_text())["colors"].items():
+    check(color[1:3] == color[3:5] == color[5:7], f"Initial token {slug} must remain monochrome")
+
+for path in (ROOT / "themes/animewp/patterns").glob("*.php"):
+    for reference in re.findall(r"get_theme_file_uri\(\s*'([^']+)'", path.read_text()):
+        check((ROOT / "themes/animewp" / reference).is_file(), f"{path.name}: missing packaged asset {reference}")
 
 def header(text, key):
     match = re.search(r"^\s*(?:\*\s*)?" + re.escape(key) + r":\s*(.+?)\s*$", text, re.M)
@@ -100,6 +125,14 @@ def main():
         audit(path)
     theme = ROOT / "themes/animewp"
     plugin = ROOT / "plugins/animewp-blocks"
+    theme_version = header((theme / "style.css").read_text(), "Version")
+    plugin_version = header((plugin / "animewp-blocks.php").read_text(), "Version")
+    check(theme_version == plugin_version, "Theme and plugin release versions must match")
+    check((theme / "readme.txt").read_text().splitlines()[0] == f"animewp {theme_version}", "Theme readme version must match style.css")
+    check(f"バージョン{plugin_version}。" in (plugin / "README.md").read_text(), "Plugin README version must match header")
+    check(f"$animewp_version = '{plugin_version}';" in (plugin / "animewp-blocks.php").read_text(), "Plugin runtime cache version must match header")
+    for slug, value in (("animewp", theme_version), ("animewp-blocks", plugin_version)):
+        check(f"{slug}-{value}.zip" in (ROOT / "README.md").read_text(), f"README package example must match {slug} version")
     for path, field, expected in ((theme / "style.css", "Theme Name", "animewp"), (plugin / "animewp-blocks.php", "Plugin Name", "AnimeWP Blocks")):
         text = path.read_text(encoding="utf-8")
         check(header(text, field) == expected, f"{path.name}: incorrect package name")
@@ -116,6 +149,7 @@ def main():
         check((theme / f"templates/{template['name']}.html").is_file(), f"Missing custom template: {template['name']}")
     for name in ("panel", "media", "video", "text-group"):
         obj = json.loads((plugin / f"blocks/{name}/block.json").read_text())
+        check(obj.get("version") == plugin_version, f"Block metadata version must match plugin: {name}")
         check(obj.get("name") == f"animewp/{name}" and obj.get("apiVersion") == 3, f"Invalid block identity/API: {name}")
         for key, attr in obj.get("attributes", {}).items():
             if "default" not in attr:
