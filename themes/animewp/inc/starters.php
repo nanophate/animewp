@@ -95,6 +95,7 @@ function animewp_starter_screen() {
 			<li><?php esc_html_e( '内容を確認して公開します。ホームに使う場合は「設定 → 表示設定」で自分で選びます。', 'animewp' ); ?></li>
 		</ol>
 		<h2><?php esc_html_e( '目的に合った編集場所', 'animewp' ); ?></h2>
+		<p><?php esc_html_e( '作品紹介の文章・画像は「固定ページ → 対象ページ → 編集」で変更します。「外観 → エディター → テンプレート」は共通の外枠を編集する場所です。そこに表示される「コンテンツ」の仮文章は本文の差し込み位置を示しており、保存した本文ではありません。', 'animewp' ); ?></p>
 		<table class="widefat striped" style="max-width:900px">
 			<thead><tr><th scope="col"><?php esc_html_e( '編集したいもの', 'animewp' ); ?></th><th scope="col"><?php esc_html_e( '選び方', 'animewp' ); ?></th></tr></thead>
 			<tbody>

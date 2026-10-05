@@ -4,6 +4,7 @@ import hashlib
 import json
 import re
 import sys
+import struct
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
@@ -52,6 +53,8 @@ def audit(path):
         data = path.read_bytes()
         if rel == "themes/animewp/screenshot.png":
             check(data.startswith(b"\x89PNG\r\n\x1a\n") and len(data) >= 33 and data[12:16] == b"IHDR", f"{rel}: invalid PNG signature/header")
+            if len(data) >= 24:
+                check(struct.unpack(">II", data[16:24]) == (1200, 900), f"{rel}: preview must be 1200x900")
             return
         text = data.decode("utf-8")
     except (UnicodeDecodeError, OSError):
@@ -95,6 +98,8 @@ def audit(path):
         for references in RUNTIME_ENDPOINTS.values():
             for reference in sorted(references, key=len, reverse=True):
                 audit_text = audit_text.replace(reference, "DECLARED_RUNTIME_ENDPOINT")
+    if rel == "themes/animewp/style.css":
+        audit_text = re.sub(r"^License URI: https://www\.gnu\.org/licenses/gpl-2\.0\.html$", "License URI: GPL_LICENSE", audit_text, flags=re.M)
     for match in URL.finditer(audit_text):
         # Test fixtures intentionally exercise allowed and rejected third-party URLs.
         # They are never distributed in either installation ZIP.

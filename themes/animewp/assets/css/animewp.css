@@ -63,7 +63,7 @@
 .animewp-hero .animewp-hero-info > h1 { font-size: clamp(2.3rem, 5vw, 4.5rem); }
 .animewp-hero .animewp-hero-info > p { max-width: 36ch; }
 .animewp-hero .wp-block-cover__inner-container { min-width: 0; }
-.animewp-media-columns { align-items: center; gap: clamp(24px, 4vw, 64px); }
+.animewp-media-columns { align-items: center; }
 .animewp-media-columns .wp-block-image img { width: 100%; }
 .animewp-media-columns p { max-width: 52ch; }
 .animewp-news-list { list-style: none; padding: 0; margin: 0; }
@@ -85,7 +85,7 @@
 .animewp-news-query .wp-block-query-pagination a,
 .animewp-news-query .wp-block-query-pagination-numbers .page-numbers { display: inline-flex; min-width: 36px; min-height: 44px; align-items: center; justify-content: center; }
 .animewp-news-query .wp-block-query-pagination-numbers .current { font-weight: 700; text-decoration: underline; }
-.animewp-character-grid { display: grid; gap: 20px; }
+.animewp-character-grid { display: grid; }
 .animewp-character-grid--four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .animewp-character-grid--five { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 .animewp-character-grid > .wp-block-column { min-width: 0; margin: 0; }
@@ -161,7 +161,7 @@
   .animewp-header .wp-block-navigation__responsive-container-content { align-items: flex-start; padding-top: 70px; }
   .animewp-header .wp-block-navigation__responsive-container-content .wp-block-navigation__container { align-items: flex-start; gap: 24px; }
   .animewp-brand .wp-block-site-title { font-size: 1rem; }
-  .animewp-character-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .animewp-character-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .animewp-section-heading { margin-block-end: 28px; }
   .animewp-hero { min-height: 620px !important; }
   .animewp-hero .wp-block-cover__image-background { object-position: 65% 50%; }
@@ -205,7 +205,7 @@ header.wp-block-template-part:has(.animewp-header--glass) { position: sticky; to
   background: linear-gradient(0deg, var(--wp--preset--color--base, #fff), transparent);
 }
 .wp-block-cover.animewp-hero--atmosphere > .wp-block-cover__inner-container, .wp-block-cover.animewp-footer-visual > .wp-block-cover__inner-container { position: relative; z-index: 2 !important; } /* Core 7 cover selectors are more specific; keep scrims below content. */
-.animewp-hero-columns { align-items: flex-start; gap: clamp(2rem, 7vw, 7rem); }
+.animewp-hero-columns { align-items: flex-start; }
 .animewp-hero-columns > .wp-block-column:first-child { flex-basis: 75%; }
 .animewp-hero-columns > .wp-block-column:last-child { flex-basis: 25%; }
 .animewp-hero-copy { max-width: 38rem; margin-inline: 0 auto; }
@@ -251,3 +251,5 @@ header.wp-block-template-part:has(.animewp-header--glass) { position: sticky; to
   header.wp-block-template-part:has(.animewp-header--glass) { position: static; }
   .is-style-animewp-fade-start img, .is-style-animewp-fade-bottom img { -webkit-mask-image: none; mask-image: none; }
 }
+
+/* Pattern column gap defaults live in layout.css, after Core defaults and before individual spacing. */

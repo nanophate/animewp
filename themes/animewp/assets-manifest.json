@@ -68,8 +68,8 @@
     {
       "path": "screenshot.png",
       "mime": "image/png",
-      "bytes": 110598,
-      "sha256": "2834f80944af24c40321603fa7730060ec155babc9cc2a4c2d90fcf0d87623ef",
+      "bytes": 148539,
+      "sha256": "6b4dad5ed18dd15239c1c9158b81370e9039a7a64a2f4ce0ae9fd2684e1277ba",
       "license": "GPL-2.0-or-later",
       "source": "Original animewp placeholder artwork / theme preview; no reference-site art",
       "modifications": "Authored for this kit; replace with licensed project materials before launch"

@@ -4,3 +4,11 @@
 .editor-styles-wrapper .animewp-hero { min-width: 0; }
 .editor-styles-wrapper .animewp-section { overflow: visible; }
 .editor-styles-wrapper .animewp-video-placeholder video:not([src]) { display: block; }
+
+/* The administrative title input is not a rendered post-title or a content heading. */
+.editor-styles-wrapper .editor-post-title {
+  font-size: clamp(1.5rem, 2.8vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1.4;
+  margin-block: 1.5rem;
+}

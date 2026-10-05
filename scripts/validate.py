@@ -41,6 +41,7 @@ def main():
     run([sys.executable, "scripts/design_tokens.py", "--check"])
     run([sys.executable, "scripts/assets_manifest.py", "--check"])
     run(["node", "tests/providers.test.js"])
+    run(["node", "tests/editor-layout.test.js"])
     run([sys.executable, "tests/palette_contrast.py"])
     run([sys.executable, "scripts/package.py", "--check"])
     print(f"Source checks passed: {counts}; PHP skipped={args.skip_php}")

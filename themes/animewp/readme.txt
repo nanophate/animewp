@@ -1,4 +1,4 @@
-animewp 1.2.0
+animewp 1.2.1
 WordPress 6.6 以上 / PHP 8.0 以上
 ライセンス: GPL-2.0-or-later
 
@@ -13,3 +13,12 @@ animewp-blocks は、装飾パネル、画像配置、動画ダイアログが�
 サイトエディターに保存した変更は、テーマの ZIP 更新より優先されます。
 更新前にはファイルとデータベースをバックアップし、検証環境で確認してください。
 独自の仮画像を同梱し、外部フォント・解析通信は初期状態では読み込みません。
+
+== Copyright ==
+
+animewp, Copyright (C) 2026 nanophate
+animewp is distributed under the terms of the GNU GPL v2 or later.
+See LICENSE for the full license text.
+Original placeholder artwork and the theme preview are included under the same license.
+
+作品紹介の文章・画像は「固定ページ → 対象ページ → 編集」で変更します。「外観 → エディター → テンプレート」は共通の外枠を編集する場所です。そこに表示される「コンテンツ」の仮文章は本文の差し込み位置を示しており、保存した本文ではありません。
