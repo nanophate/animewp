@@ -102,7 +102,7 @@
       "Every third-party optimization/statistics plugin combination"
     ],
     "production_changed": false,
-    "minimum_fixture_note": "The pre-existing WP6.6 fixture omits alignwide on hero-columns. This was present in the 1.2.0 investigation. The only pattern-content difference is that prior alignment choice.",
+    "minimum_fixture_note": "The saved WP6.6 showcase differs from the unchanged pattern in hero alignwide and the video placeholder image reference. The alignment difference is visible in the prior investigation. No before-content hash was captured, so full byte preservation of this fixture is unproven. Old-format roundtrip cases and Global Styles restoration were verified separately.",
     "individual_comparisons": {
       "current": {
         "widths": [
