@@ -1,0 +1,6 @@
+/* Keep header patterns in the canvas instead of fixing them over editor controls. */
+.editor-styles-wrapper .animewp-header { position: relative; inset: auto; width: auto; min-height: 88px; }
+.editor-styles-wrapper .animewp-main { padding-block: 32px; }
+.editor-styles-wrapper .animewp-hero { min-width: 0; }
+.editor-styles-wrapper .animewp-section { overflow: visible; }
+.editor-styles-wrapper .animewp-video-placeholder video:not([src]) { display: block; }

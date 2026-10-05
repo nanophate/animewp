@@ -1,0 +1,9 @@
+.testenv/
+artifacts/
+node_modules/
+vendor/
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example

@@ -1,0 +1,370 @@
+{
+  "$schema": "https://schemas.wp.org/wp/6.6/theme.json",
+  "version": 3,
+  "settings": {
+    "appearanceTools": true,
+    "useRootPaddingAwareAlignments": true,
+    "layout": {
+      "contentSize": "760px",
+      "wideSize": "1180px"
+    },
+    "color": {
+      "custom": true,
+      "customGradient": true,
+      "defaultPalette": false,
+      "defaultGradients": false,
+      "palette": [
+        {
+          "slug": "animewp-base",
+          "name": "背景",
+          "color": "#ffffff"
+        },
+        {
+          "slug": "animewp-ink",
+          "name": "文字",
+          "color": "#202020"
+        },
+        {
+          "slug": "animewp-muted",
+          "name": "補助文字",
+          "color": "#666666"
+        },
+        {
+          "slug": "animewp-surface",
+          "name": "淡い背景",
+          "color": "#f3f3f3"
+        },
+        {
+          "slug": "animewp-line",
+          "name": "罫線",
+          "color": "#d5d5d5"
+        },
+        {
+          "slug": "animewp-accent",
+          "name": "強調",
+          "color": "#262626"
+        }
+      ]
+    },
+    "spacing": {
+      "units": [
+        "px",
+        "rem",
+        "em",
+        "%",
+        "vw",
+        "vh"
+      ],
+      "spacingSizes": [
+        {
+          "slug": "20",
+          "name": "小",
+          "size": "12px"
+        },
+        {
+          "slug": "30",
+          "name": "標準",
+          "size": "24px"
+        },
+        {
+          "slug": "40",
+          "name": "中",
+          "size": "40px"
+        },
+        {
+          "slug": "50",
+          "name": "大",
+          "size": "64px"
+        },
+        {
+          "slug": "60",
+          "name": "余白",
+          "size": "96px"
+        }
+      ]
+    },
+    "typography": {
+      "customFontSize": true,
+      "lineHeight": true,
+      "fluid": true,
+      "fontFamilies": [
+        {
+          "slug": "animewp-sans",
+          "name": "ゴシック",
+          "fontFamily": "system-ui, -apple-system, \"Hiragino Kaku Gothic ProN\", \"Yu Gothic\", sans-serif"
+        },
+        {
+          "slug": "animewp-serif",
+          "name": "明朝",
+          "fontFamily": "\"Yu Mincho\", \"Hiragino Mincho ProN\", Georgia, serif"
+        }
+      ],
+      "fontSizes": [
+        {
+          "slug": "small",
+          "name": "小",
+          "size": "0.8125rem",
+          "fluid": false
+        },
+        {
+          "slug": "medium",
+          "name": "本文",
+          "size": "1rem",
+          "fluid": false
+        },
+        {
+          "slug": "large",
+          "name": "見出し",
+          "size": "1.75rem",
+          "fluid": {
+            "min": "1.4rem",
+            "max": "1.75rem"
+          }
+        },
+        {
+          "slug": "x-large",
+          "name": "大見出し",
+          "size": "2.6rem",
+          "fluid": {
+            "min": "1.8rem",
+            "max": "2.6rem"
+          }
+        },
+        {
+          "slug": "xx-large",
+          "name": "作品名",
+          "size": "4.5rem",
+          "fluid": {
+            "min": "2.4rem",
+            "max": "4.5rem"
+          }
+        }
+      ]
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "var:preset|color|animewp-base",
+      "text": "var:preset|color|animewp-ink"
+    },
+    "spacing": {
+      "blockGap": "1.5rem",
+      "padding": {
+        "left": "clamp(20px,4vw,64px)",
+        "right": "clamp(20px,4vw,64px)"
+      }
+    },
+    "typography": {
+      "fontFamily": "var:preset|font-family|animewp-sans",
+      "fontSize": "1rem",
+      "lineHeight": "1.9"
+    },
+    "elements": {
+      "heading": {
+        "typography": {
+          "fontWeight": "600",
+          "lineHeight": "1.4",
+          "letterSpacing": "0.01em"
+        }
+      },
+      "h1": {
+        "typography": {
+          "fontSize": "var:preset|font-size|xx-large"
+        }
+      },
+      "h2": {
+        "typography": {
+          "fontSize": "var:preset|font-size|x-large"
+        }
+      },
+      "h3": {
+        "typography": {
+          "fontSize": "var:preset|font-size|large"
+        }
+      },
+      "link": {
+        "color": {
+          "text": "var:preset|color|animewp-ink"
+        },
+        "typography": {
+          "textDecoration": "underline"
+        },
+        ":hover": {
+          "typography": {
+            "textDecoration": "none"
+          }
+        }
+      },
+      "button": {
+        "border": {
+          "radius": "4px",
+          "width": "1px",
+          "color": "var:preset|color|animewp-accent"
+        },
+        "color": {
+          "background": "var:preset|color|animewp-accent",
+          "text": "var:preset|color|animewp-base"
+        },
+        "spacing": {
+          "padding": {
+            "top": "12px",
+            "bottom": "12px",
+            "left": "24px",
+            "right": "24px"
+          }
+        },
+        "typography": {
+          "fontSize": "0.875rem",
+          "fontWeight": "500",
+          "lineHeight": "1.6"
+        }
+      }
+    },
+    "blocks": {
+      "core/site-title": {
+        "typography": {
+          "fontSize": "1.125rem",
+          "fontWeight": "600",
+          "lineHeight": "1.4"
+        },
+        "elements": {
+          "link": {
+            "typography": {
+              "textDecoration": "none"
+            }
+          }
+        }
+      },
+      "core/navigation": {
+        "typography": {
+          "fontSize": "0.875rem",
+          "lineHeight": "1.6"
+        }
+      },
+      "core/post-date": {
+        "color": {
+          "text": "var:preset|color|animewp-muted"
+        },
+        "typography": {
+          "fontSize": "0.8125rem"
+        }
+      },
+      "core/post-terms": {
+        "typography": {
+          "fontSize": "0.8125rem"
+        }
+      },
+      "core/paragraph": {
+        "spacing": {
+          "margin": {
+            "top": "1rem",
+            "bottom": "1rem"
+          }
+        }
+      },
+      "core/image": {
+        "border": {
+          "radius": "0px"
+        }
+      },
+      "core/separator": {
+        "color": {
+          "text": "var:preset|color|animewp-line"
+        },
+        "border": {
+          "width": "1px"
+        }
+      },
+      "core/quote": {
+        "border": {
+          "left": {
+            "color": "var:preset|color|animewp-line",
+            "width": "2px"
+          }
+        },
+        "spacing": {
+          "padding": {
+            "left": "24px"
+          }
+        }
+      }
+    }
+  },
+  "customTemplates": [
+    {
+      "name": "animewp-landing",
+      "title": "animewp：LP（ページ内メニュー）",
+      "postTypes": [
+        "page"
+      ]
+    },
+    {
+      "name": "animewp-canvas",
+      "title": "animewp：自由な全面レイアウト",
+      "postTypes": [
+        "page"
+      ]
+    },
+    {
+      "name": "animewp-left",
+      "title": "animewp：左メニュー",
+      "postTypes": [
+        "page",
+        "post"
+      ]
+    },
+    {
+      "name": "animewp-right",
+      "title": "animewp：右メニュー",
+      "postTypes": [
+        "page",
+        "post"
+      ]
+    },
+    {
+      "name": "animewp-overlay",
+      "title": "animewp：オーバーレイメニュー",
+      "postTypes": [
+        "page",
+        "post"
+      ]
+    }
+  ],
+  "templateParts": [
+    {
+      "name": "header",
+      "title": "標準ヘッダー",
+      "area": "header"
+    },
+    {
+      "name": "header-left",
+      "title": "左ヘッダー",
+      "area": "header"
+    },
+    {
+      "name": "header-right",
+      "title": "右ヘッダー",
+      "area": "header"
+    },
+    {
+      "name": "header-overlay",
+      "title": "オーバーレイヘッダー",
+      "area": "header"
+    },
+    {
+      "name": "header-landing",
+      "title": "LPヘッダー",
+      "area": "header"
+    },
+    {
+      "name": "footer",
+      "title": "フッター",
+      "area": "footer"
+    },
+    {
+      "name": "comments",
+      "title": "コメント",
+      "area": "uncategorized"
+    }
+  ]
+}

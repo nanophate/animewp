@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "animewp/panel",
+  "version": "1.0.0",
+  "title": "AnimeWP パネル",
+  "category": "design",
+  "icon": "layout",
+  "description": "標準ブロックを自由に入れ、必要な装飾だけ追加するパネル。",
+  "textdomain": "animewp-blocks",
+  "attributes": {
+    "heading": { "type": "string", "source": "html", "selector": ".animewp-panel__heading-text", "default": "" },
+    "headingLevel": { "type": "number", "enum": [2, 3, 4, 5, 6], "default": 2 },
+    "verticalHeading": { "type": "boolean", "default": false },
+    "backdropEnabled": { "type": "boolean", "default": false },
+    "backdropColor": { "type": "string", "default": "#e5e5e5" },
+    "boundary": { "type": "string", "enum": ["none", "wave", "diagonal"], "default": "none" },
+    "backgroundSkew": { "type": "number", "default": 0 },
+    "rotation": { "type": "number", "default": 0 },
+    "backgroundOpacity": { "type": "number", "default": 100 },
+    "radius": { "type": "number", "default": 0 },
+    "panelShadow": { "type": "string", "enum": ["none", "soft", "hard"], "default": "none" },
+    "textShadow": { "type": "string", "enum": ["none", "soft", "hard"], "default": "none" },
+    "highlight": { "type": "string", "enum": ["none", "line", "panel"], "default": "none" },
+    "highlightColor": { "type": "string", "default": "#e5e5e5" },
+    "highlightPadding": { "type": "number", "default": 0.2 }
+  },
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": ["wide", "full"],
+    "color": { "background": true, "text": true, "gradients": false },
+    "spacing": { "margin": true, "padding": true, "blockGap": true },
+    "typography": { "fontSize": true, "lineHeight": true },
+    "shadow": true
+  },
+  "editorScript": "animewp-blocks-editor",
+  "style": "animewp-blocks-style",
+  "editorStyle": "animewp-blocks-editor-style"
+}

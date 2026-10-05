@@ -1,0 +1,7 @@
+/* Metadata editorStyle loads this in the post editor and Site Editor iframe. */
+.wp-block-animewp-panel > .animewp-panel__content,
+.wp-block-animewp-video > .animewp-video__content { min-height: 1.5rem; }
+.wp-block-animewp-panel > .animewp-panel__heading .block-editor-rich-text__editable { min-width: 1em; }
+.wp-block-animewp-media > .animewp-media__layout > .block-editor-block-list__block { max-width: none; }
+.wp-block-animewp-video > video { margin-block: 1rem; }
+.wp-block-animewp-video > .animewp-video__editor-note { font-size: 0.875em; }

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://schemas.wp.org/wp/6.6/theme.json",
+  "version": 3,
+  "title": "明朝",
+  "styles": {
+    "elements": {
+      "heading": {
+        "typography": {
+          "fontFamily": "var:preset|font-family|animewp-serif",
+          "fontWeight": "500"
+        }
+      },
+      "button": {
+        "typography": {
+          "fontFamily": "var:preset|font-family|animewp-sans"
+        }
+      }
+    }
+  }
+}

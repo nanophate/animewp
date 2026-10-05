@@ -1,0 +1,34 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "animewp/video",
+  "version": "1.0.0",
+  "title": "AnimeWP 動画ダイアログ",
+  "category": "media",
+  "icon": "video-alt3",
+  "description": "自前の動画を押して開く。停止後も通常の動画と説明が残ります。",
+  "textdomain": "animewp-blocks",
+  "attributes": {
+    "videoUrl": { "type": "string", "default": "" },
+    "videoId": { "type": "number", "default": 0 },
+    "posterUrl": { "type": "string", "default": "" },
+    "buttonLabel": { "type": "string", "default": "動画を開く" },
+    "closeLabel": { "type": "string", "default": "閉じる" },
+    "trackUrl": { "type": "string", "default": "" },
+    "trackLanguage": { "type": "string", "default": "ja" },
+    "trackLabel": { "type": "string", "default": "日本語" },
+    "description": { "type": "string", "default": "" }
+  },
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": ["wide", "full"],
+    "color": { "background": true, "text": true, "gradients": false },
+    "spacing": { "margin": true, "padding": true },
+    "typography": { "fontSize": true, "lineHeight": true }
+  },
+  "editorScript": "animewp-blocks-editor",
+  "style": "animewp-blocks-style",
+  "editorStyle": "animewp-blocks-editor-style",
+  "viewScript": "animewp-blocks-video-view"
+}
