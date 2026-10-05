@@ -3,7 +3,7 @@
  * Title: キャスト・スタッフ
  * Slug: animewp/credits
  * Categories: animewp-sections
- * Description: 標準ブロックで編集できる animewp の構成です。
+ * Description: キャストとスタッフを2列で掲載します。人物名・担当・氏名を差し替えて使います。
  */
 ?>
 <!-- wp:columns -->

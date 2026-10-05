@@ -3,7 +3,7 @@
  * Title: 人物カード 4人
  * Slug: animewp/characters-four
  * Categories: animewp-sections
- * Description: 標準ブロックで編集できる animewp の構成です。
+ * Description: 人物画像と開閉できる紹介文を4人分並べます。狭い画面では2列になります。
  */
 ?>
 <!-- wp:columns {"className":"animewp-character-grid animewp-character-grid--four"} -->

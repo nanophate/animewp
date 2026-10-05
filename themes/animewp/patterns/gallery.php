@@ -3,7 +3,7 @@
  * Title: 画像ギャラリー
  * Slug: animewp/gallery
  * Categories: animewp-sections
- * Description: 標準ブロックで編集できる animewp の構成です。
+ * Description: 作品の画像を並べる標準ギャラリーブロックです。画像と代替テキストを差し替えて使います。
  */
 ?>
 <!-- wp:gallery {"columns":4,"linkTo":"none"} -->

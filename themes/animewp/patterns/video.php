@@ -1,9 +1,9 @@
 <?php
 /**
- * Title: 映像の枠
+ * Title: 映像：画像と動画
  * Slug: animewp/video
  * Categories: animewp-sections
- * Description: 標準ブロックで編集できる animewp の構成です。
+ * Description: 画像・映像タイトル・説明と標準動画ブロックをまとめた部品です。動画ファイルを追加して使います。
  */
 ?>
 <!-- wp:group {"layout":{"type":"constrained"},"className":"animewp-video-placeholder"} -->

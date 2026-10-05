@@ -1,9 +1,9 @@
 <?php
 /**
- * Title: 情報カードのヒーロー
+ * Title: メイン画像：情報カード付き
  * Slug: animewp/hero-card
  * Categories: animewp-sections
- * Description: 標準ブロックで編集できる animewp の構成です。
+ * Description: 背景画像の上に作品名・紹介文・ボタンをカードで重ねます。画像とカードを別々に編集できます。
  */
 ?>
 <!-- wp:cover {"url":"<?php echo esc_url( get_theme_file_uri( 'assets/images/animewp-key-visual-a.svg' ) ); ?>","dimRatio":30,"overlayColor":"animewp-base","isUserOverlayColor":true,"minHeight":680,"isDark":false,"align":"full","className":"animewp-hero","layout":{"type":"constrained"}} -->

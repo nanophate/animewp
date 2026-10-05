@@ -90,12 +90,12 @@
       "fontFamilies": [
         {
           "slug": "animewp-sans",
-          "name": "ゴシック",
+          "name": "端末標準ゴシック",
           "fontFamily": "system-ui, -apple-system, \"Hiragino Kaku Gothic ProN\", \"Yu Gothic\", sans-serif"
         },
         {
           "slug": "animewp-serif",
-          "name": "明朝",
+          "name": "端末標準明朝",
           "fontFamily": "\"Yu Mincho\", \"Hiragino Mincho ProN\", Georgia, serif"
         }
       ],
@@ -294,7 +294,7 @@
   "customTemplates": [
     {
       "name": "animewp-landing",
-      "title": "animewp：LP（ページ内メニュー）",
+      "title": "animewp：作品紹介ページ（ページ内メニュー）",
       "postTypes": [
         "page"
       ]
@@ -308,7 +308,7 @@
     },
     {
       "name": "animewp-left",
-      "title": "animewp：左メニュー",
+      "title": "animewp：左固定メニュー",
       "postTypes": [
         "page",
         "post"
@@ -316,7 +316,7 @@
     },
     {
       "name": "animewp-right",
-      "title": "animewp：右メニュー",
+      "title": "animewp：右固定メニュー",
       "postTypes": [
         "page",
         "post"
@@ -324,7 +324,7 @@
     },
     {
       "name": "animewp-overlay",
-      "title": "animewp：オーバーレイメニュー",
+      "title": "animewp：全面表示メニュー",
       "postTypes": [
         "page",
         "post"
@@ -334,27 +334,27 @@
   "templateParts": [
     {
       "name": "header",
-      "title": "標準ヘッダー",
+      "title": "上部ヘッダー",
       "area": "header"
     },
     {
       "name": "header-left",
-      "title": "左ヘッダー",
+      "title": "左固定ヘッダー",
       "area": "header"
     },
     {
       "name": "header-right",
-      "title": "右ヘッダー",
+      "title": "右固定ヘッダー",
       "area": "header"
     },
     {
       "name": "header-overlay",
-      "title": "オーバーレイヘッダー",
+      "title": "全面表示メニューのヘッダー",
       "area": "header"
     },
     {
       "name": "header-landing",
-      "title": "LPヘッダー",
+      "title": "ページ内メニューのヘッダー",
       "area": "header"
     },
     {

@@ -114,7 +114,7 @@ def main():
         check((theme / f"templates/{name}.html").is_file(), f"Missing template: {name}")
     for template in theme_json.get("customTemplates", []):
         check((theme / f"templates/{template['name']}.html").is_file(), f"Missing custom template: {template['name']}")
-    for name in ("panel", "media", "video"):
+    for name in ("panel", "media", "video", "text-group"):
         obj = json.loads((plugin / f"blocks/{name}/block.json").read_text())
         check(obj.get("name") == f"animewp/{name}" and obj.get("apiVersion") == 3, f"Invalid block identity/API: {name}")
         for key, attr in obj.get("attributes", {}).items():

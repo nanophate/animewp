@@ -1,10 +1,10 @@
 <?php
 /**
- * Title: ヘッダー：左
+ * Title: ヘッダー：左固定メニュー
  * Slug: animewp/header-left
  * Categories: animewp-headers
  * Block Types: core/template-part/header
- * Description: 標準ブロックで編集できる animewp の構成です。
+ * Description: 広い画面では左側に固定し、狭い画面では上部に表示するメニューです。
  */
 ?>
 <!-- wp:group {"layout":{"type":"flex"},"className":"animewp-header animewp-header--left","align":"full"} -->

@@ -1,9 +1,9 @@
 <?php
 /**
- * Title: 画像上の文章のヒーロー
+ * Title: メイン画像：文章と縦書き見出し
  * Slug: animewp/hero-plain
  * Categories: animewp-sections
- * Description: 標準ブロックで編集できる animewp の構成です。
+ * Description: 背景画像に作品名・紹介文と短い縦書き見出しを重ねます。狭い画面では見出しも横書きになります。
  */
 ?>
 <!-- wp:cover {"url":"<?php echo esc_url( get_theme_file_uri( 'assets/images/animewp-key-visual-b.svg' ) ); ?>","dimRatio":60,"overlayColor":"animewp-base","isUserOverlayColor":true,"minHeight":680,"isDark":false,"align":"full","className":"animewp-hero","layout":{"type":"constrained"}} -->

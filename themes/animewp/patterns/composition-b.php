@@ -3,7 +3,7 @@
  * Title: 作品紹介：画像と2列
  * Slug: animewp/composition-b
  * Categories: animewp-pages
- * Description: 標準ブロックで編集できる animewp の構成です。
+ * Description: 画像上の文章と短い縦書き見出し、2列の紹介を組み合わせたページ全体の見本です。
  */
 ?>
 <!-- wp:pattern {"slug":"animewp/hero-plain"} /-->

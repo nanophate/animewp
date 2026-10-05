@@ -4,7 +4,7 @@
  * Slug: animewp/news-index
  * Categories: animewp-sections
  * Inserter: no
- * Description: 標準ブロックで編集できる animewp の構成です。
+ * Description: 日付・タイトル・カテゴリーとページ送りを表示する記事一覧です。アーカイブや検索結果で使います。
  */
 ?>
 <!-- wp:query {"queryId":0,"query":{"perPage":10,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":true},"className":"animewp-news-query"} -->

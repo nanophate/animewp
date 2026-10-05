@@ -3,7 +3,7 @@
  * Title: ご利用についてのページ
  * Slug: animewp/legal-page
  * Categories: animewp-pages
- * Description: 標準ブロックで編集できる animewp の構成です。
+ * Description: 権利表記や利用上の案内を記載する固定ページの見本です。運用に合わせて内容を確認・編集してください。
  */
 ?>
 <!-- wp:heading -->

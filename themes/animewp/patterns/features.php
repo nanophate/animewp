@@ -3,7 +3,7 @@
  * Title: 特集の2列
  * Slug: animewp/features
  * Categories: animewp-sections
- * Description: 標準ブロックで編集できる animewp の構成です。
+ * Description: 画像・見出し・説明を2列に並べた特集の部品です。リンクやボタンも追加できます。
  */
 ?>
 <!-- wp:columns -->

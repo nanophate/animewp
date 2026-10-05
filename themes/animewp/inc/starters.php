@@ -58,6 +58,10 @@ function animewp_starter_screen() {
 		<p><?php esc_html_e( '標準ブロックで文章・画像・色・メニューを編集できます。まず見本を確認し、必要なページだけ下書きへ追加してください。', 'animewp' ); ?></p>
 		<p><strong><?php esc_html_e( '現在のページ・メニュー・ホーム設定は変更しません。同じ見本の再実行では、前に作ったページを開きます。', 'animewp' ); ?></strong></p>
 		<p><a class="button" href="<?php echo esc_url( admin_url( 'site-editor.php' ) ); ?>"><?php esc_html_e( 'サイト全体を編集', 'animewp' ); ?></a></p>
+		<details style="max-width:900px;margin-block:20px">
+			<summary><?php esc_html_e( '日本語で編集するための設定', 'animewp' ); ?></summary>
+			<p><?php esc_html_e( 'WordPress標準のメニューやブロック設定の表示言語は、サイトとユーザーの言語設定に従います。「設定 → 一般 → サイトの言語」を「日本語」にし、「ユーザー → プロフィール → 言語」も「日本語」または「サイトのデフォルト」にしてください。', 'animewp' ); ?></p>
+		</details>
 		<?php foreach ( animewp_starters() as $key => $starter ) : ?>
 		<div class="card" style="max-width:760px">
 			<h2><?php echo esc_html( $starter['title'] ); ?></h2>
@@ -75,10 +79,26 @@ function animewp_starter_screen() {
 		<ol>
 			<li><?php esc_html_e( '作品名、画像、説明を自分の内容へ置き換えます。仮画像は公開前に差し替えてください。', 'animewp' ); ?></li>
 			<li><?php esc_html_e( 'リスト表示でセクションを選び、移動・複製・削除します。複製したセクションのHTMLアンカーは一意の名前へ変更してください。', 'animewp' ); ?></li>
-			<li><?php esc_html_e( 'メニューはサイトエディターで編集します。左・右・全面表示はヘッダーパターンの置換、またはページのテンプレートから選べます。', 'animewp' ); ?></li>
+			<li><?php esc_html_e( 'メニューはサイトエディターで編集します。上部・左固定・右固定・全面表示はヘッダーパターンの置換、またはページのテンプレートから選べます。左・右固定メニューも、狭い画面では上部に表示します。', 'animewp' ); ?></li>
 			<li><?php esc_html_e( '内容を確認して公開します。ホームに使う場合は「設定 → 表示設定」で自分で選びます。', 'animewp' ); ?></li>
 		</ol>
-		<p><?php esc_html_e( '補助プラグインは任意です。高度な装飾・画像配置・映像ダイアログが必要な場合に有効化してください。一般的なフォームやSEOのプラグインも通常どおり追加できます。', 'animewp' ); ?></p>
+		<h2><?php esc_html_e( '目的に合った編集場所', 'animewp' ); ?></h2>
+		<table class="widefat striped" style="max-width:900px">
+			<thead><tr><th scope="col"><?php esc_html_e( '編集したいもの', 'animewp' ); ?></th><th scope="col"><?php esc_html_e( '選び方', 'animewp' ); ?></th></tr></thead>
+			<tbody>
+				<tr><th scope="row"><?php esc_html_e( 'ページや部品の見本', 'animewp' ); ?></th><td><?php esc_html_e( '編集画面の「＋ → パターン」で「animewp：ページ」「animewp：ページの部品」「animewp：ヘッダー」を選びます。挿入した見本は、文章・画像・色をブロックごとに変更できます。', 'animewp' ); ?></td></tr>
+				<tr><th scope="row"><?php esc_html_e( 'ページの型（テンプレート）', 'animewp' ); ?></th><td><?php esc_html_e( '固定ページの設定で「テンプレート」を選びます。作品紹介ページ、自由な全面レイアウト、左固定・右固定・全面表示メニューを用意しています。テンプレート自体を編集すると、その型を使うほかのページにも反映されます。', 'animewp' ); ?></td></tr>
+				<tr><th scope="row"><?php esc_html_e( 'サイト全体の雰囲気', 'animewp' ); ?></th><td><?php esc_html_e( '「外観 → エディター → スタイル」でスタイルを参照し、「見出しを明朝に」または「ゆったり余白・丸いボタン」を選びます。色・幅・余白もここで調整できます。', 'animewp' ); ?></td></tr>
+				<tr><th scope="row"><?php esc_html_e( '各ブロックの見た目', 'animewp' ); ?></th><td><?php esc_html_e( '見出し・段落・グループ・画像などを選び、ブロック設定の「スタイル」からカード、縦書き見出し、文字の背景ハイライトなどを選びます。表示される種類は選択したブロックによって変わります。', 'animewp' ); ?></td></tr>
+				<tr><th scope="row"><?php esc_html_e( '文字の種類と大きさ', 'animewp' ); ?></th><td><?php esc_html_e( 'サイト全体は「スタイル → タイポグラフィ」、一部の文字は対象ブロックの「タイポグラフィ」で変更します。「端末標準ゴシック」「端末標準明朝」は閲覧する端末の書体を使い、外部フォントを読み込みません。', 'animewp' ); ?></td></tr>
+			</tbody>
+		</table>
+		<h2><?php esc_html_e( '背景と文章を別々に整える', 'animewp' ); ?></h2>
+		<p style="max-width:900px"><?php esc_html_e( '標準のカバーやグループでは背景・余白を、内側の見出しや段落では文字色・書体・大きさを設定します。リスト表示で編集したい階層を選ぶと、背景と文章を区別しやすくなります。', 'animewp' ); ?></p>
+		<p style="max-width:900px"><?php esc_html_e( '任意のAnimeWP Blocksを有効にすると、装飾パネルの背景と、内側の「AnimeWP 文字グループ」の傾きを別々に設定できます。傾けたい見出しや段落だけを文字グループに入れ、水平に残したい本文はその外側に置きます。「パネル全体の回転（度）」は0のまま、背景だけの回転と文字グループの回転を調整してください。文字グループのモバイル用の角度は初期値0度です。', 'animewp' ); ?></p>
+		<p style="max-width:900px"><?php esc_html_e( 'プラグイン有効時は「＋ → パターン → AnimeWP ブロック」から「背景と傾いた見出し・水平本文」または「角度の違う2つの文字グループ」を挿入すると、配置の見本をすぐに試せます。', 'animewp' ); ?></p>
+		<p style="max-width:900px"><?php esc_html_e( '「縦書き見出し（短文向け）」は短い日本語の見出し用で、狭い画面では横書きに戻ります。長文の縦組みやルビの細かな組版調整は対象外です。文字の形・改行・句読点の見え方は端末やブラウザーで変わるため、実際の画面で確認してください。', 'animewp' ); ?></p>
+		<p><?php esc_html_e( '一般的なフォームやSEOのプラグインも通常どおり追加できます。', 'animewp' ); ?></p>
 	</div>
 	<?php
 }

@@ -3,7 +3,7 @@
  * Title: 放送・商品などの任意情報
  * Slug: animewp/optional-info
  * Categories: animewp-sections
- * Description: 標準ブロックで編集できる animewp の構成です。
+ * Description: 放送・配信と音楽・書籍・グッズの情報を2列のカードにまとめます。必要な項目だけ残して使います。
  */
 ?>
 <!-- wp:columns -->

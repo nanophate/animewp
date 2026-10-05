@@ -4,7 +4,7 @@
  * Slug: animewp/header-landing
  * Categories: animewp-headers
  * Block Types: core/template-part/header
- * Description: 標準ブロックで編集できる animewp の構成です。
+ * Description: 作品紹介ページの各セクションへ移動する上部メニューです。リンク先のHTMLアンカーを合わせて使います。
  */
 ?>
 <!-- wp:group {"layout":{"type":"flex"},"className":"animewp-header animewp-header--top","align":"full"} -->

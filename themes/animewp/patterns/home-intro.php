@@ -4,7 +4,7 @@
  * Slug: animewp/home-intro
  * Categories: animewp-sections
  * Inserter: no
- * Description: 標準ブロックで編集できる animewp の構成です。
+ * Description: ホームにサイト名と紹介用の画像を表示する導入部分です。
  */
 ?>
 <!-- wp:group {"layout":{"type":"default"},"className":"animewp-home-intro","align":"wide"} -->

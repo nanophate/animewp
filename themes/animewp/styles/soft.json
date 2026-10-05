@@ -1,7 +1,7 @@
 {
   "$schema": "https://schemas.wp.org/wp/6.6/theme.json",
   "version": 3,
-  "title": "柔らかな余白",
+  "title": "ゆったり余白・丸いボタン",
   "styles": {
     "spacing": {
       "blockGap": "2rem"

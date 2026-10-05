@@ -1,10 +1,10 @@
 <?php
 /**
- * Title: ヘッダー：全面メニュー
+ * Title: ヘッダー：全面表示メニュー
  * Slug: animewp/header-overlay
  * Categories: animewp-headers
  * Block Types: core/template-part/header
- * Description: 標準ブロックで編集できる animewp の構成です。
+ * Description: メニューボタンを押すと画面全体にナビゲーションを表示します。
  */
 ?>
 <!-- wp:group {"layout":{"type":"flex"},"className":"animewp-header animewp-header--overlay","align":"full"} -->

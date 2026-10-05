@@ -54,9 +54,10 @@
         if (typeof value !== 'string' || !/^(?:0|[\d.]+(?:px|rem|em|vw|vh|%)|var:preset\|spacing\|[a-z0-9-]+)$/i.test(value)) { return undefined; }
         return value.indexOf('var:preset|spacing|') === 0 ? 'var(--wp--preset--spacing--' + value.split('|')[2] + ')' : value;
     }
-    function range(attributes, setAttributes, key, label, min, max, fallback, step) {
+    function range(attributes, setAttributes, key, label, min, max, fallback, step, help) {
         return el(components.RangeControl, {
             label: __(label, domain), value: numberValue(attributes[key], min, max, fallback),
+            help: help ? __(help, domain) : undefined,
             min: min, max: max, step: step || 1,
             onChange: function (value) {
                 var update = {}; update[key] = numberValue(value, min, max, fallback); setAttributes(update);
@@ -104,8 +105,11 @@
             styles['--animewp-panel-backdrop-background'] = safeColor(attributes.backdropColor, '#e5e5e5');
         }
         if (attributes.backgroundSkew) { styles['--animewp-panel-skew'] = numberValue(attributes.backgroundSkew, -12, 12, 0) + 'deg'; }
+        // Omit the new default so existing panels do not gain a serialized style.
+        if (attributes.backgroundRotation) { styles['--animewp-panel-backdrop-rotation'] = numberValue(attributes.backgroundRotation, -8, 8, 0) + 'deg'; }
         if (attributes.rotation) { styles['--animewp-panel-rotation'] = numberValue(attributes.rotation, -8, 8, 0) + 'deg'; }
-        if (attributes.backgroundOpacity !== 100) { styles['--animewp-panel-opacity'] = numberValue(attributes.backgroundOpacity, 0, 100, 100) / 100; }
+        // Older WordPress serializers append px to numeric custom properties.
+        if (attributes.backgroundOpacity !== 100) { styles['--animewp-panel-opacity'] = String(numberValue(attributes.backgroundOpacity, 0, 100, 100) / 100); }
         if (attributes.radius) { styles['--animewp-panel-radius'] = numberValue(attributes.radius, 0, 100, 0) + 'px'; }
         if (attributes.highlightColor !== '#e5e5e5') { styles['--animewp-panel-highlight'] = safeColor(attributes.highlightColor, '#e5e5e5'); }
         if (attributes.highlightPadding !== 0.2) { styles['--animewp-panel-highlight-padding'] = numberValue(attributes.highlightPadding, 0, 2, 0.2) + 'em'; }
@@ -137,10 +141,12 @@
                         select(a, set, 'boundary', '装飾背景の境界', [
                             { label: 'なし', value: 'none' }, { label: '波形', value: 'wave' }, { label: '斜め', value: 'diagonal' }
                         ], 'none'),
-                        range(a, set, 'backgroundSkew', '装飾背景だけの傾斜（度）', -12, 12, 0),
+                        range(a, set, 'backgroundRotation', '装飾背景だけの回転（度）', -8, 8, 0, 1, '追加した色面だけを回転します。本文の角度は変わりません。'),
+                        range(a, set, 'backgroundSkew', '装飾背景だけの傾斜（度）', -12, 12, 0, 1, '色面を斜めにゆがめます。回転とは別の変形です。'),
                         range(a, set, 'backgroundOpacity', '装飾背景の不透明度（%）', 0, 100, 100)
                     ),
-                    range(a, set, 'rotation', '全体の回転（度）', -8, 8, 0),
+                    range(a, set, 'rotation', 'パネル全体の回転（度）', -8, 8, 0, 1, '背景とすべての内側ブロックを一緒に回転します。内側が0度でも親の回転は受けます。'),
+                    el('p', null, __('一部の文字だけを傾けるには、全体の回転を0度にして、内側に「AnimeWP 文字グループ」を追加します。水平にしたい段落は文字グループの外に置きます。', domain)),
                     range(a, set, 'radius', '角丸（px）', 0, 100, 0),
                     select(a, set, 'panelShadow', 'パネルの影', shadows, 'none'),
                     select(a, set, 'textShadow', '文字の影', shadows, 'none')
@@ -184,6 +190,40 @@
                 el(editor.RichText.Content, { tagName: 'span', className: 'animewp-panel__heading-text', value: a.heading })
             ),
             el('div', { className: 'animewp-panel__content' }, el(editor.InnerBlocks.Content))
+        );
+    }
+
+    function textGroupStyles(a) {
+        var styles = {};
+        if (a.rotation) { styles['--animewp-text-group-rotation'] = numberValue(a.rotation, -8, 8, 0) + 'deg'; }
+        if (a.mobileRotation) { styles['--animewp-text-group-mobile-rotation'] = numberValue(a.mobileRotation, -8, 8, 0) + 'deg'; }
+        var gap = spacingValue(a.style && a.style.spacing && a.style.spacing.blockGap);
+        if (gap !== undefined) { styles['--animewp-text-group-gap'] = gap; }
+        return styles;
+    }
+    function textGroupEdit(props) {
+        var a = props.attributes;
+        var rootProps = editor.useBlockProps({ style: textGroupStyles(a) });
+        var innerProps = editor.useInnerBlocksProps({ className: 'animewp-text-group__content' }, {
+            template: [['core/paragraph', { placeholder: __('このグループに入れる文章', domain) }]],
+            renderAppender: editor.InnerBlocks.ButtonBlockAppender
+        });
+        return el(Fragment, null,
+            el(editor.InspectorControls, null,
+                el(components.PanelBody, { title: __('文字グループの回転', domain) },
+                    el('p', null, __('内側の段落・見出し・標準グループをまとめて回転します。隣のブロックには適用しません。文字の一部分だけを選択する設定ではありません。', domain)),
+                    range(a, props.setAttributes, 'rotation', 'この文字グループの回転（度）', -8, 8, 0, 1, '幅782px以上で適用。0度は水平、マイナスは左、プラスは右に傾きます。'),
+                    range(a, props.setAttributes, 'mobileRotation', 'モバイルの回転（度）', -8, 8, 0, 1, '幅781px以下で適用。読みやすさのため初期値は0度です。'),
+                    el('p', null, __('親のパネルやグループが回転している場合は、その回転も受けます。文字だけを傾ける構成では親の回転を0度にしてください。', domain)),
+                    el('p', null, __('角度を変えるときは、リスト表示や編集画面下の階層から「文字グループ」を選びます。背景・文字色・余白・文字サイズは標準のスタイル設定で調整できます。', domain))
+                )
+            ),
+            el('div', rootProps, el('div', innerProps))
+        );
+    }
+    function textGroupSave(props) {
+        return el('div', editor.useBlockProps.save({ style: textGroupStyles(props.attributes) }),
+            el('div', { className: 'animewp-text-group__content' }, el(editor.InnerBlocks.Content))
         );
     }
 
@@ -336,9 +376,120 @@
         );
     }
 
+    // Frozen v1.0.0 schema, support settings and save helpers. Keep this snapshot
+    // independent from the current helpers: WP 6.6 saved nonzero opacity with px.
+    // Explicit strings reproduce that old HTML on both old and new serializers.
+    var panelV100OpacityPx = (function () {
+        function numberValue(value, min, max, fallback) {
+            return typeof value === 'number' && Number.isFinite(value)
+                ? Math.min(max, Math.max(min, value)) : fallback;
+        }
+        function enumValue(value, allowed, fallback) {
+            return allowed.indexOf(value) !== -1 ? value : fallback;
+        }
+        function safeColor(value, fallback) {
+            if (typeof value !== 'string') { return fallback; }
+            var color = value.trim();
+            // A color only: no URL, variable expansion, declarations, or nested functions.
+            if (/^#(?:[0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})$/i.test(color) ||
+                /^[a-z]{1,30}$/i.test(color) ||
+                /^(?:rgb|rgba|hsl|hsla|hwb|lab|lch|oklab|oklch)\([0-9.,%+\-\s/]+\)$/i.test(color)) {
+                return color;
+            }
+            return fallback;
+        }
+        function spacingValue(value) {
+            if (typeof value !== 'string' || !/^(?:0|[\d.]+(?:px|rem|em|vw|vh|%)|var:preset\|spacing\|[a-z0-9-]+)$/i.test(value)) { return undefined; }
+            return value.indexOf('var:preset|spacing|') === 0 ? 'var(--wp--preset--spacing--' + value.split('|')[2] + ')' : value;
+        }
+        function panelClass(attributes) {
+            var headingLength = (attributes.heading || '').replace(/<[^>]*>/g, '').length;
+            var vertical = attributes.verticalHeading === true && headingLength > 0 && headingLength <= 40;
+            return [
+                'animewp-panel--boundary-' + enumValue(attributes.boundary, ['none', 'wave', 'diagonal'], 'none'),
+                'animewp-panel--shadow-' + enumValue(attributes.panelShadow, ['none', 'soft', 'hard'], 'none'),
+                'animewp-panel--text-shadow-' + enumValue(attributes.textShadow, ['none', 'soft', 'hard'], 'none'),
+                'animewp-panel--highlight-' + enumValue(attributes.highlight, ['none', 'line', 'panel'], 'none'),
+                vertical ? 'animewp-panel--vertical-heading' : '',
+                attributes.backdropEnabled === true ? 'animewp-panel--backdrop' : ''
+            ].filter(Boolean).join(' ');
+        }
+        function panelStyles(attributes) {
+            var styles = {};
+            // Retain this serialized legacy variable so existing saved blocks stay valid.
+            // Standard backgrounds now paint on the root; the explicit backdrop is separate.
+            var color = attributes.style && attributes.style.color && attributes.style.color.background;
+            if (color) { styles['--animewp-panel-background'] = safeColor(color, 'transparent'); }
+            else if (typeof attributes.backgroundColor === 'string' && /^[a-z0-9-]+$/i.test(attributes.backgroundColor)) {
+                styles['--animewp-panel-background'] = 'var(--wp--preset--color--' + attributes.backgroundColor + ')';
+            }
+            if (attributes.backdropEnabled === true && attributes.backdropColor !== '#e5e5e5') {
+                styles['--animewp-panel-backdrop-background'] = safeColor(attributes.backdropColor, '#e5e5e5');
+            }
+            if (attributes.backgroundSkew) { styles['--animewp-panel-skew'] = numberValue(attributes.backgroundSkew, -12, 12, 0) + 'deg'; }
+            if (attributes.rotation) { styles['--animewp-panel-rotation'] = numberValue(attributes.rotation, -8, 8, 0) + 'deg'; }
+            if (attributes.backgroundOpacity !== 100) {
+                var opacity = numberValue(attributes.backgroundOpacity, 0, 100, 100) / 100;
+                styles['--animewp-panel-opacity'] = opacity === 0 ? '0' : String(opacity) + 'px';
+            }
+            if (attributes.radius) { styles['--animewp-panel-radius'] = numberValue(attributes.radius, 0, 100, 0) + 'px'; }
+            if (attributes.highlightColor !== '#e5e5e5') { styles['--animewp-panel-highlight'] = safeColor(attributes.highlightColor, '#e5e5e5'); }
+            if (attributes.highlightPadding !== 0.2) { styles['--animewp-panel-highlight-padding'] = numberValue(attributes.highlightPadding, 0, 2, 0.2) + 'em'; }
+            var gap = spacingValue(attributes.style && attributes.style.spacing && attributes.style.spacing.blockGap);
+            if (gap !== undefined) { styles['--animewp-panel-gap'] = gap; }
+            return styles;
+        }
+        function panelSave(props) {
+            var a = props.attributes;
+            return el('section', editor.useBlockProps.save({ className: panelClass(a), style: panelStyles(a) }),
+                a.heading && el('h' + enumValue(a.headingLevel, [2, 3, 4, 5, 6], 2), { className: 'animewp-panel__heading' },
+                    el(editor.RichText.Content, { tagName: 'span', className: 'animewp-panel__heading-text', value: a.heading })
+                ),
+                el('div', { className: 'animewp-panel__content' }, el(editor.InnerBlocks.Content))
+            );
+        }
+        return {
+            attributes: {
+                "heading": {"type":"string","source":"html","selector":".animewp-panel__heading-text","default":""},
+                "headingLevel": {"type":"number","enum":[2,3,4,5,6],"default":2},
+                "verticalHeading": {"type":"boolean","default":false},
+                "backdropEnabled": {"type":"boolean","default":false},
+                "backdropColor": {"type":"string","default":"#e5e5e5"},
+                "boundary": {"type":"string","enum":["none","wave","diagonal"],"default":"none"},
+                "backgroundSkew": {"type":"number","default":0},
+                "rotation": {"type":"number","default":0},
+                "backgroundOpacity": {"type":"number","default":100},
+                "radius": {"type":"number","default":0},
+                "panelShadow": {"type":"string","enum":["none","soft","hard"],"default":"none"},
+                "textShadow": {"type":"string","enum":["none","soft","hard"],"default":"none"},
+                "highlight": {"type":"string","enum":["none","line","panel"],"default":"none"},
+                "highlightColor": {"type":"string","default":"#e5e5e5"},
+                "highlightPadding": {"type":"number","default":0.2}
+            },
+            supports: {
+                "html": false,
+                "anchor": true,
+                "align": ["wide","full"],
+                "color": {"background":true,"text":true,"gradients":false},
+                "spacing": {"margin":true,"padding":true,"blockGap":true},
+                "typography": {"fontSize":true,"lineHeight":true},
+                "shadow": true
+            },
+            save: panelSave,
+            migrate: function (attributes, innerBlocks) { return [attributes, innerBlocks]; }
+        };
+    }());
+
     var definitions = {
+        'animewp/text-group': {
+            edit: textGroupEdit, save: textGroupSave,
+            transforms: { to: [{ type: 'block', blocks: ['core/group'], transform: function (a, innerBlocks) {
+                return blocks.createBlock('core/group', coreAttributes(a), innerBlocks);
+            } }] }
+        },
         'animewp/panel': {
             edit: panelEdit, save: panelSave,
+            deprecated: [panelV100OpacityPx],
             transforms: { to: [{ type: 'block', blocks: ['core/group'], transform: function (a, innerBlocks) {
                 var contents = innerBlocks.slice();
                 if (a.heading) { contents.unshift(blocks.createBlock('core/heading', { content: a.heading, level: enumValue(a.headingLevel, [2, 3, 4, 5, 6], 2) })); }

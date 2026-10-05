@@ -3,7 +3,7 @@
  * Title: 人物紹介ページ
  * Slug: animewp/characters-page
  * Categories: animewp-pages
- * Description: 標準ブロックで編集できる animewp の構成です。
+ * Description: 人物カードを中心にした固定ページの見本です。名前・画像・紹介文を差し替えて使います。
  */
 ?>
 <!-- wp:paragraph -->

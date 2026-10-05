@@ -3,7 +3,7 @@
  * Title: お問い合わせのページ
  * Slug: animewp/contact-page
  * Categories: animewp-pages
- * Description: 標準ブロックで編集できる animewp の構成です。
+ * Description: 連絡先やフォームを置くための固定ページの見本です。送信機能は含みません。
  */
 ?>
 <!-- wp:paragraph -->

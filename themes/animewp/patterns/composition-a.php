@@ -3,7 +3,7 @@
  * Title: 作品紹介：カードと3列
  * Slug: animewp/composition-a
  * Categories: animewp-pages
- * Description: 標準ブロックで編集できる animewp の構成です。
+ * Description: 情報カード付きのメイン画像と3列の紹介を組み合わせたページ全体の見本です。
  */
 ?>
 <!-- wp:pattern {"slug":"animewp/hero-card"} /-->

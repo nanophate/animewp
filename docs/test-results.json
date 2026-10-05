@@ -1,5 +1,7 @@
 {
+  "release": "1.1.0",
   "date": "2026-10-05",
+  "locale": "ja",
   "environments": {
     "current": {
       "wordpress": "7.1.2",
@@ -419,6 +421,16 @@
           "invalid": []
         },
         {
+          "name": "animewp-blocks/tilted-heading-upright-body",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp-blocks/independent-text-groups",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
           "name": "expanded/composition-a",
           "blocks": 9,
           "invalid": []
@@ -444,7 +456,17 @@
           "invalid": []
         },
         {
-          "name": "plugin/0",
+          "name": "legacy/v1.0.0/wp71",
+          "blocks": 5,
+          "invalid": []
+        },
+        {
+          "name": "legacy/v1.0.0/wp66",
+          "blocks": 5,
+          "invalid": []
+        },
+        {
+          "name": "rotation/0",
           "blocks": 1,
           "invalid": []
         },
@@ -454,17 +476,12 @@
           "invalid": []
         },
         {
-          "name": "plugin/1",
+          "name": "rotation/1",
           "blocks": 1,
           "invalid": []
         },
         {
-          "name": "transform/1/0",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "plugin/2",
+          "name": "rotation/2",
           "blocks": 1,
           "invalid": []
         },
@@ -474,12 +491,7 @@
           "invalid": []
         },
         {
-          "name": "transform/2/1",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "plugin/3",
+          "name": "rotation/3",
           "blocks": 1,
           "invalid": []
         },
@@ -489,12 +501,7 @@
           "invalid": []
         },
         {
-          "name": "transform/3/1",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "plugin/4",
+          "name": "rotation/4",
           "blocks": 1,
           "invalid": []
         },
@@ -504,12 +511,52 @@
           "invalid": []
         },
         {
-          "name": "plugin/5",
+          "name": "rotation/5",
           "blocks": 1,
           "invalid": []
         },
         {
           "name": "transform/5/0",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "rotation/6",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "transform/6/0",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "rotation/7",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "transform/7/0",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "rotation/8",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "transform/8/0",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "rotation/9",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "transform/9/0",
           "blocks": 1,
           "invalid": []
         }
@@ -933,6 +980,16 @@
           "invalid": []
         },
         {
+          "name": "animewp-blocks/tilted-heading-upright-body",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp-blocks/independent-text-groups",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
           "name": "expanded/composition-a",
           "blocks": 9,
           "invalid": []
@@ -958,7 +1015,17 @@
           "invalid": []
         },
         {
-          "name": "plugin/0",
+          "name": "legacy/v1.0.0/wp71",
+          "blocks": 5,
+          "invalid": []
+        },
+        {
+          "name": "legacy/v1.0.0/wp66",
+          "blocks": 5,
+          "invalid": []
+        },
+        {
+          "name": "rotation/0",
           "blocks": 1,
           "invalid": []
         },
@@ -968,17 +1035,12 @@
           "invalid": []
         },
         {
-          "name": "plugin/1",
+          "name": "rotation/1",
           "blocks": 1,
           "invalid": []
         },
         {
-          "name": "transform/1/0",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "plugin/2",
+          "name": "rotation/2",
           "blocks": 1,
           "invalid": []
         },
@@ -988,12 +1050,7 @@
           "invalid": []
         },
         {
-          "name": "transform/2/1",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "plugin/3",
+          "name": "rotation/3",
           "blocks": 1,
           "invalid": []
         },
@@ -1003,12 +1060,7 @@
           "invalid": []
         },
         {
-          "name": "transform/3/1",
-          "blocks": 1,
-          "invalid": []
-        },
-        {
-          "name": "plugin/4",
+          "name": "rotation/4",
           "blocks": 1,
           "invalid": []
         },
@@ -1018,7 +1070,7 @@
           "invalid": []
         },
         {
-          "name": "plugin/5",
+          "name": "rotation/5",
           "blocks": 1,
           "invalid": []
         },
@@ -1026,13 +1078,278 @@
           "name": "transform/5/0",
           "blocks": 1,
           "invalid": []
+        },
+        {
+          "name": "rotation/6",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "transform/6/0",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "rotation/7",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "transform/7/0",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "rotation/8",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "transform/8/0",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "rotation/9",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "transform/9/0",
+          "blocks": 1,
+          "invalid": []
         }
       ]
     }
   },
+  "rotation_desktop": {
+    "items": [
+      {
+        "cls": "qa-separated",
+        "margin": "48px",
+        "opacity": "1",
+        "radius": "0px",
+        "skew": "-2deg",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      {
+        "cls": "qa-heading-only",
+        "margin": "0px",
+        "opacity": "1",
+        "radius": "0px",
+        "skew": "-2deg",
+        "transform": "matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)"
+      },
+      {
+        "cls": "qa-upright",
+        "margin": "16px",
+        "opacity": "1",
+        "radius": "0px",
+        "skew": "-2deg",
+        "transform": "none"
+      },
+      {
+        "cls": "qa-angle-a",
+        "margin": "0px",
+        "opacity": "1",
+        "radius": "0px",
+        "skew": "",
+        "transform": "matrix(0.99863, -0.052336, 0.052336, 0.99863, 0, 0)"
+      },
+      {
+        "cls": "qa-angle-b",
+        "margin": "24px",
+        "opacity": "1",
+        "radius": "0px",
+        "skew": "",
+        "transform": "matrix(0.997564, 0.0697565, -0.0697565, 0.997564, 0, 0)"
+      },
+      {
+        "cls": "qa-nested-parent",
+        "margin": "48px",
+        "opacity": "0.4",
+        "radius": "30px",
+        "skew": "5deg",
+        "transform": "matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)"
+      },
+      {
+        "cls": "qa-nested-child",
+        "margin": "0px",
+        "opacity": "1",
+        "radius": "0px",
+        "skew": "0deg",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      {
+        "cls": "qa-text-child",
+        "margin": "0px",
+        "opacity": "1",
+        "radius": "0px",
+        "skew": "",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      {
+        "cls": "qa-panel-gap-child",
+        "margin": "48px",
+        "opacity": "1",
+        "radius": "0px",
+        "skew": "0deg",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      {
+        "cls": "qa-text-gap-child",
+        "margin": "48px",
+        "opacity": "1",
+        "radius": "0px",
+        "skew": "",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      {
+        "cls": "qa-inner-panel-gap",
+        "margin": "16px",
+        "opacity": "1",
+        "radius": "0px",
+        "skew": "0deg",
+        "transform": "none"
+      },
+      {
+        "cls": "qa-inner-text-gap",
+        "margin": "16px",
+        "opacity": "1",
+        "radius": "0px",
+        "skew": "",
+        "transform": "none"
+      }
+    ],
+    "lang": "ja",
+    "scrollWidth": 1477,
+    "width": 1477
+  },
+  "rotation_mobile": {
+    "groups": [
+      {
+        "cls": "wp-block-animewp-text-group qa-heading-only",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      {
+        "cls": "wp-block-animewp-text-group qa-angle-a",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      {
+        "cls": "wp-block-animewp-text-group qa-angle-b",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      {
+        "cls": "wp-block-animewp-text-group qa-nested-text",
+        "transform": "matrix(0.999848, 0.0174524, -0.0174524, 0.999848, 0, 0)"
+      },
+      {
+        "cls": "wp-block-animewp-text-group qa-text-child",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      {
+        "cls": "wp-block-animewp-text-group qa-default-text",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      {
+        "cls": "wp-block-animewp-text-group alignwide qa-styled-text has-text-color has-animewp-large-font-size",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      {
+        "cls": "wp-block-animewp-text-group qa-text-gap",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      {
+        "cls": "wp-block-animewp-text-group qa-text-gap-child",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    ],
+    "scrollWidth": 320,
+    "width": 320
+  },
+  "rotation_minimum_desktop": {
+    "items": [
+      {
+        "cls": "qa-heading-only",
+        "margin": "0px",
+        "opacity": "1",
+        "radius": "0px",
+        "transform": "matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)"
+      },
+      {
+        "cls": "qa-upright",
+        "margin": "16px",
+        "opacity": "1",
+        "radius": "0px",
+        "transform": "none"
+      },
+      {
+        "cls": "qa-angle-a",
+        "margin": "0px",
+        "opacity": "1",
+        "radius": "0px",
+        "transform": "matrix(0.99863, -0.052336, 0.052336, 0.99863, 0, 0)"
+      },
+      {
+        "cls": "qa-angle-b",
+        "margin": "24px",
+        "opacity": "1",
+        "radius": "0px",
+        "transform": "matrix(0.997564, 0.0697565, -0.0697565, 0.997564, 0, 0)"
+      },
+      {
+        "cls": "qa-nested-parent",
+        "margin": "48px",
+        "opacity": "0.4",
+        "radius": "30px",
+        "transform": "matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)"
+      },
+      {
+        "cls": "qa-nested-child",
+        "margin": "0px",
+        "opacity": "1",
+        "radius": "0px",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      {
+        "cls": "qa-panel-gap-child",
+        "margin": "48px",
+        "opacity": "1",
+        "radius": "0px",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      {
+        "cls": "qa-text-gap-child",
+        "margin": "48px",
+        "opacity": "1",
+        "radius": "0px",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    ],
+    "lang": "ja",
+    "scrollWidth": 1477,
+    "width": 1477
+  },
   "zip_update_preservation": {
-    "template_edit_preserved": true,
-    "page_edit_preserved": true,
-    "block_edit_preserved": true
+    "current": {
+      "items": 20,
+      "all_hashes_preserved": true
+    },
+    "minimum": {
+      "items": 19,
+      "all_hashes_preserved": true
+    }
+  },
+  "manual_checks": {
+    "current_editor_save_reload": true,
+    "minimum_editor_save_reload": true,
+    "legacy_px_save_normalized": "0.7",
+    "legacy_editor_invalid_warning": false,
+    "current_frontend_editor_angle_degrees": -4,
+    "minimum_mobile_width": 320,
+    "minimum_mobile_scroll_width": 320,
+    "minimum_plugin_stopped_text_groups_retained": 9,
+    "japanese_site_editor_font_labels": true,
+    "native_ime_composition_tested": false
   }
 }

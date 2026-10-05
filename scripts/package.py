@@ -81,7 +81,7 @@ def main():
         if slug == "animewp":
             required += ["theme.json", "templates/index.html"]
         else:
-            required += [f"blocks/{name}/block.json" for name in ("panel", "media", "video")]
+            required += [f"blocks/{name}/block.json" for name in ("panel", "media", "video", "text-group")]
         inspect_archive(data, slug, required)
         outputs[f"{slug}-{version(source, header)}.zip"] = data
     manifest = "".join(f"{hashlib.sha256(data).hexdigest()}  {name}\n" for name, data in sorted(outputs.items()))

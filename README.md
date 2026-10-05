@@ -3,7 +3,7 @@
 作品紹介サイトを標準Gutenbergで編集する、単独インストール可能なWordPressブロックテーマです。親テーマや有料ビルダーは必要ありません。
 
 - `themes/animewp/`：通常の投稿・固定ページ・検索・アーカイブと、再利用できる2構成のLP、ヘッダー、セクションのパターン。
-- `plugins/animewp-blocks/`：任意の装飾パネル、画像と本文、動画ダイアログ。テーマだけでも利用できます。
+- `plugins/animewp-blocks/`：任意の装飾パネル、回転する文字グループ、画像と本文、動画ダイアログ。テーマだけでも利用できます。
 - [INSTALL-ja.txt](INSTALL-ja.txt)：ZIP導入、初期編集、更新、停止時の手順。
 - [設計](docs/architecture.md) と [任意ブロックの仕様](plugins/animewp-blocks/README.md)。
 
@@ -13,7 +13,7 @@
 
 ## 対象と確認範囲
 
-最低対象はWordPress 6.6 / PHP 8.0です。実際のZIPで **WordPress 6.6 / PHP 8.0.30** と **WordPress 7.1.2 / PHP 8.3.35** を確認しました。各環境でバックエンド42項目、HTTP9項目、表示18項目、保存・変換42ケースを通過しています。
+最低対象はWordPress 6.6 / PHP 8.0です。実際のZIPで **WordPress 6.6 / PHP 8.0.30** と **WordPress 7.1.2 / PHP 8.3.35** を確認しました。各版の試験結果は検証記録にまとめています。
 
 iframe編集画面の保存・再読込、ZIP更新後の編集保持、補助プラグイン削除・再導入、代表的なプラグイン併用、狭幅・キーボード操作の範囲と未実施項目は[検証記録](docs/verification.md)に記載しています。
 
@@ -40,8 +40,8 @@ python3 scripts/package.py
 
 `artifacts/releases/`へ次を生成します。番号は各パッケージのVersionヘッダーから読み取ります。
 
-- `animewp-1.0.0.zip`：最上位フォルダーは`animewp/`のみ。
-- `animewp-blocks-1.0.0.zip`：最上位フォルダーは`animewp-blocks/`のみ。
+- `animewp-1.1.0.zip`：最上位フォルダーは`animewp/`のみ。
+- `animewp-blocks-1.1.0.zip`：最上位フォルダーは`animewp-blocks/`のみ。
 - `SHA256SUMS`：2つのZIPのSHA-256。
 
 ファイル順、ZIP日時、権限、格納方式を固定しています。同じソースなら環境の更新日時に左右されず同じZIPになります。各ZIPは格納方式を使い、圧縮ライブラリの違いによる出力差を避けます。ソースやQA環境を含むリポジトリ全体をWordPressへアップロードしないでください。

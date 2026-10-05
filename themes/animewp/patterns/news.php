@@ -1,9 +1,9 @@
 <?php
 /**
- * Title: ニュースの一覧
+ * Title: お知らせの記事一覧
  * Slug: animewp/news
  * Categories: animewp-sections
- * Description: 標準ブロックで編集できる animewp の構成です。
+ * Description: 新しい投稿から日付とタイトルを並べるお知らせの部品です。表示条件はクエリーループで編集できます。
  */
 ?>
 <!-- wp:query {"queryId":0,"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"className":"animewp-news-query"} -->

@@ -3,7 +3,7 @@
  * Title: 画像と文章の紹介
  * Slug: animewp/introduction
  * Categories: animewp-sections
- * Description: 標準ブロックで編集できる animewp の構成です。
+ * Description: 画像と紹介文を左右に並べる部品です。画像・見出し・本文を差し替えて使います。
  */
 ?>
 <!-- wp:columns {"className":"animewp-media-columns"} -->

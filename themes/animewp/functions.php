@@ -40,12 +40,12 @@ add_filter( 'body_class', 'animewp_body_classes' );
 
 function animewp_register_designs() {
 	register_block_pattern_category( 'animewp-pages', array( 'label' => __( 'animewp：ページ', 'animewp' ) ) );
-	register_block_pattern_category( 'animewp-sections', array( 'label' => __( 'animewp：セクション', 'animewp' ) ) );
+	register_block_pattern_category( 'animewp-sections', array( 'label' => __( 'animewp：ページの部品', 'animewp' ) ) );
 	register_block_pattern_category( 'animewp-headers', array( 'label' => __( 'animewp：ヘッダー', 'animewp' ) ) );
 	$styles = array(
-		'core/group'     => array( 'animewp-card' => __( 'animewp：カード', 'animewp' ), 'animewp-soft-panel' => __( 'animewp：淡い面', 'animewp' ) ),
-		'core/heading'   => array( 'animewp-short-vertical' => __( 'animewp：短い縦見出し', 'animewp' ) ),
-		'core/paragraph' => array( 'animewp-kicker' => __( 'animewp：小見出し', 'animewp' ), 'animewp-highlight' => __( 'animewp：行ハイライト', 'animewp' ) ),
+		'core/group'     => array( 'animewp-card' => __( 'animewp：カード', 'animewp' ), 'animewp-soft-panel' => __( 'animewp：淡い背景', 'animewp' ) ),
+		'core/heading'   => array( 'animewp-short-vertical' => __( 'animewp：縦書き見出し（短文向け）', 'animewp' ) ),
+		'core/paragraph' => array( 'animewp-kicker' => __( 'animewp：小さな補助見出し', 'animewp' ), 'animewp-highlight' => __( 'animewp：文字の背景ハイライト', 'animewp' ) ),
 		'core/details'   => array( 'animewp-details' => __( 'animewp：開閉カード', 'animewp' ) ),
 		'core/image'     => array( 'animewp-portrait' => __( 'animewp：人物画像', 'animewp' ) ),
 	);

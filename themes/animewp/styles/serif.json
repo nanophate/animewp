@@ -1,7 +1,7 @@
 {
   "$schema": "https://schemas.wp.org/wp/6.6/theme.json",
   "version": 3,
-  "title": "明朝",
+  "title": "見出しを明朝に",
   "styles": {
     "elements": {
       "heading": {
