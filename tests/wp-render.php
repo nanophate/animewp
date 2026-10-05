@@ -17,12 +17,14 @@ $cases=array(
  array('search empty',home_url('/?s=animewpNoResult987654321'),200,'表示できるお知らせはありません。'),
  array('pagination',home_url('/?paged=2'),200,'wp-block-query-pagination'),
  array('password',get_permalink($protected[0]),200,'post-password-form'),
- array('not found',home_url('/animewp-missing-page-987654321/'),404,'ホームへ戻る')
+ array('not found',home_url('/?p=987654321'),404,'ホームへ戻る')
 );
 $results=array();
 foreach($cases as $case){
  $response=wp_remote_get(animewp_local_url($case[1]),array('headers'=>array('Host'=>$host),'timeout'=>20));
  $html=is_wp_error($response)?'':wp_remote_retrieve_body($response);$status=is_wp_error($response)?0:wp_remote_retrieve_response_code($response);
+ preg_match('~<head>(.*?)</head>~s',$html,$head);
+ $results[]=array('test'=>$case[0].' one title','pass'=>substr_count($head[1]??'', '<title>')===1);
  $results[]=array('test'=>$case[0],'pass'=>$status===$case[2]&&false!==strpos($html,$case[3]),'status'=>$status);
 }
 WP_CLI::line(wp_json_encode($results,JSON_PRETTY_PRINT));foreach($results as $r){if(!$r['pass'])WP_CLI::halt(1);}

@@ -28,6 +28,9 @@ animewp_http_check('admin invalid preview nonce rejected',wp_remote_get($origin.
 $preview=wp_remote_get($origin.'/?animewp_preview=composition-a&_wpnonce='.wp_create_nonce('animewp_preview_composition-a'),$base);
 animewp_http_check('admin valid preview available',$preview,200);
 $GLOBALS['animewp_http_results'][]=array('test'=>'preview noindex header','pass'=>!is_wp_error($preview)&&strpos(wp_remote_retrieve_header($preview,'x-robots-tag'),'noindex')!==false);
+$preview_html=is_wp_error($preview)?'':wp_remote_retrieve_body($preview);
+preg_match('~<head>(.*?)</head>~s',$preview_html,$preview_head);
+$GLOBALS['animewp_http_results'][]=array('test'=>'preview has exactly one document title','pass'=>substr_count($preview_head[1]??'', '<title>')===1);
 WP_Session_Tokens::get_instance(1)->destroy($token);
 WP_Session_Tokens::get_instance($author->ID)->destroy($author_token);
 WP_CLI::line(wp_json_encode($GLOBALS['animewp_http_results'],JSON_PRETTY_PRINT));

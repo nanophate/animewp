@@ -1,0 +1,1038 @@
+{
+  "date": "2026-10-05",
+  "environments": {
+    "current": {
+      "wordpress": "7.1.2",
+      "php": "8.3.35",
+      "backend": [
+        {
+          "test": "existing static homepage option preserved on theme switch",
+          "pass": true
+        },
+        {
+          "test": "existing page and navigation content preserved",
+          "pass": true
+        },
+        {
+          "test": "no overriding front page template",
+          "pass": true
+        },
+        {
+          "test": "starter composition-a creates a draft",
+          "pass": true
+        },
+        {
+          "test": "starter composition-a repeated import reuses one page",
+          "pass": true
+        },
+        {
+          "test": "starter composition-a stores editable blocks without pattern references",
+          "pass": true
+        },
+        {
+          "test": "starter composition-a has unique saved IDs",
+          "pass": true
+        },
+        {
+          "test": "starter composition-b creates a draft",
+          "pass": true
+        },
+        {
+          "test": "starter composition-b repeated import reuses one page",
+          "pass": true
+        },
+        {
+          "test": "starter composition-b stores editable blocks without pattern references",
+          "pass": true
+        },
+        {
+          "test": "starter composition-b has unique saved IDs",
+          "pass": true
+        },
+        {
+          "test": "starter characters creates a draft",
+          "pass": true
+        },
+        {
+          "test": "starter characters repeated import reuses one page",
+          "pass": true
+        },
+        {
+          "test": "starter characters stores editable blocks without pattern references",
+          "pass": true
+        },
+        {
+          "test": "starter characters has unique saved IDs",
+          "pass": true
+        },
+        {
+          "test": "starter contact creates a draft",
+          "pass": true
+        },
+        {
+          "test": "starter contact repeated import reuses one page",
+          "pass": true
+        },
+        {
+          "test": "starter contact stores editable blocks without pattern references",
+          "pass": true
+        },
+        {
+          "test": "starter contact has unique saved IDs",
+          "pass": true
+        },
+        {
+          "test": "starter legal creates a draft",
+          "pass": true
+        },
+        {
+          "test": "starter legal repeated import reuses one page",
+          "pass": true
+        },
+        {
+          "test": "starter legal stores editable blocks without pattern references",
+          "pass": true
+        },
+        {
+          "test": "starter legal has unique saved IDs",
+          "pass": true
+        },
+        {
+          "test": "import does not alter reading settings",
+          "pass": true
+        },
+        {
+          "test": "unknown starter is rejected",
+          "pass": true
+        },
+        {
+          "test": "concurrent starter request is rejected while locked",
+          "pass": true
+        },
+        {
+          "test": "interrupted import recovers page by job slug",
+          "pass": true
+        },
+        {
+          "test": "reimport preserves manually edited starter body",
+          "pass": true
+        },
+        {
+          "test": "failed job record write returns error before page insert",
+          "pass": true
+        },
+        {
+          "test": "author cannot import starter",
+          "pass": true
+        },
+        {
+          "test": "template index resolves",
+          "pass": true
+        },
+        {
+          "test": "template home resolves",
+          "pass": true
+        },
+        {
+          "test": "template single resolves",
+          "pass": true
+        },
+        {
+          "test": "template page resolves",
+          "pass": true
+        },
+        {
+          "test": "template archive resolves",
+          "pass": true
+        },
+        {
+          "test": "template search resolves",
+          "pass": true
+        },
+        {
+          "test": "template 404 resolves",
+          "pass": true
+        },
+        {
+          "test": "template animewp-landing resolves",
+          "pass": true
+        },
+        {
+          "test": "template animewp-left resolves",
+          "pass": true
+        },
+        {
+          "test": "template animewp-right resolves",
+          "pass": true
+        },
+        {
+          "test": "template animewp-overlay resolves",
+          "pass": true
+        },
+        {
+          "test": "site editor customization survives theme switching",
+          "pass": true
+        }
+      ],
+      "http": [
+        {
+          "test": "admin import without nonce rejected",
+          "pass": true,
+          "status": 403
+        },
+        {
+          "test": "admin import invalid nonce rejected",
+          "pass": true,
+          "status": 403
+        },
+        {
+          "test": "admin valid nonce reopens existing draft",
+          "pass": true,
+          "status": 302
+        },
+        {
+          "test": "author import with own valid nonce rejected",
+          "pass": true,
+          "status": 403
+        },
+        {
+          "test": "unauthenticated preview rejected",
+          "pass": true,
+          "status": 403
+        },
+        {
+          "test": "admin invalid preview nonce rejected",
+          "pass": true,
+          "status": 403
+        },
+        {
+          "test": "admin valid preview available",
+          "pass": true,
+          "status": 200
+        },
+        {
+          "test": "preview noindex header",
+          "pass": true
+        },
+        {
+          "test": "preview has exactly one document title",
+          "pass": true
+        }
+      ],
+      "render": [
+        {
+          "test": "home one title",
+          "pass": true
+        },
+        {
+          "test": "home",
+          "pass": true,
+          "status": 200
+        },
+        {
+          "test": "page one title",
+          "pass": true
+        },
+        {
+          "test": "page",
+          "pass": true,
+          "status": 200
+        },
+        {
+          "test": "news comments one title",
+          "pass": true
+        },
+        {
+          "test": "news comments",
+          "pass": true,
+          "status": 200
+        },
+        {
+          "test": "archive one title",
+          "pass": true
+        },
+        {
+          "test": "archive",
+          "pass": true,
+          "status": 200
+        },
+        {
+          "test": "search match one title",
+          "pass": true
+        },
+        {
+          "test": "search match",
+          "pass": true,
+          "status": 200
+        },
+        {
+          "test": "search empty one title",
+          "pass": true
+        },
+        {
+          "test": "search empty",
+          "pass": true,
+          "status": 200
+        },
+        {
+          "test": "pagination one title",
+          "pass": true
+        },
+        {
+          "test": "pagination",
+          "pass": true,
+          "status": 200
+        },
+        {
+          "test": "password one title",
+          "pass": true
+        },
+        {
+          "test": "password",
+          "pass": true,
+          "status": 200
+        },
+        {
+          "test": "not found one title",
+          "pass": true
+        },
+        {
+          "test": "not found",
+          "pass": true,
+          "status": 404
+        }
+      ],
+      "block_serialization": [
+        {
+          "name": "animewp/characters-five",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/characters-four",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/characters-page",
+          "blocks": 2,
+          "invalid": []
+        },
+        {
+          "name": "animewp/composition-a",
+          "blocks": 9,
+          "invalid": []
+        },
+        {
+          "name": "animewp/composition-b",
+          "blocks": 8,
+          "invalid": []
+        },
+        {
+          "name": "animewp/contact-page",
+          "blocks": 2,
+          "invalid": []
+        },
+        {
+          "name": "animewp/credits",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/features",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/gallery",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/header-landing",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/header-left",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/header-overlay",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/header-right",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/header",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/hero-card",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/hero-plain",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/home-intro",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/introduction",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/legal-page",
+          "blocks": 4,
+          "invalid": []
+        },
+        {
+          "name": "animewp/news-index",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/news",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/optional-info",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/video",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "expanded/composition-a",
+          "blocks": 9,
+          "invalid": []
+        },
+        {
+          "name": "expanded/composition-b",
+          "blocks": 8,
+          "invalid": []
+        },
+        {
+          "name": "expanded/characters",
+          "blocks": 2,
+          "invalid": []
+        },
+        {
+          "name": "expanded/contact",
+          "blocks": 2,
+          "invalid": []
+        },
+        {
+          "name": "expanded/legal",
+          "blocks": 4,
+          "invalid": []
+        },
+        {
+          "name": "plugin/0",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "transform/0/0",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "plugin/1",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "transform/1/0",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "plugin/2",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "transform/2/0",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "transform/2/1",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "plugin/3",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "transform/3/0",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "transform/3/1",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "plugin/4",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "transform/4/0",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "plugin/5",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "transform/5/0",
+          "blocks": 1,
+          "invalid": []
+        }
+      ]
+    },
+    "minimum": {
+      "wordpress": "6.6",
+      "php": "8.0.30",
+      "backend": [
+        {
+          "test": "existing static homepage option preserved on theme switch",
+          "pass": true
+        },
+        {
+          "test": "existing page and navigation content preserved",
+          "pass": true
+        },
+        {
+          "test": "no overriding front page template",
+          "pass": true
+        },
+        {
+          "test": "starter composition-a creates a draft",
+          "pass": true
+        },
+        {
+          "test": "starter composition-a repeated import reuses one page",
+          "pass": true
+        },
+        {
+          "test": "starter composition-a stores editable blocks without pattern references",
+          "pass": true
+        },
+        {
+          "test": "starter composition-a has unique saved IDs",
+          "pass": true
+        },
+        {
+          "test": "starter composition-b creates a draft",
+          "pass": true
+        },
+        {
+          "test": "starter composition-b repeated import reuses one page",
+          "pass": true
+        },
+        {
+          "test": "starter composition-b stores editable blocks without pattern references",
+          "pass": true
+        },
+        {
+          "test": "starter composition-b has unique saved IDs",
+          "pass": true
+        },
+        {
+          "test": "starter characters creates a draft",
+          "pass": true
+        },
+        {
+          "test": "starter characters repeated import reuses one page",
+          "pass": true
+        },
+        {
+          "test": "starter characters stores editable blocks without pattern references",
+          "pass": true
+        },
+        {
+          "test": "starter characters has unique saved IDs",
+          "pass": true
+        },
+        {
+          "test": "starter contact creates a draft",
+          "pass": true
+        },
+        {
+          "test": "starter contact repeated import reuses one page",
+          "pass": true
+        },
+        {
+          "test": "starter contact stores editable blocks without pattern references",
+          "pass": true
+        },
+        {
+          "test": "starter contact has unique saved IDs",
+          "pass": true
+        },
+        {
+          "test": "starter legal creates a draft",
+          "pass": true
+        },
+        {
+          "test": "starter legal repeated import reuses one page",
+          "pass": true
+        },
+        {
+          "test": "starter legal stores editable blocks without pattern references",
+          "pass": true
+        },
+        {
+          "test": "starter legal has unique saved IDs",
+          "pass": true
+        },
+        {
+          "test": "import does not alter reading settings",
+          "pass": true
+        },
+        {
+          "test": "unknown starter is rejected",
+          "pass": true
+        },
+        {
+          "test": "concurrent starter request is rejected while locked",
+          "pass": true
+        },
+        {
+          "test": "interrupted import recovers page by job slug",
+          "pass": true
+        },
+        {
+          "test": "reimport preserves manually edited starter body",
+          "pass": true
+        },
+        {
+          "test": "failed job record write returns error before page insert",
+          "pass": true
+        },
+        {
+          "test": "author cannot import starter",
+          "pass": true
+        },
+        {
+          "test": "template index resolves",
+          "pass": true
+        },
+        {
+          "test": "template home resolves",
+          "pass": true
+        },
+        {
+          "test": "template single resolves",
+          "pass": true
+        },
+        {
+          "test": "template page resolves",
+          "pass": true
+        },
+        {
+          "test": "template archive resolves",
+          "pass": true
+        },
+        {
+          "test": "template search resolves",
+          "pass": true
+        },
+        {
+          "test": "template 404 resolves",
+          "pass": true
+        },
+        {
+          "test": "template animewp-landing resolves",
+          "pass": true
+        },
+        {
+          "test": "template animewp-left resolves",
+          "pass": true
+        },
+        {
+          "test": "template animewp-right resolves",
+          "pass": true
+        },
+        {
+          "test": "template animewp-overlay resolves",
+          "pass": true
+        },
+        {
+          "test": "site editor customization survives theme switching",
+          "pass": true
+        }
+      ],
+      "http": [
+        {
+          "test": "admin import without nonce rejected",
+          "pass": true,
+          "status": 403
+        },
+        {
+          "test": "admin import invalid nonce rejected",
+          "pass": true,
+          "status": 403
+        },
+        {
+          "test": "admin valid nonce reopens existing draft",
+          "pass": true,
+          "status": 302
+        },
+        {
+          "test": "author import with own valid nonce rejected",
+          "pass": true,
+          "status": 403
+        },
+        {
+          "test": "unauthenticated preview rejected",
+          "pass": true,
+          "status": 403
+        },
+        {
+          "test": "admin invalid preview nonce rejected",
+          "pass": true,
+          "status": 403
+        },
+        {
+          "test": "admin valid preview available",
+          "pass": true,
+          "status": 200
+        },
+        {
+          "test": "preview noindex header",
+          "pass": true
+        },
+        {
+          "test": "preview has exactly one document title",
+          "pass": true
+        }
+      ],
+      "render": [
+        {
+          "test": "home one title",
+          "pass": true
+        },
+        {
+          "test": "home",
+          "pass": true,
+          "status": 200
+        },
+        {
+          "test": "page one title",
+          "pass": true
+        },
+        {
+          "test": "page",
+          "pass": true,
+          "status": 200
+        },
+        {
+          "test": "news comments one title",
+          "pass": true
+        },
+        {
+          "test": "news comments",
+          "pass": true,
+          "status": 200
+        },
+        {
+          "test": "archive one title",
+          "pass": true
+        },
+        {
+          "test": "archive",
+          "pass": true,
+          "status": 200
+        },
+        {
+          "test": "search match one title",
+          "pass": true
+        },
+        {
+          "test": "search match",
+          "pass": true,
+          "status": 200
+        },
+        {
+          "test": "search empty one title",
+          "pass": true
+        },
+        {
+          "test": "search empty",
+          "pass": true,
+          "status": 200
+        },
+        {
+          "test": "pagination one title",
+          "pass": true
+        },
+        {
+          "test": "pagination",
+          "pass": true,
+          "status": 200
+        },
+        {
+          "test": "password one title",
+          "pass": true
+        },
+        {
+          "test": "password",
+          "pass": true,
+          "status": 200
+        },
+        {
+          "test": "not found one title",
+          "pass": true
+        },
+        {
+          "test": "not found",
+          "pass": true,
+          "status": 404
+        }
+      ],
+      "block_serialization": [
+        {
+          "name": "animewp/characters-five",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/characters-four",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/characters-page",
+          "blocks": 2,
+          "invalid": []
+        },
+        {
+          "name": "animewp/composition-a",
+          "blocks": 9,
+          "invalid": []
+        },
+        {
+          "name": "animewp/composition-b",
+          "blocks": 8,
+          "invalid": []
+        },
+        {
+          "name": "animewp/contact-page",
+          "blocks": 2,
+          "invalid": []
+        },
+        {
+          "name": "animewp/credits",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/features",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/gallery",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/header-landing",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/header-left",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/header-overlay",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/header-right",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/header",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/hero-card",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/hero-plain",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/home-intro",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/introduction",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/legal-page",
+          "blocks": 4,
+          "invalid": []
+        },
+        {
+          "name": "animewp/news-index",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/news",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/optional-info",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "animewp/video",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "expanded/composition-a",
+          "blocks": 9,
+          "invalid": []
+        },
+        {
+          "name": "expanded/composition-b",
+          "blocks": 8,
+          "invalid": []
+        },
+        {
+          "name": "expanded/characters",
+          "blocks": 2,
+          "invalid": []
+        },
+        {
+          "name": "expanded/contact",
+          "blocks": 2,
+          "invalid": []
+        },
+        {
+          "name": "expanded/legal",
+          "blocks": 4,
+          "invalid": []
+        },
+        {
+          "name": "plugin/0",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "transform/0/0",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "plugin/1",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "transform/1/0",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "plugin/2",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "transform/2/0",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "transform/2/1",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "plugin/3",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "transform/3/0",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "transform/3/1",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "plugin/4",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "transform/4/0",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "plugin/5",
+          "blocks": 1,
+          "invalid": []
+        },
+        {
+          "name": "transform/5/0",
+          "blocks": 1,
+          "invalid": []
+        }
+      ]
+    }
+  },
+  "zip_update_preservation": {
+    "template_edit_preserved": true,
+    "page_edit_preserved": true,
+    "block_edit_preserved": true
+  }
+}

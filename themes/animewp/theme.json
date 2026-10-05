@@ -139,7 +139,8 @@
             "max": "4.5rem"
           }
         }
-      ]
+      ],
+      "defaultFontSizes": false
     }
   },
   "styles": {

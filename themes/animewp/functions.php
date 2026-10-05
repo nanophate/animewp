@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function animewp_setup() {
 	load_theme_textdomain( 'animewp', get_template_directory() . '/languages' );
-	add_theme_support( 'title-tag' );
+	// Block template canvas renders the document title.
 	add_theme_support( 'automatic-feed-links' );
 	add_theme_support( 'post-thumbnails' );
 	add_theme_support( 'responsive-embeds' );
