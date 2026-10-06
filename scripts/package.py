@@ -15,7 +15,7 @@ PACKAGES = (
     ("animewp", ROOT / "themes/animewp", "style.css"),
     ("animewp-blocks", ROOT / "plugins/animewp-blocks", "animewp-blocks.php"),
 )
-ALLOWED_SUFFIXES = {".php", ".css", ".js", ".json", ".html", ".svg", ".md", ".txt"}
+ALLOWED_SUFFIXES = {".php", ".css", ".js", ".json", ".html", ".svg", ".md", ".txt", ".po", ".pot", ".mo"}
 ZIP_DATE = (1980, 1, 1, 0, 0, 0)
 
 
@@ -81,7 +81,9 @@ def main():
         if slug == "animewp":
             required += ["theme.json", "templates/index.html"]
         else:
-            required += [f"blocks/{name}/block.json" for name in ("panel", "media", "video", "text-group")]
+            for name in ("panel", "media", "video", "text-group"):
+                required += [f"build/blocks/{name}/{file}" for file in ("block.json", "index.js", "index.asset.php")]
+            required += ["build/blocks/video/view.js", "languages/animewp-blocks-ja.mo", "languages/animewp-blocks-ja.po"]
         inspect_archive(data, slug, required)
         outputs[f"{slug}-{version(source, header)}.zip"] = data
     manifest = "".join(f"{hashlib.sha256(data).hexdigest()}  {name}\n" for name, data in sorted(outputs.items()))

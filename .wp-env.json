@@ -1,0 +1,16 @@
+{
+  "core": "WordPress/WordPress#6.6-branch",
+  "phpVersion": "8.0",
+  "themes": [
+    "./themes/animewp"
+  ],
+  "plugins": [
+    "./plugins/animewp-blocks"
+  ],
+  "port": 8888,
+  "config": {
+    "WP_DEBUG": true,
+    "SCRIPT_DEBUG": false
+  },
+  "testsEnvironment": false
+}

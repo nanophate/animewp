@@ -3,10 +3,16 @@
   "apiVersion": 3,
   "name": "animewp/media",
   "version": "1.3.0",
-  "title": "AnimeWP 画像と本文",
+  "title": "Image & Text",
   "category": "media",
   "icon": "align-pull-left",
-  "description": "標準画像と本文を保持し、デスクトップの重ね配置や端末別の焦点を調整。",
+  "description": "An image with text beside or over it, with crop height and separate mobile focal point.",
+  "keywords": [
+    "image",
+    "media",
+    "text",
+    "animewp"
+  ],
   "textdomain": "animewp-blocks",
   "attributes": {
     "layoutMode": {
@@ -84,7 +90,7 @@
       "lineHeight": true
     }
   },
-  "editorScript": "animewp-blocks-editor",
+  "editorScript": "file:./index.js",
   "style": "animewp-blocks-style",
   "editorStyle": "animewp-blocks-editor-style"
 }

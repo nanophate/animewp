@@ -20,13 +20,26 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4; verified commit
         with:
           persist-credentials: false
+          # The serialization check compares against main.
+          fetch-depth: 0
       - name: PHP syntax on the target runtime
         env:
           ANIMEWP_PHP_VERSION: ${{ matrix.php }}
         run: |
-          docker run --rm -v "$PWD:/work:ro" -w /work "php:${ANIMEWP_PHP_VERSION}-cli" sh -eu -c 'find themes plugins tests -type f -name "*.php" -print0 | xargs -0 -n 1 php -l'
-      - name: JavaScript, Python, JSON, metadata, audit and reproducibility
+          docker run --rm -v "$PWD:/work:ro" -w /work "php:${ANIMEWP_PHP_VERSION}-cli" sh -eu -c 'find themes plugins tests -path "*/node_modules" -prune -o -type f -name "*.php" -print0 | xargs -0 -n 1 php -l'
+      - name: Install build and test tooling
+        run: |
+          npm ci
+          npm ci --prefix tests/serialization
+      - name: Lint block source
+        run: npm run lint:js
+      - name: Build, JavaScript, Python, JSON, metadata, audit and reproducibility
         run: python3 scripts/validate.py --skip-php
+      - name: Saved block markup is unchanged (WordPress 6.6 and 7.1 editor scripts)
+        run: |
+          for branch in 6.6-branch 7.1-branch; do
+            ANIMEWP_WP_DIR="$(sh tests/serialization/fetch-wordpress.sh "$branch")" node tests/serialization/compare.js --base-ref origin/main
+          done
       - name: Produce and verify installation ZIPs
         run: |
           python3 scripts/package.py

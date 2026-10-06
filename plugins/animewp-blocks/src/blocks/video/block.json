@@ -3,10 +3,18 @@
   "apiVersion": 3,
   "name": "animewp/video",
   "version": "1.3.0",
-  "title": "AnimeWP 動画ダイアログ",
+  "title": "Video Button",
   "category": "media",
   "icon": "video-alt3",
-  "description": "動画ファイル、YouTube、Vimeoを押して開く。外部動画は同意後に接続し、停止後も元リンクが残ります。",
+  "description": "A poster and play button that opens a video file, YouTube or Vimeo in a dialog. External players load only after pressing play.",
+  "keywords": [
+    "video",
+    "movie",
+    "youtube",
+    "vimeo",
+    "pv",
+    "animewp"
+  ],
   "textdomain": "animewp-blocks",
   "attributes": {
     "source": {
@@ -84,8 +92,8 @@
       "lineHeight": true
     }
   },
-  "editorScript": "animewp-blocks-editor",
+  "editorScript": "file:./index.js",
   "style": "animewp-blocks-style",
   "editorStyle": "animewp-blocks-editor-style",
-  "viewScript": "animewp-blocks-video-view"
+  "viewScript": "file:./view.js"
 }

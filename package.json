@@ -1,0 +1,25 @@
+{
+  "name": "animewp",
+  "private": true,
+  "description": "Development tooling for the animewp theme and AnimeWP Blocks plugin. Not distributed.",
+  "license": "GPL-2.0-or-later",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "wp-scripts build --webpack-src-dir=plugins/animewp-blocks/src --output-path=plugins/animewp-blocks/build",
+    "start": "wp-scripts start --webpack-src-dir=plugins/animewp-blocks/src --output-path=plugins/animewp-blocks/build",
+    "lint:js": "wp-scripts lint-js plugins/animewp-blocks/src",
+    "format": "wp-scripts format plugins/animewp-blocks/src",
+    "validate": "python3 scripts/validate.py",
+    "test:serialization": "node tests/serialization/compare.js",
+    "i18n": "sh scripts/i18n.sh",
+    "env:start": "wp-env start",
+    "env:stop": "wp-env stop",
+    "wp": "wp-env run cli -- wp"
+  },
+  "devDependencies": {
+    "@wordpress/env": "11.16.0",
+    "@wordpress/scripts": "35.0.0"
+  }
+}

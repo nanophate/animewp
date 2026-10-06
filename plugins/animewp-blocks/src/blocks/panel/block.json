@@ -3,10 +3,16 @@
   "apiVersion": 3,
   "name": "animewp/panel",
   "version": "1.3.0",
-  "title": "AnimeWP パネル",
+  "title": "Decorated Panel",
   "category": "design",
   "icon": "layout",
-  "description": "標準ブロックを自由に入れ、必要な装飾だけ追加するパネル。",
+  "description": "A container for any blocks, with an optional backdrop shape, rotation, shadows and a highlighted short heading.",
+  "keywords": [
+    "panel",
+    "backdrop",
+    "decoration",
+    "animewp"
+  ],
   "textdomain": "animewp-blocks",
   "attributes": {
     "heading": {
@@ -171,7 +177,7 @@
     },
     "shadow": true
   },
-  "editorScript": "animewp-blocks-editor",
+  "editorScript": "file:./index.js",
   "style": "animewp-blocks-style",
   "editorStyle": "animewp-blocks-editor-style"
 }

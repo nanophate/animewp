@@ -8,3 +8,4 @@
 .wp-block-animewp-video > .animewp-video__editor-note { font-size: 0.875em; }
 .wp-block-animewp-video .animewp-video__preview { max-width: 48rem; }
 .wp-block-animewp-video .animewp-video__preview img { max-width: 100%; }
+.animewp-blocks-fieldset { margin: 0 0 16px; padding: 0; border: 0; min-width: 0; }

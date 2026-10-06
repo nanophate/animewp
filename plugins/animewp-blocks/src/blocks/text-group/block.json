@@ -3,14 +3,15 @@
   "apiVersion": 3,
   "name": "animewp/text-group",
   "version": "1.3.0",
-  "title": "AnimeWP 文字グループ",
+  "title": "Rotated Text",
   "category": "design",
   "icon": "editor-textcolor",
-  "description": "段落や見出しなどをまとめ、このグループだけ回転。モバイルの角度も個別に設定できます。",
+  "description": "Rotates only the headings and paragraphs inside it, with a separate angle for mobile.",
   "keywords": [
-    "文字",
-    "回転",
-    "グループ"
+    "rotate",
+    "tilt",
+    "text",
+    "animewp"
   ],
   "textdomain": "animewp-blocks",
   "attributes": {
@@ -45,7 +46,7 @@
       "lineHeight": true
     }
   },
-  "editorScript": "animewp-blocks-editor",
+  "editorScript": "file:./index.js",
   "style": "animewp-blocks-style",
   "editorStyle": "animewp-blocks-editor-style"
 }

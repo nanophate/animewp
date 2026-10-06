@@ -1,0 +1,625 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: AnimeWP Blocks 1.3.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-10-06T19:24:45+00:00\n"
+"PO-Revision-Date: 2026-10-06T19:24:45+00:00\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Domain: animewp-blocks\n"
+
+#. Plugin Name of the plugin
+#: animewp-blocks.php:77
+msgid "AnimeWP Blocks"
+msgstr "AnimeWP Blocks"
+
+#. Description of the plugin
+msgid "Decorated panels, rotated text, image and text layouts, and video buttons for anime and film sites. Saved content stays readable if the plugin is turned off."
+msgstr "アニメ・映画サイト向けの装飾パネル、回転テキスト、画像と本文、動画ボタン。プラグインを停止しても保存した内容は表示されます。"
+
+#. Author of the plugin
+msgid "AnimeWP"
+msgstr "AnimeWP"
+
+#: patterns/independent-text-groups.php:10
+msgid "Two text blocks at different angles"
+msgstr "角度の違う2つの文字グループ"
+
+#: patterns/independent-text-groups.php:11
+msgid "Two Rotated Text blocks in one panel, tilted −3° and 4°. Both are level on mobile."
+msgstr "左へ−3度と右へ4度の回転テキストを同じパネル内に配置。モバイルは両方0度です。"
+
+#: patterns/tilted-heading-upright-body.php:10
+msgid "Tilted backdrop and heading, level body text"
+msgstr "背景と傾いた見出し・水平本文"
+
+#: patterns/tilted-heading-upright-body.php:11
+msgid "The backdrop is tilted −2° and the heading −3°, while the body text stays level."
+msgstr "装飾背景は−2度、見出しは−3度、本文は水平です。"
+
+#: build/blocks/media/index.js:1
+msgid "Heading"
+msgstr "見出し"
+
+#: build/blocks/media/index.js:1
+msgid "Write the text"
+msgstr "本文を入力"
+
+#: build/blocks/media/index.js:1
+msgid "Layout"
+msgstr "画像と本文の配置"
+
+#: build/blocks/media/index.js:1
+msgid "Reading order (mobile and screen readers)"
+msgstr "読む順（モバイルと読み上げ）"
+
+#: build/blocks/media/index.js:1
+msgid "Image, then text"
+msgstr "画像 → 本文"
+
+#: build/blocks/media/index.js:1
+msgid "Text, then image"
+msgstr "本文 → 画像"
+
+#: build/blocks/media/index.js:1
+msgid "Reorders the saved blocks, so mobile layout and screen readers always match."
+msgstr "保存DOMを並べ替えます。読み上げ順とモバイルの表示順は常に同じです。"
+
+#: build/blocks/media/index.js:1
+msgid "Desktop layout"
+msgstr "デスクトップの構図"
+
+#: build/blocks/media/index.js:1
+msgid "On mobile, image and text always stack in reading order."
+msgstr "モバイルでは重ねず、読む順で縦に並びます。"
+
+#: build/blocks/media/index.js:1
+msgid "Side by side"
+msgstr "横並び"
+
+#: build/blocks/media/index.js:1
+msgid "Text over image"
+msgstr "画像に本文を重ねる"
+
+#: build/blocks/media/index.js:1
+msgid "Desktop image position"
+msgstr "デスクトップの画像位置"
+
+#: build/blocks/media/index.js:1
+msgid "Visual only. Set the reading order above."
+msgstr "見た目だけの変更です。読み上げ順は「読む順」で設定します。"
+
+#: build/blocks/media/index.js:1
+msgid "Left"
+msgstr "左"
+
+#: build/blocks/media/index.js:1
+msgid "Right"
+msgstr "右"
+
+#: build/blocks/media/index.js:1
+msgid "Image width (%)"
+msgstr "画像の幅（%）"
+
+#: build/blocks/media/index.js:1
+msgid "Give the inner group a background, text color and padding so the text stays readable."
+msgstr "文字を読みやすくするため、内側の標準グループで背景色・文字色・余白を設定してください。"
+
+#: build/blocks/media/index.js:1
+msgid "Crop image to a fixed height"
+msgstr "画像を一定の高さで切り抜く"
+
+#: build/blocks/media/index.js:1
+msgid "Image height (px)"
+msgstr "画像の高さ（px）"
+
+#: build/blocks/media/index.js:1
+msgid "Focal point, horizontal (%)"
+msgstr "焦点の横位置（%）"
+
+#: build/blocks/media/index.js:1
+msgid "Focal point, vertical (%)"
+msgstr "焦点の縦位置（%）"
+
+#: build/blocks/media/index.js:1
+msgid "Mobile image height (px)"
+msgstr "モバイルの画像の高さ（px）"
+
+#: build/blocks/media/index.js:1
+msgid "Separate focal point on mobile"
+msgstr "モバイルの焦点を個別設定"
+
+#: build/blocks/media/index.js:1
+msgid "Mobile focal point, horizontal (%)"
+msgstr "モバイル焦点の横位置（%）"
+
+#: build/blocks/media/index.js:1
+msgid "Mobile focal point, vertical (%)"
+msgstr "モバイル焦点の縦位置（%）"
+
+#: build/blocks/panel/index.js:1
+msgid "Color source"
+msgstr "色の指定方法"
+
+#: build/blocks/panel/index.js:1
+msgid "Custom color (kept as is)"
+msgstr "任意の色（既存の色を保持）"
+
+#: build/blocks/panel/index.js:1
+msgid "Follow a site color"
+msgstr "サイトの色見本に追従"
+
+#: build/blocks/panel/index.js:1
+msgid "Follow a color role"
+msgstr "色の役割に追従"
+
+#: build/blocks/panel/index.js:1
+msgid "Site color"
+msgstr "色見本"
+
+#: build/blocks/panel/index.js:1
+msgid "Choose a color"
+msgstr "選択してください"
+
+#: build/blocks/panel/index.js:1
+msgid "Color role"
+msgstr "色の役割"
+
+#: build/blocks/panel/index.js:1
+msgid "Surface (soft background)"
+msgstr "淡い背景 / surface"
+
+#: build/blocks/panel/index.js:1
+msgid "Accent"
+msgstr "強調 / accent"
+
+#: build/blocks/panel/index.js:1
+msgid "Contrast (dark surface)"
+msgstr "濃い面 / contrast"
+
+#: build/blocks/panel/index.js:1
+msgid "Site colors and roles update when the color scheme changes; custom colors stay fixed. A role also picks a matching text color unless the block sets its own. Check readability after changing."
+msgstr "色見本・役割は配色変更に追従します。任意の色はそのまま残ります。役割は対応する文字色も選びます（文字色の個別指定が優先）。変更後は読みやすさを確認してください。"
+
+#: build/blocks/panel/index.js:1
+msgid "None"
+msgstr "なし"
+
+#: build/blocks/panel/index.js:1
+msgid "Soft"
+msgstr "柔らかい影"
+
+#: build/blocks/panel/index.js:1
+msgid "Hard"
+msgstr "くっきりした影"
+
+#: build/blocks/panel/index.js:1
+msgid "Decoration"
+msgstr "パネル装飾"
+
+#: build/blocks/panel/index.js:1
+msgid "Background, text color, spacing and font size use the standard Styles controls."
+msgstr "背景・文字の色、余白、文字サイズは標準のスタイル設定で調整します。"
+
+#: build/blocks/panel/index.js:1
+msgid "Add a backdrop layer"
+msgstr "装飾背景レイヤーを追加"
+
+#: build/blocks/panel/index.js:1
+msgid "Adds a separate color shape behind the content. The standard background is unchanged."
+msgstr "内容の後ろに別の色面を重ねます。標準背景はそのまま残ります。"
+
+#: build/blocks/panel/index.js:1
+msgid "Backdrop color"
+msgstr "装飾背景レイヤーの色"
+
+#: build/blocks/panel/index.js:1
+msgid "Backdrop edge"
+msgstr "装飾背景の境界"
+
+#: build/blocks/panel/index.js:1
+msgid "Straight"
+msgstr "なし"
+
+#: build/blocks/panel/index.js:1
+msgid "Wave"
+msgstr "波形"
+
+#: build/blocks/panel/index.js:1
+msgid "Diagonal"
+msgstr "斜め"
+
+#: build/blocks/panel/index.js:1
+msgid "Backdrop rotation (°)"
+msgstr "装飾背景だけの回転（度）"
+
+#: build/blocks/panel/index.js:1
+msgid "Rotates only the backdrop. Content stays level."
+msgstr "色面だけを回転します。本文の角度は変わりません。"
+
+#: build/blocks/panel/index.js:1
+msgid "Backdrop skew (°)"
+msgstr "装飾背景だけの傾斜（度）"
+
+#: build/blocks/panel/index.js:1
+msgid "Slants the backdrop. Separate from rotation."
+msgstr "色面を斜めにゆがめます。回転とは別の変形です。"
+
+#: build/blocks/panel/index.js:1
+msgid "Backdrop opacity (%)"
+msgstr "装飾背景の不透明度（%）"
+
+#: build/blocks/panel/index.js:1
+msgid "Rotate whole panel (°)"
+msgstr "パネル全体の回転（度）"
+
+#: build/blocks/panel/index.js:1
+msgid "Rotates the backdrop and every block inside together."
+msgstr "背景とすべての内側ブロックを一緒に回転します。"
+
+#: build/blocks/panel/index.js:1
+msgid "To tilt only some text, keep this at 0° and put that text in a Rotated Text block inside the panel."
+msgstr "一部の文字だけを傾けるには、全体の回転を0度にして、内側に「回転テキスト」を追加します。"
+
+#: build/blocks/panel/index.js:1
+msgid "Corner radius (px)"
+msgstr "角丸（px）"
+
+#: build/blocks/panel/index.js:1
+msgid "Panel shadow"
+msgstr "パネルの影"
+
+#: build/blocks/panel/index.js:1
+msgid "Text shadow"
+msgstr "文字の影"
+
+#: build/blocks/panel/index.js:1
+msgid "Short heading"
+msgstr "短い見出し"
+
+#: build/blocks/panel/index.js:1
+msgid "Heading level"
+msgstr "見出しレベル"
+
+#: build/blocks/panel/index.js:1
+msgid "Vertical heading"
+msgstr "見出しだけ縦書き"
+
+#: build/blocks/panel/index.js:1
+msgid "Applies to headings up to 40 characters. Body text and mobile stay horizontal."
+msgstr "40文字以内で適用。本文とモバイル表示は横書きです。"
+
+#: build/blocks/panel/index.js:1
+msgid "Heading highlight"
+msgstr "見出しの帯"
+
+#: build/blocks/panel/index.js:1
+msgid "Band behind each line"
+msgstr "折り返す各行に帯"
+
+#: build/blocks/panel/index.js:1
+msgid "Single padded block"
+msgstr "余白つきの一枚パネル"
+
+#: build/blocks/panel/index.js:1
+msgid "Highlight color"
+msgstr "帯の色"
+
+#: build/blocks/panel/index.js:1
+msgid "Highlight padding (em)"
+msgstr "帯の内側余白（em）"
+
+#: build/blocks/panel/index.js:1
+msgid "Short heading (optional)"
+msgstr "短い見出し（任意）"
+
+#: build/blocks/text-group/index.js:1
+msgid "Text to rotate"
+msgstr "このグループに入れる文章"
+
+#: build/blocks/text-group/index.js:1
+msgid "Rotation"
+msgstr "文字グループの回転"
+
+#: build/blocks/text-group/index.js:1
+msgid "Rotates the headings, paragraphs and groups inside this block together. Neighbouring blocks stay level."
+msgstr "内側の段落・見出し・グループをまとめて回転します。隣のブロックは水平のままです。"
+
+#: build/blocks/text-group/index.js:1
+msgid "Rotation (°)"
+msgstr "この文字グループの回転（度）"
+
+#: build/blocks/text-group/index.js:1
+msgid "Screens 782px and wider. Negative tilts left, positive tilts right."
+msgstr "幅782px以上で適用。マイナスは左、プラスは右に傾きます。"
+
+#: build/blocks/text-group/index.js:1
+msgid "Mobile rotation (°)"
+msgstr "モバイルの回転（度）"
+
+#: build/blocks/text-group/index.js:1
+msgid "Screens 781px and narrower. 0° by default for readability."
+msgstr "幅781px以下で適用。読みやすさのため初期値は0度です。"
+
+#: build/blocks/text-group/index.js:1
+msgid "A rotated parent panel or group also tilts this block. To tilt only this text, set the parent to 0°. Select this block from List View if it is hard to click."
+msgstr "親のパネルやグループが回転している場合は、その回転も受けます。文字だけを傾けるには親を0度にしてください。選択しにくい場合はリスト表示から選びます。"
+
+#: build/blocks/video/index.js:1
+msgid "Replace poster image"
+msgstr "ポスター画像を変更"
+
+#: build/blocks/video/index.js:1
+msgid "Choose poster image"
+msgstr "サイト内のポスター画像を選択"
+
+#: build/blocks/video/index.js:1
+msgid "Remove poster image"
+msgstr "ポスター画像をクリア"
+
+#: build/blocks/video/index.js:1
+msgid "YouTube and Vimeo posters must come from this site’s Media Library. External images are not loaded."
+msgstr "YouTubeとVimeoではサイト内メディアライブラリーの画像だけを使えます。外部画像は読み込みません。"
+
+#: build/blocks/video/index.js:1
+msgid "That image is not hosted on this site. Choose an image from this site’s Media Library."
+msgstr "選択した画像はサイト内URLではありません。メディアライブラリーの画像を選んでください。"
+
+#: build/blocks/video/index.js:1
+msgid "Poster and play button preview"
+msgstr "ポスターと再生ボタンの見本"
+
+#: build/blocks/video/index.js:1
+msgid "Choose a poster image to preview it here."
+msgstr "サイト内ポスターを選ぶと、ここに見本を表示します。"
+
+#: build/blocks/video/index.js:1
+msgid "Video and captions"
+msgstr "動画と字幕"
+
+#: build/blocks/video/index.js:1
+msgid "Source"
+msgstr "動画の種類"
+
+#: build/blocks/video/index.js:1
+msgid "Video file"
+msgstr "動画ファイル"
+
+#: build/blocks/video/index.js:1
+msgid "Vimeo (public videos)"
+msgstr "Vimeo（公開動画）"
+
+#: build/blocks/video/index.js:1
+msgid "Video page URL"
+msgstr "動画ページのURL"
+
+#: build/blocks/video/index.js:1
+msgid "Video file URL"
+msgstr "動画ファイルのURL"
+
+#: build/blocks/video/index.js:1
+msgid "HTTPS link to the video page. Start times (t= or start=) are kept. Link private or unlisted Vimeo videos instead."
+msgstr "動画ページのHTTPS URL。再生開始秒のt/start指定にも対応します。非公開・限定公開Vimeoは元リンクで案内してください。"
+
+#: build/blocks/video/index.js:1
+msgid "An http(s) URL or a site path starting with /."
+msgstr "HTTP(S)またはサイト内の / で始まるパス。"
+
+#: build/blocks/video/index.js:1
+msgid "Enter the video page URL. The editor never connects to the video service."
+msgstr "動画ページのURLを入力してください。編集画面では外部サービスへ接続しません。"
+
+#: build/blocks/video/index.js:1
+msgid "This URL is not supported for the selected service. Only the original link will be saved."
+msgstr "このサービスの対応URLではありません。元のリンクのみ保存します。"
+
+#: build/blocks/video/index.js:1
+msgid "The player loads only after a visitor presses play, and is removed when closed. Captions are managed on the video service."
+msgstr "プレーヤーは再生ボタンを押した後だけ読み込み、閉じると削除します。字幕は配信サービス側で設定します。"
+
+#: build/blocks/video/index.js:1
+msgid "This URL is invalid and will be removed on save."
+msgstr "このURLは保存時に無効化されます。"
+
+#: build/blocks/video/index.js:1
+msgid "Poster image URL (optional)"
+msgstr "ポスター画像のURL（任意）"
+
+#: build/blocks/video/index.js:1
+msgid "Play button text"
+msgstr "開くボタンの文言"
+
+#: build/blocks/video/index.js:1
+msgid "Close button text"
+msgstr "閉じるボタンの文言"
+
+#: build/blocks/video/index.js:1
+msgid "Captions file URL (WebVTT, optional)"
+msgstr "字幕ファイルのURL（WebVTT・任意）"
+
+#: build/blocks/video/index.js:1
+msgid "By default captions must be served from this site."
+msgstr "初期設定では、このサイトと同じ配信元の字幕を使います。"
+
+#: build/blocks/video/index.js:1
+msgid "Video and captions hosting"
+msgstr "動画・字幕の配信方法"
+
+#: build/blocks/video/index.js:1
+msgid "Anonymous CORS applies to both video and captions. The other server must send Access-Control-Allow-Origin. Authenticated hosting is not supported."
+msgstr "匿名CORSは動画と字幕の両方に適用します。配信サーバーがAccess-Control-Allow-Originを返す必要があります。認証付き配信は対象外です。"
+
+#: build/blocks/video/index.js:1
+msgid "This site (captions on the same site)"
+msgstr "通常（字幕はページと同じ配信元）"
+
+#: build/blocks/video/index.js:1
+msgid "Another server (anonymous CORS)"
+msgstr "別配信元を許可（匿名CORS）"
+
+#: build/blocks/video/index.js:1
+msgid "The captions file is on another server. Move it to this site, or check that server’s CORS settings and choose anonymous CORS."
+msgstr "字幕が別の配信元にあります。サイト内に置くか、配信サーバーのCORS設定を確認して匿名CORSを選択してください。"
+
+#: build/blocks/video/index.js:1
+msgid "Converting to standard blocks turns the video into a Custom HTML block to keep the CORS setting. Description, captions and link are kept."
+msgstr "標準ブロックへの変換では、CORS属性を保持するため動画部分がカスタムHTMLになります。説明・字幕・リンクは残ります。"
+
+#: build/blocks/video/index.js:1
+msgid "The captions URL is invalid."
+msgstr "字幕URLが無効です。"
+
+#: build/blocks/video/index.js:1
+msgid "Captions language code"
+msgstr "字幕の言語コード"
+
+#: build/blocks/video/index.js:1
+msgid "Captions label"
+msgstr "字幕の表示名"
+
+#: build/blocks/video/index.js:1
+msgid "Video description"
+msgstr "動画の説明"
+
+#: build/blocks/video/index.js:1
+msgid "Replace video"
+msgstr "動画を変更"
+
+#: build/blocks/video/index.js:1
+msgid "Choose video from Media Library"
+msgstr "メディアから動画を選択"
+
+#: build/blocks/video/index.js:1
+msgid "Video page URL is set. The editor does not connect to the service."
+msgstr "動画ページのURLを設定済みです。編集画面では接続しません。"
+
+#: build/blocks/video/index.js:1
+msgid "Set a YouTube or Vimeo video page URL."
+msgstr "YouTubeまたはVimeoの動画ページURLを設定してください。"
+
+#: build/blocks/video/index.js:1
+msgid "Choose a video, or enter a video URL in the settings."
+msgstr "動画を選択するか、設定欄に動画URLを入力してください。"
+
+#: build/blocks/video/index.js:1
+msgid "On the site, the video opens when the button is pressed. Add a description or transcript below with standard blocks."
+msgstr "公開ページではボタンを押すと開きます。説明や文字起こしは下に標準ブロックで追加できます。"
+
+#: build/blocks/media/block.json
+msgctxt "block title"
+msgid "Image & Text"
+msgstr "画像と本文"
+
+#: build/blocks/media/block.json
+msgctxt "block description"
+msgid "An image with text beside or over it, with crop height and separate mobile focal point."
+msgstr "画像の横または上に本文を配置。切り抜きの高さとモバイルの焦点を個別に設定できます。"
+
+#: build/blocks/media/block.json
+msgctxt "block keyword"
+msgid "image"
+msgstr "画像"
+
+#: build/blocks/media/block.json
+msgctxt "block keyword"
+msgid "media"
+msgstr "メディア"
+
+#: build/blocks/media/block.json
+#: build/blocks/text-group/block.json
+msgctxt "block keyword"
+msgid "text"
+msgstr "文字"
+
+#: build/blocks/media/block.json
+#: build/blocks/panel/block.json
+#: build/blocks/text-group/block.json
+#: build/blocks/video/block.json
+msgctxt "block keyword"
+msgid "animewp"
+msgstr "animewp"
+
+#: build/blocks/panel/block.json
+msgctxt "block title"
+msgid "Decorated Panel"
+msgstr "装飾パネル"
+
+#: build/blocks/panel/block.json
+msgctxt "block description"
+msgid "A container for any blocks, with an optional backdrop shape, rotation, shadows and a highlighted short heading."
+msgstr "標準ブロックを自由に入れ、装飾背景・回転・影・見出しの帯を必要なだけ追加するパネル。"
+
+#: build/blocks/panel/block.json
+msgctxt "block keyword"
+msgid "panel"
+msgstr "パネル"
+
+#: build/blocks/panel/block.json
+msgctxt "block keyword"
+msgid "backdrop"
+msgstr "背景"
+
+#: build/blocks/panel/block.json
+msgctxt "block keyword"
+msgid "decoration"
+msgstr "装飾"
+
+#: build/blocks/text-group/block.json
+msgctxt "block title"
+msgid "Rotated Text"
+msgstr "回転テキスト"
+
+#: build/blocks/text-group/block.json
+msgctxt "block description"
+msgid "Rotates only the headings and paragraphs inside it, with a separate angle for mobile."
+msgstr "内側の見出しや段落だけを回転します。モバイルの角度も個別に設定できます。"
+
+#: build/blocks/text-group/block.json
+msgctxt "block keyword"
+msgid "rotate"
+msgstr "回転"
+
+#: build/blocks/text-group/block.json
+msgctxt "block keyword"
+msgid "tilt"
+msgstr "傾き"
+
+#: build/blocks/video/block.json
+msgctxt "block title"
+msgid "Video Button"
+msgstr "動画ボタン"
+
+#: build/blocks/video/block.json
+msgctxt "block description"
+msgid "A poster and play button that opens a video file, YouTube or Vimeo in a dialog. External players load only after pressing play."
+msgstr "ポスターと再生ボタンから動画ファイル・YouTube・Vimeoを開きます。外部プレーヤーは再生を押した後だけ読み込みます。"
+
+#: build/blocks/video/block.json
+msgctxt "block keyword"
+msgid "video"
+msgstr "動画"
+
+#: build/blocks/video/block.json
+msgctxt "block keyword"
+msgid "movie"
+msgstr "映像"
+
+#: build/blocks/video/block.json
+msgctxt "block keyword"
+msgid "youtube"
+msgstr "YouTube"
+
+#: build/blocks/video/block.json
+msgctxt "block keyword"
+msgid "vimeo"
+msgstr "Vimeo"
+
+#: build/blocks/video/block.json
+msgctxt "block keyword"
+msgid "pv"
+msgstr "PV"

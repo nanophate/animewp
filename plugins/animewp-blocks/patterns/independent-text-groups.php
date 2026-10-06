@@ -7,8 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 return array(
-	'title'         => __( '角度の違う2つの文字グループ', 'animewp-blocks' ),
-	'description'   => __( '左へ−3度と右へ4度の文字グループを同じパネル内に配置。モバイルは両方0度です。', 'animewp-blocks' ),
+	'title'         => __( 'Two text blocks at different angles', 'animewp-blocks' ),
+	'description'   => __( 'Two Rotated Text blocks in one panel, tilted −3° and 4°. Both are level on mobile.', 'animewp-blocks' ),
 	'categories'    => array( 'animewp-blocks' ),
 	'viewportWidth' => 1000,
 	'content'       => <<<'HTML'

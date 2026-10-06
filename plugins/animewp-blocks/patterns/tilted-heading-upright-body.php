@@ -7,8 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 return array(
-	'title'         => __( '背景と傾いた見出し・水平本文', 'animewp-blocks' ),
-	'description'   => __( '装飾背景は−2度、文字グループの見出しは−3度、外側の本文は水平。パネル全体は0度です。', 'animewp-blocks' ),
+	'title'         => __( 'Tilted backdrop and heading, level body text', 'animewp-blocks' ),
+	'description'   => __( 'The backdrop is tilted −2° and the heading −3°, while the body text stays level.', 'animewp-blocks' ),
 	'categories'    => array( 'animewp-blocks' ),
 	'viewportWidth' => 1000,
 	'content'       => <<<'HTML'

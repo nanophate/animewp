@@ -3,7 +3,7 @@
 作品紹介サイトを標準Gutenbergで編集する、単独インストール可能なWordPressブロックテーマです。親テーマや有料ビルダーは必要ありません。
 
 - `themes/animewp/`：通常の投稿・固定ページ・検索・アーカイブと、再利用できる3構成のLP、ヘッダー、セクションのパターン。
-- `plugins/animewp-blocks/`：任意の装飾パネル、回転する文字グループ、画像と本文、動画ダイアログ。テーマだけでも利用できます。
+- `plugins/animewp-blocks/`：任意の装飾パネル、回転テキスト、画像と本文、動画ボタン。テーマだけでも利用できます。
 - [INSTALL-ja.txt](INSTALL-ja.txt)：ZIP導入、初期編集、更新、停止時の手順。
 - [設計](docs/architecture.md) と [任意ブロックの仕様](plugins/animewp-blocks/README.md)。
 
@@ -31,11 +31,15 @@ iframe編集画面の保存・再読込、ZIP更新後の編集保持、補助�
 
 ## ソース検査
 
-Python 3.10以上、Node.js、PHP CLIを用意して、リポジトリのルートで実行します。Pythonの追加パッケージやnpm依存の導入は不要です。
+ホストに必要なのはPython 3.10以上、Node.js 20以上、Dockerです。PHPとWordPressはDockerで動かすため、PCへのPHP導入は不要です。リポジトリのルートで実行します。
 
 ```sh
-python3 scripts/validate.py
+npm ci
+npm ci --prefix tests/serialization
+python3 scripts/validate.py --compare
 ```
+
+`validate.py` は補助プラグインをビルドし（`src/` → `build/`）、PHPをローカルに無ければ `php:8.0-cli` コンテナーで構文検査します。`--compare` は保存HTMLの互換性を `main` と比較します。比較にはWordPress本体のエディタースクリプトが必要なため、先に `npm run env:start`（`@wordpress/env`、localhost:8888）を起動するか、`ANIMEWP_WP_DIR` にWordPressのフォルダーを指定してください。開発の詳しい手順は[補助プラグインのREADME](plugins/animewp-blocks/README.md#開発)にあります。
 
 PHP・JavaScript・Pythonの構文、JSON、メタデータ、必須テンプレート、属性の既定値、外部参照、よく使われる秘密情報の形式、SVG、ZIP構成と再現性を検査します。秘密情報検査は既知形式の検出であり、あらゆる秘密情報の不存在を証明するものではありません。
 
