@@ -74,7 +74,25 @@ for ( const [ name, create ] of Object.entries( generatedBlocks( make ) ) ) {
 					return switched ? serialize( switched ) : null;
 			  } )
 			: undefined;
+	// Motion settings live in the block comment only: the saved HTML must not change.
+	let motionChangesHtml = false;
+	let motionChecked = false;
+	const type = wp.blocks.getBlockType( block.name );
+	if ( type && type.attributes.animewpMotion ) {
+		const plain = safe( () => wp.blocks.getSaveContent( type, block.attributes, block.innerBlocks ) );
+		const withMotion = safe( () =>
+			wp.blocks.getSaveContent(
+				type,
+				{ ...block.attributes, animewpMotion: window.JSON.parse( '{"entrance":"rise","target":"children","hover":"lift","loop":"float","parallax":20,"scrolled":"hide"}' ) },
+				block.innerBlocks
+			)
+		);
+		motionChangesHtml = plain !== withMotion;
+		motionChecked = true;
+	}
 	result.blocks[ name ] = {
+		motionChangesHtml,
+		motionChecked,
 		serialized: saved,
 		reparsed: typeof saved === 'string' ? describe( parse( saved ) ) : null,
 		toGroup,

@@ -17,10 +17,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-const BLOCKS = array( 'panel', 'text-group', 'media', 'video', 'carousel', 'video-card', 'backdrop' );
+const BLOCKS = array( 'panel', 'text-group', 'media', 'video', 'carousel', 'video-card', 'backdrop', 'decoration' );
 
 require_once __DIR__ . '/includes/video-providers.php';
 require_once __DIR__ . '/includes/youtube-poster.php';
+require_once __DIR__ . '/includes/motion.php';
 
 /** Bundled translations; a translation installed in wp-content/languages takes precedence. */
 function load_textdomain(): void {

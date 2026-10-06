@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "animewp/decoration",
+  "version": "2.0.0",
+  "title": "Decoration",
+  "category": "design",
+  "icon": "star-filled",
+  "description": "A shape or image placed anywhere in its section, behind or in front of the content. Combine with Motion (float, parallax) for drifting petals, bubbles or lines.",
+  "keywords": [ "shape", "ornament", "petal", "sparkle", "float", "animewp" ],
+  "textdomain": "animewp-blocks",
+  "attributes": {
+    "shape": { "type": "string", "enum": [ "circle", "ring", "petal", "sparkle", "dots", "wave", "image" ], "default": "sparkle" },
+    "imageId": { "type": "number", "default": 0 },
+    "imageUrl": { "type": "string", "default": "" },
+    "x": { "type": "number", "default": 85 },
+    "y": { "type": "number", "default": 20 },
+    "size": { "type": "number", "default": 6 },
+    "rotation": { "type": "number", "default": 0 },
+    "opacity": { "type": "number", "default": 100 },
+    "layer": { "type": "string", "enum": [ "behind", "front" ], "default": "behind" },
+    "blend": { "type": "string", "enum": [ "normal", "multiply", "screen", "overlay", "soft-light" ], "default": "normal" },
+    "hideOnMobile": { "type": "boolean", "default": false }
+  },
+  "supports": {
+    "html": false,
+    "reusable": false,
+    "color": { "text": true, "background": false, "__experimentalDefaultControls": { "text": true } }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}

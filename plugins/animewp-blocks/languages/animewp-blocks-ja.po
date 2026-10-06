@@ -14,7 +14,7 @@ msgstr ""
 "X-Domain: animewp-blocks\n"
 
 #. Plugin Name of the plugin
-#: animewp-blocks.php:80
+#: animewp-blocks.php:81
 msgid "AnimeWP Blocks"
 msgstr "AnimeWP Blocks"
 
@@ -187,6 +187,7 @@ msgid "Site colors and roles update when the color scheme changes; custom colors
 msgstr "色見本・役割は配色変更に追従します。任意の色はそのまま残ります。役割は対応する文字色も選びます（文字色の個別指定が優先）。変更後は読みやすさを確認してください。"
 
 #: build/blocks/panel/index.js:1
+#: build/motion/editor.js:1
 msgid "None"
 msgstr "なし"
 
@@ -198,9 +199,9 @@ msgstr "柔らかい影"
 msgid "Hard"
 msgstr "くっきりした影"
 
-#: build/blocks/panel/index.js:1
+#: build/blocks/decoration/index.js:1
 msgid "Decoration"
-msgstr "パネル装飾"
+msgstr "装飾"
 
 #: build/blocks/panel/index.js:1
 msgid "Background, text color, spacing and font size use the standard Styles controls."
@@ -226,6 +227,7 @@ msgstr "装飾背景の境界"
 msgid "Straight"
 msgstr "なし"
 
+#: build/blocks/decoration/index.js:1
 #: build/blocks/panel/index.js:1
 msgid "Wave"
 msgstr "波形"
@@ -330,6 +332,7 @@ msgstr "文字グループの回転"
 msgid "Rotates the headings, paragraphs and groups inside this block together. Neighbouring blocks stay level."
 msgstr "内側の段落・見出し・グループをまとめて回転します。隣のブロックは水平のままです。"
 
+#: build/blocks/decoration/index.js:1
 #: build/blocks/text-group/index.js:1
 msgid "Rotation (°)"
 msgstr "この文字グループの回転（度）"
@@ -546,6 +549,7 @@ msgstr "文字"
 
 #: build/blocks/backdrop/block.json
 #: build/blocks/carousel/block.json
+#: build/blocks/decoration/block.json
 #: build/blocks/media/block.json
 #: build/blocks/panel/block.json
 #: build/blocks/text-group/block.json
@@ -673,6 +677,7 @@ msgid "Previous and next buttons"
 msgstr "前へ・次へボタン"
 
 #: build/blocks/carousel/index.js:1
+#: build/blocks/decoration/index.js:1
 msgid "Dots"
 msgstr "ドット"
 
@@ -783,10 +788,12 @@ msgid "This connects to YouTube or Vimeo as soon as the page loads, before the v
 msgstr "ページを開いた時点で、再生を押す前にYouTubeまたはVimeoへ接続します。接続を避けたい場合はポスターを選んでください。"
 
 #: build/blocks/backdrop/index.js:1
+#: build/blocks/decoration/index.js:1
 msgid "Replace image"
 msgstr "画像を変更"
 
 #: build/blocks/backdrop/index.js:1
+#: build/blocks/decoration/index.js:1
 msgid "Choose image"
 msgstr "画像を選択"
 
@@ -959,3 +966,290 @@ msgstr "動画カード"
 msgctxt "block description"
 msgid "A poster with a play button, label and title. Opens YouTube, Vimeo or a video file in a player window. Use it alone, in columns, or inside a Carousel."
 msgstr "再生ボタン付きのポスターとラベル・タイトル。YouTube・Vimeo・動画ファイルをプレーヤー画面で開きます。単独でも、カラムやカルーセルの中でも使えます。"
+
+#: build/blocks/decoration/index.js:1
+msgid "Circle"
+msgstr "円"
+
+#: build/blocks/decoration/index.js:1
+msgid "Ring"
+msgstr "輪"
+
+#: build/blocks/decoration/index.js:1
+msgid "Petal"
+msgstr "花びら"
+
+#: build/blocks/decoration/index.js:1
+msgid "Sparkle"
+msgstr "きらめき"
+
+#: build/blocks/decoration/index.js:1
+msgid "Your image"
+msgstr "画像を使う"
+
+#: build/blocks/decoration/index.js:1
+msgid "Shape"
+msgstr "形"
+
+#: build/blocks/decoration/index.js:1
+msgid "Image"
+msgstr "画像"
+
+#: build/blocks/decoration/index.js:1
+msgid "The shape uses this block’s text color (Styles → Color)."
+msgstr "形はこのブロックの文字色で表示されます（スタイル → 色）。"
+
+#: build/blocks/decoration/index.js:1
+msgid "Horizontal position (%)"
+msgstr "横位置（%）"
+
+#: build/blocks/decoration/index.js:1
+msgid "Vertical position (%)"
+msgstr "縦位置（%）"
+
+#: build/blocks/decoration/index.js:1
+msgid "Size (% of the section width)"
+msgstr "大きさ（区画の幅に対する%）"
+
+#: build/blocks/decoration/index.js:1
+msgid "Opacity (%)"
+msgstr "不透明度（%）"
+
+#: build/blocks/decoration/index.js:1
+msgid "Layer"
+msgstr "重なり"
+
+#: build/blocks/decoration/index.js:1
+msgid "Behind the content"
+msgstr "内容の後ろ"
+
+#: build/blocks/decoration/index.js:1
+msgid "In front of the content"
+msgstr "内容の前"
+
+#: build/blocks/decoration/index.js:1
+msgid "Blend"
+msgstr "重ね方"
+
+#: build/blocks/decoration/index.js:1
+msgid "Normal"
+msgstr "通常"
+
+#: build/blocks/decoration/index.js:1
+msgid "Multiply (darken)"
+msgstr "乗算（暗く）"
+
+#: build/blocks/decoration/index.js:1
+msgid "Screen (lighten)"
+msgstr "スクリーン（明るく）"
+
+#: build/blocks/decoration/index.js:1
+msgid "Overlay"
+msgstr "オーバーレイ"
+
+#: build/blocks/decoration/index.js:1
+msgid "Soft light"
+msgstr "ソフトライト"
+
+#: build/blocks/decoration/index.js:1
+msgid "Hide on small screens"
+msgstr "小さな画面では表示しない"
+
+#: build/blocks/decoration/index.js:1
+msgid "To make it drift, open Motion below and choose Keep moving → Float, or set Parallax."
+msgstr "ふわふわ動かすには、下の「モーション」で「動き続ける → 浮遊」を選ぶか、パララックスを設定します。"
+
+#: build/motion/editor.js:1
+msgid "Motion"
+msgstr "モーション"
+
+#: build/motion/editor.js:1
+msgid "Entrance"
+msgstr "登場"
+
+#: build/motion/editor.js:1
+msgid "Fade in"
+msgstr "フェードイン"
+
+#: build/motion/editor.js:1
+msgid "Rise"
+msgstr "下から浮かぶ"
+
+#: build/motion/editor.js:1
+msgid "Slide from the start side"
+msgstr "行頭側からスライド"
+
+#: build/motion/editor.js:1
+msgid "Slide from the end side"
+msgstr "行末側からスライド"
+
+#: build/motion/editor.js:1
+msgid "Zoom in"
+msgstr "ズームイン"
+
+#: build/motion/editor.js:1
+msgid "Come into focus (blur)"
+msgstr "ぼかしから鮮明に"
+
+#: build/motion/editor.js:1
+msgid "Wipe (mask)"
+msgstr "ワイプ（マスク）"
+
+#: build/motion/editor.js:1
+msgid "Letter by letter"
+msgstr "1文字ずつ"
+
+#: build/motion/editor.js:1
+msgid "Plays once when the block scrolls into view."
+msgstr "ブロックが画面に入ったときに1回だけ再生します。"
+
+#: build/motion/editor.js:1
+msgid "Apply to"
+msgstr "適用先"
+
+#: build/motion/editor.js:1
+msgid "This block"
+msgstr "このブロック"
+
+#: build/motion/editor.js:1
+msgid "Each inner block in turn"
+msgstr "中のブロックに1つずつ順に"
+
+#: build/motion/editor.js:1
+msgid "Delay (ms)"
+msgstr "開始までの待ち時間（ms）"
+
+#: build/motion/editor.js:1
+msgid "Duration (ms)"
+msgstr "長さ（ms）"
+
+#: build/motion/editor.js:1
+msgid "0 uses the site’s motion speed."
+msgstr "0でサイト共通の速さを使います。"
+
+#: build/motion/editor.js:1
+msgid "Gap between inner blocks (ms)"
+msgstr "中のブロックの間隔（ms）"
+
+#: build/motion/editor.js:1
+msgid "0 uses the site’s default."
+msgstr "0でサイト共通の値を使います。"
+
+#: build/motion/editor.js:1
+msgid "Preview"
+msgstr "プレビュー"
+
+#: build/motion/editor.js:1
+msgid "On hover"
+msgstr "ポインターを合わせたとき"
+
+#: build/motion/editor.js:1
+msgid "Lift"
+msgstr "浮き上がる"
+
+#: build/motion/editor.js:1
+msgid "Zoom the image"
+msgstr "画像を拡大"
+
+#: build/motion/editor.js:1
+msgid "Glow"
+msgstr "光る"
+
+#: build/motion/editor.js:1
+msgid "Follows “Apply to”: this block, or each inner block."
+msgstr "「適用先」に従い、このブロックまたは中の各ブロックに効きます。"
+
+#: build/motion/editor.js:1
+msgid "Keep moving"
+msgstr "動き続ける"
+
+#: build/motion/editor.js:1
+msgid "Float"
+msgstr "浮遊"
+
+#: build/motion/editor.js:1
+msgid "Sway"
+msgstr "ゆれる"
+
+#: build/motion/editor.js:1
+msgid "Pulse"
+msgstr "脈打つ"
+
+#: build/motion/editor.js:1
+msgid "A slow, endless movement for decorations."
+msgstr "装飾向けの、ゆっくり続く動きです。"
+
+#: build/motion/editor.js:1
+msgid "Parallax"
+msgstr "パララックス"
+
+#: build/motion/editor.js:1
+msgid "Moves slower (negative) or faster (positive) than the page while scrolling. 0 is off."
+msgstr "スクロール時にページより遅く（マイナス）または速く（プラス）動きます。0でオフ。"
+
+#: build/motion/editor.js:1
+msgid "After scrolling down"
+msgstr "下にスクロールした後"
+
+#: build/motion/editor.js:1
+msgid "No change"
+msgstr "変えない"
+
+#: build/motion/editor.js:1
+msgid "Hide"
+msgstr "隠す"
+
+#: build/motion/editor.js:1
+msgid "Show (hidden at the top)"
+msgstr "表示する（ページ上部では隠す）"
+
+#: build/motion/editor.js:1
+msgid "Make compact"
+msgstr "コンパクトにする"
+
+#: build/motion/editor.js:1
+msgid "For headers: for example, hide the full logo and show a short one once the visitor scrolls."
+msgstr "ヘッダー向け：たとえばスクロールしたら正式ロゴを隠し、短いロゴを表示します。"
+
+#: build/motion/editor.js:1
+msgid "Visitors who ask their device for reduced motion see everything without movement."
+msgstr "端末で「視差効果を減らす」などを設定した訪問者には、動きなしで表示します。"
+
+#: build/blocks/decoration/block.json
+msgctxt "block title"
+msgid "Decoration"
+msgstr "装飾"
+
+#: build/blocks/decoration/block.json
+msgctxt "block description"
+msgid "A shape or image placed anywhere in its section, behind or in front of the content. Combine with Motion (float, parallax) for drifting petals, bubbles or lines."
+msgstr "区画内の好きな位置に置く形や画像。内容の後ろにも前にも置けます。モーション（浮遊・パララックス）と組み合わせると、舞う花びらや泡、線を表現できます。"
+
+#: build/blocks/decoration/block.json
+msgctxt "block keyword"
+msgid "shape"
+msgstr "形"
+
+#: build/blocks/decoration/block.json
+msgctxt "block keyword"
+msgid "ornament"
+msgstr "飾り"
+
+#: build/blocks/decoration/block.json
+msgctxt "block keyword"
+msgid "petal"
+msgstr "花びら"
+
+#: build/blocks/decoration/block.json
+msgctxt "block keyword"
+msgid "sparkle"
+msgstr "きらめき"
+
+#: build/blocks/decoration/block.json
+msgctxt "block keyword"
+msgid "float"
+msgstr "浮遊"
+
+#: build/blocks/panel/index.js:1
+msgid "Panel decoration"
+msgstr "パネル装飾"

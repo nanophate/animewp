@@ -68,6 +68,20 @@ animewp は「全体の設定 → 部品の共通設定 → 1か所だけの設�
 | `--wp--custom--animewp--motion--easing--out` / `--in-out` | cubic-bezier(0.2, 0.7, 0.2, 1) / cubic-bezier(0.65, 0, 0.35, 1) |
 | `--wp--custom--animewp--motion--distance` / `--blur` / `--stagger` | 1.5rem / 8px / 90ms |
 
+## 動き
+
+動きは任意です。どのブロックにも右側の設定に「モーション」があり、登場・ホバー・動き続ける・パララックス・スクロール後の表示を選べます。グループで「中のブロックに1つずつ順に」を選ぶと、中身がまとめて順番に動きます。
+
+サイト全体の速さは下の変数で一括変更できます。ページ間の移動には、対応ブラウザーで控えめなフェードが付きます（不要なら追加CSSに `@view-transition { navigation: none; }`）。端末で動きを減らす設定をした訪問者には、どちらも動きなしで表示します。
+
+```css
+:root {
+  --wp--custom--animewp--motion--duration--slow: 1200ms; /* 登場の長さ */
+  --wp--custom--animewp--motion--stagger: 150ms;         /* 順番に現れる間隔 */
+  --wp--custom--animewp--motion--distance: 3rem;         /* 浮かぶ・スライドの距離 */
+}
+```
+
 ## 1.xからの互換
 
 1.xの色見本（「（従来互換）」の6色と用途別ラベル色）と「用途：」の3書体は選択肢から外しました。保存済みの本文で使われている場合は `assets/css/compat.css` が同じ見た目を保ちます。1.xの「外観 → animewp 書体」の設定は引き続き適用され、外観 → テーマの案内から解除できます。

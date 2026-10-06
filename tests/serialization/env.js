@@ -124,6 +124,11 @@ function installWordPress() {
 function loadPlugin( dir, window ) {
 	const built = path.join( dir, 'build/blocks' );
 	if ( fs.existsSync( built ) ) {
+		// Extensions that add attributes must run before blocks register.
+		const motion = path.join( dir, 'build/motion/editor.js' );
+		if ( fs.existsSync( motion ) ) {
+			run( window, motion );
+		}
 		for ( const name of fs.readdirSync( built ).sort() ) {
 			const file = path.join( built, name, 'index.js' );
 			if ( fs.existsSync( file ) ) {

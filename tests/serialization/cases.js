@@ -102,6 +102,18 @@ const POOLS = {
 		playLabel: [ '再生', '' ],
 		closeLabel: [ '閉じる', 'Close' ],
 	},
+	'animewp/decoration': {
+		shape: [ 'sparkle', 'petal', 'image', 'blob' ],
+		imageUrl: [ '', '/wp-content/uploads/art.png', 'https://evil.test/art.png' ],
+		x: [ 85, -20, 150 ],
+		y: [ 20, 0 ],
+		size: [ 6, 0, 100 ],
+		rotation: [ 0, -200, 45 ],
+		opacity: [ 100, 0, 55 ],
+		layer: [ 'behind', 'front' ],
+		blend: [ 'normal', 'multiply', 'soft-light', 'bogus' ],
+		hideOnMobile: [ false, true ],
+	},
 	'animewp/backdrop': {
 		mode: [ 'follow', 'image', 'file', 'follow-video' ],
 		imageUrl: [ '', '/wp-content/uploads/bg.jpg', 'https://evil.test/bg.jpg' ],
@@ -174,7 +186,7 @@ function innerBlocks( make, name, random ) {
 			make( 'core/image', { url: ORIGIN + '/wp-content/uploads/b.jpg', alt: '画像' } ),
 		];
 	}
-	if ( name === 'animewp/video-card' || name === 'animewp/backdrop' ) {
+	if ( [ 'animewp/video-card', 'animewp/backdrop', 'animewp/decoration' ].includes( name ) ) {
 		return [];
 	}
 	if ( name === 'animewp/media' ) {

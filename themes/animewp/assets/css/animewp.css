@@ -257,3 +257,11 @@ header.wp-block-template-part:has(.animewp-header--glass) { position: sticky; to
 }
 
 /* Pattern column gap defaults live in layout.css, after Core defaults and before individual spacing. */
+
+/* Page transitions: a soft cross-fade between pages in browsers that support
+ * cross-document View Transitions; others navigate normally. To turn it off,
+ * add `@view-transition { navigation: none; }` in Styles → Additional CSS. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+  ::view-transition-group(root) { animation-duration: var(--wp--custom--animewp--motion--duration--base, 450ms); }
+}

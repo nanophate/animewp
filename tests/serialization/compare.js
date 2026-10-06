@@ -114,6 +114,9 @@ for ( const [ name, entry ] of Object.entries( head.blocks ) ) {
 		failures.push( { label: name + ' is not registered in the working tree' } );
 		continue;
 	}
+	if ( entry.motionChangesHtml ) {
+		failures.push( { label: name + ' saved HTML changes when Motion settings are added' } );
+	}
 	if ( ! entry.reparsed || entry.reparsed.some( ( block ) => ! block.valid ) ) {
 		failures.push( { label: name + ' head output does not re-parse as valid', head: entry.serialized } );
 	}
@@ -125,6 +128,8 @@ for ( const [ name, entry ] of Object.entries( head.documents ) ) {
 }
 
 console.log( `WordPress ${ head.wordpress } editor scripts. Baseline ${ base.layout } (${ baseDir }) vs working tree ${ head.layout }.` );
+const motionChecked = Object.values( head.blocks ).filter( ( entry ) => entry.motionChecked ).length;
+console.log( `Motion settings checked on ${ motionChecked } generated blocks: saved HTML must not change.` );
 console.log( `Compared ${ documentCount } saved documents and ${ blockCount } generated blocks (save, re-parse, transforms); ${ newCount } blocks of new types checked for valid re-parse only.` );
 if ( invalidBase ) {
 	console.log( `Note: ${ invalidBase } blocks are already invalid in the baseline; head must match that exactly.` );

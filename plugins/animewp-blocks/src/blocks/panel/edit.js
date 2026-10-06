@@ -142,7 +142,7 @@ export default function Edit( { attributes: a, setAttributes } ) {
 		<>
 			<InspectorControls>
 				<PanelBody
-					title={ __( 'Decoration', 'animewp-blocks' ) }
+					title={ __( 'Panel decoration', 'animewp-blocks' ) }
 					initialOpen={ false }
 				>
 					<p>

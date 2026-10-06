@@ -9,13 +9,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-06T23:31:43+00:00\n"
+"POT-Creation-Date: 2026-10-06T23:45:53+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: animewp-blocks\n"
 
 #. Plugin Name of the plugin
-#: animewp-blocks.php:80
+#: animewp-blocks.php:81
 msgid "AnimeWP Blocks"
 msgstr ""
 
@@ -93,10 +93,12 @@ msgid "This connects to YouTube or Vimeo as soon as the page loads, before the v
 msgstr ""
 
 #: build/blocks/backdrop/index.js:1
+#: build/blocks/decoration/index.js:1
 msgid "Replace image"
 msgstr ""
 
 #: build/blocks/backdrop/index.js:1
+#: build/blocks/decoration/index.js:1
 msgid "Choose image"
 msgstr ""
 
@@ -218,6 +220,7 @@ msgid "Uses the first image in each slide."
 msgstr ""
 
 #: build/blocks/carousel/index.js:1
+#: build/blocks/decoration/index.js:1
 msgid "Dots"
 msgstr ""
 
@@ -235,6 +238,112 @@ msgstr ""
 
 #: build/blocks/carousel/index.js:1
 msgid "0 turns it off. Pauses on hover and focus, adds a pause button, and never runs for visitors who prefer reduced motion."
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Circle"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Ring"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Petal"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Sparkle"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+#: build/blocks/panel/index.js:1
+msgid "Wave"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Your image"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Decoration"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Shape"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Image"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "The shape uses this block’s text color (Styles → Color)."
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Horizontal position (%)"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Vertical position (%)"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Size (% of the section width)"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+#: build/blocks/text-group/index.js:1
+msgid "Rotation (°)"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Opacity (%)"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Layer"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Behind the content"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "In front of the content"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Blend"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Normal"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Multiply (darken)"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Screen (lighten)"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Overlay"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Soft light"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Hide on small screens"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "To make it drift, open Motion below and choose Keep moving → Float, or set Parallax."
 msgstr ""
 
 #: build/blocks/media/index.js:1
@@ -382,6 +491,7 @@ msgid "Site colors and roles update when the color scheme changes; custom colors
 msgstr ""
 
 #: build/blocks/panel/index.js:1
+#: build/motion/editor.js:1
 msgid "None"
 msgstr ""
 
@@ -394,7 +504,7 @@ msgid "Hard"
 msgstr ""
 
 #: build/blocks/panel/index.js:1
-msgid "Decoration"
+msgid "Panel decoration"
 msgstr ""
 
 #: build/blocks/panel/index.js:1
@@ -419,10 +529,6 @@ msgstr ""
 
 #: build/blocks/panel/index.js:1
 msgid "Straight"
-msgstr ""
-
-#: build/blocks/panel/index.js:1
-msgid "Wave"
 msgstr ""
 
 #: build/blocks/panel/index.js:1
@@ -523,10 +629,6 @@ msgstr ""
 
 #: build/blocks/text-group/index.js:1
 msgid "Rotates the headings, paragraphs and groups inside this block together. Neighbouring blocks stay level."
-msgstr ""
-
-#: build/blocks/text-group/index.js:1
-msgid "Rotation (°)"
 msgstr ""
 
 #: build/blocks/text-group/index.js:1
@@ -765,6 +867,162 @@ msgstr ""
 msgid "On the site, the video opens when the button is pressed. Add a description or transcript below with standard blocks."
 msgstr ""
 
+#: build/motion/editor.js:1
+msgid "Motion"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Entrance"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Fade in"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Rise"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Slide from the start side"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Slide from the end side"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Zoom in"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Come into focus (blur)"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Wipe (mask)"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Letter by letter"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Plays once when the block scrolls into view."
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Apply to"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "This block"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Each inner block in turn"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Delay (ms)"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Duration (ms)"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "0 uses the site’s motion speed."
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Gap between inner blocks (ms)"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "0 uses the site’s default."
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Preview"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "On hover"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Lift"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Zoom the image"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Glow"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Follows “Apply to”: this block, or each inner block."
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Keep moving"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Float"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Sway"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Pulse"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "A slow, endless movement for decorations."
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Parallax"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Moves slower (negative) or faster (positive) than the page while scrolling. 0 is off."
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "After scrolling down"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "No change"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Hide"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Show (hidden at the top)"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Make compact"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "For headers: for example, hide the full logo and show a short one once the visitor scrolls."
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Visitors who ask their device for reduced motion see everything without movement."
+msgstr ""
+
 #: build/blocks/backdrop/block.json
 msgctxt "block title"
 msgid "Backdrop"
@@ -797,6 +1055,7 @@ msgstr ""
 
 #: build/blocks/backdrop/block.json
 #: build/blocks/carousel/block.json
+#: build/blocks/decoration/block.json
 #: build/blocks/media/block.json
 #: build/blocks/panel/block.json
 #: build/blocks/text-group/block.json
@@ -834,6 +1093,41 @@ msgstr ""
 #: build/blocks/carousel/block.json
 msgctxt "block keyword"
 msgid "gallery"
+msgstr ""
+
+#: build/blocks/decoration/block.json
+msgctxt "block title"
+msgid "Decoration"
+msgstr ""
+
+#: build/blocks/decoration/block.json
+msgctxt "block description"
+msgid "A shape or image placed anywhere in its section, behind or in front of the content. Combine with Motion (float, parallax) for drifting petals, bubbles or lines."
+msgstr ""
+
+#: build/blocks/decoration/block.json
+msgctxt "block keyword"
+msgid "shape"
+msgstr ""
+
+#: build/blocks/decoration/block.json
+msgctxt "block keyword"
+msgid "ornament"
+msgstr ""
+
+#: build/blocks/decoration/block.json
+msgctxt "block keyword"
+msgid "petal"
+msgstr ""
+
+#: build/blocks/decoration/block.json
+msgctxt "block keyword"
+msgid "sparkle"
+msgstr ""
+
+#: build/blocks/decoration/block.json
+msgctxt "block keyword"
+msgid "float"
 msgstr ""
 
 #: build/blocks/media/block.json
