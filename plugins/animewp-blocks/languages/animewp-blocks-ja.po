@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: AnimeWP Blocks 1.3.0\n"
+"Project-Id-Version: AnimeWP Blocks 2.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"

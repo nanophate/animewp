@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schemas.wp.org/wp/6.6/theme.json",
+  "version": 3,
+  "title": "キャッチコピー",
+  "slug": "animewp-catchphrase",
+  "blockTypes": [
+    "core/paragraph",
+    "core/heading"
+  ],
+  "styles": {
+    "typography": {
+      "fontFamily": "var:preset|font-family|animewp-serif",
+      "fontSize": "var:preset|font-size|large",
+      "fontWeight": "400",
+      "letterSpacing": "0.08em",
+      "lineHeight": "1.8"
+    }
+  }
+}

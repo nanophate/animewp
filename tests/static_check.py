@@ -124,10 +124,18 @@ def audit(path):
         errors.append(f"{rel}:{audit_text[:match.start()].count(chr(10)) + 1}: external reference (value omitted)")
 
 
-# The release remains a monochrome base; color editing belongs to Core or CSS.
-check({p.name for p in (ROOT / "themes/animewp/styles").glob("*.json")} == {"serif.json", "soft.json"}, "Unexpected named theme skin")
-for slug, color in json.loads((ROOT / "themes/animewp/inc/design-tokens.json").read_text())["colors"].items():
-    check(color[1:3] == color[3:5] == color[5:7], f"Initial token {slug} must remain monochrome")
+# The default palette stays monochrome. Color schemes are optional, editable presets
+# (styles/colors) that must replace every color role and nothing else.
+check({p.name for p in (ROOT / "themes/animewp/styles").glob("*.json")} == {"serif.json", "soft.json"}, "Unexpected full theme style variation")
+TOKENS = json.loads((ROOT / "themes/animewp/inc/design-tokens.json").read_text())
+ROLES = [item["slug"] for item in TOKENS["palette"]]
+for item in TOKENS["palette"]:
+    color = item["color"]
+    check(color[1:3] == color[3:5] == color[5:7], f"Default color role {item['slug']} must remain monochrome")
+for path in (ROOT / "themes/animewp/styles/colors").glob("*.json"):
+    scheme = json.loads(path.read_text())
+    check(set(scheme) <= {"$schema", "version", "title", "settings"} and set(scheme.get("settings", {})) == {"color"}, f"{path.name}: a color scheme may only set the palette")
+    check([item["slug"] for item in scheme["settings"]["color"].get("palette", [])] == ROLES, f"{path.name}: must define every color role in order")
 
 for path in (ROOT / "themes/animewp/patterns").glob("*.php"):
     for reference in re.findall(r"get_theme_file_uri\(\s*'([^']+)'", path.read_text()):

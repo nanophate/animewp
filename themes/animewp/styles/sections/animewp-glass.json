@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.wp.org/wp/6.6/theme.json",
+  "version": 3,
+  "title": "すりガラス",
+  "slug": "animewp-glass",
+  "blockTypes": [
+    "core/group",
+    "core/columns",
+    "core/column"
+  ],
+  "styles": {
+    "color": {
+      "background": "color-mix(in srgb, var(--wp--preset--color--base) 72%, transparent)",
+      "text": "var:preset|color|contrast"
+    },
+    "spacing": {
+      "padding": {
+        "top": "var:preset|spacing|40",
+        "right": "var:preset|spacing|40",
+        "bottom": "var:preset|spacing|40",
+        "left": "var:preset|spacing|40"
+      }
+    },
+    "border": {
+      "width": "var(--wp--custom--animewp--line)",
+      "style": "solid",
+      "color": "color-mix(in srgb, var(--wp--preset--color--base) 60%, transparent)",
+      "radius": "var(--wp--custom--animewp--radius--small)"
+    },
+    "elements": {
+      "heading": {
+        "color": {
+          "text": "inherit"
+        }
+      },
+      "link": {
+        "color": {
+          "text": "inherit"
+        }
+      }
+    }
+  }
+}

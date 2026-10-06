@@ -1,0 +1,14 @@
+{
+  "$schema": "https://schemas.wp.org/wp/6.6/theme.json",
+  "version": 3,
+  "title": "縦書き見出し（短文向け）",
+  "slug": "animewp-short-vertical",
+  "blockTypes": [
+    "core/heading"
+  ],
+  "styles": {
+    "typography": {
+      "lineHeight": "1.8"
+    }
+  }
+}

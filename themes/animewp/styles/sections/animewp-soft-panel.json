@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schemas.wp.org/wp/6.6/theme.json",
+  "version": 3,
+  "title": "淡い背景",
+  "slug": "animewp-soft-panel",
+  "blockTypes": [
+    "core/group",
+    "core/column"
+  ],
+  "styles": {
+    "color": {
+      "background": "var:preset|color|surface",
+      "text": "var:preset|color|contrast"
+    },
+    "spacing": {
+      "padding": {
+        "top": "clamp(20px, 3vw, 36px)",
+        "right": "clamp(20px, 3vw, 36px)",
+        "bottom": "clamp(20px, 3vw, 36px)",
+        "left": "clamp(20px, 3vw, 36px)"
+      }
+    },
+    "border": {
+      "width": "var(--wp--custom--animewp--line)",
+      "style": "solid",
+      "color": "var:preset|color|border",
+      "radius": "var(--wp--custom--animewp--radius--small)"
+    }
+  }
+}

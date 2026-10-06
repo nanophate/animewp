@@ -20,12 +20,13 @@ function animewp_setup() {
 	add_theme_support( 'editor-styles' );
 	add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script' ) );
 	add_theme_support( 'custom-logo', array( 'height' => 80, 'width' => 240, 'flex-height' => true, 'flex-width' => true ) );
-	add_editor_style( array( 'assets/css/animewp.css', 'assets/css/layout.css', 'assets/css/editor.css' ) );
+	add_editor_style( array( 'assets/css/compat.css', 'assets/css/animewp.css', 'assets/css/layout.css', 'assets/css/editor.css' ) );
 }
 add_action( 'after_setup_theme', 'animewp_setup' );
 
 function animewp_assets() {
-	wp_enqueue_style( 'animewp-theme', get_theme_file_uri( 'assets/css/animewp.css' ), array(), wp_get_theme()->get( 'Version' ) );
+	wp_enqueue_style( 'animewp-compat', get_theme_file_uri( 'assets/css/compat.css' ), array(), wp_get_theme()->get( 'Version' ) );
+	wp_enqueue_style( 'animewp-theme', get_theme_file_uri( 'assets/css/animewp.css' ), array( 'animewp-compat' ), wp_get_theme()->get( 'Version' ) );
 	wp_enqueue_style( 'animewp-layout', get_theme_file_uri( 'assets/css/layout.css' ), array( 'animewp-theme' ), wp_get_theme()->get( 'Version' ) );
 	wp_enqueue_script( 'animewp-presentation', get_theme_file_uri( 'assets/js/presentation.js' ), array(), wp_get_theme()->get( 'Version' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
@@ -46,10 +47,10 @@ function animewp_register_designs() {
 	register_block_pattern_category( 'animewp-parts', array( 'label' => __( 'animewp：小さな部品', 'animewp' ) ) );
 	register_block_pattern_category( 'animewp-headers', array( 'label' => __( 'animewp：ヘッダー', 'animewp' ) ) );
 	register_block_pattern_category( 'animewp-footers', array( 'label' => __( 'animewp：フッター', 'animewp' ) ) );
+	// Text and section styles with editable typography/colors live in styles/*.json
+	// (Styles → Blocks → …). These remaining styles are decorative behaviour only.
 	$styles = array(
-		'core/group'     => array( 'animewp-card' => __( 'animewp：カード', 'animewp' ), 'animewp-soft-panel' => __( 'animewp：淡い背景', 'animewp' ), 'animewp-reveal' => __( 'animewp：控えめに表示', 'animewp' ), 'animewp-texture' => __( 'animewp：細い罫線のテクスチャ', 'animewp' ) ),
-		'core/heading'   => array( 'animewp-short-vertical' => __( 'animewp：縦書き見出し（短文向け）', 'animewp' ) ),
-		'core/paragraph' => array( 'animewp-kicker' => __( 'animewp：小さな補助見出し', 'animewp' ), 'animewp-highlight' => __( 'animewp：文字の背景ハイライト', 'animewp' ) ),
+		'core/group'     => array( 'animewp-reveal' => __( 'animewp：控えめに表示', 'animewp' ), 'animewp-texture' => __( 'animewp：細い罫線のテクスチャ', 'animewp' ) ),
 		'core/details'   => array( 'animewp-details' => __( 'animewp：開閉カード', 'animewp' ) ),
 		'core/image'     => array( 'animewp-portrait' => __( 'animewp：人物画像', 'animewp' ), 'animewp-fade-start' => __( 'animewp：左端をフェード', 'animewp' ), 'animewp-fade-bottom' => __( 'animewp：下端をフェード', 'animewp' ) ),
 	);

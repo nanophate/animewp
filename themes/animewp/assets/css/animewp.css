@@ -100,13 +100,10 @@
 .is-style-animewp-portrait img { aspect-ratio: 3 / 4; object-fit: contain; background: var(--animewp-surface); }
 .is-style-animewp-details > summary { cursor: pointer; padding-block: 10px; min-height: 24px; font-weight: 600; }
 .is-style-animewp-details[open] > summary { margin-bottom: 16px; }
-.is-style-animewp-card,
-.is-style-animewp-soft-panel { padding: clamp(20px, 3vw, 36px); border: 1px solid var(--animewp-line); border-radius: 4px; }
-.is-style-animewp-card { background-color: var(--animewp-card-bg, var(--wp--preset--color--base, #fff)); color: var(--animewp-card-ink, var(--wp--preset--color--contrast, #202020)); }
-.is-style-animewp-soft-panel { background-color: var(--animewp-surface); color: var(--wp--preset--color--contrast, #202020); }
-.is-style-animewp-kicker { font-size: 0.75rem; letter-spacing: 0.12em; line-height: 1.8; }
-.is-style-animewp-highlight { background: var(--animewp-highlight, var(--animewp-surface)); padding: 0.15em 0.35em; box-decoration-break: clone; -webkit-box-decoration-break: clone; display: inline; }
-.is-style-animewp-short-vertical { writing-mode: vertical-rl; text-orientation: mixed; max-inline-size: 18em; line-height: 1.8; }
+/* Typography, colors, spacing and borders of text/section styles: styles/text, styles/sections. */
+.is-style-animewp-highlight { box-decoration-break: clone; -webkit-box-decoration-break: clone; display: inline; }
+.is-style-animewp-short-vertical { writing-mode: vertical-rl; text-orientation: mixed; max-inline-size: 18em; }
+.is-style-animewp-glass { -webkit-backdrop-filter: blur(var(--wp--custom--animewp--motion--blur, 8px)); backdrop-filter: blur(var(--wp--custom--animewp--motion--blur, 8px)); }
 .animewp-video-placeholder { border: 1px solid var(--animewp-line); }
 .animewp-video-placeholder > .wp-block-image { margin: 0; }
 .animewp-video-placeholder > :not(.wp-block-image) { margin-inline: 24px; }
@@ -238,7 +235,7 @@ header.wp-block-template-part:has(.animewp-header--glass) { position: sticky; to
 .animewp-footer-links .wp-block-navigation__container { gap: 0.5rem 1.5rem; }
 .animewp-footer-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1.5rem; border-top: 1px solid var(--animewp-line); margin-block-start: 1.5rem; padding-block-start: 1rem; font-size: 0.875rem; }
 .animewp-footer-meta p { margin-block: 0; }
-.animewp-news-row .wp-block-post-terms, .is-style-animewp-kicker { font-size: 0.875rem; }
+.animewp-news-row .wp-block-post-terms { font-size: 0.875rem; }
 .is-style-animewp-reveal { transition: opacity 0.45s ease; }
 .is-style-animewp-reveal[data-animewp-reveal-pending] { opacity: 0; }
 @media (max-width: 781px) {

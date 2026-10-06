@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schemas.wp.org/wp/6.6/theme.json",
+  "version": 3,
+  "title": "文字の背景ハイライト",
+  "slug": "animewp-highlight",
+  "blockTypes": [
+    "core/paragraph"
+  ],
+  "styles": {
+    "color": {
+      "background": "var(--animewp-highlight, var(--wp--preset--color--surface))"
+    },
+    "spacing": {
+      "padding": {
+        "top": "0.15em",
+        "right": "0.35em",
+        "bottom": "0.15em",
+        "left": "0.35em"
+      }
+    }
+  }
+}

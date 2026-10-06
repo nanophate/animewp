@@ -56,8 +56,8 @@ python3 scripts/package.py
 
 `artifacts/releases/`へ次を生成します。番号は各パッケージのVersionヘッダーから読み取ります。
 
-- `animewp-1.3.0.zip`：最上位フォルダーは`animewp/`のみ。
-- `animewp-blocks-1.3.0.zip`：最上位フォルダーは`animewp-blocks/`のみ。
+- `animewp-2.0.0.zip`：最上位フォルダーは`animewp/`のみ。
+- `animewp-blocks-2.0.0.zip`：最上位フォルダーは`animewp-blocks/`のみ。
 - `SHA256SUMS`：2つのZIPのSHA-256。
 
 ファイル順、ZIP日時、権限、格納方式を固定しています。同じソースなら環境の更新日時に左右されず同じZIPになります。各ZIPは格納方式を使い、圧縮ライブラリの違いによる出力差を避けます。ソースやQA環境を含むリポジトリ全体をWordPressへアップロードしないでください。

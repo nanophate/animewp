@@ -1,6 +1,6 @@
 # AnimeWP Blocks
 
-バージョン1.3.0。任意のcompanion plugin。WordPress 6.6以上・PHP 8.0以上を対象にした、対応するGutenberg環境で使える静的ブロック4種類です。配布ZIPはビルド済みのため、導入時のビルド操作や追加パッケージは不要です。全装飾の初期値はオフで、白・黒・灰色を初期値とし、任意色・サイトの色見本・色の役割から自由に設定できます。名前付き配色スキンは含みません。
+バージョン2.0.0。任意のcompanion plugin。WordPress 6.6以上・PHP 8.0以上を対象にした、対応するGutenberg環境で使える静的ブロック4種類です。配布ZIPはビルド済みのため、導入時のビルド操作や追加パッケージは不要です。全装飾の初期値はオフで、白・黒・灰色を初期値とし、任意色・サイトの色見本・色の役割から自由に設定できます。名前付き配色スキンは含みません。
 
 4ブロックはCoreのグラデーション設定に対応します。パネルではCoreの文字揃えも選べます。指定値はブロックのラッパーに保存され、パネル・文字グループ・画像と本文は標準グループへの変換時にも色・グラデーション・文字揃えを引き継ぎます。
 
@@ -117,6 +117,7 @@ npm start                               # 編集中は自動ビルド
 npm run lint:js                         # WordPressのコーディング規約
 npm ci --prefix tests/serialization     # 互換性テストの道具（初回のみ）
 python3 scripts/validate.py --compare   # ビルド、PHP（Docker）、監査、保存HTML比較
+npm run test:wp                         # WordPress統合試験（Docker内の使い捨てサイトで実行）
 npm run i18n                            # 翻訳ファイルを再生成（WP-CLIをDockerで実行）
 ```
 

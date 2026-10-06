@@ -12,5 +12,8 @@
     "WP_DEBUG": true,
     "SCRIPT_DEBUG": false
   },
-  "testsEnvironment": false
+  "testsEnvironment": false,
+  "mappings": {
+    "wp-content/animewp-tests": "./tests"
+  }
 }

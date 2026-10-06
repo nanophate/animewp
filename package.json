@@ -16,7 +16,8 @@
     "i18n": "sh scripts/i18n.sh",
     "env:start": "wp-env start",
     "env:stop": "wp-env stop",
-    "wp": "wp-env run cli -- wp"
+    "wp": "wp-env run cli -- wp",
+    "test:wp": "sh tests/run-wp-suites.sh"
   },
   "devDependencies": {
     "@wordpress/env": "11.16.0",
