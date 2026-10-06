@@ -15,7 +15,7 @@ PACKAGES = (
     ("animewp", ROOT / "themes/animewp", "style.css"),
     ("animewp-blocks", ROOT / "plugins/animewp-blocks", "animewp-blocks.php"),
 )
-ALLOWED_SUFFIXES = {".php", ".css", ".js", ".json", ".html", ".svg", ".md", ".txt", ".po", ".pot", ".mo"}
+ALLOWED_SUFFIXES = {".php", ".css", ".scss", ".js", ".json", ".html", ".svg", ".md", ".txt", ".po", ".pot", ".mo"}
 ZIP_DATE = (1980, 1, 1, 0, 0, 0)
 
 

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "animewp/backdrop",
+  "version": "2.0.0",
+  "title": "Backdrop",
+  "category": "design",
+  "icon": "cover-image",
+  "description": "A background layer for the section it is placed in: an image, a looping video, or the poster of whichever slide or card is current.",
+  "keywords": [ "background", "blur", "living background", "video background", "animewp" ],
+  "textdomain": "animewp-blocks",
+  "attributes": {
+    "mode": { "type": "string", "enum": [ "follow", "image", "file", "follow-video" ], "default": "follow" },
+    "imageId": { "type": "number", "default": 0 },
+    "imageUrl": { "type": "string", "default": "" },
+    "videoId": { "type": "number", "default": 0 },
+    "videoUrl": { "type": "string", "default": "" },
+    "blur": { "type": "number", "default": 24 },
+    "veil": { "type": "number", "default": 55 },
+    "focalX": { "type": "number", "default": 50 },
+    "focalY": { "type": "number", "default": 50 }
+  },
+  "supports": {
+    "html": false,
+    "reusable": false,
+    "color": { "background": true, "text": false, "gradients": true, "__experimentalDefaultControls": { "background": true } }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScriptModule": "file:./view.js"
+}

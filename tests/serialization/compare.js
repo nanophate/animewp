@@ -44,7 +44,7 @@ function ensureBuilt( dir ) {
 	// Same invocation as npm run build, pointed at the baseline (relative paths from the repo root).
 	execFileSync(
 		path.join( ROOT, 'node_modules/.bin/wp-scripts' ),
-		[ 'build', '--webpack-src-dir=' + path.join( relative, 'src' ), '--output-path=' + path.join( relative, 'build' ) ],
+		[ 'build', '--experimental-modules', '--webpack-src-dir=' + path.join( relative, 'src' ), '--output-path=' + path.join( relative, 'build' ) ],
 		{ cwd: ROOT, stdio: [ 'ignore', 'ignore', 'inherit' ] }
 	);
 	if ( ! fs.existsSync( path.join( dir, 'build/blocks/panel/index.js' ) ) ) {
@@ -81,7 +81,8 @@ function same( label, a, b ) {
 	}
 }
 
-same( 'registered block types', base.blockTypes, head.blockTypes );
+// Every baseline block type must still exist; new types may be added.
+same( 'registered block types', base.blockTypes.filter( ( type ) => ! head.blockTypes.includes( type ) ), [] );
 let documentCount = 0;
 let invalidBase = 0;
 for ( const [ name, entry ] of Object.entries( base.documents ) ) {
@@ -93,8 +94,14 @@ for ( const [ name, entry ] of Object.entries( base.documents ) ) {
 	same( name + ' reparsed', entry.reparsed, other && other.reparsed );
 }
 let blockCount = 0;
+let newCount = 0;
 for ( const [ name, entry ] of Object.entries( base.blocks ) ) {
 	const other = head.blocks[ name ] || {};
+	if ( entry.unregistered ) {
+		// New block type: only the head-validity check below applies.
+		newCount++;
+		continue;
+	}
 	blockCount++;
 	same( name + ' serialized', entry.serialized, other.serialized );
 	same( name + ' reparsed', entry.reparsed, other.reparsed );
@@ -103,6 +110,10 @@ for ( const [ name, entry ] of Object.entries( base.blocks ) ) {
 }
 // Our own output must always re-parse as valid.
 for ( const [ name, entry ] of Object.entries( head.blocks ) ) {
+	if ( entry.unregistered ) {
+		failures.push( { label: name + ' is not registered in the working tree' } );
+		continue;
+	}
 	if ( ! entry.reparsed || entry.reparsed.some( ( block ) => ! block.valid ) ) {
 		failures.push( { label: name + ' head output does not re-parse as valid', head: entry.serialized } );
 	}
@@ -114,7 +125,7 @@ for ( const [ name, entry ] of Object.entries( head.documents ) ) {
 }
 
 console.log( `WordPress ${ head.wordpress } editor scripts. Baseline ${ base.layout } (${ baseDir }) vs working tree ${ head.layout }.` );
-console.log( `Compared ${ documentCount } saved documents and ${ blockCount } generated blocks (save, re-parse, transforms).` );
+console.log( `Compared ${ documentCount } saved documents and ${ blockCount } generated blocks (save, re-parse, transforms); ${ newCount } blocks of new types checked for valid re-parse only.` );
 if ( invalidBase ) {
 	console.log( `Note: ${ invalidBase } blocks are already invalid in the baseline; head must match that exactly.` );
 }

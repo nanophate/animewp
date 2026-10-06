@@ -19,6 +19,7 @@ import providers from '../../shared/providers';
 import { Select } from '../../shared/controls';
 import {
 	isSameOrigin,
+	editorUrl,
 	localPosterUrl,
 	numberValue,
 	safeText,
@@ -143,7 +144,11 @@ export default function Edit( { attributes: a, setAttributes } ) {
 		>
 			<div className="animewp-video__preview-frame">
 				{ localPoster && (
-					<img src={ localPoster } alt="" loading="lazy" />
+					<img
+						src={ editorUrl( localPoster ) }
+						alt=""
+						loading="lazy"
+					/>
 				) }
 				<span className="animewp-video__trigger animewp-video__preview-cta">
 					{ safeText( a.buttonLabel, SAVED_TEXT.defaultButton, 100 ) }

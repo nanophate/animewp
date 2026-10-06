@@ -20,11 +20,12 @@ PROVIDER_ENDPOINTS = {
     "https://player.vimeo.com/video/",
     "www.youtube.com", "www.youtube-nocookie.com", "www.vimeo.com",
 }
-# The provider module and every bundle that includes it.
+# The provider module, and the thumbnail importer (server-side, editor-initiated).
+# Built bundles that include providers.js are allowed the same hosts below.
 RUNTIME_ENDPOINTS = {
     "plugins/animewp-blocks/src/shared/providers.js": PROVIDER_ENDPOINTS,
-    "plugins/animewp-blocks/build/blocks/video/index.js": PROVIDER_ENDPOINTS,
-    "plugins/animewp-blocks/build/blocks/video/view.js": PROVIDER_ENDPOINTS,
+    "plugins/animewp-blocks/includes/video-providers.php": PROVIDER_ENDPOINTS,
+    "plugins/animewp-blocks/includes/youtube-poster.php": {"https://i.ytimg.com/vi/"},
 }
 SECRET_PATTERNS = (
     re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
@@ -121,6 +122,8 @@ def audit(path):
             continue
         if match.group() in RUNTIME_ENDPOINTS.get(rel, set()):
             continue
+        if rel.startswith("plugins/animewp-blocks/build/") and match.group() in PROVIDER_ENDPOINTS:
+            continue
         errors.append(f"{rel}:{audit_text[:match.start()].count(chr(10)) + 1}: external reference (value omitted)")
 
 
@@ -174,7 +177,11 @@ def main():
         check((theme / f"templates/{name}.html").is_file(), f"Missing template: {name}")
     for template in theme_json.get("customTemplates", []):
         check((theme / f"templates/{template['name']}.html").is_file(), f"Missing custom template: {template['name']}")
-    for name in ("panel", "media", "video", "text-group"):
+    # build/ must contain exactly the blocks in src/ (stale output would ship otherwise).
+    source_blocks = {p.parent.name for p in (plugin / "src/blocks").glob("*/block.json")}
+    built_blocks = {p.name for p in (plugin / "build/blocks").iterdir() if p.is_dir()} if (plugin / "build/blocks").is_dir() else set()
+    check(source_blocks == built_blocks, f"build/blocks differs from src/blocks: {sorted(source_blocks ^ built_blocks)} (rebuild from a clean build/)")
+    for name in sorted(source_blocks):
         source = plugin / f"src/blocks/{name}/block.json"
         built = plugin / f"build/blocks/{name}/block.json"
         check(built.is_file(), f"Missing build for {name}: run npm run build")

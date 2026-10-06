@@ -7,8 +7,8 @@
     "node": ">=20"
   },
   "scripts": {
-    "build": "wp-scripts build --webpack-src-dir=plugins/animewp-blocks/src --output-path=plugins/animewp-blocks/build",
-    "start": "wp-scripts start --webpack-src-dir=plugins/animewp-blocks/src --output-path=plugins/animewp-blocks/build",
+    "build": "wp-scripts build --experimental-modules --webpack-src-dir=plugins/animewp-blocks/src --output-path=plugins/animewp-blocks/build",
+    "start": "wp-scripts start --experimental-modules --webpack-src-dir=plugins/animewp-blocks/src --output-path=plugins/animewp-blocks/build",
     "lint:js": "wp-scripts lint-js plugins/animewp-blocks/src",
     "format": "wp-scripts format plugins/animewp-blocks/src",
     "validate": "python3 scripts/validate.py",

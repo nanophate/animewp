@@ -1,0 +1,103 @@
+/**
+ * Video Card. :where() defaults let Styles → Blocks → Video Card (border and
+ * shadow reach the frame through block.json selectors) and block settings win.
+ */
+@use "../../shared/engines/dialog";
+
+.wp-block-animewp-video-card {
+	--animewp-video-card-time: var(--wp--custom--animewp--motion--duration--slow, 900ms);
+	--animewp-video-card-ease: var(--wp--custom--animewp--motion--easing--out, cubic-bezier(0.2, 0.7, 0.2, 1));
+	margin-inline: 0;
+	min-width: 0;
+}
+
+:where(.wp-block-animewp-video-card) {
+	margin-block: 0;
+}
+
+.animewp-video-card__link {
+	display: block;
+	color: inherit;
+	text-decoration: none;
+
+	&:focus-visible {
+		outline: 2px solid currentcolor;
+		outline-offset: 4px;
+	}
+}
+
+.animewp-video-card__frame {
+	position: relative;
+	display: block;
+	aspect-ratio: var(--animewp-video-card-ratio, 16/9);
+	overflow: hidden;
+	background: var(--wp--preset--color--surface, #f3f3f3);
+
+	img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform var(--animewp-video-card-time) var(--animewp-video-card-ease);
+	}
+}
+
+:where(.wp-block-animewp-video-card .animewp-video-card__frame) {
+	border: 0 solid var(--wp--preset--color--border, #d5d5d5);
+	border-radius: var(--wp--custom--animewp--radius--small, 4px);
+}
+
+.animewp-video-card__link:hover img,
+.animewp-video-card__link:focus-visible img {
+	transform: scale(1.04);
+}
+
+.animewp-video-card__play {
+	position: absolute;
+	inset: 0;
+	width: clamp(3rem, 18%, 5rem);
+	height: auto;
+	aspect-ratio: 1;
+	margin: auto;
+	border-radius: 50%;
+	background: color-mix(in srgb, var(--wp--preset--color--base, #fff) 88%, transparent);
+	box-shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 16%);
+	transition: transform var(--wp--custom--animewp--motion--duration--base, 450ms) var(--animewp-video-card-ease);
+
+	&::before {
+		position: absolute;
+		inset: 0;
+		width: 30%;
+		height: 34%;
+		margin: auto;
+		background: var(--wp--preset--color--contrast, #202020);
+		clip-path: polygon(18% 0, 100% 50%, 18% 100%);
+		content: "";
+	}
+}
+
+.animewp-video-card__link:hover .animewp-video-card__play {
+	transform: scale(1.08);
+}
+
+.animewp-video-card__caption {
+	display: grid;
+	gap: 0.2em;
+	margin-top: 0.75rem;
+}
+
+.animewp-video-card__label {
+	font-size: var(--wp--preset--font-size--x-small, 0.75rem);
+	letter-spacing: 0.08em;
+	opacity: 0.7;
+}
+
+.animewp-video-card__title {
+	line-height: 1.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.wp-block-animewp-video-card * {
+		transition: none !important;
+	}
+}

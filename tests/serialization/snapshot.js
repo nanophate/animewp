@@ -54,7 +54,14 @@ for ( const [ name, html ] of Object.entries( documents() ) ) {
 }
 
 for ( const [ name, create ] of Object.entries( generatedBlocks( make ) ) ) {
-	const block = create();
+	let block;
+	try {
+		block = create();
+	} catch ( error ) {
+		// A block added after the baseline: nothing to compare against yet.
+		result.blocks[ name ] = { unregistered: true };
+		continue;
+	}
 	const saved = safe( () => serialize( [ block ] ) );
 	const toGroup = safe( () => {
 		const switched = switchToBlockType( block, 'core/group' );

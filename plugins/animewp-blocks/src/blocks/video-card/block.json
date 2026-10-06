@@ -1,0 +1,121 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "animewp/video-card",
+  "version": "2.0.0",
+  "title": "Video Card",
+  "category": "media",
+  "icon": "format-video",
+  "description": "A poster with a play button, label and title. Opens YouTube, Vimeo or a video file in a player window. Use it alone, in columns, or inside a Carousel.",
+  "keywords": [
+    "video",
+    "movie",
+    "trailer",
+    "pv",
+    "youtube",
+    "animewp"
+  ],
+  "textdomain": "animewp-blocks",
+  "attributes": {
+    "source": {
+      "type": "string",
+      "enum": [
+        "youtube",
+        "vimeo",
+        "file"
+      ],
+      "default": "youtube"
+    },
+    "url": {
+      "type": "string",
+      "default": ""
+    },
+    "fileId": {
+      "type": "number",
+      "default": 0
+    },
+    "posterId": {
+      "type": "number",
+      "default": 0
+    },
+    "posterUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "label": {
+      "type": "string",
+      "source": "html",
+      "selector": ".animewp-video-card__label",
+      "default": ""
+    },
+    "title": {
+      "type": "string",
+      "source": "html",
+      "selector": ".animewp-video-card__title",
+      "default": ""
+    },
+    "aspectRatio": {
+      "type": "string",
+      "enum": [
+        "16/9",
+        "21/9",
+        "4/3",
+        "1/1",
+        "3/4",
+        "9/16"
+      ],
+      "default": "16/9"
+    },
+    "playLabel": {
+      "type": "string",
+      "default": "再生"
+    },
+    "closeLabel": {
+      "type": "string",
+      "default": "閉じる"
+    }
+  },
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "color": {
+      "background": true,
+      "text": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true,
+      "textAlign": true
+    },
+    "shadow": {
+      "__experimentalSkipSerialization": true
+    },
+    "__experimentalBorder": {
+      "radius": true,
+      "color": true,
+      "width": true,
+      "style": true,
+      "__experimentalSkipSerialization": true,
+      "__experimentalDefaultControls": {
+        "radius": true
+      }
+    }
+  },
+  "selectors": {
+    "root": ".wp-block-animewp-video-card",
+    "border": ".wp-block-animewp-video-card .animewp-video-card__frame",
+    "shadow": ".wp-block-animewp-video-card .animewp-video-card__frame"
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScriptModule": "file:./view.js"
+}

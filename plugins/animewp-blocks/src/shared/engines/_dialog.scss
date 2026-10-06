@@ -1,0 +1,68 @@
+/* Player dialog shared by Movie Gallery, Key Visual and Characters. */
+.animewp-dialog {
+	width: min(92vw, 1100px);
+	max-width: none;
+	max-height: 92vh;
+	padding: 0;
+	overflow: visible;
+	border: 0;
+	background: transparent;
+	color: var(--wp--preset--color--base, #fff);
+
+	&::backdrop {
+		background: color-mix(in srgb, var(--wp--preset--color--contrast, #202020) 88%, transparent);
+		-webkit-backdrop-filter: blur(6px);
+		backdrop-filter: blur(6px);
+	}
+
+	&[open] {
+		animation: animewp-dialog-in var(--wp--custom--animewp--motion--duration--base, 450ms) var(--wp--custom--animewp--motion--easing--out, ease) both;
+	}
+}
+
+.animewp-dialog__close {
+	position: absolute;
+	right: 0;
+	bottom: calc(100% + 0.5rem);
+	min-width: 44px;
+	min-height: 44px;
+	padding: 0 0.75rem;
+	border: 1px solid currentcolor;
+	border-radius: 999px;
+	background: transparent;
+	color: inherit;
+	font: inherit;
+	font-size: var(--wp--preset--font-size--small, 0.8125rem);
+	letter-spacing: 0.12em;
+	cursor: pointer;
+}
+
+.animewp-dialog__body {
+	aspect-ratio: 16 / 9;
+	background: #000;
+}
+
+.animewp-dialog__frame,
+.animewp-dialog__video {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border: 0;
+}
+
+html.animewp-has-dialog {
+	overflow: hidden;
+}
+
+@keyframes animewp-dialog-in {
+	from {
+		opacity: 0;
+		transform: translateY(1rem) scale(0.98);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.animewp-dialog[open] {
+		animation: none;
+	}
+}

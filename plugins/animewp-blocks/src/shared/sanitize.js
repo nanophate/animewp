@@ -147,3 +147,14 @@ export function coreAttributes( attributes ) {
 	} );
 	return result;
 }
+
+/**
+ * Absolute URL for showing a saved site path inside the editor canvas. The
+ * canvas is a blob: document, where root-relative paths do not resolve.
+ *
+ * @param {string} path Site-relative path from localPosterUrl().
+ * @return {string} Absolute URL, or ''.
+ */
+export function editorUrl( path ) {
+	return path ? new URL( path, window.location.origin ).href : '';
+}

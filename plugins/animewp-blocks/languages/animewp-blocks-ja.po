@@ -14,7 +14,7 @@ msgstr ""
 "X-Domain: animewp-blocks\n"
 
 #. Plugin Name of the plugin
-#: animewp-blocks.php:77
+#: animewp-blocks.php:80
 msgid "AnimeWP Blocks"
 msgstr "AnimeWP Blocks"
 
@@ -382,22 +382,28 @@ msgstr "サイト内ポスターを選ぶと、ここに見本を表示します
 msgid "Video and captions"
 msgstr "動画と字幕"
 
+#: build/blocks/video-card/index.js:1
 #: build/blocks/video/index.js:1
 msgid "Source"
 msgstr "動画の種類"
 
+#: build/blocks/video-card/index.js:1
 #: build/blocks/video/index.js:1
 msgid "Video file"
 msgstr "動画ファイル"
 
+#: build/blocks/video-card/index.js:1
 #: build/blocks/video/index.js:1
 msgid "Vimeo (public videos)"
 msgstr "Vimeo（公開動画）"
 
+#: build/blocks/video-card/index.js:1
 #: build/blocks/video/index.js:1
 msgid "Video page URL"
 msgstr "動画ページのURL"
 
+#: build/blocks/backdrop/index.js:1
+#: build/blocks/video-card/index.js:1
 #: build/blocks/video/index.js:1
 msgid "Video file URL"
 msgstr "動画ファイルのURL"
@@ -490,6 +496,8 @@ msgstr "動画の説明"
 msgid "Replace video"
 msgstr "動画を変更"
 
+#: build/blocks/backdrop/index.js:1
+#: build/blocks/video-card/index.js:1
 #: build/blocks/video/index.js:1
 msgid "Choose video from Media Library"
 msgstr "メディアから動画を選択"
@@ -536,9 +544,12 @@ msgctxt "block keyword"
 msgid "text"
 msgstr "文字"
 
+#: build/blocks/backdrop/block.json
+#: build/blocks/carousel/block.json
 #: build/blocks/media/block.json
 #: build/blocks/panel/block.json
 #: build/blocks/text-group/block.json
+#: build/blocks/video-card/block.json
 #: build/blocks/video/block.json
 msgctxt "block keyword"
 msgid "animewp"
@@ -599,16 +610,19 @@ msgctxt "block description"
 msgid "A poster and play button that opens a video file, YouTube or Vimeo in a dialog. External players load only after pressing play."
 msgstr "ポスターと再生ボタンから動画ファイル・YouTube・Vimeoを開きます。外部プレーヤーは再生を押した後だけ読み込みます。"
 
+#: build/blocks/video-card/block.json
 #: build/blocks/video/block.json
 msgctxt "block keyword"
 msgid "video"
 msgstr "動画"
 
+#: build/blocks/video-card/block.json
 #: build/blocks/video/block.json
 msgctxt "block keyword"
 msgid "movie"
 msgstr "映像"
 
+#: build/blocks/video-card/block.json
 #: build/blocks/video/block.json
 msgctxt "block keyword"
 msgid "youtube"
@@ -619,7 +633,329 @@ msgctxt "block keyword"
 msgid "vimeo"
 msgstr "Vimeo"
 
+#: build/blocks/video-card/block.json
 #: build/blocks/video/block.json
 msgctxt "block keyword"
 msgid "pv"
 msgstr "PV"
+
+#: includes/youtube-poster.php:40
+msgid "Enter a YouTube video page URL first."
+msgstr "先にYouTubeの動画ページURLを入力してください。"
+
+#: includes/youtube-poster.php:69
+msgid "The thumbnail could not be downloaded. Choose an image instead."
+msgstr "サムネイルを取得できませんでした。代わりに画像を選んでください。"
+
+#. translators: %s: YouTube video ID.
+#: includes/youtube-poster.php:78
+msgid "YouTube thumbnail %s"
+msgstr "YouTubeサムネイル %s"
+
+#: build/blocks/video-card/index.js:1
+msgid "Poster shape"
+msgstr "ポスターの縦横比"
+
+#: build/blocks/backdrop/index.js:1
+msgid "A short, silent loop works best (MP4 or WebM)."
+msgstr "短い無音のループ動画（MP4またはWebM）が適しています。"
+
+#: build/blocks/backdrop/index.js:1
+msgid "Blur (px)"
+msgstr "ぼかし（px）"
+
+#: build/blocks/carousel/index.js:1
+msgid "Auto-advance (seconds)"
+msgstr "自動で切り替え（秒）"
+
+#: build/blocks/carousel/index.js:1
+msgid "Previous and next buttons"
+msgstr "前へ・次へボタン"
+
+#: build/blocks/carousel/index.js:1
+msgid "Dots"
+msgstr "ドット"
+
+#: build/blocks/carousel/index.js:1
+#: build/blocks/video-card/index.js:1
+msgid "Text"
+msgstr "文言"
+
+#: build/blocks/video-card/index.js:1
+msgid "Play button (screen readers)"
+msgstr "再生ボタン（読み上げ用）"
+
+#: build/blocks/video-card/index.js:1
+msgid "Close button"
+msgstr "閉じるボタン"
+
+#: build/blocks/video-card/index.js:1
+msgid "Replace poster"
+msgstr "ポスターを変更"
+
+#: build/blocks/video-card/index.js:1
+msgid "Choose poster"
+msgstr "ポスターを選択"
+
+#: build/blocks/video-card/index.js:1
+msgid "Video"
+msgstr "動画"
+
+#: build/blocks/video-card/index.js:1
+msgid "This URL is not supported for the selected source."
+msgstr "選んだ動画の種類に対応していないURLです。"
+
+#: build/blocks/video-card/index.js:1
+msgid "Poster"
+msgstr "ポスター"
+
+#: build/blocks/video-card/index.js:1
+msgid "Posters come from this site’s Media Library, so visitors do not contact the video service until they press play."
+msgstr "ポスターはサイト内のメディアライブラリーから表示するため、再生を押すまで訪問者は動画サービスに接続しません。"
+
+#: build/blocks/video-card/index.js:1
+msgid "The thumbnail could not be imported."
+msgstr "サムネイルを取り込めませんでした。"
+
+#: build/blocks/video-card/index.js:1
+msgid "Import YouTube thumbnail"
+msgstr "YouTubeのサムネイルを取り込む"
+
+#: build/blocks/video-card/index.js:1
+msgid "Remove poster"
+msgstr "ポスターを外す"
+
+#: build/blocks/video-card/index.js:1
+msgid "Choose or import a poster in the block settings."
+msgstr "ブロック設定でポスターを選ぶか取り込んでください。"
+
+#: build/blocks/video-card/index.js:1
+msgid "Set the video URL in the block settings."
+msgstr "ブロック設定で動画のURLを入力してください。"
+
+#: build/blocks/video-card/index.js:1
+msgid "Label (e.g. 2nd trailer)"
+msgstr "ラベル（例：第2弾PV）"
+
+#: build/blocks/video-card/index.js:1
+msgid "Title"
+msgstr "タイトル"
+
+#: build/blocks/video-card/block.json
+msgctxt "block keyword"
+msgid "trailer"
+msgstr "予告"
+
+#: build/blocks/backdrop/index.js:1
+msgid "Backdrop"
+msgstr "背景レイヤー"
+
+#: build/blocks/backdrop/index.js:1
+msgid "Fills the section this block is placed in, behind its other blocks."
+msgstr "置いた区画全体に、ほかのブロックの後ろへ広がります。"
+
+#: build/blocks/backdrop/index.js:1
+msgid "Show"
+msgstr "表示するもの"
+
+#: build/blocks/backdrop/index.js:1
+msgid "Poster of the current slide or card"
+msgstr "表示中のスライド・カードのポスター"
+
+#: build/blocks/backdrop/index.js:1
+msgid "An image"
+msgstr "画像"
+
+#: build/blocks/backdrop/index.js:1
+msgid "A looping video file"
+msgstr "ループ再生する動画ファイル"
+
+#: build/blocks/backdrop/index.js:1
+msgid "The current video, muted (YouTube/Vimeo)"
+msgstr "表示中の動画を無音で再生（YouTube／Vimeo）"
+
+#: build/blocks/backdrop/index.js:1
+msgid "Follows a Carousel or Video Cards in the same section: the current slide, or the card under the pointer."
+msgstr "同じ区画のカルーセルや動画カードに追従します。表示中のスライド、またはポインターを合わせたカードの画像を表示します。"
+
+#: build/blocks/backdrop/index.js:1
+msgid "This connects to YouTube or Vimeo as soon as the page loads, before the visitor presses play. The poster option avoids that."
+msgstr "ページを開いた時点で、再生を押す前にYouTubeまたはVimeoへ接続します。接続を避けたい場合はポスターを選んでください。"
+
+#: build/blocks/backdrop/index.js:1
+msgid "Replace image"
+msgstr "画像を変更"
+
+#: build/blocks/backdrop/index.js:1
+msgid "Choose image"
+msgstr "画像を選択"
+
+#: build/blocks/backdrop/index.js:1
+msgid "Focal point"
+msgstr "焦点"
+
+#: build/blocks/backdrop/index.js:1
+msgid "Veil (%)"
+msgstr "かぶせる色の濃さ（%）"
+
+#: build/blocks/backdrop/index.js:1
+msgid "A layer of this block’s background color over the image, so text stays readable. Set the color under Styles."
+msgstr "文字を読みやすくするため、このブロックの背景色を画像の上に重ねます。色はスタイルで設定します。"
+
+#: build/blocks/carousel/index.js:1
+msgid "Slides"
+msgstr "スライド"
+
+#: build/blocks/carousel/index.js:1
+msgid "Every block inside becomes one slide."
+msgstr "中に入れたブロックが1枚ずつスライドになります。"
+
+#: build/blocks/carousel/index.js:1
+msgid "Slide width (%)"
+msgstr "スライドの幅（%）"
+
+#: build/blocks/carousel/index.js:1
+msgid "At 100%, one slide fills the width. Smaller values let the next slides peek in."
+msgstr "100%では1枚が全幅に表示されます。小さくすると前後のスライドが少し見えます。"
+
+#: build/blocks/carousel/index.js:1
+msgid "Transition"
+msgstr "切り替え方"
+
+#: build/blocks/carousel/index.js:1
+msgid "Slide"
+msgstr "スライド"
+
+#: build/blocks/carousel/index.js:1
+msgid "Fade (slides stack in place)"
+msgstr "フェード（同じ位置で重ねて切り替え）"
+
+#: build/blocks/carousel/index.js:1
+msgid "Dim the slides that are not current"
+msgstr "表示中以外のスライドを控えめにする"
+
+#: build/blocks/carousel/index.js:1
+msgid "Loop from the last slide to the first"
+msgstr "最後のスライドから最初に戻る"
+
+#: build/blocks/carousel/index.js:1
+msgid "Controls"
+msgstr "操作"
+
+#: build/blocks/carousel/index.js:1
+msgid "Round icon buttons"
+msgstr "丸いアイコンボタン"
+
+#: build/blocks/carousel/index.js:1
+msgid "Text with arrow line"
+msgstr "文字と矢印線"
+
+#: build/blocks/carousel/index.js:1
+msgid "None (swipe and dots only)"
+msgstr "なし（スワイプと選択のみ）"
+
+#: build/blocks/carousel/index.js:1
+msgid "Previous button text"
+msgstr "前へボタンの文言"
+
+#: build/blocks/carousel/index.js:1
+msgid "Read by screen readers."
+msgstr "読み上げで使われます。"
+
+#: build/blocks/carousel/index.js:1
+msgid "Next button text"
+msgstr "次へボタンの文言"
+
+#: build/blocks/carousel/index.js:1
+msgid "Slide picker"
+msgstr "スライドの選択"
+
+#: build/blocks/carousel/index.js:1
+msgid "Slide picker style"
+msgstr "選択の表示"
+
+#: build/blocks/carousel/index.js:1
+msgid "Uses the first image in each slide."
+msgstr "各スライドの最初の画像を使います。"
+
+#: build/blocks/carousel/index.js:1
+msgid "Numbers (01, 02…)"
+msgstr "番号（01、02…）"
+
+#: build/blocks/carousel/index.js:1
+msgid "Thumbnails"
+msgstr "サムネイル"
+
+#: build/blocks/carousel/index.js:1
+msgid "0 turns it off. Pauses on hover and focus, adds a pause button, and never runs for visitors who prefer reduced motion."
+msgstr "0でオフ。ポインターやフォーカスが乗ると止まり、一時停止ボタンが付きます。動きを減らす設定の訪問者には動きません。"
+
+#: build/blocks/backdrop/block.json
+msgctxt "block title"
+msgid "Backdrop"
+msgstr "背景レイヤー"
+
+#: build/blocks/backdrop/block.json
+msgctxt "block description"
+msgid "A background layer for the section it is placed in: an image, a looping video, or the poster of whichever slide or card is current."
+msgstr "置いた区画の背景になるレイヤー。画像、ループ動画、または表示中のスライドやカードのポスターを表示します。"
+
+#: build/blocks/backdrop/block.json
+msgctxt "block keyword"
+msgid "background"
+msgstr "背景"
+
+#: build/blocks/backdrop/block.json
+msgctxt "block keyword"
+msgid "blur"
+msgstr "ぼかし"
+
+#: build/blocks/backdrop/block.json
+msgctxt "block keyword"
+msgid "living background"
+msgstr "動く背景"
+
+#: build/blocks/backdrop/block.json
+msgctxt "block keyword"
+msgid "video background"
+msgstr "動画背景"
+
+#: build/blocks/carousel/block.json
+msgctxt "block title"
+msgid "Carousel"
+msgstr "カルーセル"
+
+#: build/blocks/carousel/block.json
+msgctxt "block description"
+msgid "Turns the blocks inside it into slides that swipe or cross-fade: video cards, cover images, character profiles, anything. Buttons, dots, numbers or thumbnails, and auto-advance are optional."
+msgstr "中のブロックをスワイプやフェードで切り替わるスライドにします。動画カード、カバー画像、キャラクター紹介など何でも入れられます。ボタン、ドット・番号・サムネイル、自動切り替えは任意です。"
+
+#: build/blocks/carousel/block.json
+msgctxt "block keyword"
+msgid "slider"
+msgstr "スライダー"
+
+#: build/blocks/carousel/block.json
+msgctxt "block keyword"
+msgid "slideshow"
+msgstr "スライドショー"
+
+#: build/blocks/carousel/block.json
+msgctxt "block keyword"
+msgid "swipe"
+msgstr "スワイプ"
+
+#: build/blocks/carousel/block.json
+msgctxt "block keyword"
+msgid "gallery"
+msgstr "ギャラリー"
+
+#: build/blocks/video-card/block.json
+msgctxt "block title"
+msgid "Video Card"
+msgstr "動画カード"
+
+#: build/blocks/video-card/block.json
+msgctxt "block description"
+msgid "A poster with a play button, label and title. Opens YouTube, Vimeo or a video file in a player window. Use it alone, in columns, or inside a Carousel."
+msgstr "再生ボタン付きのポスターとラベル・タイトル。YouTube・Vimeo・動画ファイルをプレーヤー画面で開きます。単独でも、カラムやカルーセルの中でも使えます。"

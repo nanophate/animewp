@@ -81,6 +81,35 @@ const URLS = [
 ];
 
 const POOLS = {
+	'animewp/carousel': {
+		slideWidth: [ 100, 64, 30, 120 ],
+		effect: [ 'slide', 'fade' ],
+		navStyle: [ 'icon', 'text', 'line', 'none' ],
+		showDots: [ true, false ],
+		dotStyle: [ 'dots', 'numbers', 'thumbnails' ],
+		autoplay: [ 0, 6, 30 ],
+		loop: [ true, false ],
+		emphasizeActive: [ false, true ],
+		prevLabel: [ '前へ', 'PREV', '', 'x'.repeat( 60 ) ],
+	},
+	'animewp/video-card': {
+		source: [ 'youtube', 'vimeo', 'file' ],
+		url: URLS,
+		posterUrl: [ '', '/wp-content/uploads/poster.jpg', ORIGIN + '/wp-content/uploads/poster.jpg', 'https://evil.test/p.jpg' ],
+		label: [ '', 'TRAILER 01', '<strong>PV</strong>' ],
+		title: [ '', 'メイン映像', 'A &amp; B' ],
+		aspectRatio: [ '16/9', '9/16', '5/4' ],
+		playLabel: [ '再生', '' ],
+		closeLabel: [ '閉じる', 'Close' ],
+	},
+	'animewp/backdrop': {
+		mode: [ 'follow', 'image', 'file', 'follow-video' ],
+		imageUrl: [ '', '/wp-content/uploads/bg.jpg', 'https://evil.test/bg.jpg' ],
+		videoUrl: [ '', '/wp-content/uploads/loop.mp4', 'javascript:x' ],
+		blur: [ 24, 0, 200 ],
+		veil: [ 55, 0, 100 ],
+		focalX: [ 50, 0, 100 ],
+	},
 	'animewp/panel': {
 		heading: [ '', '短い見出し', '<strong>太字</strong>と<em>斜体</em>', 'あ'.repeat( 41 ), 'A &amp; B &lt; C' ],
 		headingLevel: [ 2, 3, 6, 7 ],
@@ -139,6 +168,15 @@ const POOLS = {
 
 function innerBlocks( make, name, random ) {
 	const paragraph = ( text ) => make( 'core/paragraph', { content: text } );
+	if ( name === 'animewp/carousel' ) {
+		return [
+			make( 'animewp/video-card', { url: URLS[ 1 ], label: 'TRAILER 01', title: 'メイン映像', posterUrl: '/wp-content/uploads/a.jpg' } ),
+			make( 'core/image', { url: ORIGIN + '/wp-content/uploads/b.jpg', alt: '画像' } ),
+		];
+	}
+	if ( name === 'animewp/video-card' || name === 'animewp/backdrop' ) {
+		return [];
+	}
 	if ( name === 'animewp/media' ) {
 		return [
 			make( 'core/image', { url: ORIGIN + '/wp-content/uploads/a.jpg', alt: 'QA', sizeSlug: 'large', linkDestination: 'none' } ),
