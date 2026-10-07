@@ -8,6 +8,8 @@
 'use strict';
 
 const SECTION_PADDING = { top: 'var:preset|spacing|60', bottom: 'var:preset|spacing|60' };
+// Full-bleed content (the key visual's caption) starts where the wide sections start.
+const EDGE = 'max(var(--wp--style--root--padding-left), calc((100% - var(--wp--style--global--wide-size)) / 2))';
 
 /** Motion presets per look. `plain` adds nothing. */
 const LOOKS = {
@@ -39,8 +41,10 @@ module.exports = ( { b, image, poster } ) => {
 			label( japanese ),
 		] );
 
+	// One width per section: titles and content share the theme's wide size
+	// (Styles → Layout), so every section starts at the same left edge.
 	const section = ( inner, look, extra = {} ) =>
-		b( 'core/group', { align: 'full', tagName: 'section', style: { spacing: { padding: SECTION_PADDING } }, layout: { type: 'constrained' }, ...extra }, inner );
+		b( 'core/group', { align: 'full', tagName: 'section', style: { spacing: { padding: SECTION_PADDING } }, layout: { type: 'constrained', contentSize: 'var(--wp--style--global--wide-size)' }, ...extra }, inner );
 
 	// Decorations sit behind the content, except over full-bleed images (layer: front).
 	const petals = ( look, layer = 'behind' ) =>
@@ -54,7 +58,7 @@ module.exports = ( { b, image, poster } ) => {
 
 	const keyVisual = ( look = 'plain' ) => {
 		const slide = ( file, catchphrase ) =>
-			b( 'core/cover', { url: image( file ), dimRatio: 0, isDark: false, minHeight: 86, minHeightUnit: 'vh', contentPosition: 'bottom left', style: { spacing: { padding: { top: 'var:preset|spacing|60', right: 'var:preset|spacing|50', bottom: 'var:preset|spacing|60', left: 'var:preset|spacing|50' } } } }, [
+			b( 'core/cover', { url: image( file ), dimRatio: 0, isDark: false, minHeight: 86, minHeightUnit: 'vh', contentPosition: 'bottom left', style: { spacing: { padding: { top: 'var:preset|spacing|60', right: EDGE, bottom: 'var:preset|spacing|60', left: EDGE } } } }, [
 				b( 'core/group', { layout: { type: 'constrained', contentSize: '36rem', justifyContent: 'left' }, className: 'is-style-animewp-glass', ...motion( LOOKS[ look ].section ) }, [
 					label( 'TV ANIMATION' ),
 					b( 'core/heading', { content: '作品タイトル', level: 1, className: 'is-style-animewp-display', ...motion( LOOKS[ look ].title ) } ),
@@ -89,7 +93,12 @@ module.exports = ( { b, image, poster } ) => {
 		section( [
 			sectionTitle( 'Story', 'ストーリー', look ),
 			b( 'core/columns', { align: 'wide', style: { spacing: { blockGap: { left: 'var:preset|spacing|60' } } }, ...motion( LOOKS[ look ].section ) }, [
-				b( 'core/column', { width: '30%' }, [ b( 'core/heading', { content: 'あの日の約束を、<br>もう一度。', level: 3, className: 'is-style-animewp-short-vertical' } ) ] ),
+				// The vertical heading sits beside the text (and comes first on phones).
+				b( 'core/column', { width: '30%' }, [
+					b( 'core/group', { layout: { type: 'flex', justifyContent: 'right' } }, [
+						b( 'core/heading', { content: 'あの日の約束を、<br>もう一度。', level: 3, className: 'is-style-animewp-short-vertical' } ),
+					] ),
+				] ),
 				b( 'core/column', {}, [
 					paragraph( '物語のあらすじを入力します。登場人物、舞台、物語が動き出すきっかけを、数段落で紹介します。' ),
 					paragraph( '縦書き見出しは短い言葉向けです。狭い画面では自動で横書きに戻ります。' ),
@@ -173,7 +182,7 @@ module.exports = ( { b, image, poster } ) => {
 	const onAir = ( look = 'plain' ) =>
 		section( [
 			sectionTitle( 'On Air', '放送・配信', look ),
-			b( 'core/group', { layout: { type: 'constrained' }, ...motion( LOOKS[ look ].section ) }, [
+			b( 'core/group', { layout: { type: 'constrained', justifyContent: 'left' }, ...motion( LOOKS[ look ].section ) }, [
 				b( 'core/table', {
 					hasFixedLayout: true,
 					head: [ { cells: [ { content: '放送局・配信', tag: 'th' }, { content: '日時', tag: 'th' } ] } ],

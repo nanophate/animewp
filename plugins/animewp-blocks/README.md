@@ -140,13 +140,13 @@ HTMLDialogElement対応ブラウザーではネイティブモーダル、Escape
 
 ```sh
 npm ci                                  # ビルド・Lint・Docker環境の道具
-npm run env:start                       # localhost:8888 にWordPress 6.6を起動（wp-env既定の管理者で入れます）
+npm run env:start                       # localhost:8888 に開発用、localhost:8889 に試験用のWordPress 6.6を起動（wp-env既定の管理者で入れます）
 npm start                               # 編集中は自動ビルド
 npm run lint:js                         # WordPressのコーディング規約
 npm ci --prefix tests/serialization     # 互換性テストの道具（初回のみ）
 python3 scripts/validate.py --compare   # ビルド、PHP（Docker）、監査、保存HTML比較
-npm run test:wp                         # WordPress統合試験（Docker内の使い捨てサイトで実行）
-npm run test:security                   # セキュリティ検査（PHPCSのWordPressセキュリティ規則、Plugin Check、Theme Check）
+npm run test:wp                         # WordPress統合試験（試験用サイト localhost:8889 で実行。開発用サイトの内容は変えません）
+npm run test:security                   # セキュリティ検査（PHPCSのWordPressセキュリティ規則、Plugin Check、Theme Check。試験用サイトで実行）
 npm run i18n                            # 翻訳ファイルを再生成（WP-CLIをDockerで実行）
 ```
 

@@ -14,3 +14,13 @@
 	pointer-events: none;
 	opacity: 0.6;
 }
+
+/* Fade slides would stack on top of each other; edit them side by side instead. */
+.wp-block-animewp-carousel.is-effect-fade > .animewp-carousel__track {
+	display: flex;
+	overflow-x: auto;
+
+	> * {
+		grid-area: auto;
+	}
+}

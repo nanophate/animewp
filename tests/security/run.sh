@@ -3,8 +3,8 @@
 #   1. PHP_CodeSniffer with the WordPress security sniffs (phpcs.xml.dist):
 #      escaping, nonces, input sanitization, prepared SQL, dangerous functions,
 #      PHP 8.0+ compatibility.
-#   2. Plugin Check (WordPress.org), security category, in the wp-env site.
-#   3. Theme Check (WordPress.org) in the wp-env site: fails on REQUIRED items.
+#   2. Plugin Check (WordPress.org), security category, in the wp-env tests site (localhost:8889).
+#   3. Theme Check (WordPress.org) in the wp-env tests site (localhost:8889): fails on REQUIRED items.
 # Needs: Docker, npm ci, npm run build, npm run env:start.
 set -eu
 root=$(cd "$(dirname "$0")/../.." && pwd)
@@ -17,7 +17,7 @@ fi
 docker run --rm -v "$root:/work" -w /work php:8.0-cli tests/security/vendor/bin/phpcs --standard=phpcs.xml.dist --report=summary
 echo "PHPCS: no issues"
 
-wp() { npx wp-env run cli -- wp "$@" 2>/dev/null; }
+wp() { npx wp-env run tests-cli -- wp "$@" 2>/dev/null; }
 wp plugin is-installed plugin-check || wp plugin install plugin-check --quiet
 wp plugin is-installed theme-check || wp plugin install theme-check --quiet
 wp plugin activate plugin-check theme-check --quiet

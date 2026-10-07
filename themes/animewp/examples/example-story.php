@@ -10,7 +10,7 @@
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 ?>
-<!-- wp:group {"tagName":"section","align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
+<!-- wp:group {"tagName":"section","align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained","contentSize":"var(\u002d\u002dwp\u002d\u002dstyle\u002d\u002dglobal\u002d\u002dwide-size)"}} -->
 <section class="wp-block-group alignfull" id="story" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:group {"style":{"spacing":{"blockGap":"0.25rem","margin":{"bottom":"var:preset|spacing|40"}}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"left"}} -->
 <div class="wp-block-group" style="margin-bottom:var(--wp--preset--spacing--40)"><!-- wp:heading {"className":"is-style-animewp-latin"} -->
 <h2 class="wp-block-heading is-style-animewp-latin">Story</h2>
@@ -23,9 +23,11 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 <!-- wp:columns {"align":"wide","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|60"}}}} -->
 <div class="wp-block-columns alignwide"><!-- wp:column {"width":"30%"} -->
-<div class="wp-block-column" style="flex-basis:30%"><!-- wp:heading {"level":3,"className":"is-style-animewp-short-vertical"} -->
+<div class="wp-block-column" style="flex-basis:30%"><!-- wp:group {"layout":{"type":"flex","justifyContent":"right"}} -->
+<div class="wp-block-group"><!-- wp:heading {"level":3,"className":"is-style-animewp-short-vertical"} -->
 <h3 class="wp-block-heading is-style-animewp-short-vertical">あの日の約束を、<br>もう一度。</h3>
 <!-- /wp:heading --></div>
+<!-- /wp:group --></div>
 <!-- /wp:column -->
 
 <!-- wp:column -->
