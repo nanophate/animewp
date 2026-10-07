@@ -9,15 +9,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Pages that can be added as drafts. The full example pages need AnimeWP
+ * Blocks; without it only the pages built from core blocks are offered.
+ */
 function animewp_starters() {
-	return array(
-		'showcase'      => array( 'pattern' => 'animewp/home-showcase', 'title' => __( '作品紹介 — 余白の作品紹介', 'animewp' ), 'template' => 'animewp-showcase' ),
-		'composition-a' => array( 'pattern' => 'animewp/composition-a', 'title' => __( '作品紹介 — カードと3列', 'animewp' ), 'template' => 'animewp-landing' ),
-		'composition-b' => array( 'pattern' => 'animewp/composition-b', 'title' => __( '作品紹介 — 画像と2列', 'animewp' ), 'template' => 'animewp-landing' ),
-		'characters'    => array( 'pattern' => 'animewp/characters-page', 'title' => __( '登場人物', 'animewp' ), 'template' => 'default' ),
-		'contact'       => array( 'pattern' => 'animewp/contact-page', 'title' => __( 'お問い合わせ', 'animewp' ), 'template' => 'default' ),
-		'legal'         => array( 'pattern' => 'animewp/legal-page', 'title' => __( 'ご利用について', 'animewp' ), 'template' => 'default' ),
+	$starters = array(
+		'simple'      => array( 'pattern' => 'animewp/page-simple', 'title' => __( '作品紹介 — シンプル', 'animewp' ), 'template' => 'animewp-canvas' ),
+		'blur'        => array( 'pattern' => 'animewp/page-blur', 'title' => __( '作品紹介 — ぼかしから現れる', 'animewp' ), 'template' => 'animewp-canvas' ),
+		'drift'       => array( 'pattern' => 'animewp/page-drift', 'title' => __( '作品紹介 — 花びらが舞う', 'animewp' ), 'template' => 'animewp-canvas' ),
+		'style-guide' => array( 'pattern' => 'animewp/style-guide', 'title' => __( 'スタイル見本', 'animewp' ), 'template' => 'animewp-canvas' ),
+		'contact'     => array( 'pattern' => 'animewp/contact-page', 'title' => __( 'お問い合わせ', 'animewp' ), 'template' => 'default' ),
+		'legal'       => array( 'pattern' => 'animewp/legal-page', 'title' => __( 'ご利用について', 'animewp' ), 'template' => 'default' ),
 	);
+	$registry = WP_Block_Patterns_Registry::get_instance();
+	return array_filter( $starters, static fn( $starter ) => $registry->is_registered( $starter['pattern'] ) );
 }
 
 function animewp_can_import() {
@@ -99,7 +105,7 @@ function animewp_starter_screen() {
 		<table class="widefat striped" style="max-width:900px">
 			<thead><tr><th scope="col"><?php esc_html_e( '編集したいもの', 'animewp' ); ?></th><th scope="col"><?php esc_html_e( '選び方', 'animewp' ); ?></th></tr></thead>
 			<tbody>
-				<tr><th scope="row"><?php esc_html_e( 'ページや部品の見本', 'animewp' ); ?></th><td><?php esc_html_e( '編集画面の「＋ → パターン」で「animewp：ページ」「animewp：ページの部品」「animewp：ヘッダー」を選びます。挿入した見本は、文章・画像・色をブロックごとに変更できます。', 'animewp' ); ?></td></tr>
+				<tr><th scope="row"><?php esc_html_e( 'ページや部品の見本', 'animewp' ); ?></th><td><?php esc_html_e( '編集画面の「＋ → パターン」で「animewp：区画の見本」「animewp：ページの見本」「animewp：ヘッダー」を選びます。挿入した見本は、文章・画像・色をブロックごとに変更できます。', 'animewp' ); ?></td></tr>
 				<tr><th scope="row"><?php esc_html_e( 'ページの型（テンプレート）', 'animewp' ); ?></th><td><?php esc_html_e( '固定ページの設定で「テンプレート」を選びます。作品紹介ページ、自由な全面レイアウト、左固定・右固定・全面表示メニューを用意しています。テンプレート自体を編集すると、その型を使うほかのページにも反映されます。', 'animewp' ); ?></td></tr>
 				<tr><th scope="row"><?php esc_html_e( 'サイト全体の雰囲気', 'animewp' ); ?></th><td><?php esc_html_e( '「外観 → エディター → スタイル」でスタイルを参照し、「見出しを明朝に」または「ゆったり余白・丸いボタン」を選びます。色・幅・余白もここで調整できます。', 'animewp' ); ?></td></tr>
 				<tr><th scope="row"><?php esc_html_e( '各ブロックの見た目', 'animewp' ); ?></th><td><?php esc_html_e( '見出し・段落・グループ・画像などを選び、ブロック設定の「スタイル」からカード、縦書き見出し、文字の背景ハイライトなどを選びます。表示される種類は選択したブロックによって変わります。', 'animewp' ); ?></td></tr>

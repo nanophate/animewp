@@ -1,5 +1,0 @@
-/* Gap values only; runtime wrappers select the defaults when Core spacing is unset. */
-.animewp-hero-columns { --animewp-column-gap: clamp(2rem, 7vw, 7rem); }
-.animewp-media-columns { --animewp-column-gap: clamp(24px, 4vw, 64px); }
-.animewp-character-grid { --animewp-column-gap: 20px; }
-@media (max-width: 781px) { .animewp-character-grid { --animewp-column-gap: 16px; } }

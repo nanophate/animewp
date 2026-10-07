@@ -2,7 +2,7 @@
 /**
  * Title: ページ送り付きの記事一覧
  * Slug: animewp/news-index
- * Categories: animewp-sections
+ * Categories: animewp-examples
  * Inserter: no
  * Description: 日付・タイトル・カテゴリーとページ送りを表示する記事一覧です。アーカイブや検索結果で使います。
  */

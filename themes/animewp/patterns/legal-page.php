@@ -2,7 +2,8 @@
 /**
  * Title: ご利用についてのページ
  * Slug: animewp/legal-page
- * Categories: animewp-pages
+ * Categories: animewp-example-pages
+ * Inserter: no
  * Description: 権利表記や利用上の案内を記載する固定ページの見本です。運用に合わせて内容を確認・編集してください。
  */
 ?>

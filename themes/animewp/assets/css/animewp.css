@@ -20,19 +20,11 @@
   min-height: 88px;
   box-sizing: border-box;
   border-bottom: 1px solid var(--animewp-line);
-  --animewp-default-header-gap: 24px;
-  --animewp-default-header-padding-top: 20px;
-  --animewp-default-header-padding-right: clamp(20px, 4vw, 64px);
-  --animewp-default-header-padding-bottom: 20px;
-  --animewp-default-header-padding-left: clamp(20px, 4vw, 64px);
-  --animewp-default-header-justify: space-between;
-  --animewp-default-header-orientation: row;
-  --animewp-default-header-wrap: wrap;
 }
-.animewp-brand { --animewp-default-brand-gap: 12px; flex-shrink: 0; }
+.animewp-brand { flex-shrink: 0; }
 .animewp-brand .wp-block-site-logo { line-height: 0; }
 .animewp-brand .wp-block-site-title { margin-block: 0; }
-.animewp-header .wp-block-navigation { --animewp-default-navigation-gap: 24px; margin: 0; flex: 1; }
+.animewp-header .wp-block-navigation { margin: 0; flex: 1; }
 .animewp-header .wp-block-navigation a { text-decoration: none; }
 .animewp-header .wp-block-navigation a:hover { text-decoration: underline; }
 .animewp-header .wp-block-navigation__responsive-container-open,
@@ -132,13 +124,6 @@
     top: var(--wp-admin--admin-bar--height, 0px);
     bottom: 0;
     width: var(--animewp-side-width);
-    --animewp-default-header-padding-top: 36px;
-    --animewp-default-header-padding-right: 28px;
-    --animewp-default-header-padding-bottom: 36px;
-    --animewp-default-header-padding-left: 28px;
-    --animewp-default-header-justify: flex-start;
-    --animewp-default-header-orientation: column;
-    --animewp-default-header-align: stretch;
     display: flex;
     overflow-y: auto;
     background: var(--wp--preset--color--base, #fff);
@@ -149,16 +134,13 @@
   .animewp-theme:has(.animewp-header--left) .wp-site-blocks { padding-left: var(--animewp-side-width); }
   .animewp-theme:has(.animewp-header--right) .wp-site-blocks { padding-right: var(--animewp-side-width); }
   .animewp-theme :is(.animewp-header--left, .animewp-header--right) .wp-block-navigation { flex: 0; margin-top: 40px; }
-  .animewp-theme :is(.animewp-header--left, .animewp-header--right) .wp-block-navigation { --animewp-default-navigation-gap: 20px; --animewp-default-navigation-orientation: column; }
   .animewp-theme :is(.animewp-header--left, .animewp-header--right) .wp-block-navigation__container { align-items: var(--navigation-layout-align, flex-start); }
 }
 @media (max-width: 1000px) {
-  .animewp-header { --animewp-default-header-wrap: wrap; }
-  .animewp-header .wp-block-navigation { --animewp-default-navigation-gap: 18px; }
   .animewp-news-row { grid-template-columns: 1fr; gap: 8px; }
 }
 @media (max-width: 781px) {
-  .animewp-header { min-height: 72px; --animewp-default-header-gap: 16px; --animewp-default-header-padding-top: 14px; --animewp-default-header-padding-bottom: 14px; --animewp-default-header-wrap: nowrap; }
+  .animewp-header { min-height: 72px; }
   .animewp-header .wp-block-navigation__responsive-container:not(.is-menu-open) { display: none; }
   .animewp-header .wp-block-navigation__responsive-container-open { display: flex; margin-inline-start: auto; }
   .animewp-header .wp-block-navigation__responsive-container.is-menu-open { padding: 28px; }
@@ -256,7 +238,6 @@ header.wp-block-template-part:has(.animewp-header--glass) { position: sticky; to
   .is-style-animewp-fade-start img, .is-style-animewp-fade-bottom img { -webkit-mask-image: none; mask-image: none; }
 }
 
-/* Pattern column gap defaults live in layout.css, after Core defaults and before individual spacing. */
 
 /* Page transitions: a soft cross-fade between pages in browsers that support
  * cross-document View Transitions; others navigate normally. To turn it off,

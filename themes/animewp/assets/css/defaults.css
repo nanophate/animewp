@@ -1,0 +1,44 @@
+/*
+ * Default spacing for headers and pattern columns saved before 2.0, which did
+ * not store their spacing in the block. Front end only and one class strong,
+ * so any spacing set on the block itself (always stored since 2.0) wins.
+ */
+.animewp-header {
+  gap: 24px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 20px clamp(20px, 4vw, 64px);
+  margin-block: 0;
+}
+:where(.animewp-header) .animewp-brand { gap: 12px; }
+:where(.animewp-header) .wp-block-navigation { gap: 24px; }
+
+:where(.animewp-hero-columns).wp-block-columns { gap: clamp(2rem, 7vw, 7rem); }
+:where(.animewp-media-columns).wp-block-columns { gap: clamp(24px, 4vw, 64px); }
+:where(.animewp-character-grid).wp-block-columns { gap: 20px; }
+
+@media (min-width: 1001px) {
+  :where(.animewp-theme) :is(.animewp-header--left, .animewp-header--right) {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 36px 28px;
+  }
+  :where(.animewp-theme) :where(.animewp-header--left, .animewp-header--right) .wp-block-navigation {
+    gap: 20px;
+  }
+  :where(.animewp-theme) :where(.animewp-header--left, .animewp-header--right) .wp-block-navigation__container {
+    --navigation-layout-direction: column;
+    --navigation-layout-justify: initial;
+    --navigation-layout-align: var(--navigation-layout-justification-setting, flex-start);
+    flex-direction: column;
+  }
+}
+@media (max-width: 1000px) {
+  :where(.animewp-header) .wp-block-navigation { gap: 18px; }
+}
+@media (max-width: 781px) {
+  .animewp-header { gap: 16px; padding-block: 14px; flex-wrap: nowrap; }
+  :where(.animewp-character-grid).wp-block-columns { gap: 16px; }
+  :where(.animewp-header) .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__container { gap: 24px; }
+}

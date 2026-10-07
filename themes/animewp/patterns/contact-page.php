@@ -2,7 +2,8 @@
 /**
  * Title: お問い合わせのページ
  * Slug: animewp/contact-page
- * Categories: animewp-pages
+ * Categories: animewp-example-pages
+ * Inserter: no
  * Description: 連絡先やフォームを置くための固定ページの見本です。送信機能は含みません。
  */
 ?>
