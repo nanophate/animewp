@@ -1,11 +1,8 @@
-/**
+/*
  * Scroll-snap carousel. CSS does the layout and snapping; this only keeps the
  * active index, buttons, dots, keyboard and optional autoplay in sync.
  * Without JavaScript the track is still a swipeable, scrollable list.
  */
-const reducedMotion = () =>
-	window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
-
 export function createCarousel( {
 	track,
 	slides,
@@ -19,9 +16,13 @@ export function createCarousel( {
 	mode = 'slide',
 } ) {
 	const fade = mode === 'fade';
+	const motion = window.matchMedia( '(prefers-reduced-motion: reduce)' );
+	const root = track.parentElement;
 	let active = -1;
 	let timer = null;
 	let paused = false;
+	let hovered = root.matches( ':hover' );
+	let focused = root.contains( root.ownerDocument.activeElement );
 	let frame = 0;
 
 	function setActive( index ) {
@@ -63,7 +64,7 @@ export function createCarousel( {
 				( track.clientWidth - slide.clientWidth ) / 2;
 			track.scrollTo( {
 				left,
-				behavior: smooth && ! reducedMotion() ? 'smooth' : 'auto',
+				behavior: smooth && ! motion.matches ? 'smooth' : 'auto',
 			} );
 		}
 		setActive( target );
@@ -119,6 +120,17 @@ export function createCarousel( {
 		dot.addEventListener( 'click', () => goTo( i ) )
 	);
 	track.addEventListener( 'keydown', ( event ) => {
+		// Nested blocks keep their own editing and keyboard controls.
+		if (
+			event.target !== track ||
+			event.defaultPrevented ||
+			event.altKey ||
+			event.ctrlKey ||
+			event.metaKey ||
+			event.shiftKey
+		) {
+			return;
+		}
 		if ( event.key === 'ArrowRight' || event.key === 'ArrowLeft' ) {
 			event.preventDefault();
 			goTo( active + ( event.key === 'ArrowRight' ? 1 : -1 ) );
@@ -135,21 +147,34 @@ export function createCarousel( {
 		if (
 			autoplay > 0 &&
 			! paused &&
-			! reducedMotion() &&
+			! hovered &&
+			! focused &&
+			! document.hidden &&
+			! motion.matches &&
 			slides.length > 1
 		) {
 			timer = setInterval( () => goTo( active + 1 ), autoplay * 1000 );
 		}
 	}
 	if ( autoplay > 0 ) {
-		const root = track.parentElement;
-		root.addEventListener( 'pointerenter', stop );
-		root.addEventListener( 'pointerleave', start );
-		root.addEventListener( 'focusin', stop );
-		root.addEventListener( 'focusout', start );
-		document.addEventListener( 'visibilitychange', () =>
-			document.hidden ? stop() : start()
-		);
+		root.addEventListener( 'pointerenter', () => {
+			hovered = true;
+			start();
+		} );
+		root.addEventListener( 'pointerleave', () => {
+			hovered = false;
+			start();
+		} );
+		root.addEventListener( 'focusin', () => {
+			focused = true;
+			start();
+		} );
+		root.addEventListener( 'focusout', ( event ) => {
+			focused = root.contains( event.relatedTarget );
+			start();
+		} );
+		document.addEventListener( 'visibilitychange', start );
+		motion.addEventListener( 'change', start );
 		if ( pauseButton ) {
 			pauseButton.hidden = false;
 			pauseButton.addEventListener( 'click', () => {

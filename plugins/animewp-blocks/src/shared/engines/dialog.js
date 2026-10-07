@@ -39,10 +39,11 @@ export function createDialog(
 	return {
 		open( content, { label, trigger } = {} ) {
 			opener = trigger || container.ownerDocument.activeElement;
-			body.replaceChildren( content );
 			dialog.setAttribute( 'aria-label', label || '' );
-			document.documentElement.classList.add( 'animewp-has-dialog' );
+			// Do not attach an autoplaying player until the modal actually opens.
 			dialog.showModal();
+			body.replaceChildren( content );
+			document.documentElement.classList.add( 'animewp-has-dialog' );
 			close.focus( { preventScroll: true } );
 		},
 		close: () => dialog.close(),

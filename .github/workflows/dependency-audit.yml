@@ -25,8 +25,12 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
-          node-version: "22"
+          node-version: "24"
           package-manager-cache: false
+      - name: Use the reviewed npm version
+        run: npm install --global npm@11.16.0 --ignore-scripts
+      - name: Verify audit failure handling and exception scope
+        run: python3 -m unittest discover -s tests/security -p 'test_*.py'
       # Fails on any runtime vulnerability, and on high/critical development-tool
       # advisories not reviewed in tests/security/npm-audit-accepted.json.
       - name: Audit locked dependencies (root and tests/serialization)

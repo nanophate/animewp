@@ -18,4 +18,11 @@ $out['password']=animewp_fixture('password',array('post_title'=>'保護された
 for($i=1;$i<=12;$i++){$out['news-'.$i]=animewp_fixture('news-'.$i,array('post_type'=>'post','post_title'=>'検証お知らせ '.$i.($i===12?' — 長いタイトルが複数行に折り返しても余白を保つことを確認するための文章':''),'post_content'=>'<!-- wp:paragraph --><p>検索確認用の本文。検証キーワード。</p><!-- /wp:paragraph -->','comment_status'=>'open'));}
 if(!get_comments(array('post_id'=>$out['news-1'],'count'=>true))){wp_insert_comment(array('comment_post_ID'=>$out['news-1'],'comment_author'=>'検証コメント','comment_content'=>'コメント欄の表示を確認します。','comment_approved'=>1));}
 $out['reading']=get_option('show_on_front');
-WP_CLI::line(wp_json_encode($out,JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE));
+$results=array();
+foreach($out as $key=>$id){
+ if($key==='reading')continue;
+ $results[]=array('test'=>'created fixture '.$key,'pass'=>is_int($id)&&$id>0);
+}
+$results[]=array('test'=>'fixture comment is available','pass'=>(bool)get_comments(array('post_id'=>$out['news-1'],'count'=>true)));
+WP_CLI::line(wp_json_encode(array('fixtures'=>$out,'results'=>$results),JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE));
+foreach($results as $result){if(!$result['pass'])WP_CLI::halt(1);}

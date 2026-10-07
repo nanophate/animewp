@@ -7,7 +7,8 @@ const reduced = window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
 const root = document.documentElement;
 
 /**
- * Wrap each character in a span; the element keeps the full text for screen readers.
+ * Animate characters while keeping each original text node available to screen
+ * readers, including the text that names a link inside a paragraph or heading.
  * @param {HTMLElement} element Text block to split.
  */
 function splitLetters( element ) {
@@ -19,7 +20,6 @@ function splitLetters( element ) {
 	) {
 		return;
 	}
-	element.setAttribute( 'aria-label', text );
 	let index = 0;
 	const walker = element.ownerDocument.createTreeWalker(
 		element,
@@ -30,19 +30,28 @@ function splitLetters( element ) {
 		nodes.push( walker.currentNode );
 	}
 	nodes.forEach( ( node ) => {
+		if ( ! node.nodeValue.trim() ) {
+			return;
+		}
 		const fragment = element.ownerDocument.createDocumentFragment();
+		const readable = element.ownerDocument.createElement( 'span' );
+		readable.className = 'animewp-letter-text';
+		readable.textContent = node.nodeValue;
+		fragment.append( readable );
+		const visual = element.ownerDocument.createElement( 'span' );
+		visual.setAttribute( 'aria-hidden', 'true' );
 		[ ...node.nodeValue ].forEach( ( character ) => {
 			if ( /\s/.test( character ) ) {
-				fragment.append( character );
+				visual.append( character );
 				return;
 			}
 			const span = element.ownerDocument.createElement( 'span' );
 			span.className = 'animewp-letter';
-			span.setAttribute( 'aria-hidden', 'true' );
 			span.style.setProperty( '--animewp-i', String( index++ ) );
 			span.textContent = character;
-			fragment.append( span );
+			visual.append( span );
 		} );
+		fragment.append( visual );
 		node.replaceWith( fragment );
 	} );
 }
@@ -53,7 +62,7 @@ function prepare( element ) {
 			child.style.setProperty( '--animewp-i', String( index ) )
 		);
 	}
-	if ( element.classList.contains( 'has-entrance-letters' ) ) {
+	if ( ! reduced && element.classList.contains( 'has-entrance-letters' ) ) {
 		splitLetters( element );
 	}
 }

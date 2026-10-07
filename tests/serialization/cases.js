@@ -252,4 +252,18 @@ function generatedBlocks( make, perBlock = 400 ) {
 	return cases;
 }
 
-module.exports = { documents, generatedBlocks };
+/** Core blocks that must preserve Motion in comments without changing HTML. */
+function coreMotionBlocks( make ) {
+	const paragraph = () => make( 'core/paragraph', { content: '本文 <a href="/trailer">映像を見る</a>' } );
+	return {
+		'core/paragraph': paragraph,
+		'core/heading': () => make( 'core/heading', { level: 3, content: '見出し' } ),
+		'core/group': () => make( 'core/group', { layout: { type: 'constrained' } }, [ paragraph() ] ),
+		'core/image': () => make( 'core/image', { url: ORIGIN + '/image.jpg', alt: '画像', sizeSlug: 'large', linkDestination: 'none' } ),
+		'core/button': () => make( 'core/button', { text: '映像を見る', url: '/trailer' } ),
+		'core/columns': () => make( 'core/columns', {}, [ make( 'core/column', {}, [ paragraph() ] ), make( 'core/column', {}, [ paragraph() ] ) ] ),
+		'core/cover': () => make( 'core/cover', { url: ORIGIN + '/image.jpg', dimRatio: 50 }, [ paragraph() ] ),
+	};
+}
+
+module.exports = { documents, generatedBlocks, coreMotionBlocks };

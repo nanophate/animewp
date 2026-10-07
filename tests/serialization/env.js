@@ -9,6 +9,7 @@
 const os = require( 'node:os' );
 const fs = require( 'node:fs' );
 const path = require( 'node:path' );
+const { TextEncoder, TextDecoder } = require( 'node:util' );
 const { JSDOM, VirtualConsole } = require( 'jsdom' );
 
 const ORIGIN = 'http://localhost:8888';
@@ -72,10 +73,19 @@ const scriptErrors = [];
 
 function createWindow() {
 	// Editor logs (deprecation notices, React warnings) stay out of stdout.
-	const virtualConsole = process.env.ANIMEWP_HARNESS_DEBUG ? new VirtualConsole().sendTo( console ) : new VirtualConsole();
+	const virtualConsole = new VirtualConsole();
+	if ( process.env.ANIMEWP_HARNESS_DEBUG ) {
+		// jsdom 27+ renamed sendTo; keep diagnostics usable before and after
+		// an independently reviewed harness dependency update.
+		if ( typeof virtualConsole.forwardTo === 'function' ) {
+			virtualConsole.forwardTo( console );
+		} else {
+			virtualConsole.sendTo( console );
+		}
+	}
 	// Only uncaught script exceptions fail a run; jsdom also reports CSS it cannot parse.
 	virtualConsole.on( 'jsdomError', ( error ) => {
-		if ( error.type === 'unhandled-exception' || ( error.detail && error.detail instanceof Error ) ) {
+		if ( error.type === 'unhandled exception' || error.type === 'unhandled-exception' ) {
 			scriptErrors.push( error );
 		}
 	} );
@@ -88,6 +98,10 @@ function createWindow() {
 		virtualConsole,
 	} );
 	const { window } = dom;
+	// jsdom omits these browser APIs; WordPress 7.1 core-data uses TextEncoder
+	// during script initialization. Node supplies the standard implementations.
+	window.TextEncoder ??= TextEncoder;
+	window.TextDecoder ??= TextDecoder;
 	window.matchMedia = () => ( { matches: false, addListener() {}, removeListener() {}, addEventListener() {}, removeEventListener() {} } );
 	window.eval( 'window.ResizeObserver = window.ResizeObserver || class { observe() {} unobserve() {} disconnect() {} };' );
 	window.eval( 'window.IntersectionObserver = window.IntersectionObserver || class { observe() {} unobserve() {} disconnect() {} };' );
@@ -100,7 +114,10 @@ function run( window, file ) {
 	window.document.head.appendChild( script );
 	if ( scriptErrors.length ) {
 		const error = scriptErrors.splice( 0 )[ 0 ];
-		throw new Error( file + ': ' + ( error.detail && error.detail.stack ? error.detail.stack : error.message ) );
+		// jsdom 24 uses detail, newer versions use cause. The original Error
+		// belongs to the window realm, so instanceof Error is not a safe test.
+		const cause = error.cause || error.detail;
+		throw new Error( file + ': ' + ( cause && cause.stack ? cause.stack : error.message ) );
 	}
 }
 
@@ -111,7 +128,8 @@ function installWordPress() {
 	for ( const handle of order ) {
 		run( window, scriptFile( wpDir, handle ) );
 	}
-	window.wp.blockLibrary.registerCoreBlocks();
+	// Core registration is deferred to loadPlugin so attribute filters apply to
+	// core blocks as well as custom blocks, before examples or fixtures are parsed.
 	const version = /\$wp_version = '([^']+)'/.exec( fs.readFileSync( path.join( wpDir, 'wp-includes/version.php' ), 'utf8' ) )[ 1 ];
 	return { window, wp: window.wp, version };
 }
@@ -129,6 +147,7 @@ function loadPlugin( dir, window ) {
 		if ( fs.existsSync( motion ) ) {
 			run( window, motion );
 		}
+		window.wp.blockLibrary.registerCoreBlocks();
 		for ( const name of fs.readdirSync( built ).sort() ) {
 			const file = path.join( built, name, 'index.js' );
 			if ( fs.existsSync( file ) ) {
@@ -141,6 +160,7 @@ function loadPlugin( dir, window ) {
 	if ( ! fs.existsSync( legacy ) ) {
 		throw new Error( 'No build/ or legacy assets/editor.js in ' + dir + ' (run npm run build first)' );
 	}
+	window.wp.blockLibrary.registerCoreBlocks();
 	const keys = [ 'apiVersion', 'name', 'title', 'category', 'icon', 'description', 'keywords', 'attributes', 'supports', 'textdomain' ];
 	const metadata = fs
 		.readdirSync( path.join( dir, 'blocks' ) )
@@ -155,4 +175,4 @@ function loadPlugin( dir, window ) {
 	return 'legacy';
 }
 
-module.exports = { ORIGIN, installWordPress, loadPlugin };
+module.exports = { ORIGIN, installWordPress, loadPlugin, createWindow, run };

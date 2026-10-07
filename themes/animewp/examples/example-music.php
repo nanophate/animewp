@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
-<!-- wp:columns {"align":"wide"} -->
+<!-- wp:columns {"align":"wide","animewpMotion":{"hover":"lift","target":"children"}} -->
 <div class="wp-block-columns alignwide"><!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"}} -->
 <div class="wp-block-group is-style-animewp-card"><!-- wp:image {"aspectRatio":"1","scale":"cover"} -->

@@ -5,6 +5,7 @@
 .wp-block-animewp-carousel {
 	--animewp-carousel-ease: var(--wp--custom--animewp--motion--easing--out, cubic-bezier(0.2, 0.7, 0.2, 1));
 	--animewp-carousel-time: var(--wp--custom--animewp--motion--duration--base, 450ms);
+	--animewp-carousel-effective-slide: var(--animewp-carousel-slide, 100%);
 	position: relative;
 	min-width: 0;
 }
@@ -29,12 +30,12 @@
 	/* End spacers center the first and last slide when slides are narrower than the track. */
 	&::before,
 	&::after {
-		flex: 0 0 max(0px, calc((100% - var(--animewp-carousel-slide, 100%)) / 2 - var(--animewp-carousel-gap, var(--wp--style--block-gap, 1.5rem))));
+		flex: 0 0 max(0px, calc((100% - var(--animewp-carousel-effective-slide)) / 2 - var(--animewp-carousel-gap, var(--wp--style--block-gap, 1.5rem))));
 		content: "";
 	}
 
 	> * {
-		flex: 0 0 var(--animewp-carousel-slide, 100%);
+		flex: 0 0 var(--animewp-carousel-effective-slide);
 		min-width: 0;
 		max-width: none;
 		margin: 0 !important;
@@ -56,7 +57,7 @@
 }
 
 /* Fade: slides stack in one cell and cross-fade. --------------------------- */
-.is-effect-fade > .animewp-carousel__track {
+.is-effect-fade.is-enhanced > .animewp-carousel__track {
 	display: grid;
 	overflow: hidden;
 	scroll-snap-type: none;
@@ -285,7 +286,7 @@
 
 @media (max-width: 781px) {
 	.wp-block-animewp-carousel {
-		--animewp-carousel-slide: max(var(--animewp-carousel-slide-mobile, 86%), var(--animewp-carousel-slide, 100%)) !important;
+		--animewp-carousel-effective-slide: max(var(--animewp-carousel-slide-mobile, 86%), var(--animewp-carousel-slide, 100%));
 	}
 }
 

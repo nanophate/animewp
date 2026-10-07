@@ -4,14 +4,18 @@
  * discovered from block.json files.
  */
 const path = require( 'node:path' );
+const { getProjectSourcePath } = require( '@wordpress/scripts/utils' );
 const [ scriptConfig, moduleConfig ] = require( '@wordpress/scripts/config/webpack.config' );
+const BuildPolicyPlugin = require( './scripts/build-policy.cjs' );
 
-const src = path.resolve( __dirname, 'plugins/animewp-blocks/src' );
+// Baseline comparisons pass a different source directory; every entry must use it.
+const src = path.resolve( __dirname, getProjectSourcePath() );
 
 function withEntries( config, extra ) {
 	const defaults = config.entry;
 	return {
 		...config,
+		plugins: [ ...config.plugins, new BuildPolicyPlugin() ],
 		entry: async () => ( {
 			...( typeof defaults === 'function' ? await defaults() : defaults ),
 			...extra,
