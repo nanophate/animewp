@@ -1,3 +1,5 @@
+> **Status (2.0.0, all phases done).** Built as planned, with one change asked for during the work: instead of dedicated Movie Gallery, Key Visual, Character and Section Title blocks, there are generic parts that combine — Carousel, Video Card, Backdrop, Decoration — plus patterns using the text styles. Not built yet: Smoke and Marquee motion presets, opening logo animation, opt-in smooth scroll, user-editable named motion presets, page-level motion inheritance, and the control refresh for Decorated Panel / Image & Text / Video Button. Still open: product name, where editable motion presets would live, and the WordPress floor (still 6.6).
+
 # Overhaul plan v2 — few examples, deep elements, one harmony
 
 **Product idea in one line:** a calm white/black/gray base where every element is deeply customizable, everything stays in harmony because it all reads the same design tokens, and motion is an optional layer you apply to a group once and every child follows.
