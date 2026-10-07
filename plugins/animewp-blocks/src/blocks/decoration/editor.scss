@@ -1,0 +1,30 @@
+/* Editor: let the decoration itself be clicked so it can be selected and moved. */
+.wp-block-animewp-decoration .animewp-decoration__art {
+	pointer-events: auto;
+	cursor: move;
+}
+
+.wp-block-animewp-decoration.is-selected .animewp-decoration__art {
+	outline: 1px dashed var(--wp-admin-theme-color, #3858e9);
+	outline-offset: 2px;
+}
+
+/* Shape picker in the sidebar. */
+.animewp-decoration-shapes {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 6px;
+	margin-bottom: 16px;
+}
+
+.animewp-decoration-shapes__item.components-button {
+	justify-content: center;
+	height: 48px;
+	color: #1e1e1e;
+
+	.animewp-decoration__art {
+		width: 24px;
+		transform: none;
+		pointer-events: none;
+	}
+}

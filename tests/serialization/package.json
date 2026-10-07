@@ -1,0 +1,9 @@
+{
+  "name": "animewp-serialization-harness",
+  "private": true,
+  "description": "Compares saved block markup between two plugin builds using the WordPress editor scripts from wp-env.",
+  "license": "GPL-2.0-or-later",
+  "devDependencies": {
+    "jsdom": "24.1.3"
+  }
+}

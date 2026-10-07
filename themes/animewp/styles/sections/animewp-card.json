@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schemas.wp.org/wp/6.6/theme.json",
+  "version": 3,
+  "title": "カード",
+  "slug": "animewp-card",
+  "blockTypes": [
+    "core/group",
+    "core/column"
+  ],
+  "styles": {
+    "color": {
+      "background": "var(--animewp-card-bg, var(--wp--preset--color--base))",
+      "text": "var(--animewp-card-ink, var(--wp--preset--color--contrast))"
+    },
+    "spacing": {
+      "padding": {
+        "top": "clamp(20px, 3vw, 36px)",
+        "right": "clamp(20px, 3vw, 36px)",
+        "bottom": "clamp(20px, 3vw, 36px)",
+        "left": "clamp(20px, 3vw, 36px)"
+      }
+    },
+    "border": {
+      "width": "var(--wp--custom--animewp--line)",
+      "style": "solid",
+      "color": "var:preset|color|border",
+      "radius": "var(--wp--custom--animewp--radius--small)"
+    }
+  }
+}

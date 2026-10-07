@@ -1,0 +1,16 @@
+{
+  "$schema": "https://schemas.wp.org/wp/6.6/theme.json",
+  "version": 3,
+  "title": "補助見出し",
+  "slug": "animewp-kicker",
+  "blockTypes": [
+    "core/paragraph"
+  ],
+  "styles": {
+    "typography": {
+      "fontSize": "0.875rem",
+      "letterSpacing": "0.12em",
+      "lineHeight": "1.8"
+    }
+  }
+}

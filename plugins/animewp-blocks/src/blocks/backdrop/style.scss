@@ -1,0 +1,73 @@
+/**
+ * Backdrop: a layer behind the other blocks of its section. The section gets
+ * a stacking context at zero specificity; nothing else about it changes.
+ */
+:where(:has(> .wp-block-animewp-backdrop)) {
+	position: relative;
+	isolation: isolate;
+}
+
+.wp-block-animewp-backdrop {
+	position: absolute !important;
+	inset: 0;
+	z-index: -1;
+	max-width: none !important;
+	margin: 0 !important;
+	overflow: hidden;
+	pointer-events: none;
+	container-type: size;
+}
+
+/* Do not let the hidden layer push the next block down in flow layouts. */
+body .wp-block-animewp-backdrop + * {
+	margin-block-start: 0;
+}
+
+.animewp-backdrop__media {
+	position: absolute;
+	inset: calc(var(--animewp-backdrop-blur, 0px) * -2);
+	width: calc(100% + var(--animewp-backdrop-blur, 0px) * 4);
+	max-width: none;
+	height: calc(100% + var(--animewp-backdrop-blur, 0px) * 4);
+	border: 0;
+	object-fit: cover;
+	object-position: var(--animewp-backdrop-focus, 50% 50%);
+	filter: blur(var(--animewp-backdrop-blur, 0px));
+	opacity: 0;
+	transition: opacity var(--wp--custom--animewp--motion--duration--slow, 900ms) var(--wp--custom--animewp--motion--easing--out, ease);
+
+	&.is-active {
+		opacity: 1;
+	}
+}
+
+iframe.animewp-backdrop__media {
+	inset: auto;
+	top: 50%;
+	left: 50%;
+	width: max(100cqw, 177.78cqh);
+	height: max(100cqh, 56.25cqw);
+	transform: translate(-50%, -50%);
+}
+
+.animewp-backdrop__veil {
+	position: absolute;
+	inset: 0;
+	background: var(--wp--preset--color--base, #fff);
+	opacity: var(--animewp-backdrop-veil, 0.55);
+}
+
+/* The block's own background color or gradient (Styles → Color) becomes the veil. */
+.wp-block-animewp-backdrop.has-background .animewp-backdrop__veil {
+	background: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.animewp-backdrop__media {
+		transition: none;
+	}
+
+	iframe.animewp-backdrop__media {
+		display: none;
+	}
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://schemas.wp.org/wp/6.6/theme.json",
+  "version": 3,
+  "title": "英字ラベル",
+  "slug": "animewp-label",
+  "blockTypes": [
+    "core/paragraph",
+    "core/heading"
+  ],
+  "styles": {
+    "typography": {
+      "fontFamily": "var:preset|font-family|animewp-mono",
+      "fontSize": "var:preset|font-size|small",
+      "letterSpacing": "0.16em",
+      "lineHeight": "1.7",
+      "textTransform": "uppercase",
+      "fontWeight": "400"
+    }
+  }
+}

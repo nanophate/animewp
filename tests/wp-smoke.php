@@ -41,13 +41,13 @@ foreach ( array_keys( animewp_starters() ) as $animewp_key ) {
 animewp_test( 'import does not alter reading settings', $animewp_option_snapshot === array( get_option( 'show_on_front' ), get_option( 'page_on_front' ), get_option( 'page_for_posts' ) ) );
 animewp_test( 'unknown starter is rejected', is_wp_error( animewp_import_starter_draft( '../unknown' ) ) );
 $animewp_lock = animewp_acquire_import_lock();
-animewp_test( 'concurrent starter request is rejected while locked', false !== $animewp_lock && is_wp_error( animewp_import_starter_draft( 'composition-a' ) ) );
+animewp_test( 'concurrent starter request is rejected while locked', false !== $animewp_lock && is_wp_error( animewp_import_starter_draft( 'basic' ) ) );
 if ( $animewp_lock ) { animewp_release_import_lock( $animewp_lock ); }
 $animewp_saved_imports = get_option( 'animewp_starter_imports_v1' );
 $animewp_recovery = $animewp_saved_imports;
-unset( $animewp_recovery['composition-a']['post_id'] );
+unset( $animewp_recovery['basic']['post_id'] );
 update_option( 'animewp_starter_imports_v1', $animewp_recovery, false );
-animewp_test( 'interrupted import recovers page by job slug', $animewp_imports['composition-a'] === animewp_import_starter_draft( 'composition-a' ) );
+animewp_test( 'interrupted import recovers page by job slug', $animewp_imports['basic'] === animewp_import_starter_draft( 'basic' ) );
 $animewp_contact_id=$animewp_imports['contact'];
 $animewp_contact_before=get_post_field('post_content',$animewp_contact_id);
 wp_update_post(array('ID'=>$animewp_contact_id,'post_content'=>'<!-- wp:paragraph --><p>Edited starter content stays here.</p><!-- /wp:paragraph -->'));
@@ -67,7 +67,7 @@ update_option('animewp_starter_imports_v1',$animewp_records_before,false);
 $animewp_author = get_user_by( 'login', 'animewp-test-author' );
 $animewp_author_id = $animewp_author ? $animewp_author->ID : wp_insert_user( array( 'user_login' => 'animewp-test-author', 'user_pass' => wp_generate_password( 40 ), 'role' => 'author', 'user_email' => 'animewp-author@example.invalid' ) );
 wp_set_current_user( $animewp_author_id );
-animewp_test( 'author cannot import starter', is_wp_error( animewp_import_starter_draft( 'composition-a' ) ) );
+animewp_test( 'author cannot import starter', is_wp_error( animewp_import_starter_draft( 'basic' ) ) );
 wp_set_current_user( 1 );
 foreach ( array( 'index','home','single','page','archive','search','404','animewp-landing','animewp-left','animewp-right','animewp-overlay' ) as $animewp_template ) {
 	$animewp_t = get_block_template( 'animewp//' . $animewp_template, 'wp_template' );
@@ -79,6 +79,9 @@ if ( $animewp_other_themes ) { switch_theme( $animewp_other_themes[0] ); switch_
 animewp_test( 'site editor customization survives theme switching', false !== strpos( get_block_template( 'animewp//page', 'wp_template' )->content, 'Saved template customization' ) );
 wp_delete_post( $animewp_style_post, true );
 foreach ( $animewp_original as $animewp_name => $animewp_value ) { update_option( $animewp_name, $animewp_value ); }
+// Remove the page and menu this run created, so repeated runs do not fill the site's navigation.
+wp_delete_post( $animewp_existing, true );
+wp_delete_post( $animewp_menu, true );
 $animewp_data = array( 'wordpress' => get_bloginfo( 'version' ), 'php' => PHP_VERSION, 'existing_page' => $animewp_existing, 'navigation' => $animewp_menu, 'author_id' => $animewp_author_id, 'imports' => $animewp_imports, 'results' => $GLOBALS['animewp_results'] );
 WP_CLI::line( wp_json_encode( $animewp_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE ) );
 foreach ( $GLOBALS['animewp_results'] as $animewp_result ) { if ( ! $animewp_result['pass'] ) { WP_CLI::halt(1); } }

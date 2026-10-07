@@ -1,0 +1,18 @@
+{
+  "$schema": "https://schemas.wp.org/wp/6.6/theme.json",
+  "version": 3,
+  "title": "大見出し（明朝・広い字間）",
+  "slug": "animewp-display",
+  "blockTypes": [
+    "core/heading"
+  ],
+  "styles": {
+    "typography": {
+      "fontFamily": "var:preset|font-family|animewp-serif",
+      "fontSize": "var:preset|font-size|xx-large",
+      "fontWeight": "400",
+      "letterSpacing": "0.08em",
+      "lineHeight": "1.65"
+    }
+  }
+}

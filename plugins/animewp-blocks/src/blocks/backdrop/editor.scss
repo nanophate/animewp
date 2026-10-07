@@ -1,0 +1,22 @@
+/* Editor: the layer stays behind the section; a small chip makes it selectable. */
+.wp-block-animewp-backdrop {
+	pointer-events: none;
+}
+
+.animewp-backdrop__chip {
+	position: absolute;
+	top: 0.5rem;
+	left: 0.5rem;
+	z-index: 2;
+	padding: 0.15rem 0.5rem;
+	border-radius: 999px;
+	background: rgb(0 0 0 / 60%);
+	color: #fff;
+	font-size: 11px;
+	pointer-events: auto;
+	cursor: pointer;
+}
+
+.wp-block-animewp-backdrop.is-selected .animewp-backdrop__chip {
+	background: var(--wp-admin-theme-color, #3858e9);
+}

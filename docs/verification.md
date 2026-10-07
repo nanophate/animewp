@@ -1,3 +1,5 @@
+> 1.x の記録です。2.0.0 の構成と確認範囲は README.md と themes/animewp/docs/customizing.md を参照してください。
+
 # animewp 1.3.0 検証記録
 
 2026-10-05 UTC。配布候補ZIPをローカル隔離WordPressに更新インストールし、実際のChromium 149.0.7827.55で公開ページと編集iframeを測定しました。ユーザーのブラウザープロファイルと本番サイトは使っていません。

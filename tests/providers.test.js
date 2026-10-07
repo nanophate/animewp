@@ -1,6 +1,6 @@
 'use strict';
 const assert = require('node:assert/strict');
-const {normalize, embedUrl} = require('../plugins/animewp-blocks/assets/providers.js');
+const {normalize, embedUrl} = require('../plugins/animewp-blocks/src/shared/providers.js');
 const valid = [
     ['youtube', 'https://youtu.be/jNQXAC9IVRw?t=1m2s', 'jNQXAC9IVRw', 62],
     ['youtube', 'https://www.youtube.com/watch?v=jNQXAC9IVRw&start=30', 'jNQXAC9IVRw', 30],

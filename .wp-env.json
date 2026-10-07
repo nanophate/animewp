@@ -1,0 +1,28 @@
+{
+  "core": "WordPress/WordPress#6.6-branch",
+  "phpVersion": "8.0",
+  "themes": [
+    "./themes/animewp"
+  ],
+  "plugins": [
+    "./plugins/animewp-blocks"
+  ],
+  "port": 8888,
+  "testsPort": 8889,
+  "config": {
+    "WP_DEBUG": true,
+    "SCRIPT_DEBUG": false
+  },
+  "testsEnvironment": true,
+  "mappings": {
+    "wp-content/animewp-tests": "./tests"
+  },
+  "env": {
+    "tests": {
+      "config": {
+        "WP_DEBUG": true,
+        "SCRIPT_DEBUG": false
+      }
+    }
+  }
+}

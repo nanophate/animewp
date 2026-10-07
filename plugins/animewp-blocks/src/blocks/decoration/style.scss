@@ -1,0 +1,65 @@
+/**
+ * Decoration: positioned inside its section. Placement uses left/top and an
+ * inner element for centring and rotation, so Motion (transform, translate,
+ * rotate, scale on this block) composes with it.
+ */
+:where(:has(> .wp-block-animewp-decoration)) {
+	position: relative;
+	isolation: isolate;
+}
+
+.wp-block-animewp-decoration {
+	position: absolute !important;
+	top: var(--animewp-decoration-y, 20%);
+	left: var(--animewp-decoration-x, 85%);
+	z-index: -1;
+	width: var(--animewp-decoration-size, 6%);
+	height: 0;
+	margin: 0 !important;
+	pointer-events: none;
+	opacity: var(--animewp-decoration-opacity, 1);
+
+	&.is-layer-front {
+		z-index: 2;
+	}
+}
+
+body .wp-block-animewp-decoration + * {
+	margin-block-start: 0;
+}
+
+.animewp-decoration__art {
+	display: block;
+	width: 100%;
+	max-width: none;
+	height: auto;
+	aspect-ratio: 1;
+	transform: translate(-50%, -50%) rotate(var(--animewp-decoration-rotation, 0deg));
+}
+
+img.animewp-decoration__art {
+	aspect-ratio: auto;
+}
+
+span.animewp-decoration__art {
+	background: currentcolor;
+	-webkit-mask: var(--animewp-decoration-mask) center / contain no-repeat;
+	mask: var(--animewp-decoration-mask) center / contain no-repeat;
+}
+
+@each $shape in circle, ring, petal, sparkle, dots, wave {
+	.is-shape-#{$shape} {
+		--animewp-decoration-mask: url(../../../assets/shapes/#{$shape}.svg);
+	}
+}
+
+.is-blend-multiply { mix-blend-mode: multiply; }
+.is-blend-screen { mix-blend-mode: screen; }
+.is-blend-overlay { mix-blend-mode: overlay; }
+.is-blend-soft-light { mix-blend-mode: soft-light; }
+
+@media (max-width: 781px) {
+	.wp-block-animewp-decoration.is-hidden-mobile {
+		display: none;
+	}
+}

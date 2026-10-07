@@ -1,0 +1,1268 @@
+# Copyright (C) 2026 AnimeWP
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: AnimeWP Blocks 2.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-10-07T00:37:07+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.9.0\n"
+"X-Domain: animewp-blocks\n"
+
+#. Plugin Name of the plugin
+#: animewp-blocks.php:81
+msgid "AnimeWP Blocks"
+msgstr ""
+
+#. Description of the plugin
+msgid "Decorated panels, rotated text, image and text layouts, and video buttons for anime and film sites. Saved content stays readable if the plugin is turned off."
+msgstr ""
+
+#. Author of the plugin
+msgid "AnimeWP"
+msgstr ""
+
+#: includes/youtube-poster.php:40
+msgid "Enter a YouTube video page URL first."
+msgstr ""
+
+#: includes/youtube-poster.php:69
+msgid "The thumbnail could not be downloaded. Choose an image instead."
+msgstr ""
+
+#. translators: %s: YouTube video ID.
+#: includes/youtube-poster.php:78
+msgid "YouTube thumbnail %s"
+msgstr ""
+
+#: patterns/independent-text-groups.php:10
+msgid "Two text blocks at different angles"
+msgstr ""
+
+#: patterns/independent-text-groups.php:11
+msgid "Two Rotated Text blocks in one panel, tilted −3° and 4°. Both are level on mobile."
+msgstr ""
+
+#: patterns/tilted-heading-upright-body.php:10
+msgid "Tilted backdrop and heading, level body text"
+msgstr ""
+
+#: patterns/tilted-heading-upright-body.php:11
+msgid "The backdrop is tilted −2° and the heading −3°, while the body text stays level."
+msgstr ""
+
+#: build/blocks/backdrop/index.js:1
+msgid "Backdrop"
+msgstr ""
+
+#: build/blocks/backdrop/index.js:1
+msgid "Fills the section this block is placed in, behind its other blocks."
+msgstr ""
+
+#: build/blocks/backdrop/index.js:1
+msgid "Show"
+msgstr ""
+
+#: build/blocks/backdrop/index.js:1
+msgid "Poster of the current slide or card"
+msgstr ""
+
+#: build/blocks/backdrop/index.js:1
+msgid "An image"
+msgstr ""
+
+#: build/blocks/backdrop/index.js:1
+msgid "A looping video file"
+msgstr ""
+
+#: build/blocks/backdrop/index.js:1
+msgid "The current video, muted (YouTube/Vimeo)"
+msgstr ""
+
+#: build/blocks/backdrop/index.js:1
+msgid "Follows a Carousel or Video Cards in the same section: the current slide, or the card under the pointer."
+msgstr ""
+
+#: build/blocks/backdrop/index.js:1
+msgid "This connects to YouTube or Vimeo as soon as the page loads, before the visitor presses play. The poster option avoids that."
+msgstr ""
+
+#: build/blocks/backdrop/index.js:1
+#: build/blocks/decoration/index.js:1
+msgid "Replace image"
+msgstr ""
+
+#: build/blocks/backdrop/index.js:1
+#: build/blocks/decoration/index.js:1
+msgid "Choose image"
+msgstr ""
+
+#: build/blocks/backdrop/index.js:1
+msgid "Focal point"
+msgstr ""
+
+#: build/blocks/backdrop/index.js:1
+#: build/blocks/video-card/index.js:1
+#: build/blocks/video/index.js:1
+msgid "Video file URL"
+msgstr ""
+
+#: build/blocks/backdrop/index.js:1
+msgid "A short, silent loop works best (MP4 or WebM)."
+msgstr ""
+
+#: build/blocks/backdrop/index.js:1
+#: build/blocks/video-card/index.js:1
+#: build/blocks/video/index.js:1
+msgid "Choose video from Media Library"
+msgstr ""
+
+#: build/blocks/backdrop/index.js:1
+msgid "Blur (px)"
+msgstr ""
+
+#: build/blocks/backdrop/index.js:1
+msgid "Veil (%)"
+msgstr ""
+
+#: build/blocks/backdrop/index.js:1
+msgid "A layer of this block’s background color over the image, so text stays readable. Set the color under Styles."
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "Slides"
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "Every block inside becomes one slide."
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "Slide width (%)"
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "At 100%, one slide fills the width. Smaller values let the next slides peek in."
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "Transition"
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "Slide"
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "Fade (slides stack in place)"
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "Dim the slides that are not current"
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "Loop from the last slide to the first"
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "Controls"
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "Name for screen readers"
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "For example: Trailers, Characters."
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "Previous and next buttons"
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "Round icon buttons"
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+#: build/blocks/video-card/index.js:1
+msgid "Text"
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "Text with arrow line"
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "None (swipe and dots only)"
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "Previous button text"
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "Read by screen readers."
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "Next button text"
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "Slide picker"
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "Slide picker style"
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "Uses the first image in each slide."
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+#: build/blocks/decoration/index.js:1
+msgid "Dots"
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "Numbers (01, 02…)"
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "Thumbnails"
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "Auto-advance (seconds)"
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "0 turns it off. Pauses on hover and focus, adds a pause button, and never runs for visitors who prefer reduced motion."
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "Pause button (screen readers)"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Circle"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Ring"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Petal"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Sparkle"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+#: build/blocks/panel/index.js:1
+msgid "Wave"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Your image"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Decoration"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Shape"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Image"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "The shape uses this block’s text color (Styles → Color)."
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Horizontal position (%)"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Vertical position (%)"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Size (% of the section width)"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+#: build/blocks/text-group/index.js:1
+msgid "Rotation (°)"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Opacity (%)"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Layer"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Behind the content"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "In front of the content"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Blend"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Normal"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Multiply (darken)"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Screen (lighten)"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Overlay"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Soft light"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "Hide on small screens"
+msgstr ""
+
+#: build/blocks/decoration/index.js:1
+msgid "To make it drift, open Motion below and choose Keep moving → Float, or set Parallax."
+msgstr ""
+
+#: build/blocks/media/index.js:1
+msgid "Heading"
+msgstr ""
+
+#: build/blocks/media/index.js:1
+msgid "Write the text"
+msgstr ""
+
+#: build/blocks/media/index.js:1
+msgid "Layout"
+msgstr ""
+
+#: build/blocks/media/index.js:1
+msgid "Reading order (mobile and screen readers)"
+msgstr ""
+
+#: build/blocks/media/index.js:1
+msgid "Image, then text"
+msgstr ""
+
+#: build/blocks/media/index.js:1
+msgid "Text, then image"
+msgstr ""
+
+#: build/blocks/media/index.js:1
+msgid "Reorders the saved blocks, so mobile layout and screen readers always match."
+msgstr ""
+
+#: build/blocks/media/index.js:1
+msgid "Desktop layout"
+msgstr ""
+
+#: build/blocks/media/index.js:1
+msgid "On mobile, image and text always stack in reading order."
+msgstr ""
+
+#: build/blocks/media/index.js:1
+msgid "Side by side"
+msgstr ""
+
+#: build/blocks/media/index.js:1
+msgid "Text over image"
+msgstr ""
+
+#: build/blocks/media/index.js:1
+msgid "Desktop image position"
+msgstr ""
+
+#: build/blocks/media/index.js:1
+msgid "Visual only. Set the reading order above."
+msgstr ""
+
+#: build/blocks/media/index.js:1
+msgid "Left"
+msgstr ""
+
+#: build/blocks/media/index.js:1
+msgid "Right"
+msgstr ""
+
+#: build/blocks/media/index.js:1
+msgid "Image width (%)"
+msgstr ""
+
+#: build/blocks/media/index.js:1
+msgid "Give the inner group a background, text color and padding so the text stays readable."
+msgstr ""
+
+#: build/blocks/media/index.js:1
+msgid "Crop image to a fixed height"
+msgstr ""
+
+#: build/blocks/media/index.js:1
+msgid "Image height (px)"
+msgstr ""
+
+#: build/blocks/media/index.js:1
+msgid "Focal point, horizontal (%)"
+msgstr ""
+
+#: build/blocks/media/index.js:1
+msgid "Focal point, vertical (%)"
+msgstr ""
+
+#: build/blocks/media/index.js:1
+msgid "Mobile image height (px)"
+msgstr ""
+
+#: build/blocks/media/index.js:1
+msgid "Separate focal point on mobile"
+msgstr ""
+
+#: build/blocks/media/index.js:1
+msgid "Mobile focal point, horizontal (%)"
+msgstr ""
+
+#: build/blocks/media/index.js:1
+msgid "Mobile focal point, vertical (%)"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Color source"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Custom color (kept as is)"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Follow a site color"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Follow a color role"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Site color"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Choose a color"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Color role"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Surface (soft background)"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Accent"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Contrast (dark surface)"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Site colors and roles update when the color scheme changes; custom colors stay fixed. A role also picks a matching text color unless the block sets its own. Check readability after changing."
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+#: build/motion/editor.js:1
+msgid "None"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Soft"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Hard"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Panel decoration"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Background, text color, spacing and font size use the standard Styles controls."
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Add a backdrop layer"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Adds a separate color shape behind the content. The standard background is unchanged."
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Backdrop color"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Backdrop edge"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Straight"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Diagonal"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Backdrop rotation (°)"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Rotates only the backdrop. Content stays level."
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Backdrop skew (°)"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Slants the backdrop. Separate from rotation."
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Backdrop opacity (%)"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Rotate whole panel (°)"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Rotates the backdrop and every block inside together."
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "To tilt only some text, keep this at 0° and put that text in a Rotated Text block inside the panel."
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Corner radius (px)"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Panel shadow"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Text shadow"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Short heading"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Heading level"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Vertical heading"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Applies to headings up to 40 characters. Body text and mobile stay horizontal."
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Heading highlight"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Band behind each line"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Single padded block"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Highlight color"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Highlight padding (em)"
+msgstr ""
+
+#: build/blocks/panel/index.js:1
+msgid "Short heading (optional)"
+msgstr ""
+
+#: build/blocks/text-group/index.js:1
+msgid "Text to rotate"
+msgstr ""
+
+#: build/blocks/text-group/index.js:1
+msgid "Rotation"
+msgstr ""
+
+#: build/blocks/text-group/index.js:1
+msgid "Rotates the headings, paragraphs and groups inside this block together. Neighbouring blocks stay level."
+msgstr ""
+
+#: build/blocks/text-group/index.js:1
+msgid "Screens 782px and wider. Negative tilts left, positive tilts right."
+msgstr ""
+
+#: build/blocks/text-group/index.js:1
+msgid "Mobile rotation (°)"
+msgstr ""
+
+#: build/blocks/text-group/index.js:1
+msgid "Screens 781px and narrower. 0° by default for readability."
+msgstr ""
+
+#: build/blocks/text-group/index.js:1
+msgid "A rotated parent panel or group also tilts this block. To tilt only this text, set the parent to 0°. Select this block from List View if it is hard to click."
+msgstr ""
+
+#: build/blocks/video-card/index.js:1
+msgid "Replace poster"
+msgstr ""
+
+#: build/blocks/video-card/index.js:1
+msgid "Choose poster"
+msgstr ""
+
+#: build/blocks/video-card/index.js:1
+msgid "Video"
+msgstr ""
+
+#: build/blocks/video-card/index.js:1
+#: build/blocks/video/index.js:1
+msgid "Source"
+msgstr ""
+
+#: build/blocks/video-card/index.js:1
+#: build/blocks/video/index.js:1
+msgid "Vimeo (public videos)"
+msgstr ""
+
+#: build/blocks/video-card/index.js:1
+#: build/blocks/video/index.js:1
+msgid "Video file"
+msgstr ""
+
+#: build/blocks/video-card/index.js:1
+#: build/blocks/video/index.js:1
+msgid "Video page URL"
+msgstr ""
+
+#: build/blocks/video-card/index.js:1
+msgid "This URL is not supported for the selected source."
+msgstr ""
+
+#: build/blocks/video-card/index.js:1
+msgid "Poster"
+msgstr ""
+
+#: build/blocks/video-card/index.js:1
+msgid "Poster shape"
+msgstr ""
+
+#: build/blocks/video-card/index.js:1
+msgid "Posters come from this site’s Media Library, so visitors do not contact the video service until they press play."
+msgstr ""
+
+#: build/blocks/video-card/index.js:1
+msgid "The thumbnail could not be imported."
+msgstr ""
+
+#: build/blocks/video-card/index.js:1
+msgid "Import YouTube thumbnail"
+msgstr ""
+
+#: build/blocks/video-card/index.js:1
+msgid "Remove poster"
+msgstr ""
+
+#: build/blocks/video-card/index.js:1
+msgid "Play button (screen readers)"
+msgstr ""
+
+#: build/blocks/video-card/index.js:1
+msgid "Close button"
+msgstr ""
+
+#: build/blocks/video-card/index.js:1
+msgid "Choose or import a poster in the block settings."
+msgstr ""
+
+#: build/blocks/video-card/index.js:1
+msgid "Set the video URL in the block settings."
+msgstr ""
+
+#: build/blocks/video-card/index.js:1
+msgid "Label (e.g. 2nd trailer)"
+msgstr ""
+
+#: build/blocks/video-card/index.js:1
+msgid "Title"
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "Replace poster image"
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "Choose poster image"
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "Remove poster image"
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "YouTube and Vimeo posters must come from this site’s Media Library. External images are not loaded."
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "That image is not hosted on this site. Choose an image from this site’s Media Library."
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "Poster and play button preview"
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "Choose a poster image to preview it here."
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "Video and captions"
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "HTTPS link to the video page. Start times (t= or start=) are kept. Link private or unlisted Vimeo videos instead."
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "An http(s) URL or a site path starting with /."
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "Enter the video page URL. The editor never connects to the video service."
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "This URL is not supported for the selected service. Only the original link will be saved."
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "The player loads only after a visitor presses play, and is removed when closed. Captions are managed on the video service."
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "This URL is invalid and will be removed on save."
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "Poster image URL (optional)"
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "Play button text"
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "Close button text"
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "Captions file URL (WebVTT, optional)"
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "By default captions must be served from this site."
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "Video and captions hosting"
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "Anonymous CORS applies to both video and captions. The other server must send Access-Control-Allow-Origin. Authenticated hosting is not supported."
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "This site (captions on the same site)"
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "Another server (anonymous CORS)"
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "The captions file is on another server. Move it to this site, or check that server’s CORS settings and choose anonymous CORS."
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "Converting to standard blocks turns the video into a Custom HTML block to keep the CORS setting. Description, captions and link are kept."
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "The captions URL is invalid."
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "Captions language code"
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "Captions label"
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "Video description"
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "Replace video"
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "Video page URL is set. The editor does not connect to the service."
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "Set a YouTube or Vimeo video page URL."
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "Choose a video, or enter a video URL in the settings."
+msgstr ""
+
+#: build/blocks/video/index.js:1
+msgid "On the site, the video opens when the button is pressed. Add a description or transcript below with standard blocks."
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Motion"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Entrance"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Fade in"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Rise"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Slide from the start side"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Slide from the end side"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Zoom in"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Come into focus (blur)"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Wipe (mask)"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Letter by letter"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Plays once when the block scrolls into view."
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Apply to"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "This block"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Each inner block in turn"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Delay (ms)"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Duration (ms)"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "0 uses the site’s motion speed."
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Gap between inner blocks (ms)"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "0 uses the site’s default."
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Preview"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "On hover"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Lift"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Zoom the image"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Glow"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Follows “Apply to”: this block, or each inner block."
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Keep moving"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Float"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Sway"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Pulse"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "A slow, endless movement for decorations."
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Parallax"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Moves slower (negative) or faster (positive) than the page while scrolling. 0 is off."
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "After scrolling down"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "No change"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Hide"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Show (hidden at the top)"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Make compact"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "For headers: for example, hide the full logo and show a short one once the visitor scrolls."
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Visitors who ask their device for reduced motion see everything without movement."
+msgstr ""
+
+#: build/blocks/backdrop/block.json
+msgctxt "block title"
+msgid "Backdrop"
+msgstr ""
+
+#: build/blocks/backdrop/block.json
+msgctxt "block description"
+msgid "A background layer for the section it is placed in: an image, a looping video, or the poster of whichever slide or card is current."
+msgstr ""
+
+#: build/blocks/backdrop/block.json
+msgctxt "block keyword"
+msgid "background"
+msgstr ""
+
+#: build/blocks/backdrop/block.json
+msgctxt "block keyword"
+msgid "blur"
+msgstr ""
+
+#: build/blocks/backdrop/block.json
+msgctxt "block keyword"
+msgid "living background"
+msgstr ""
+
+#: build/blocks/backdrop/block.json
+msgctxt "block keyword"
+msgid "video background"
+msgstr ""
+
+#: build/blocks/backdrop/block.json
+#: build/blocks/carousel/block.json
+#: build/blocks/decoration/block.json
+#: build/blocks/media/block.json
+#: build/blocks/panel/block.json
+#: build/blocks/text-group/block.json
+#: build/blocks/video-card/block.json
+#: build/blocks/video/block.json
+msgctxt "block keyword"
+msgid "animewp"
+msgstr ""
+
+#: build/blocks/carousel/block.json
+msgctxt "block title"
+msgid "Carousel"
+msgstr ""
+
+#: build/blocks/carousel/block.json
+msgctxt "block description"
+msgid "Turns the blocks inside it into slides that swipe or cross-fade: video cards, cover images, character profiles, anything. Buttons, dots, numbers or thumbnails, and auto-advance are optional."
+msgstr ""
+
+#: build/blocks/carousel/block.json
+msgctxt "block keyword"
+msgid "slider"
+msgstr ""
+
+#: build/blocks/carousel/block.json
+msgctxt "block keyword"
+msgid "slideshow"
+msgstr ""
+
+#: build/blocks/carousel/block.json
+msgctxt "block keyword"
+msgid "swipe"
+msgstr ""
+
+#: build/blocks/carousel/block.json
+msgctxt "block keyword"
+msgid "gallery"
+msgstr ""
+
+#: build/blocks/decoration/block.json
+msgctxt "block title"
+msgid "Decoration"
+msgstr ""
+
+#: build/blocks/decoration/block.json
+msgctxt "block description"
+msgid "A shape or image placed anywhere in its section, behind or in front of the content. Combine with Motion (float, parallax) for drifting petals, bubbles or lines."
+msgstr ""
+
+#: build/blocks/decoration/block.json
+msgctxt "block keyword"
+msgid "shape"
+msgstr ""
+
+#: build/blocks/decoration/block.json
+msgctxt "block keyword"
+msgid "ornament"
+msgstr ""
+
+#: build/blocks/decoration/block.json
+msgctxt "block keyword"
+msgid "petal"
+msgstr ""
+
+#: build/blocks/decoration/block.json
+msgctxt "block keyword"
+msgid "sparkle"
+msgstr ""
+
+#: build/blocks/decoration/block.json
+msgctxt "block keyword"
+msgid "float"
+msgstr ""
+
+#: build/blocks/media/block.json
+msgctxt "block title"
+msgid "Image & Text"
+msgstr ""
+
+#: build/blocks/media/block.json
+msgctxt "block description"
+msgid "An image with text beside or over it, with crop height and separate mobile focal point."
+msgstr ""
+
+#: build/blocks/media/block.json
+msgctxt "block keyword"
+msgid "image"
+msgstr ""
+
+#: build/blocks/media/block.json
+msgctxt "block keyword"
+msgid "media"
+msgstr ""
+
+#: build/blocks/media/block.json
+#: build/blocks/text-group/block.json
+msgctxt "block keyword"
+msgid "text"
+msgstr ""
+
+#: build/blocks/panel/block.json
+msgctxt "block title"
+msgid "Decorated Panel"
+msgstr ""
+
+#: build/blocks/panel/block.json
+msgctxt "block description"
+msgid "A container for any blocks, with an optional backdrop shape, rotation, shadows and a highlighted short heading."
+msgstr ""
+
+#: build/blocks/panel/block.json
+msgctxt "block keyword"
+msgid "panel"
+msgstr ""
+
+#: build/blocks/panel/block.json
+msgctxt "block keyword"
+msgid "backdrop"
+msgstr ""
+
+#: build/blocks/panel/block.json
+msgctxt "block keyword"
+msgid "decoration"
+msgstr ""
+
+#: build/blocks/text-group/block.json
+msgctxt "block title"
+msgid "Rotated Text"
+msgstr ""
+
+#: build/blocks/text-group/block.json
+msgctxt "block description"
+msgid "Rotates only the headings and paragraphs inside it, with a separate angle for mobile."
+msgstr ""
+
+#: build/blocks/text-group/block.json
+msgctxt "block keyword"
+msgid "rotate"
+msgstr ""
+
+#: build/blocks/text-group/block.json
+msgctxt "block keyword"
+msgid "tilt"
+msgstr ""
+
+#: build/blocks/video-card/block.json
+msgctxt "block title"
+msgid "Video Card"
+msgstr ""
+
+#: build/blocks/video-card/block.json
+msgctxt "block description"
+msgid "A poster with a play button, label and title. Opens YouTube, Vimeo or a video file in a player window. Use it alone, in columns, or inside a Carousel."
+msgstr ""
+
+#: build/blocks/video-card/block.json
+#: build/blocks/video/block.json
+msgctxt "block keyword"
+msgid "video"
+msgstr ""
+
+#: build/blocks/video-card/block.json
+#: build/blocks/video/block.json
+msgctxt "block keyword"
+msgid "movie"
+msgstr ""
+
+#: build/blocks/video-card/block.json
+msgctxt "block keyword"
+msgid "trailer"
+msgstr ""
+
+#: build/blocks/video-card/block.json
+#: build/blocks/video/block.json
+msgctxt "block keyword"
+msgid "pv"
+msgstr ""
+
+#: build/blocks/video-card/block.json
+#: build/blocks/video/block.json
+msgctxt "block keyword"
+msgid "youtube"
+msgstr ""
+
+#: build/blocks/video/block.json
+msgctxt "block title"
+msgid "Video Button"
+msgstr ""
+
+#: build/blocks/video/block.json
+msgctxt "block description"
+msgid "A poster and play button that opens a video file, YouTube or Vimeo in a dialog. External players load only after pressing play."
+msgstr ""
+
+#: build/blocks/video/block.json
+msgctxt "block keyword"
+msgid "vimeo"
+msgstr ""

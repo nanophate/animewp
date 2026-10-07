@@ -88,57 +88,36 @@ function animewp_font_display_defaults( $theme_json ) {
 }
 add_filter( 'wp_theme_json_data_user', 'animewp_font_display_defaults' );
 
-function animewp_design_menu() {
-	add_theme_page( __( 'animewp 書体', 'animewp' ), __( 'animewp 書体', 'animewp' ), 'edit_theme_options', 'animewp-design', 'animewp_design_screen' );
-}
-add_action( 'admin_menu', 'animewp_design_menu' );
-
-function animewp_design_screen() {
-	if ( ! current_user_can( 'edit_theme_options' ) ) { wp_die( esc_html__( 'この操作を行う権限がありません。', 'animewp' ), '', array( 'response' => 403 ) ); }
-	$available = animewp_available_font_families();
-	$values = animewp_font_role_values();
-	$font_url = version_compare( get_bloginfo( 'version' ), '7.0', '>=' ) ? admin_url( 'font-library.php' ) : admin_url( 'site-editor.php?path=/wp_global_styles&canvas=edit' );
+/**
+ * 1.x stored three font "roles" on a separate screen. Fonts are now chosen in
+ * the Site Editor (Styles → Typography, and per text style in Styles → Blocks).
+ * A saved role map keeps applying to content that uses the old role fonts until
+ * the administrator resets it here; nothing is migrated automatically.
+ */
+function animewp_legacy_font_roles_notice() {
+	$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+	if ( ! $screen || 'themes' !== $screen->id || ! current_user_can( 'edit_theme_options' ) || ! animewp_font_role_values() ) { return; }
 	?>
-	<div class="wrap" style="max-width:960px">
-		<h1><?php esc_html_e( 'animewp 書体', 'animewp' ); ?></h1>
-		<?php if ( isset( $_GET['saved'] ) ) : ?><div class="notice notice-success"><p><?php esc_html_e( '設定を保存しました。編集画面を開いている場合は再読み込みしてください。', 'animewp' ); ?></p></div><?php endif; ?>
-		<h2><?php esc_html_e( '好きな書体を追加する', 'animewp' ); ?></h2>
-		<p><?php esc_html_e( 'WordPress標準のFont Libraryで、Google Fontsを選択してインストールするか、利用許諾のあるTTF・OTF・WOFF・WOFF2をアップロードできます。追加できる書体数をanimewpは制限しません。使用する書体と太さだけを有効にしてください。', 'animewp' ); ?></p>
-		<p><?php esc_html_e( 'Google Fontsは管理者が接続を選び、書体をインストールするときに外部へ通信します。インストール済みファイルはWordPress側から配信されます。外部フォントURLの直接登録や別サービスとの自動同期は行いません。', 'animewp' ); ?></p>
-		<p><a class="button" href="<?php echo esc_url( $font_url ); ?>"><?php esc_html_e( '標準の書体管理を開く', 'animewp' ); ?></a></p>
-		<p><?php esc_html_e( 'WordPress 6.6では「外観 → エディター → スタイル → タイポグラフィ → フォントの管理」、WordPress 7以降では「外観 → フォント」からも管理できます。本文と通常の見出しは標準のグローバルスタイルで設定します。', 'animewp' ); ?></p>
-		<h2><?php esc_html_e( '3つの用途に書体を割り当てる', 'animewp' ); ?></h2>
-		<p><?php esc_html_e( '本文・見出しに加えた用途の設定です。書体数の上限ではありません。ブロックの標準「フォント」で用途を選ぶと、この割り当てを使います。特定のブロックには別の書体を直接選択できます。', 'animewp' ); ?></p>
+	<div class="notice notice-info">
+		<p><?php esc_html_e( '以前の「animewp 書体」で選んだ書体は、その書体を使う既存の本文に引き続き適用されています。今後の書体は「外観 → エディター → スタイル」の「タイポグラフィ」と、「ブロック」内の各テキストスタイル（英字ラベル・キャッチコピーなど）で設定します。', 'animewp' ); ?></p>
 		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
-			<input type="hidden" name="action" value="animewp_save_fonts">
-			<?php wp_nonce_field( 'animewp_save_fonts', 'animewp_nonce' ); ?>
-			<table class="form-table"><tbody>
-			<?php foreach ( animewp_font_roles() as $role => $label ) : $value = isset( $values[ $role ] ) ? $values[ $role ] : ''; ?>
-				<tr><th scope="row"><label for="animewp-role-<?php echo esc_attr( $role ); ?>"><?php echo esc_html( $label ); ?></label></th><td>
-				<select id="animewp-role-<?php echo esc_attr( $role ); ?>" name="animewp_roles[<?php echo esc_attr( $role ); ?>]">
-					<option value=""><?php esc_html_e( 'デザインの推奨値へ戻す', 'animewp' ); ?></option>
-					<?php foreach ( $available as $slug => $family ) : ?>
-					<option value="<?php echo esc_attr( $slug ); ?>" <?php selected( $value, $slug ); ?>><?php echo esc_html( isset( $family['name'] ) ? $family['name'] : $slug ); ?></option>
-					<?php endforeach; ?>
-				</select>
-				<?php if ( $value && ! isset( $available[ $value ] ) ) : ?><p class="description"><?php esc_html_e( '前の書体は削除または無効化されています。現在はデザインの推奨値で表示します。選び直して保存してください。', 'animewp' ); ?></p><?php endif; ?>
-				</td></tr>
-			<?php endforeach; ?>
-			</tbody></table>
-			<?php submit_button( __( '用途の書体を保存', 'animewp' ) ); ?>
+			<input type="hidden" name="action" value="animewp_reset_font_roles">
+			<?php wp_nonce_field( 'animewp_reset_font_roles', 'animewp_nonce' ); ?>
+			<p>
+				<a class="button button-primary" href="<?php echo esc_url( admin_url( 'site-editor.php?path=/wp_global_styles' ) ); ?>"><?php esc_html_e( 'スタイルを開く', 'animewp' ); ?></a>
+				<?php submit_button( __( '以前の書体設定を解除', 'animewp' ), 'secondary', 'submit', false ); ?>
+			</p>
 		</form>
-		<p><?php esc_html_e( '初期状態では端末の標準書体を使います。和文は明朝・ゴシックの代替書体でも読める組版です。Shippori Mincho・Klee One・Cormorant Garamondなどは、必要に応じて標準Font Libraryで追加できます。追加フォントの権利と配信条件は利用者が確認してください。', 'animewp' ); ?></p>
 	</div>
 	<?php
 }
+add_action( 'admin_notices', 'animewp_legacy_font_roles_notice' );
 
-function animewp_save_fonts_action() {
+function animewp_reset_font_roles_action() {
 	if ( ! current_user_can( 'edit_theme_options' ) ) { wp_die( esc_html__( 'この操作を行う権限がありません。', 'animewp' ), '', array( 'response' => 403 ) ); }
-	check_admin_referer( 'animewp_save_fonts', 'animewp_nonce' );
-	$values = isset( $_POST['animewp_roles'] ) ? wp_unslash( $_POST['animewp_roles'] ) : array();
-	$result = animewp_save_font_roles( $values );
-	if ( is_wp_error( $result ) ) { wp_die( esc_html( $result->get_error_message() ), '', array( 'response' => 400, 'back_link' => true ) ); }
-	wp_safe_redirect( admin_url( 'themes.php?page=animewp-design&saved=1' ) );
+	check_admin_referer( 'animewp_reset_font_roles', 'animewp_nonce' );
+	animewp_save_font_roles( array() );
+	wp_safe_redirect( admin_url( 'themes.php' ) );
 	exit;
 }
-add_action( 'admin_post_animewp_save_fonts', 'animewp_save_fonts_action' );
+add_action( 'admin_post_animewp_reset_font_roles', 'animewp_reset_font_roles_action' );

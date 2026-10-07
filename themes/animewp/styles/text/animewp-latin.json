@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schemas.wp.org/wp/6.6/theme.json",
+  "version": 3,
+  "title": "英字見出し",
+  "slug": "animewp-latin",
+  "blockTypes": [
+    "core/heading",
+    "core/paragraph"
+  ],
+  "styles": {
+    "typography": {
+      "fontFamily": "var:preset|font-family|animewp-latin-serif",
+      "fontSize": "var:preset|font-size|x-large",
+      "fontWeight": "400",
+      "letterSpacing": "0.04em",
+      "lineHeight": "1.2"
+    }
+  }
+}

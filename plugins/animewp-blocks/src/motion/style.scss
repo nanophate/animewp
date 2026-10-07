@@ -1,0 +1,200 @@
+/**
+ * Motion. Timing comes from the theme tokens (Styles → Additional CSS can
+ * override --wp--custom--animewp--motion--*) or per block. Entrances use
+ * `transform`; hover lift, float and parallax share the independent
+ * `translate` property through typed custom properties, so they compose.
+ */
+@property --animewp-lift {
+	syntax: "<length>";
+	inherits: false;
+	initial-value: 0px;
+}
+
+@property --animewp-float {
+	syntax: "<length>";
+	inherits: false;
+	initial-value: 0px;
+}
+
+.animewp-motion {
+	--animewp-motion-time: var(--animewp-duration, var(--wp--custom--animewp--motion--duration--slow, 900ms));
+	--animewp-motion-ease: var(--wp--custom--animewp--motion--easing--out, cubic-bezier(0.2, 0.7, 0.2, 1));
+	--animewp-motion-delay: var(--animewp-delay, 0ms);
+	--animewp-motion-stagger: var(--animewp-stagger, var(--wp--custom--animewp--motion--stagger, 90ms));
+	--animewp-motion-distance: var(--wp--custom--animewp--motion--distance, 1.5rem);
+	--animewp-motion-blur: var(--wp--custom--animewp--motion--blur, 8px);
+}
+
+/* Only where needed: `translate` creates a containing block, which would trap
+ * fixed-position content such as a mobile menu overlay inside a header. */
+.animewp-motion:is(.has-parallax, .has-loop-float),
+.has-hover-lift:not(.is-target-children),
+.has-hover-lift.is-target-children > * {
+	translate: 0 calc(var(--animewp-parallax-y, 0px) + var(--animewp-lift) + var(--animewp-float));
+}
+
+/* Entrances ------------------------------------------------------------- */
+@mixin play($name) {
+	animation: $name var(--animewp-motion-time) var(--animewp-motion-ease) calc(var(--animewp-motion-delay) + var(--animewp-i, 0) * var(--animewp-motion-stagger)) both;
+}
+
+@each $preset in fade, rise, slide-start, slide-end, zoom, blur, mask {
+	.has-entrance-#{$preset}.is-inview:not(.is-target-children),
+	.has-entrance-#{$preset}.is-target-children.is-inview > * {
+		@include play(animewp-in-#{$preset});
+	}
+}
+
+.has-entrance-letters {
+	--animewp-motion-stagger: var(--animewp-stagger, 40ms);
+	--animewp-motion-distance: 0.6em;
+
+	.animewp-letter {
+		display: inline-block;
+	}
+
+	&.is-inview .animewp-letter {
+		@include play(animewp-in-rise);
+	}
+}
+
+@keyframes animewp-in-fade {
+	from { opacity: 0; }
+}
+
+@keyframes animewp-in-rise {
+	from { opacity: 0; transform: translateY(var(--animewp-motion-distance)); }
+}
+
+@keyframes animewp-in-slide-start {
+	from { opacity: 0; transform: translateX(calc(var(--animewp-motion-distance) * -2)); }
+}
+
+@keyframes animewp-in-slide-end {
+	from { opacity: 0; transform: translateX(calc(var(--animewp-motion-distance) * 2)); }
+}
+
+@keyframes animewp-in-zoom {
+	from { opacity: 0; transform: scale(0.92); }
+}
+
+@keyframes animewp-in-blur {
+	from { opacity: 0; filter: blur(var(--animewp-motion-blur)); transform: scale(1.03); }
+}
+
+@keyframes animewp-in-mask {
+	from { clip-path: inset(0 100% 0 0); }
+	to { clip-path: inset(0 0 0 0); }
+}
+
+/* Before the entrance: hidden only when scripts run and motion is welcome,
+ * never in the editor, and shown anyway after 3 s if the script fails. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+	:where(body:not(.editor-styles-wrapper)) .has-entrance:not(.is-target-children):not(.is-inview),
+	:where(body:not(.editor-styles-wrapper)) .has-entrance.is-target-children:not(.is-inview) > * {
+		opacity: 0;
+		animation: animewp-failsafe 0.01s 3s forwards;
+	}
+}
+
+@keyframes animewp-failsafe {
+	to { opacity: 1; }
+}
+
+/* Hover ------------------------------------------------------------------ */
+.has-hover-lift:not(.is-target-children),
+.has-hover-lift.is-target-children > *,
+.has-hover-glow:not(.is-target-children),
+.has-hover-glow.is-target-children > * {
+	transition:
+		--animewp-lift var(--wp--custom--animewp--motion--duration--base, 450ms) var(--animewp-motion-ease, ease),
+		box-shadow var(--wp--custom--animewp--motion--duration--base, 450ms) var(--animewp-motion-ease, ease);
+}
+
+.has-hover-lift:not(.is-target-children):hover,
+.has-hover-lift.is-target-children > :hover {
+	--animewp-lift: -6px;
+	box-shadow: 0 1rem 2rem rgb(0 0 0 / 12%);
+}
+
+.has-hover-glow:not(.is-target-children):hover,
+.has-hover-glow.is-target-children > :hover {
+	box-shadow:
+		0 0 0 1px color-mix(in srgb, currentcolor 35%, transparent),
+		0 0.75rem 2.5rem color-mix(in srgb, var(--wp--preset--color--accent, #262626) 30%, transparent);
+}
+
+.has-hover-zoom:not(.is-target-children),
+.has-hover-zoom.is-target-children > * {
+	overflow: hidden;
+
+	img {
+		transition: scale var(--wp--custom--animewp--motion--duration--slow, 900ms) var(--animewp-motion-ease, ease);
+	}
+
+	&:hover img {
+		scale: 1.05;
+	}
+}
+
+/* Loops (decorations) ---------------------------------------------------- */
+.has-loop-float {
+	animation: animewp-float 6s ease-in-out infinite alternate;
+}
+
+.has-loop-sway {
+	transform-origin: 50% 0;
+	animation: animewp-sway 7s ease-in-out infinite alternate;
+}
+
+.has-loop-pulse {
+	animation: animewp-pulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes animewp-float {
+	from { --animewp-float: -8px; }
+	to { --animewp-float: 8px; }
+}
+
+@keyframes animewp-sway {
+	from { rotate: -3deg; }
+	to { rotate: 3deg; }
+}
+
+@keyframes animewp-pulse {
+	from { scale: 1; }
+	to { scale: 1.04; }
+}
+
+/* After scrolling (site only) ------------------------------------------- */
+:where(body:not(.editor-styles-wrapper)) {
+	.is-scrolled-shrink {
+		transition: padding var(--wp--custom--animewp--motion--duration--base, 450ms) var(--animewp-motion-ease, ease);
+	}
+}
+
+html.animewp-is-scrolled :where(body:not(.editor-styles-wrapper)) .is-scrolled-hide,
+html:not(.animewp-is-scrolled) :where(body:not(.editor-styles-wrapper)) .is-scrolled-show {
+	display: none !important;
+}
+
+html.animewp-is-scrolled :where(body:not(.editor-styles-wrapper)) .is-scrolled-shrink {
+	padding-top: 0.5rem !important;
+	padding-bottom: 0.5rem !important;
+}
+
+/* Reduced motion: everything visible, nothing moves. -------------------- */
+@media (prefers-reduced-motion: reduce) {
+	.animewp-motion,
+	.animewp-motion.is-target-children > *,
+	.animewp-motion .animewp-letter {
+		animation: none !important;
+		transition: none !important;
+	}
+
+	.animewp-motion:is(.has-parallax, .has-loop-float),
+	.has-hover-lift:not(.is-target-children),
+	.has-hover-lift.is-target-children > * {
+		translate: none !important;
+	}
+}

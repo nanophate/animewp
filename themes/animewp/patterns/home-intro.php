@@ -2,7 +2,7 @@
 /**
  * Title: ホームの導入
  * Slug: animewp/home-intro
- * Categories: animewp-sections
+ * Categories: animewp-examples
  * Inserter: no
  * Description: ホームにサイト名と紹介用の画像を表示する導入部分です。
  */

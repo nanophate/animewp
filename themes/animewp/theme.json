@@ -17,32 +17,32 @@
         {
           "slug": "base",
           "name": "基本背景",
-          "color": "var(--wp--preset--color--animewp-base,#ffffff)"
+          "color": "#ffffff"
         },
         {
           "slug": "surface",
           "name": "淡い背景",
-          "color": "var(--wp--preset--color--animewp-surface,#f3f3f3)"
+          "color": "#f3f3f3"
         },
         {
           "slug": "contrast",
           "name": "基本文字・濃い面",
-          "color": "var(--wp--preset--color--animewp-ink,#202020)"
+          "color": "#202020"
         },
         {
           "slug": "muted",
           "name": "補助文字",
-          "color": "var(--wp--preset--color--animewp-muted,#595959)"
+          "color": "#595959"
         },
         {
           "slug": "accent",
           "name": "強調",
-          "color": "var(--wp--preset--color--animewp-accent,#262626)"
+          "color": "#262626"
         },
         {
           "slug": "border",
           "name": "罫線",
-          "color": "var(--wp--preset--color--animewp-line,#d5d5d5)"
+          "color": "#d5d5d5"
         },
         {
           "slug": "on-accent",
@@ -53,76 +53,6 @@
           "slug": "on-contrast",
           "name": "濃い面の文字",
           "color": "#ffffff"
-        },
-        {
-          "slug": "badge-info",
-          "name": "情報ラベル背景",
-          "color": "#414141"
-        },
-        {
-          "slug": "badge-info-text",
-          "name": "情報ラベル文字",
-          "color": "#ffffff"
-        },
-        {
-          "slug": "badge-media",
-          "name": "メディアラベル背景",
-          "color": "#555555"
-        },
-        {
-          "slug": "badge-media-text",
-          "name": "メディアラベル文字",
-          "color": "#ffffff"
-        },
-        {
-          "slug": "badge-event",
-          "name": "イベントラベル背景",
-          "color": "#333333"
-        },
-        {
-          "slug": "badge-event-text",
-          "name": "イベントラベル文字",
-          "color": "#ffffff"
-        },
-        {
-          "slug": "badge-music",
-          "name": "音楽ラベル背景",
-          "color": "#666666"
-        },
-        {
-          "slug": "badge-music-text",
-          "name": "音楽ラベル文字",
-          "color": "#ffffff"
-        },
-        {
-          "slug": "animewp-base",
-          "name": "基本背景（従来互換）",
-          "color": "#ffffff"
-        },
-        {
-          "slug": "animewp-surface",
-          "name": "淡い背景（従来互換）",
-          "color": "#f3f3f3"
-        },
-        {
-          "slug": "animewp-ink",
-          "name": "基本文字・濃い面（従来互換）",
-          "color": "#202020"
-        },
-        {
-          "slug": "animewp-muted",
-          "name": "補助文字（従来互換）",
-          "color": "#595959"
-        },
-        {
-          "slug": "animewp-accent",
-          "name": "強調（従来互換）",
-          "color": "#262626"
-        },
-        {
-          "slug": "animewp-line",
-          "name": "罫線（従来互換）",
-          "color": "#d5d5d5"
         }
       ],
       "gradients": [
@@ -152,6 +82,7 @@
         "vw",
         "vh"
       ],
+      "defaultSpacingSizes": false,
       "spacingSizes": [
         {
           "slug": "20",
@@ -196,22 +127,23 @@
           "fontFamily": "\"Yu Mincho\", \"Hiragino Mincho ProN\", Georgia, serif"
         },
         {
-          "slug": "animewp-role-display",
-          "name": "用途：英字・大見出し",
-          "fontFamily": "var(--animewp-role-display, var(--wp--custom--animewp--font-display, Georgia, serif))"
+          "slug": "animewp-latin-serif",
+          "name": "欧文セリフ",
+          "fontFamily": "Georgia, \"Times New Roman\", serif"
         },
         {
-          "slug": "animewp-role-accent-hand",
-          "name": "用途：短いアクセント文",
-          "fontFamily": "var(--animewp-role-accent-hand, var(--wp--custom--animewp--font-accent-hand, \"Yu Mincho\", \"Hiragino Mincho ProN\", serif))"
-        },
-        {
-          "slug": "animewp-role-mono",
-          "name": "用途：日付・等幅文字",
-          "fontFamily": "var(--animewp-role-mono, var(--wp--custom--animewp--font-mono, ui-monospace, SFMono-Regular, Consolas, monospace))"
+          "slug": "animewp-mono",
+          "name": "等幅",
+          "fontFamily": "ui-monospace, SFMono-Regular, Consolas, monospace"
         }
       ],
       "fontSizes": [
+        {
+          "slug": "x-small",
+          "name": "キャプション",
+          "size": "0.75rem",
+          "fluid": false
+        },
         {
           "slug": "small",
           "name": "小",
@@ -223,6 +155,15 @@
           "name": "本文",
           "size": "1rem",
           "fluid": false
+        },
+        {
+          "slug": "lead",
+          "name": "リード",
+          "size": "1.25rem",
+          "fluid": {
+            "min": "1.0625rem",
+            "max": "1.25rem"
+          }
         },
         {
           "slug": "large",
@@ -250,6 +191,15 @@
             "min": "2.4rem",
             "max": "4.5rem"
           }
+        },
+        {
+          "slug": "xxx-large",
+          "name": "キービジュアル",
+          "size": "6.5rem",
+          "fluid": {
+            "min": "3rem",
+            "max": "6.5rem"
+          }
         }
       ],
       "defaultFontSizes": false
@@ -265,7 +215,22 @@
         "headerHeight": "5rem",
         "fontDisplay": "Georgia, serif",
         "fontAccentHand": "\"Yu Mincho\", \"Hiragino Mincho ProN\", serif",
-        "fontMono": "ui-monospace, SFMono-Regular, Consolas, monospace"
+        "fontMono": "ui-monospace, SFMono-Regular, Consolas, monospace",
+        "line": "1px",
+        "motion": {
+          "duration": {
+            "fast": "160ms",
+            "base": "450ms",
+            "slow": "900ms"
+          },
+          "easing": {
+            "out": "cubic-bezier(0.2, 0.7, 0.2, 1)",
+            "inOut": "cubic-bezier(0.65, 0, 0.35, 1)"
+          },
+          "distance": "1.5rem",
+          "blur": "8px",
+          "stagger": "90ms"
+        }
       }
     },
     "shadow": {

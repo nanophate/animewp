@@ -1,0 +1,51 @@
+{
+  "$schema": "https://schemas.wp.org/wp/6.6/theme.json",
+  "version": 3,
+  "title": "桜",
+  "settings": {
+    "color": {
+      "palette": [
+        {
+          "slug": "base",
+          "name": "基本背景",
+          "color": "#fffafb"
+        },
+        {
+          "slug": "surface",
+          "name": "淡い背景",
+          "color": "#fbeef1"
+        },
+        {
+          "slug": "contrast",
+          "name": "基本文字・濃い面",
+          "color": "#2b1f24"
+        },
+        {
+          "slug": "muted",
+          "name": "補助文字",
+          "color": "#6b5560"
+        },
+        {
+          "slug": "accent",
+          "name": "強調",
+          "color": "#b03a62"
+        },
+        {
+          "slug": "border",
+          "name": "罫線",
+          "color": "#efd5dc"
+        },
+        {
+          "slug": "on-accent",
+          "name": "強調面の文字",
+          "color": "#ffffff"
+        },
+        {
+          "slug": "on-contrast",
+          "name": "濃い面の文字",
+          "color": "#fffafb"
+        }
+      ]
+    }
+  }
+}

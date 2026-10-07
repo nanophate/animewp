@@ -1,0 +1,15 @@
+{
+  "$schema": "https://schemas.wp.org/wp/6.6/theme.json",
+  "version": 3,
+  "title": "リード文",
+  "slug": "animewp-lead",
+  "blockTypes": [
+    "core/paragraph"
+  ],
+  "styles": {
+    "typography": {
+      "fontSize": "var:preset|font-size|lead",
+      "lineHeight": "2"
+    }
+  }
+}

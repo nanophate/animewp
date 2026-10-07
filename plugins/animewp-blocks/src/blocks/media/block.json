@@ -1,0 +1,96 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "animewp/media",
+  "version": "2.0.0",
+  "title": "Image & Text",
+  "category": "media",
+  "icon": "align-pull-left",
+  "description": "An image with text beside or over it, with crop height and separate mobile focal point.",
+  "keywords": [
+    "image",
+    "media",
+    "text",
+    "animewp"
+  ],
+  "textdomain": "animewp-blocks",
+  "attributes": {
+    "layoutMode": {
+      "type": "string",
+      "enum": [
+        "side",
+        "overlay"
+      ],
+      "default": "side"
+    },
+    "imageSide": {
+      "type": "string",
+      "enum": [
+        "left",
+        "right"
+      ],
+      "default": "left"
+    },
+    "imageWidth": {
+      "type": "number",
+      "default": 50
+    },
+    "crop": {
+      "type": "boolean",
+      "default": false
+    },
+    "focalX": {
+      "type": "number",
+      "default": 50
+    },
+    "focalY": {
+      "type": "number",
+      "default": 50
+    },
+    "mobileFocalX": {
+      "type": "number",
+      "default": 50
+    },
+    "mobileFocalY": {
+      "type": "number",
+      "default": 50
+    },
+    "independentMobileFocus": {
+      "type": "boolean",
+      "default": false
+    },
+    "imageHeight": {
+      "type": "number",
+      "default": 400
+    },
+    "mobileImageHeight": {
+      "type": "number",
+      "default": 280
+    }
+  },
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "color": {
+      "background": true,
+      "text": true,
+      "gradients": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true,
+      "blockGap": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "editorScript": "file:./index.js",
+  "style": "animewp-blocks-style",
+  "editorStyle": "animewp-blocks-editor-style"
+}

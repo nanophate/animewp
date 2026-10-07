@@ -1,0 +1,296 @@
+/**
+ * Carousel. Defaults use :where() so Styles → Blocks → Carousel and
+ * per-block settings always win. Theme tokens supply color and motion.
+ */
+.wp-block-animewp-carousel {
+	--animewp-carousel-ease: var(--wp--custom--animewp--motion--easing--out, cubic-bezier(0.2, 0.7, 0.2, 1));
+	--animewp-carousel-time: var(--wp--custom--animewp--motion--duration--base, 450ms);
+	position: relative;
+	min-width: 0;
+}
+
+.animewp-carousel__track {
+	display: flex;
+	gap: var(--animewp-carousel-gap, var(--wp--style--block-gap, 1.5rem));
+	overflow-x: auto;
+	overscroll-behavior-x: contain;
+	scroll-snap-type: x mandatory;
+	scrollbar-width: none;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+
+	&:focus-visible {
+		outline: 2px solid currentcolor;
+		outline-offset: 4px;
+	}
+
+	/* End spacers center the first and last slide when slides are narrower than the track. */
+	&::before,
+	&::after {
+		flex: 0 0 max(0px, calc((100% - var(--animewp-carousel-slide, 100%)) / 2 - var(--animewp-carousel-gap, var(--wp--style--block-gap, 1.5rem))));
+		content: "";
+	}
+
+	> * {
+		flex: 0 0 var(--animewp-carousel-slide, 100%);
+		min-width: 0;
+		max-width: none;
+		margin: 0 !important;
+		scroll-snap-align: center;
+	}
+}
+
+.is-emphasized.is-enhanced .animewp-carousel__track > * {
+	opacity: 0.45;
+	transform: scale(0.94);
+	transition:
+		opacity var(--animewp-carousel-time) var(--animewp-carousel-ease),
+		transform var(--animewp-carousel-time) var(--animewp-carousel-ease);
+
+	&.is-active {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+/* Fade: slides stack in one cell and cross-fade. --------------------------- */
+.is-effect-fade > .animewp-carousel__track {
+	display: grid;
+	overflow: hidden;
+	scroll-snap-type: none;
+	touch-action: pan-y;
+
+	&::before,
+	&::after {
+		display: none;
+	}
+
+	> * {
+		grid-area: 1 / 1;
+		transition: opacity var(--wp--custom--animewp--motion--duration--slow, 900ms) var(--animewp-carousel-ease);
+	}
+}
+
+.is-effect-fade.is-enhanced > .animewp-carousel__track > :not(.is-active) {
+	opacity: 0;
+	pointer-events: none;
+}
+
+/* Controls ---------------------------------------------------------------- */
+.animewp-carousel__nav {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 0.75rem 1.5rem;
+	margin-top: var(--wp--preset--spacing--30, 1.5rem);
+}
+
+.animewp-carousel__arrow,
+.animewp-carousel__pause {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.75em;
+	min-width: 44px;
+	min-height: 44px;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: inherit;
+	font: inherit;
+	cursor: pointer;
+}
+
+:where(.has-nav-icon) .animewp-carousel__arrow,
+.animewp-carousel__pause {
+	border: 1px solid currentcolor;
+	border-radius: 50%;
+	transition: background-color var(--animewp-carousel-time), color var(--animewp-carousel-time);
+}
+
+.has-nav-icon .animewp-carousel__arrow:hover,
+.animewp-carousel__pause:hover {
+	background: currentcolor;
+
+	> * {
+		filter: invert(1);
+	}
+}
+
+.animewp-carousel__chevron {
+	width: 0.6rem;
+	height: 0.6rem;
+	border-top: 1.5px solid currentcolor;
+	border-right: 1.5px solid currentcolor;
+	transform: translateX(-15%) rotate(45deg);
+
+	.is-prev & {
+		transform: translateX(15%) rotate(-135deg);
+	}
+}
+
+.animewp-carousel__arrow-text {
+	font-size: var(--wp--preset--font-size--small, 0.8125rem);
+	letter-spacing: 0.12em;
+}
+
+.animewp-carousel__line {
+	position: relative;
+	width: 2.5rem;
+	height: 1px;
+	background: currentcolor;
+	transition: width var(--animewp-carousel-time) var(--animewp-carousel-ease);
+
+	&::after {
+		position: absolute;
+		top: -3px;
+		width: 7px;
+		height: 7px;
+		border-top: 1px solid currentcolor;
+		content: "";
+	}
+
+	.is-next &::after {
+		right: 0;
+		border-right: 1px solid currentcolor;
+		transform: rotate(45deg);
+	}
+
+	.is-prev &::after {
+		left: 0;
+		border-left: 1px solid currentcolor;
+		transform: rotate(-45deg);
+	}
+}
+
+.animewp-carousel__arrow:hover .animewp-carousel__line {
+	width: 3.5rem;
+}
+
+.animewp-carousel__dots {
+	display: flex;
+}
+
+.animewp-carousel__dot {
+	position: relative;
+	width: 24px;
+	height: 44px;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: inherit;
+	cursor: pointer;
+
+	&::before {
+		position: absolute;
+		inset: 0;
+		width: 7px;
+		height: 7px;
+		margin: auto;
+		border-radius: 50%;
+		background: currentcolor;
+		opacity: 0.3;
+		content: "";
+		transition: opacity var(--animewp-carousel-time);
+	}
+
+	&[aria-current="true"]::before {
+		opacity: 1;
+	}
+}
+
+/* Numbers and thumbnails replace the dot mark. */
+.has-dots-numbers .animewp-carousel__dot,
+.has-dots-thumbnails .animewp-carousel__dot {
+	width: auto;
+	min-width: 44px;
+	font-size: var(--wp--preset--font-size--small, 0.8125rem);
+	letter-spacing: 0.08em;
+	opacity: 0.45;
+	transition: opacity var(--animewp-carousel-time);
+
+	&::before {
+		display: none;
+	}
+
+	&[aria-current="true"],
+	&:hover {
+		opacity: 1;
+	}
+}
+
+.has-dots-numbers .animewp-carousel__dot[aria-current="true"] {
+	text-decoration: underline;
+	text-underline-offset: 0.4em;
+}
+
+.has-dots-thumbnails .animewp-carousel__dots {
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 0.5rem;
+}
+
+.has-dots-thumbnails .animewp-carousel__dot {
+	width: var(--animewp-carousel-thumb, 4.5rem);
+	height: auto;
+	padding: 0;
+	overflow: hidden;
+	border-radius: var(--wp--custom--animewp--radius--small, 4px);
+	aspect-ratio: 1;
+
+	img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	&[aria-current="true"] {
+		outline: 2px solid currentcolor;
+		outline-offset: 2px;
+	}
+}
+
+.animewp-carousel__pause {
+	width: 44px;
+
+	&::before,
+	&::after {
+		width: 2px;
+		height: 0.75rem;
+		background: currentcolor;
+		content: "";
+	}
+
+	&::after {
+		margin-left: 4px;
+	}
+
+	&[aria-pressed="true"]::before {
+		width: 0;
+		height: 0;
+		border-top: 0.4rem solid transparent;
+		border-bottom: 0.4rem solid transparent;
+		border-left: 0.65rem solid currentcolor;
+		background: none;
+	}
+
+	&[aria-pressed="true"]::after {
+		display: none;
+	}
+}
+
+@media (max-width: 781px) {
+	.wp-block-animewp-carousel {
+		--animewp-carousel-slide: max(var(--animewp-carousel-slide-mobile, 86%), var(--animewp-carousel-slide, 100%)) !important;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.wp-block-animewp-carousel * {
+		transition: none !important;
+	}
+}

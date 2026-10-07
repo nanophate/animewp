@@ -5,12 +5,12 @@ $origin=rtrim(getenv('ANIMEWP_HTTP_ORIGIN'),'/');
 $host=wp_parse_url(home_url(),PHP_URL_HOST);$port=wp_parse_url(home_url(),PHP_URL_PORT);if($port)$host.=':'.$port;
 function animewp_local_url($url){global $animewp_test_origin;return $animewp_test_origin.wp_parse_url($url,PHP_URL_PATH).(wp_parse_url($url,PHP_URL_QUERY)?'?'.wp_parse_url($url,PHP_URL_QUERY):'');}
 $GLOBALS['animewp_test_origin']=$origin;
-$fixture=get_posts(array('post_type'=>'page','post_status'=>'publish','meta_key'=>'_animewp_qa_fixture','meta_value'=>'composition-a','numberposts'=>1));
+$fixture=get_posts(array('post_type'=>'page','post_status'=>'publish','meta_key'=>'_animewp_qa_fixture','meta_value'=>'basic','numberposts'=>1));
 $news=get_posts(array('post_type'=>'post','post_status'=>'publish','meta_key'=>'_animewp_qa_fixture','meta_value'=>'news-1','numberposts'=>1));
 $protected=get_posts(array('post_type'=>'page','post_status'=>'publish','meta_key'=>'_animewp_qa_fixture','meta_value'=>'password','numberposts'=>1));
 $cases=array(
  array('home',home_url('/'),200,'animewp-news-list'),
- array('page',get_permalink($fixture[0]),200,'animewp-characters'),
+ array('page',get_permalink($fixture[0]),200,'id="story"'),
  array('news comments',get_permalink($news[0]),200,'コメント欄の表示を確認します。'),
  array('archive',get_category_link(1),200,'animewp-news-list'),
  array('search match',home_url('/?s='.rawurlencode('検証キーワード')),200,'検証お知らせ'),

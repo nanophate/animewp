@@ -1,0 +1,183 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "animewp/panel",
+  "version": "2.0.0",
+  "title": "Decorated Panel",
+  "category": "design",
+  "icon": "layout",
+  "description": "A container for any blocks, with an optional backdrop shape, rotation, shadows and a highlighted short heading.",
+  "keywords": [
+    "panel",
+    "backdrop",
+    "decoration",
+    "animewp"
+  ],
+  "textdomain": "animewp-blocks",
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "source": "html",
+      "selector": ".animewp-panel__heading-text",
+      "default": ""
+    },
+    "headingLevel": {
+      "type": "number",
+      "enum": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "default": 2
+    },
+    "verticalHeading": {
+      "type": "boolean",
+      "default": false
+    },
+    "backdropEnabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "backdropColor": {
+      "type": "string",
+      "default": "#e5e5e5"
+    },
+    "boundary": {
+      "type": "string",
+      "enum": [
+        "none",
+        "wave",
+        "diagonal"
+      ],
+      "default": "none"
+    },
+    "backgroundSkew": {
+      "type": "number",
+      "default": 0
+    },
+    "backgroundRotation": {
+      "type": "number",
+      "default": 0
+    },
+    "rotation": {
+      "type": "number",
+      "default": 0
+    },
+    "backgroundOpacity": {
+      "type": "number",
+      "default": 100
+    },
+    "radius": {
+      "type": "number",
+      "default": 0
+    },
+    "panelShadow": {
+      "type": "string",
+      "enum": [
+        "none",
+        "soft",
+        "hard"
+      ],
+      "default": "none"
+    },
+    "textShadow": {
+      "type": "string",
+      "enum": [
+        "none",
+        "soft",
+        "hard"
+      ],
+      "default": "none"
+    },
+    "highlight": {
+      "type": "string",
+      "enum": [
+        "none",
+        "line",
+        "panel"
+      ],
+      "default": "none"
+    },
+    "highlightColor": {
+      "type": "string",
+      "default": "#e5e5e5"
+    },
+    "highlightPadding": {
+      "type": "number",
+      "default": 0.2
+    },
+    "backdropColorMode": {
+      "type": "string",
+      "enum": [
+        "custom",
+        "preset",
+        "role"
+      ],
+      "default": "custom"
+    },
+    "backdropPreset": {
+      "type": "string",
+      "default": ""
+    },
+    "backdropRole": {
+      "type": "string",
+      "enum": [
+        "surface",
+        "accent",
+        "contrast"
+      ],
+      "default": "surface"
+    },
+    "highlightColorMode": {
+      "type": "string",
+      "enum": [
+        "custom",
+        "preset",
+        "role"
+      ],
+      "default": "custom"
+    },
+    "highlightPreset": {
+      "type": "string",
+      "default": ""
+    },
+    "highlightRole": {
+      "type": "string",
+      "enum": [
+        "surface",
+        "accent",
+        "contrast"
+      ],
+      "default": "surface"
+    }
+  },
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "color": {
+      "background": true,
+      "text": true,
+      "gradients": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true,
+      "blockGap": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true,
+      "textAlign": true
+    },
+    "shadow": true
+  },
+  "editorScript": "file:./index.js",
+  "style": "animewp-blocks-style",
+  "editorStyle": "animewp-blocks-editor-style"
+}

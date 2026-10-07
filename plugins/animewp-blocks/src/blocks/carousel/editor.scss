@@ -1,0 +1,26 @@
+/* Editor: every slide stays visible in a scrollable row for direct editing. */
+.wp-block-animewp-carousel > .animewp-carousel__track {
+	align-items: flex-start;
+	padding-block-end: 0.5rem;
+	scroll-snap-type: none;
+
+	> .block-list-appender {
+		flex: 0 0 auto;
+		align-self: center;
+	}
+}
+
+.wp-block-animewp-carousel .animewp-carousel__nav {
+	pointer-events: none;
+	opacity: 0.6;
+}
+
+/* Fade slides would stack on top of each other; edit them side by side instead. */
+.wp-block-animewp-carousel.is-effect-fade > .animewp-carousel__track {
+	display: flex;
+	overflow-x: auto;
+
+	> * {
+		grid-area: auto;
+	}
+}

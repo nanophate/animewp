@@ -10,3 +10,4 @@ vendor/
 
 __pycache__/
 *.pyc
+plugins/animewp-blocks/build/

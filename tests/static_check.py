@@ -9,16 +9,23 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-EXCLUDED = {".git", ".testenv", "artifacts", "node_modules", "vendor", "__pycache__"}
+EXCLUDED = {".git", ".testenv", ".claude", "artifacts", "node_modules", "vendor", "__pycache__"}
+# npm lockfiles list registry URLs; they are development-only and never packaged.
+URL_AUDIT_EXEMPT = {"package-lock.json"}
 LICENSE_SHA256 = "e1c15e91ce22ab264ab9919b44f16f6420e80f0e44444295853e8236d0470947"
 URL = re.compile(r"(?:https?://|(?<![\w:\\])//|www\.)[A-Za-z0-9][^\s<>\"']*")
 SCHEMA = re.compile(r"https:" + r"/" + r"/schemas\.wp\.org/(?:wp/6\.6/theme|trunk/block)\.json\Z")
+PROVIDER_ENDPOINTS = {
+    "https://www.youtube-nocookie.com/embed/",
+    "https://player.vimeo.com/video/",
+    "www.youtube.com", "www.youtube-nocookie.com", "www.vimeo.com",
+}
+# The provider module, and the thumbnail importer (server-side, editor-initiated).
+# Built bundles that include providers.js are allowed the same hosts below.
 RUNTIME_ENDPOINTS = {
-    "plugins/animewp-blocks/assets/providers.js": {
-        "https://www.youtube-nocookie.com/embed/",
-        "https://player.vimeo.com/video/",
-        "www.youtube.com", "www.youtube-nocookie.com", "www.vimeo.com",
-    },
+    "plugins/animewp-blocks/src/shared/providers.js": PROVIDER_ENDPOINTS,
+    "plugins/animewp-blocks/includes/video-providers.php": PROVIDER_ENDPOINTS,
+    "plugins/animewp-blocks/includes/youtube-poster.php": {"https://i.ytimg.com/vi/"},
 }
 SECRET_PATTERNS = (
     re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
@@ -56,6 +63,11 @@ def audit(path):
             if len(data) >= 24:
                 check(struct.unpack(">II", data[16:24]) == (1200, 900), f"{rel}: preview must be 1200x900")
             return
+        if path.suffix == ".mo":
+            # Compiled gettext catalog: check the magic number and that its source PO is beside it.
+            check(data[:4] in (b"\xde\x12\x04\x95", b"\x95\x04\x12\xde"), f"{rel}: invalid MO catalog")
+            check(path.with_suffix(".po").is_file(), f"{rel}: missing source PO")
+            return
         text = data.decode("utf-8")
     except (UnicodeDecodeError, OSError):
         errors.append(f"{rel}: unreadable or unaudited binary file")
@@ -92,28 +104,41 @@ def audit(path):
             audit_text = re.sub(r'xmlns="http:' + r'/' + r'/www\.w3\.org/2000/svg"', 'xmlns="SVG_NAMESPACE"', audit_text)
         except ET.ParseError:
             errors.append(f"{rel}: invalid SVG/XML")
+    # Bundles embed their block.json, including its machine schema reference.
+    if rel.startswith("plugins/animewp-blocks/build/") and path.suffix == ".js":
+        audit_text = audit_text.replace("https:" + "/" + "/schemas.wp.org/trunk/block.json", "MACHINE_SCHEMA")
     # The audit implementation contains namespace patterns, never public resource links.
     if path.resolve() == Path(__file__).resolve():
         audit_text = audit_text.replace("http://www.w3.org/2000/svg", "SVG_NAMESPACE")
         for references in RUNTIME_ENDPOINTS.values():
             for reference in sorted(references, key=len, reverse=True):
                 audit_text = audit_text.replace(reference, "DECLARED_RUNTIME_ENDPOINT")
-    if rel == "themes/animewp/style.css":
+    if rel in ("themes/animewp/style.css", "plugins/animewp-blocks/readme.txt"):
         audit_text = re.sub(r"^License URI: https://www\.gnu\.org/licenses/gpl-2\.0\.html$", "License URI: GPL_LICENSE", audit_text, flags=re.M)
     for match in URL.finditer(audit_text):
         # Test fixtures intentionally exercise allowed and rejected third-party URLs.
         # They are never distributed in either installation ZIP.
-        if rel.startswith("tests/") or rel == "docs/test-results.json":
+        if rel.startswith("tests/") or rel == "docs/test-results.json" or path.name in URL_AUDIT_EXEMPT:
             continue
         if match.group() in RUNTIME_ENDPOINTS.get(rel, set()):
+            continue
+        if rel.startswith("plugins/animewp-blocks/build/") and match.group() in PROVIDER_ENDPOINTS:
             continue
         errors.append(f"{rel}:{audit_text[:match.start()].count(chr(10)) + 1}: external reference (value omitted)")
 
 
-# The release remains a monochrome base; color editing belongs to Core or CSS.
-check({p.name for p in (ROOT / "themes/animewp/styles").glob("*.json")} == {"serif.json", "soft.json"}, "Unexpected named theme skin")
-for slug, color in json.loads((ROOT / "themes/animewp/inc/design-tokens.json").read_text())["colors"].items():
-    check(color[1:3] == color[3:5] == color[5:7], f"Initial token {slug} must remain monochrome")
+# The default palette stays monochrome. Color schemes are optional, editable presets
+# (styles/colors) that must replace every color role and nothing else.
+check({p.name for p in (ROOT / "themes/animewp/styles").glob("*.json")} == {"serif.json", "soft.json"}, "Unexpected full theme style variation")
+TOKENS = json.loads((ROOT / "themes/animewp/inc/design-tokens.json").read_text())
+ROLES = [item["slug"] for item in TOKENS["palette"]]
+for item in TOKENS["palette"]:
+    color = item["color"]
+    check(color[1:3] == color[3:5] == color[5:7], f"Default color role {item['slug']} must remain monochrome")
+for path in (ROOT / "themes/animewp/styles/colors").glob("*.json"):
+    scheme = json.loads(path.read_text())
+    check(set(scheme) <= {"$schema", "version", "title", "settings"} and set(scheme.get("settings", {})) == {"color"}, f"{path.name}: a color scheme may only set the palette")
+    check([item["slug"] for item in scheme["settings"]["color"].get("palette", [])] == ROLES, f"{path.name}: must define every color role in order")
 
 for path in (ROOT / "themes/animewp/patterns").glob("*.php"):
     for reference in re.findall(r"get_theme_file_uri\(\s*'([^']+)'", path.read_text()):
@@ -136,6 +161,7 @@ def main():
     check((theme / "readme.txt").read_text().splitlines()[0] == f"animewp {theme_version}", "Theme readme version must match style.css")
     check(f"バージョン{plugin_version}。" in (plugin / "README.md").read_text(), "Plugin README version must match header")
     check(f"$animewp_version = '{plugin_version}';" in (plugin / "animewp-blocks.php").read_text(), "Plugin runtime cache version must match header")
+    check(f"Stable tag: {plugin_version}" in (plugin / "readme.txt").read_text(), "Plugin readme.txt Stable tag must match header")
     for slug, value in (("animewp", theme_version), ("animewp-blocks", plugin_version)):
         check(f"{slug}-{value}.zip" in (ROOT / "README.md").read_text(), f"README package example must match {slug} version")
     for path, field, expected in ((theme / "style.css", "Theme Name", "animewp"), (plugin / "animewp-blocks.php", "Plugin Name", "AnimeWP Blocks")):
@@ -152,8 +178,17 @@ def main():
         check((theme / f"templates/{name}.html").is_file(), f"Missing template: {name}")
     for template in theme_json.get("customTemplates", []):
         check((theme / f"templates/{template['name']}.html").is_file(), f"Missing custom template: {template['name']}")
-    for name in ("panel", "media", "video", "text-group"):
-        obj = json.loads((plugin / f"blocks/{name}/block.json").read_text())
+    # build/ must contain exactly the blocks in src/ (stale output would ship otherwise).
+    source_blocks = {p.parent.name for p in (plugin / "src/blocks").glob("*/block.json")}
+    built_blocks = {p.name for p in (plugin / "build/blocks").iterdir() if p.is_dir()} if (plugin / "build/blocks").is_dir() else set()
+    check(source_blocks == built_blocks, f"build/blocks differs from src/blocks: {sorted(source_blocks ^ built_blocks)} (rebuild from a clean build/)")
+    for name in sorted(source_blocks):
+        source = plugin / f"src/blocks/{name}/block.json"
+        built = plugin / f"build/blocks/{name}/block.json"
+        check(built.is_file(), f"Missing build for {name}: run npm run build")
+        if built.is_file():
+            check(json.loads(built.read_text()) == json.loads(source.read_text()), f"Stale build for {name}: run npm run build")
+        obj = json.loads(source.read_text())
         check(obj.get("version") == plugin_version, f"Block metadata version must match plugin: {name}")
         check(obj.get("name") == f"animewp/{name}" and obj.get("apiVersion") == 3, f"Invalid block identity/API: {name}")
         for key, attr in obj.get("attributes", {}).items():

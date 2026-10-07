@@ -1,0 +1,99 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "animewp/video",
+  "version": "2.0.0",
+  "title": "Video Button",
+  "category": "media",
+  "icon": "video-alt3",
+  "description": "A poster and play button that opens a video file, YouTube or Vimeo in a dialog. External players load only after pressing play.",
+  "keywords": [
+    "video",
+    "movie",
+    "youtube",
+    "vimeo",
+    "pv",
+    "animewp"
+  ],
+  "textdomain": "animewp-blocks",
+  "attributes": {
+    "source": {
+      "type": "string",
+      "enum": [
+        "file",
+        "youtube",
+        "vimeo"
+      ],
+      "default": "file"
+    },
+    "videoUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "videoId": {
+      "type": "number",
+      "default": 0
+    },
+    "posterUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonLabel": {
+      "type": "string",
+      "default": "動画を開く"
+    },
+    "closeLabel": {
+      "type": "string",
+      "default": "閉じる"
+    },
+    "trackUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "crossOriginMode": {
+      "type": "string",
+      "enum": [
+        "same-origin",
+        "anonymous"
+      ],
+      "default": "same-origin"
+    },
+    "trackLanguage": {
+      "type": "string",
+      "default": "ja"
+    },
+    "trackLabel": {
+      "type": "string",
+      "default": "日本語"
+    },
+    "description": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "color": {
+      "background": true,
+      "text": true,
+      "gradients": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "editorScript": "file:./index.js",
+  "style": "animewp-blocks-style",
+  "editorStyle": "animewp-blocks-editor-style",
+  "viewScript": "file:./view.js"
+}

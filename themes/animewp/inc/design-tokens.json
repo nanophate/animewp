@@ -1,5 +1,48 @@
 {
-  "aliases": {
+  "_comment": "Source of the editable palette (theme.json) and of assets/css/compat.css. Run scripts/design_tokens.py after editing.",
+  "palette": [
+    {
+      "slug": "base",
+      "name": "基本背景",
+      "color": "#ffffff"
+    },
+    {
+      "slug": "surface",
+      "name": "淡い背景",
+      "color": "#f3f3f3"
+    },
+    {
+      "slug": "contrast",
+      "name": "基本文字・濃い面",
+      "color": "#202020"
+    },
+    {
+      "slug": "muted",
+      "name": "補助文字",
+      "color": "#595959"
+    },
+    {
+      "slug": "accent",
+      "name": "強調",
+      "color": "#262626"
+    },
+    {
+      "slug": "border",
+      "name": "罫線",
+      "color": "#d5d5d5"
+    },
+    {
+      "slug": "on-accent",
+      "name": "強調面の文字",
+      "color": "#ffffff"
+    },
+    {
+      "slug": "on-contrast",
+      "name": "濃い面の文字",
+      "color": "#ffffff"
+    }
+  ],
+  "legacyAliases": {
     "base": "animewp-base",
     "surface": "animewp-surface",
     "contrast": "animewp-ink",
@@ -7,33 +50,7 @@
     "accent": "animewp-accent",
     "border": "animewp-line"
   },
-  "labels": {
-    "base": "基本背景",
-    "surface": "淡い背景",
-    "contrast": "基本文字・濃い面",
-    "muted": "補助文字",
-    "accent": "強調",
-    "border": "罫線",
-    "on-accent": "強調面の文字",
-    "on-contrast": "濃い面の文字",
-    "badge-info": "情報ラベル背景",
-    "badge-info-text": "情報ラベル文字",
-    "badge-media": "メディアラベル背景",
-    "badge-media-text": "メディアラベル文字",
-    "badge-event": "イベントラベル背景",
-    "badge-event-text": "イベントラベル文字",
-    "badge-music": "音楽ラベル背景",
-    "badge-music-text": "音楽ラベル文字"
-  },
-  "colors": {
-    "base": "#ffffff",
-    "surface": "#f3f3f3",
-    "contrast": "#202020",
-    "muted": "#595959",
-    "accent": "#262626",
-    "border": "#d5d5d5",
-    "on-accent": "#ffffff",
-    "on-contrast": "#ffffff",
+  "legacyColors": {
     "badge-info": "#414141",
     "badge-info-text": "#ffffff",
     "badge-media": "#555555",
@@ -42,5 +59,10 @@
     "badge-event-text": "#ffffff",
     "badge-music": "#666666",
     "badge-music-text": "#ffffff"
+  },
+  "legacyFontRoles": {
+    "display": "var(--wp--custom--animewp--font-display, Georgia, serif)",
+    "accent-hand": "var(--wp--custom--animewp--font-accent-hand, \"Yu Mincho\", \"Hiragino Mincho ProN\", serif)",
+    "mono": "var(--wp--custom--animewp--font-mono, ui-monospace, SFMono-Regular, Consolas, monospace)"
   }
 }
