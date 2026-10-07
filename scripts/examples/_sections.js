@@ -64,7 +64,7 @@ module.exports = ( { b, image, poster } ) => {
 			] );
 		return b( 'core/group', { align: 'full', layout: { type: 'default' }, style: { spacing: { padding: { top: '0', bottom: '0' } } } }, [
 			...petals( look, 'front' ),
-			b( 'animewp/carousel', { align: 'full', effect: 'fade', autoplay: 7, navStyle: 'none', dotStyle: 'numbers', style: { spacing: { blockGap: '0' } } }, [
+			b( 'animewp/carousel', { label: 'キービジュアル', align: 'full', effect: 'fade', autoplay: 7, navStyle: 'none', dotStyle: 'numbers', style: { spacing: { blockGap: '0' } } }, [
 				slide( 'animewp-key-visual-a.svg', '物語が、そっと動き出す。' ),
 				slide( 'animewp-key-visual-b.svg', 'ここから、新しい景色へ。' ),
 			] ),
@@ -105,7 +105,7 @@ module.exports = ( { b, image, poster } ) => {
 			b( 'animewp/backdrop', { mode: 'follow', blur: 32, veil: 70 } ),
 			...petals( look ),
 			sectionTitle( 'Movie', '映像', look, 'center' ),
-			b( 'animewp/carousel', { align: 'full', slideWidth: 64, emphasizeActive: true, ...motion( LOOKS[ look ].heading ) }, [
+			b( 'animewp/carousel', { label: '映像', align: 'full', slideWidth: 64, emphasizeActive: true, ...motion( LOOKS[ look ].heading ) }, [
 				card( 'animewp-key-visual-a.svg', 'TRAILER 01', 'メイン映像' ),
 				card( 'animewp-key-visual-b.svg', 'TRAILER 02', 'ティザー映像' ),
 				card( 'animewp-key-visual-a.svg', 'SPECIAL', '特別映像' ),
@@ -127,7 +127,7 @@ module.exports = ( { b, image, poster } ) => {
 			] );
 		return section( [
 			sectionTitle( 'Characters', 'キャラクター', look ),
-			b( 'animewp/carousel', { align: 'wide', effect: 'fade', dotStyle: 'thumbnails' }, [
+			b( 'animewp/carousel', { label: 'キャラクター', align: 'wide', effect: 'fade', dotStyle: 'thumbnails' }, [
 				person( 'animewp-character-a.svg', '01', '主人公の名前' ),
 				person( 'animewp-character-b.svg', '02', '相棒の名前' ),
 				person( 'animewp-character-c.svg', '03', 'ライバルの名前' ),

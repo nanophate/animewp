@@ -45,5 +45,11 @@ export function carouselProps( a ) {
 		'data-dots': a.showDots === false ? 'false' : undefined,
 		'data-prev-label': safeText( a.prevLabel, '前へ', 40 ),
 		'data-next-label': safeText( a.nextLabel, '次へ', 40 ),
+		'data-label': safeText( a.label, 'スライド', 80 ),
+		'data-pause-label': safeText(
+			a.pauseLabel,
+			'自動切り替えを一時停止',
+			80
+		),
 	};
 }

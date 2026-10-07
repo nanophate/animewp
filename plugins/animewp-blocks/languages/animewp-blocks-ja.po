@@ -1253,3 +1253,15 @@ msgstr "浮遊"
 #: build/blocks/panel/index.js:1
 msgid "Panel decoration"
 msgstr "パネル装飾"
+
+#: build/blocks/carousel/index.js:1
+msgid "Name for screen readers"
+msgstr "読み上げ用の名前"
+
+#: build/blocks/carousel/index.js:1
+msgid "For example: Trailers, Characters."
+msgstr "例：映像、キャラクター"
+
+#: build/blocks/carousel/index.js:1
+msgid "Pause button (screen readers)"
+msgstr "一時停止ボタン（読み上げ用）"

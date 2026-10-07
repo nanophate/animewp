@@ -75,6 +75,8 @@ def main():
     if php:
         lint_php(php, php_paths)
         counts["php"] = len(php_paths)
+    if not args.skip_build:
+        run(["npx", "wp-scripts", "lint-js", "plugins/animewp-blocks/src"])
     run([sys.executable, "scripts/design_tokens.py", "--check"])
     run([sys.executable, "scripts/assets_manifest.py", "--check"])
     run(["node", "tests/providers.test.js"])

@@ -22,10 +22,10 @@ $_COOKIE[LOGGED_IN_COOKIE]=wp_generate_auth_cookie($author->ID,time()+300,'logge
 $base['headers']['Cookie']=LOGGED_IN_COOKIE.'='.$_COOKIE[LOGGED_IN_COOKIE];
 $body['animewp_nonce']=wp_create_nonce('animewp_import_starter');
 animewp_http_check('author import with own valid nonce rejected',wp_remote_post($origin.'/wp-admin/admin-post.php',array_merge($base,array('body'=>$body))),403);
-animewp_http_check('unauthenticated preview rejected',wp_remote_get($origin.'/?animewp_preview=simple',array('redirection'=>0,'headers'=>array('Host'=>$base['headers']['Host']))),403);
+animewp_http_check('unauthenticated preview rejected',wp_remote_get($origin.'/?animewp_preview=basic',array('redirection'=>0,'headers'=>array('Host'=>$base['headers']['Host']))),403);
 wp_set_current_user(1);$_COOKIE[LOGGED_IN_COOKIE]=substr($cookie,strlen(LOGGED_IN_COOKIE)+1);$base['headers']['Cookie']=$cookie;
-animewp_http_check('admin invalid preview nonce rejected',wp_remote_get($origin.'/?animewp_preview=simple&_wpnonce=bad',$base),403);
-$preview=wp_remote_get($origin.'/?animewp_preview=simple&_wpnonce='.wp_create_nonce('animewp_preview_simple'),$base);
+animewp_http_check('admin invalid preview nonce rejected',wp_remote_get($origin.'/?animewp_preview=basic&_wpnonce=bad',$base),403);
+$preview=wp_remote_get($origin.'/?animewp_preview=basic&_wpnonce='.wp_create_nonce('animewp_preview_basic'),$base);
 animewp_http_check('admin valid preview available',$preview,200);
 $GLOBALS['animewp_http_results'][]=array('test'=>'preview noindex header','pass'=>!is_wp_error($preview)&&strpos(wp_remote_retrieve_header($preview,'x-robots-tag'),'noindex')!==false);
 $preview_html=is_wp_error($preview)?'':wp_remote_retrieve_body($preview);

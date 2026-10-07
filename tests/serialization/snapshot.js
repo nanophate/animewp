@@ -12,8 +12,14 @@ const dir = path.resolve( process.argv[ 2 ] || '' );
 const { window, wp, version } = installWordPress();
 const layout = loadPlugin( dir, window );
 // Attributes are copied into the page realm so WordPress sees native objects.
-const make = ( name, attributes = {}, inner = [] ) =>
-	wp.blocks.createBlock( name, window.JSON.parse( JSON.stringify( attributes ) ), inner );
+// Unregistered types must throw on every WordPress version (7.x createBlock does not),
+// so blocks added after the baseline are reported as new rather than compared.
+const make = ( name, attributes = {}, inner = [] ) => {
+	if ( ! wp.blocks.getBlockType( name ) ) {
+		throw new Error( 'Block type not registered: ' + name );
+	}
+	return wp.blocks.createBlock( name, window.JSON.parse( JSON.stringify( attributes ) ), inner );
+};
 const { parse, serialize, switchToBlockType, getBlockTypes } = wp.blocks;
 
 function describe( blocks, prefix = '' ) {

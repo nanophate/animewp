@@ -7,7 +7,14 @@ dir=wp-content/animewp-tests
 origin=http://wordpress   # the WordPress container as seen from the CLI container
 status=0
 for suite in wp-smoke wp-fixtures wp-regressions-v12 wp-render wp-http; do
-	output=$(npx wp-env run cli -- env ANIMEWP_HTTP_ORIGIN="$origin" wp eval-file "$dir/$suite.php" 2>&1) || status=1
+	# wp-env occasionally fails its own Docker request ("lookup:" timing dump); retry once.
+	for attempt in 1 2; do
+		suite_status=0
+		output=$(npx wp-env run cli -- env ANIMEWP_HTTP_ORIGIN="$origin" wp eval-file "$dir/$suite.php" 2>&1) || suite_status=1
+		case "$output" in *"lookup:"*) [ "$attempt" = 1 ] && sleep 3 && continue ;; esac
+		break
+	done
+	[ "$suite_status" = 0 ] || status=1
 	summary=$(printf '%s' "$output" | python3 -c '
 import json, re, sys
 text = "\n".join(line for line in sys.stdin.read().splitlines() if not line.startswith(("ℹ", "✔")))

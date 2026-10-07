@@ -26,8 +26,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
-<!-- wp:animewp/carousel {"slideWidth":64,"emphasizeActive":true,"align":"full"} -->
-<div class="wp-block-animewp-carousel alignfull has-nav-icon is-effect-slide has-dots-dots is-emphasized" style="--animewp-carousel-slide:64%" data-prev-label="前へ" data-next-label="次へ"><div class="animewp-carousel__track"><!-- wp:animewp/video-card {"posterUrl":"<?php echo esc_url( wp_make_link_relative( get_theme_file_uri( 'assets/images/' ) ) ); ?>animewp-key-visual-a.svg"} -->
+<!-- wp:animewp/carousel {"slideWidth":64,"emphasizeActive":true,"label":"映像","align":"full"} -->
+<div class="wp-block-animewp-carousel alignfull has-nav-icon is-effect-slide has-dots-dots is-emphasized" style="--animewp-carousel-slide:64%" data-prev-label="前へ" data-next-label="次へ" data-label="映像" data-pause-label="自動切り替えを一時停止"><div class="animewp-carousel__track"><!-- wp:animewp/video-card {"posterUrl":"<?php echo esc_url( wp_make_link_relative( get_theme_file_uri( 'assets/images/' ) ) ); ?>animewp-key-visual-a.svg"} -->
 <figure style="--animewp-video-card-ratio:16/9" class="wp-block-animewp-video-card"><span class="animewp-video-card__frame"><img src="<?php echo esc_url( wp_make_link_relative( get_theme_file_uri( 'assets/images/' ) ) ); ?>animewp-key-visual-a.svg" alt="" loading="lazy" decoding="async"/></span><figcaption class="animewp-video-card__caption"><span class="animewp-video-card__label">TRAILER 01</span><span class="animewp-video-card__title">メイン映像</span></figcaption></figure>
 <!-- /wp:animewp/video-card -->
 

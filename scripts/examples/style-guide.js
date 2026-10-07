@@ -49,7 +49,7 @@ module.exports = ( helpers ) => {
 	const carousel = ( navStyle, dotStyle, extra = {} ) =>
 		b( 'core/column', {}, [
 			s.caption( 'navStyle: ' + navStyle + ' / dotStyle: ' + dotStyle ),
-			b( 'animewp/carousel', { navStyle, dotStyle, ...extra }, [
+			b( 'animewp/carousel', { label: '見本画像', navStyle, dotStyle, ...extra }, [
 				b( 'core/image', { url: image( 'animewp-key-visual-a.svg' ), alt: '見本画像1' } ),
 				b( 'core/image', { url: image( 'animewp-key-visual-b.svg' ), alt: '見本画像2' } ),
 				b( 'core/image', { url: image( 'animewp-character-d.svg' ), alt: '見本画像3' } ),

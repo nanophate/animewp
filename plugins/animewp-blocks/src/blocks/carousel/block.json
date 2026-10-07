@@ -70,6 +70,14 @@
     "nextLabel": {
       "type": "string",
       "default": "次へ"
+    },
+    "label": {
+      "type": "string",
+      "default": "スライド"
+    },
+    "pauseLabel": {
+      "type": "string",
+      "default": "自動切り替えを一時停止"
     }
   },
   "supports": {

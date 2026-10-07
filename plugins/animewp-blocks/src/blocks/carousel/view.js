@@ -66,6 +66,7 @@ function enhance( root ) {
 	if ( root.dataset.dots !== 'false' ) {
 		const group = element( 'div', 'animewp-carousel__dots' );
 		group.setAttribute( 'role', 'group' );
+		group.setAttribute( 'aria-label', root.dataset.label || 'スライド' );
 		const dotStyle =
 			[ 'numbers', 'thumbnails' ].find( ( name ) =>
 				root.classList.contains( 'has-dots-' + name )
@@ -110,16 +111,23 @@ function enhance( root ) {
 		pause.type = 'button';
 		pause.hidden = true;
 		pause.setAttribute( 'aria-pressed', 'false' );
-		pause.setAttribute( 'aria-label', '自動再生を一時停止' );
+		pause.setAttribute(
+			'aria-label',
+			root.dataset.pauseLabel || '自動切り替えを一時停止'
+		);
 		nav.append( pause );
 	}
 	if ( nav.childElementCount ) {
 		root.append( nav );
 	}
 
+	// aria-roledescription is only announced on an element with a role.
+	root.setAttribute( 'role', 'region' );
 	root.setAttribute( 'aria-roledescription', 'carousel' );
+	root.setAttribute( 'aria-label', root.dataset.label || 'スライド' );
 	track.tabIndex = 0;
 	slides.forEach( ( slide, index ) => {
+		slide.setAttribute( 'role', 'group' );
 		slide.setAttribute( 'aria-roledescription', 'slide' );
 		slide.setAttribute( 'aria-label', index + 1 + ' / ' + slides.length );
 	} );

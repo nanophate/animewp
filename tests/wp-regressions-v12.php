@@ -62,7 +62,8 @@ try {
  check_v12('No custom palette switching action or function exists',!function_exists('animewp_apply_palette')&&!has_action('admin_post_animewp_apply_palette'));
  $after['settings']['typography']['fontFamilies']['custom']=array();wp_update_post(wp_slash(array('ID'=>$styles_id,'post_content'=>wp_json_encode($after))));wp_clean_theme_json_cache();
  check_v12('Deleted assigned families fall back without broken role CSS',animewp_role_css()==='');
- check_v12('F4 author filtered markup retains anonymous crossorigin',false!==strpos(wp_kses_post('<video crossorigin="anonymous" controls src="/film.mp4"><track src="/captions.vtt" kind="captions" /></video>'),'crossorigin="anonymous"'));
+ // Plugin feature (AnimeWP Blocks allows crossorigin on video); only checked when the plugin is active.
+ if(function_exists('Animewp\\Blocks\\allow_video_crossorigin'))check_v12('F4 author filtered markup retains anonymous crossorigin',false!==strpos(wp_kses_post('<video crossorigin="anonymous" controls src="/film.mp4"><track src="/captions.vtt" kind="captions" /></video>'),'crossorigin="anonymous"'));
  $author=get_user_by('login','animewp-test-author');wp_set_current_user($author->ID);
  check_v12('Author cannot change font roles',is_wp_error(animewp_save_font_roles(array())));
  wp_set_current_user(1);

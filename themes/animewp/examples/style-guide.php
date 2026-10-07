@@ -245,8 +245,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <p class="is-style-animewp-caption">navStyle: icon / dotStyle: dots</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:animewp/carousel -->
-<div class="wp-block-animewp-carousel has-nav-icon is-effect-slide has-dots-dots" style="--animewp-carousel-slide:100%" data-prev-label="前へ" data-next-label="次へ"><div class="animewp-carousel__track"><!-- wp:image -->
+<!-- wp:animewp/carousel {"label":"見本画像"} -->
+<div class="wp-block-animewp-carousel has-nav-icon is-effect-slide has-dots-dots" style="--animewp-carousel-slide:100%" data-prev-label="前へ" data-next-label="次へ" data-label="見本画像" data-pause-label="自動切り替えを一時停止"><div class="animewp-carousel__track"><!-- wp:image -->
 <figure class="wp-block-image"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/' ) ); ?>animewp-key-visual-a.svg" alt="見本画像1"/></figure>
 <!-- /wp:image -->
 
@@ -265,8 +265,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <p class="is-style-animewp-caption">navStyle: text / dotStyle: numbers</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:animewp/carousel {"navStyle":"text","dotStyle":"numbers","prevLabel":"PREV","nextLabel":"NEXT"} -->
-<div class="wp-block-animewp-carousel has-nav-text is-effect-slide has-dots-numbers" style="--animewp-carousel-slide:100%" data-prev-label="PREV" data-next-label="NEXT"><div class="animewp-carousel__track"><!-- wp:image -->
+<!-- wp:animewp/carousel {"navStyle":"text","dotStyle":"numbers","prevLabel":"PREV","nextLabel":"NEXT","label":"見本画像"} -->
+<div class="wp-block-animewp-carousel has-nav-text is-effect-slide has-dots-numbers" style="--animewp-carousel-slide:100%" data-prev-label="PREV" data-next-label="NEXT" data-label="見本画像" data-pause-label="自動切り替えを一時停止"><div class="animewp-carousel__track"><!-- wp:image -->
 <figure class="wp-block-image"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/' ) ); ?>animewp-key-visual-a.svg" alt="見本画像1"/></figure>
 <!-- /wp:image -->
 
@@ -285,8 +285,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <p class="is-style-animewp-caption">navStyle: line / dotStyle: thumbnails</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:animewp/carousel {"effect":"fade","navStyle":"line","dotStyle":"thumbnails","prevLabel":"PREV","nextLabel":"NEXT"} -->
-<div class="wp-block-animewp-carousel has-nav-line is-effect-fade has-dots-thumbnails" style="--animewp-carousel-slide:100%" data-prev-label="PREV" data-next-label="NEXT"><div class="animewp-carousel__track"><!-- wp:image -->
+<!-- wp:animewp/carousel {"effect":"fade","navStyle":"line","dotStyle":"thumbnails","prevLabel":"PREV","nextLabel":"NEXT","label":"見本画像"} -->
+<div class="wp-block-animewp-carousel has-nav-line is-effect-fade has-dots-thumbnails" style="--animewp-carousel-slide:100%" data-prev-label="PREV" data-next-label="NEXT" data-label="見本画像" data-pause-label="自動切り替えを一時停止"><div class="animewp-carousel__track"><!-- wp:image -->
 <figure class="wp-block-image"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/' ) ); ?>animewp-key-visual-a.svg" alt="見本画像1"/></figure>
 <!-- /wp:image -->
 

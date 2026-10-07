@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-06T23:45:53+00:00\n"
+"POT-Creation-Date: 2026-10-07T00:37:07+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: animewp-blocks\n"
@@ -175,6 +175,14 @@ msgid "Controls"
 msgstr ""
 
 #: build/blocks/carousel/index.js:1
+msgid "Name for screen readers"
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "For example: Trailers, Characters."
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
 msgid "Previous and next buttons"
 msgstr ""
 
@@ -238,6 +246,10 @@ msgstr ""
 
 #: build/blocks/carousel/index.js:1
 msgid "0 turns it off. Pauses on hover and focus, adds a pause button, and never runs for visitors who prefer reduced motion."
+msgstr ""
+
+#: build/blocks/carousel/index.js:1
+msgid "Pause button (screen readers)"
 msgstr ""
 
 #: build/blocks/decoration/index.js:1

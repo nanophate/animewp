@@ -40,6 +40,8 @@ jobs:
           for branch in 6.6-branch 7.1-branch; do
             ANIMEWP_WP_DIR="$(sh tests/serialization/fetch-wordpress.sh "$branch")" node tests/serialization/compare.js --base-ref origin/main
           done
+      - name: Generated examples are current and valid
+        run: ANIMEWP_WP_DIR="$(sh tests/serialization/fetch-wordpress.sh 6.6-branch)" node scripts/build-examples.js --check
       - name: Produce and verify installation ZIPs
         run: |
           python3 scripts/package.py

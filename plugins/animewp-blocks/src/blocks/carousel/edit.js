@@ -88,6 +88,20 @@ export default function Edit( { attributes: a, setAttributes } ) {
 					/>
 				</PanelBody>
 				<PanelBody title={ __( 'Controls', 'animewp-blocks' ) }>
+					<TextControl
+						__nextHasNoMarginBottom
+						__next40pxDefaultSize
+						label={ __(
+							'Name for screen readers',
+							'animewp-blocks'
+						) }
+						help={ __(
+							'For example: Trailers, Characters.',
+							'animewp-blocks'
+						) }
+						value={ a.label }
+						onChange={ ( label ) => setAttributes( { label } ) }
+					/>
 					<Select
 						{ ...shared }
 						name="navStyle"
@@ -216,6 +230,20 @@ export default function Edit( { attributes: a, setAttributes } ) {
 						max={ 20 }
 						fallback={ 0 }
 					/>
+					{ a.autoplay > 0 && (
+						<TextControl
+							__nextHasNoMarginBottom
+							__next40pxDefaultSize
+							label={ __(
+								'Pause button (screen readers)',
+								'animewp-blocks'
+							) }
+							value={ a.pauseLabel }
+							onChange={ ( pauseLabel ) =>
+								setAttributes( { pauseLabel } )
+							}
+						/>
+					) }
 				</PanelBody>
 			</InspectorControls>
 			<div { ...blockProps }>

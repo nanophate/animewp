@@ -22,8 +22,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
-<!-- wp:animewp/carousel {"effect":"fade","dotStyle":"thumbnails","align":"wide"} -->
-<div class="wp-block-animewp-carousel alignwide has-nav-icon is-effect-fade has-dots-thumbnails" style="--animewp-carousel-slide:100%" data-prev-label="前へ" data-next-label="次へ"><div class="animewp-carousel__track"><!-- wp:columns {"verticalAlignment":"center","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|50"}}}} -->
+<!-- wp:animewp/carousel {"effect":"fade","dotStyle":"thumbnails","label":"キャラクター","align":"wide"} -->
+<div class="wp-block-animewp-carousel alignwide has-nav-icon is-effect-fade has-dots-thumbnails" style="--animewp-carousel-slide:100%" data-prev-label="前へ" data-next-label="次へ" data-label="キャラクター" data-pause-label="自動切り替えを一時停止"><div class="animewp-carousel__track"><!-- wp:columns {"verticalAlignment":"center","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|50"}}}} -->
 <div class="wp-block-columns are-vertically-aligned-center"><!-- wp:column {"width":"42%"} -->
 <div class="wp-block-column" style="flex-basis:42%"><!-- wp:image {"className":"is-style-animewp-portrait"} -->
 <figure class="wp-block-image is-style-animewp-portrait"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/' ) ); ?>animewp-character-a.svg" alt="主人公の名前のイラスト（差し替えてください）"/></figure>

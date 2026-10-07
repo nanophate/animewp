@@ -12,8 +12,8 @@
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 ?>
 <!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"0","bottom":"0"}}},"layout":{"type":"default"}} -->
-<div class="wp-block-group alignfull" style="padding-top:0;padding-bottom:0"><!-- wp:animewp/carousel {"effect":"fade","navStyle":"none","dotStyle":"numbers","autoplay":7,"align":"full","style":{"spacing":{"blockGap":"0"}}} -->
-<div class="wp-block-animewp-carousel alignfull has-nav-none is-effect-fade has-dots-numbers" style="--animewp-carousel-slide:100%;--animewp-carousel-gap:0" data-autoplay="7" data-prev-label="前へ" data-next-label="次へ"><div class="animewp-carousel__track"><!-- wp:cover {"url":"<?php echo esc_url( get_theme_file_uri( 'assets/images/' ) ); ?>animewp-key-visual-a.svg","dimRatio":0,"minHeight":86,"minHeightUnit":"vh","contentPosition":"bottom left","isDark":false,"style":{"spacing":{"padding":{"top":"var:preset|spacing|60","right":"var:preset|spacing|50","bottom":"var:preset|spacing|60","left":"var:preset|spacing|50"}}}} -->
+<div class="wp-block-group alignfull" style="padding-top:0;padding-bottom:0"><!-- wp:animewp/carousel {"effect":"fade","navStyle":"none","dotStyle":"numbers","autoplay":7,"label":"キービジュアル","align":"full","style":{"spacing":{"blockGap":"0"}}} -->
+<div class="wp-block-animewp-carousel alignfull has-nav-none is-effect-fade has-dots-numbers" style="--animewp-carousel-slide:100%;--animewp-carousel-gap:0" data-autoplay="7" data-prev-label="前へ" data-next-label="次へ" data-label="キービジュアル" data-pause-label="自動切り替えを一時停止"><div class="animewp-carousel__track"><!-- wp:cover {"url":"<?php echo esc_url( get_theme_file_uri( 'assets/images/' ) ); ?>animewp-key-visual-a.svg","dimRatio":0,"minHeight":86,"minHeightUnit":"vh","contentPosition":"bottom left","isDark":false,"style":{"spacing":{"padding":{"top":"var:preset|spacing|60","right":"var:preset|spacing|50","bottom":"var:preset|spacing|60","left":"var:preset|spacing|50"}}}} -->
 <div class="wp-block-cover is-light has-custom-content-position is-position-bottom-left" style="padding-top:var(--wp--preset--spacing--60);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--60);padding-left:var(--wp--preset--spacing--50);min-height:86vh"><span aria-hidden="true" class="wp-block-cover__background has-background-dim-0 has-background-dim"></span><img class="wp-block-cover__image-background" alt="" src="<?php echo esc_url( get_theme_file_uri( 'assets/images/' ) ); ?>animewp-key-visual-a.svg" data-object-fit="cover"/><div class="wp-block-cover__inner-container"><!-- wp:group {"className":"is-style-animewp-glass","layout":{"type":"constrained","contentSize":"36rem","justifyContent":"left"}} -->
 <div class="wp-block-group is-style-animewp-glass"><!-- wp:paragraph {"className":"is-style-animewp-label"} -->
 <p class="is-style-animewp-label">TV ANIMATION</p>
@@ -146,8 +146,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
-<!-- wp:animewp/carousel {"slideWidth":64,"emphasizeActive":true,"align":"full","animewpMotion":{"entrance":"blur"}} -->
-<div class="wp-block-animewp-carousel alignfull has-nav-icon is-effect-slide has-dots-dots is-emphasized" style="--animewp-carousel-slide:64%" data-prev-label="前へ" data-next-label="次へ"><div class="animewp-carousel__track"><!-- wp:animewp/video-card {"posterUrl":"<?php echo esc_url( wp_make_link_relative( get_theme_file_uri( 'assets/images/' ) ) ); ?>animewp-key-visual-a.svg"} -->
+<!-- wp:animewp/carousel {"slideWidth":64,"emphasizeActive":true,"label":"映像","align":"full","animewpMotion":{"entrance":"blur"}} -->
+<div class="wp-block-animewp-carousel alignfull has-nav-icon is-effect-slide has-dots-dots is-emphasized" style="--animewp-carousel-slide:64%" data-prev-label="前へ" data-next-label="次へ" data-label="映像" data-pause-label="自動切り替えを一時停止"><div class="animewp-carousel__track"><!-- wp:animewp/video-card {"posterUrl":"<?php echo esc_url( wp_make_link_relative( get_theme_file_uri( 'assets/images/' ) ) ); ?>animewp-key-visual-a.svg"} -->
 <figure style="--animewp-video-card-ratio:16/9" class="wp-block-animewp-video-card"><span class="animewp-video-card__frame"><img src="<?php echo esc_url( wp_make_link_relative( get_theme_file_uri( 'assets/images/' ) ) ); ?>animewp-key-visual-a.svg" alt="" loading="lazy" decoding="async"/></span><figcaption class="animewp-video-card__caption"><span class="animewp-video-card__label">TRAILER 01</span><span class="animewp-video-card__title">メイン映像</span></figcaption></figure>
 <!-- /wp:animewp/video-card -->
 
@@ -176,8 +176,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
-<!-- wp:animewp/carousel {"effect":"fade","dotStyle":"thumbnails","align":"wide"} -->
-<div class="wp-block-animewp-carousel alignwide has-nav-icon is-effect-fade has-dots-thumbnails" style="--animewp-carousel-slide:100%" data-prev-label="前へ" data-next-label="次へ"><div class="animewp-carousel__track"><!-- wp:columns {"verticalAlignment":"center","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|50"}}}} -->
+<!-- wp:animewp/carousel {"effect":"fade","dotStyle":"thumbnails","label":"キャラクター","align":"wide"} -->
+<div class="wp-block-animewp-carousel alignwide has-nav-icon is-effect-fade has-dots-thumbnails" style="--animewp-carousel-slide:100%" data-prev-label="前へ" data-next-label="次へ" data-label="キャラクター" data-pause-label="自動切り替えを一時停止"><div class="animewp-carousel__track"><!-- wp:columns {"verticalAlignment":"center","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|50"}}}} -->
 <div class="wp-block-columns are-vertically-aligned-center"><!-- wp:column {"width":"42%"} -->
 <div class="wp-block-column" style="flex-basis:42%"><!-- wp:image {"className":"is-style-animewp-portrait"} -->
 <figure class="wp-block-image is-style-animewp-portrait"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/' ) ); ?>animewp-character-a.svg" alt="主人公の名前のイラスト（差し替えてください）"/></figure>

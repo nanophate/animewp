@@ -29,17 +29,28 @@ export default function Edit( { attributes: a, setAttributes } ) {
 		<>
 			<InspectorControls>
 				<PanelBody title={ __( 'Decoration', 'animewp-blocks' ) }>
-					<div className="animewp-decoration-shapes" role="group" aria-label={ __( 'Shape', 'animewp-blocks' ) }>
+					<div
+						className="animewp-decoration-shapes"
+						role="group"
+						aria-label={ __( 'Shape', 'animewp-blocks' ) }
+					>
 						{ SHAPES.map( ( shape ) => (
 							<Button
 								key={ shape }
-								className={ 'animewp-decoration-shapes__item is-shape-' + shape }
+								className={
+									'animewp-decoration-shapes__item is-shape-' +
+									shape
+								}
 								isPressed={ a.shape === shape }
 								label={ names[ shape ] }
 								showTooltip
 								onClick={ () => setAttributes( { shape } ) }
 							>
-								{ shape === 'image' ? __( 'Image', 'animewp-blocks' ) : <span className="animewp-decoration__art" /> }
+								{ shape === 'image' ? (
+									__( 'Image', 'animewp-blocks' )
+								) : (
+									<span className="animewp-decoration__art" />
+								) }
 							</Button>
 						) ) }
 					</div>
@@ -50,33 +61,110 @@ export default function Edit( { attributes: a, setAttributes } ) {
 								value={ a.imageId }
 								onSelect={ ( item ) =>
 									setAttributes( {
-										imageId: numberValue( item.id, 0, Number.MAX_SAFE_INTEGER, 0 ),
+										imageId: numberValue(
+											item.id,
+											0,
+											Number.MAX_SAFE_INTEGER,
+											0
+										),
 										imageUrl: localPosterUrl( item.url ),
 									} )
 								}
 								render={ ( { open } ) => (
-									<Button variant="secondary" onClick={ open }>
-										{ image ? __( 'Replace image', 'animewp-blocks' ) : __( 'Choose image', 'animewp-blocks' ) }
+									<Button
+										variant="secondary"
+										onClick={ open }
+									>
+										{ image
+											? __(
+													'Replace image',
+													'animewp-blocks'
+												)
+											: __(
+													'Choose image',
+													'animewp-blocks'
+												) }
 									</Button>
 								) }
 							/>
 						</MediaUploadCheck>
 					) : (
-						<p>{ __( 'The shape uses this block’s text color (Styles → Color).', 'animewp-blocks' ) }</p>
+						<p>
+							{ __(
+								'The shape uses this block’s text color (Styles → Color).',
+								'animewp-blocks'
+							) }
+						</p>
 					) }
-					<Range { ...shared } name="x" label={ __( 'Horizontal position (%)', 'animewp-blocks' ) } min={ -20 } max={ 120 } fallback={ 85 } />
-					<Range { ...shared } name="y" label={ __( 'Vertical position (%)', 'animewp-blocks' ) } min={ -20 } max={ 120 } fallback={ 20 } />
-					<Range { ...shared } name="size" label={ __( 'Size (% of the section width)', 'animewp-blocks' ) } min={ 1 } max={ 100 } fallback={ 6 } />
-					<Range { ...shared } name="rotation" label={ __( 'Rotation (°)', 'animewp-blocks' ) } min={ -180 } max={ 180 } fallback={ 0 } />
-					<Range { ...shared } name="opacity" label={ __( 'Opacity (%)', 'animewp-blocks' ) } min={ 0 } max={ 100 } fallback={ 100 } />
+					<Range
+						{ ...shared }
+						name="x"
+						label={ __(
+							'Horizontal position (%)',
+							'animewp-blocks'
+						) }
+						min={ -20 }
+						max={ 120 }
+						fallback={ 85 }
+					/>
+					<Range
+						{ ...shared }
+						name="y"
+						label={ __(
+							'Vertical position (%)',
+							'animewp-blocks'
+						) }
+						min={ -20 }
+						max={ 120 }
+						fallback={ 20 }
+					/>
+					<Range
+						{ ...shared }
+						name="size"
+						label={ __(
+							'Size (% of the section width)',
+							'animewp-blocks'
+						) }
+						min={ 1 }
+						max={ 100 }
+						fallback={ 6 }
+					/>
+					<Range
+						{ ...shared }
+						name="rotation"
+						label={ __( 'Rotation (°)', 'animewp-blocks' ) }
+						min={ -180 }
+						max={ 180 }
+						fallback={ 0 }
+					/>
+					<Range
+						{ ...shared }
+						name="opacity"
+						label={ __( 'Opacity (%)', 'animewp-blocks' ) }
+						min={ 0 }
+						max={ 100 }
+						fallback={ 100 }
+					/>
 					<Select
 						{ ...shared }
 						name="layer"
 						label={ __( 'Layer', 'animewp-blocks' ) }
 						fallback="behind"
 						options={ [
-							{ label: __( 'Behind the content', 'animewp-blocks' ), value: 'behind' },
-							{ label: __( 'In front of the content', 'animewp-blocks' ), value: 'front' },
+							{
+								label: __(
+									'Behind the content',
+									'animewp-blocks'
+								),
+								value: 'behind',
+							},
+							{
+								label: __(
+									'In front of the content',
+									'animewp-blocks'
+								),
+								value: 'front',
+							},
 						] }
 					/>
 					<Select
@@ -85,21 +173,60 @@ export default function Edit( { attributes: a, setAttributes } ) {
 						label={ __( 'Blend', 'animewp-blocks' ) }
 						fallback="normal"
 						options={ [
-							{ label: __( 'Normal', 'animewp-blocks' ), value: 'normal' },
-							{ label: __( 'Multiply (darken)', 'animewp-blocks' ), value: 'multiply' },
-							{ label: __( 'Screen (lighten)', 'animewp-blocks' ), value: 'screen' },
-							{ label: __( 'Overlay', 'animewp-blocks' ), value: 'overlay' },
-							{ label: __( 'Soft light', 'animewp-blocks' ), value: 'soft-light' },
+							{
+								label: __( 'Normal', 'animewp-blocks' ),
+								value: 'normal',
+							},
+							{
+								label: __(
+									'Multiply (darken)',
+									'animewp-blocks'
+								),
+								value: 'multiply',
+							},
+							{
+								label: __(
+									'Screen (lighten)',
+									'animewp-blocks'
+								),
+								value: 'screen',
+							},
+							{
+								label: __( 'Overlay', 'animewp-blocks' ),
+								value: 'overlay',
+							},
+							{
+								label: __( 'Soft light', 'animewp-blocks' ),
+								value: 'soft-light',
+							},
 						] }
 					/>
-					<Toggle { ...shared } name="hideOnMobile" label={ __( 'Hide on small screens', 'animewp-blocks' ) } />
+					<Toggle
+						{ ...shared }
+						name="hideOnMobile"
+						label={ __(
+							'Hide on small screens',
+							'animewp-blocks'
+						) }
+					/>
 					<p className="animewp-motion-note">
-						{ __( 'To make it drift, open Motion below and choose Keep moving → Float, or set Parallax.', 'animewp-blocks' ) }
+						{ __(
+							'To make it drift, open Motion below and choose Keep moving → Float, or set Parallax.',
+							'animewp-blocks'
+						) }
 					</p>
 				</PanelBody>
 			</InspectorControls>
 			<div { ...blockProps }>
-				{ image ? <img className="animewp-decoration__art" src={ editorUrl( image ) } alt="" /> : <span className="animewp-decoration__art" /> }
+				{ image ? (
+					<img
+						className="animewp-decoration__art"
+						src={ editorUrl( image ) }
+						alt=""
+					/>
+				) : (
+					<span className="animewp-decoration__art" />
+				) }
 			</div>
 		</>
 	);
