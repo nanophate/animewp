@@ -47,3 +47,19 @@ jobs:
           python3 scripts/package.py
           cd artifacts/releases
           sha256sum --check SHA256SUMS
+
+  security:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4; verified commit
+        with:
+          persist-credentials: false
+      - name: Install build tooling
+        run: npm ci
+      - name: Build blocks
+        run: npm run build
+      - name: Start WordPress in Docker (wp-env)
+        run: npx wp-env start
+      - name: PHPCS security sniffs, Plugin Check and Theme Check
+        run: npm run test:security

@@ -18,7 +18,8 @@
     "env:stop": "wp-env stop",
     "wp": "wp-env run cli -- wp",
     "test:wp": "sh tests/run-wp-suites.sh",
-    "examples": "node scripts/build-examples.js"
+    "examples": "node scripts/build-examples.js",
+    "test:security": "sh tests/security/run.sh"
   },
   "devDependencies": {
     "@wordpress/env": "11.16.0",

@@ -146,6 +146,7 @@ npm run lint:js                         # WordPressのコーディング規約
 npm ci --prefix tests/serialization     # 互換性テストの道具（初回のみ）
 python3 scripts/validate.py --compare   # ビルド、PHP（Docker）、監査、保存HTML比較
 npm run test:wp                         # WordPress統合試験（Docker内の使い捨てサイトで実行）
+npm run test:security                   # セキュリティ検査（PHPCSのWordPressセキュリティ規則、Plugin Check、Theme Check）
 npm run i18n                            # 翻訳ファイルを再生成（WP-CLIをDockerで実行）
 ```
 

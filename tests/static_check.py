@@ -113,7 +113,7 @@ def audit(path):
         for references in RUNTIME_ENDPOINTS.values():
             for reference in sorted(references, key=len, reverse=True):
                 audit_text = audit_text.replace(reference, "DECLARED_RUNTIME_ENDPOINT")
-    if rel == "themes/animewp/style.css":
+    if rel in ("themes/animewp/style.css", "plugins/animewp-blocks/readme.txt"):
         audit_text = re.sub(r"^License URI: https://www\.gnu\.org/licenses/gpl-2\.0\.html$", "License URI: GPL_LICENSE", audit_text, flags=re.M)
     for match in URL.finditer(audit_text):
         # Test fixtures intentionally exercise allowed and rejected third-party URLs.
@@ -161,6 +161,7 @@ def main():
     check((theme / "readme.txt").read_text().splitlines()[0] == f"animewp {theme_version}", "Theme readme version must match style.css")
     check(f"バージョン{plugin_version}。" in (plugin / "README.md").read_text(), "Plugin README version must match header")
     check(f"$animewp_version = '{plugin_version}';" in (plugin / "animewp-blocks.php").read_text(), "Plugin runtime cache version must match header")
+    check(f"Stable tag: {plugin_version}" in (plugin / "readme.txt").read_text(), "Plugin readme.txt Stable tag must match header")
     for slug, value in (("animewp", theme_version), ("animewp-blocks", plugin_version)):
         check(f"{slug}-{value}.zip" in (ROOT / "README.md").read_text(), f"README package example must match {slug} version")
     for path, field, expected in ((theme / "style.css", "Theme Name", "animewp"), (plugin / "animewp-blocks.php", "Plugin Name", "AnimeWP Blocks")):

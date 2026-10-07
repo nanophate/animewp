@@ -60,7 +60,7 @@ def main():
         run(["npm", "run", "--silent", "build"])
     php = php_linter(args.skip_php)
     paths = [p for base in ("themes", "plugins", "scripts", "tests") for p in (ROOT / base).rglob("*")
-             if p.is_file() and "node_modules" not in p.relative_to(ROOT).parts]
+             if p.is_file() and not {"node_modules", "vendor"} & set(p.relative_to(ROOT).parts)]
     counts = {"php": 0, "js": 0, "py": 0}
     php_paths = []
     for path in sorted(paths):
