@@ -22,7 +22,7 @@
     "test:security": "sh tests/security/run.sh"
   },
   "devDependencies": {
-    "@wordpress/env": "11.16.0",
-    "@wordpress/scripts": "35.0.0"
+    "@wordpress/env": "11.17.0",
+    "@wordpress/scripts": "36.1.0"
   }
 }

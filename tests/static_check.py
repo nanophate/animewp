@@ -182,6 +182,18 @@ def main():
     source_blocks = {p.parent.name for p in (plugin / "src/blocks").glob("*/block.json")}
     built_blocks = {p.name for p in (plugin / "build/blocks").iterdir() if p.is_dir()} if (plugin / "build/blocks").is_dir() else set()
     check(source_blocks == built_blocks, f"build/blocks differs from src/blocks: {sorted(source_blocks ^ built_blocks)} (rebuild from a clean build/)")
+    # npm packages are development tools only; nothing installed from npm ships.
+    check(not json.loads((ROOT / "package.json").read_text()).get("dependencies"), "package.json: runtime dependencies are not allowed; use devDependencies")
+    # Shipped scripts contain only this project's code: no bundled libraries
+    # (they would carry a license banner) and only dependencies WordPress provides.
+    for path in sorted((plugin / "build").rglob("*")):
+        rel = path.relative_to(ROOT).as_posix()
+        if path.suffix in (".js", ".css"):
+            check(not re.search(r"/\*!|@license|@preserve", path.read_text(encoding="utf-8")), f"{rel}: third-party license banner (bundled library?)")
+        if path.name.endswith(".asset.php"):
+            listed = re.search(r"'dependencies'\s*=>\s*array\(([^)]*)\)", path.read_text(encoding="utf-8"))
+            for handle in re.findall(r"'([^']+)'", listed.group(1) if listed else ""):
+                check(bool(re.fullmatch(r"wp-[a-z0-9-]+|react|react-dom|react-jsx-runtime|@wordpress/[a-z0-9-]+", handle)), f"{rel}: depends on {handle}, which WordPress does not provide")
     for name in sorted(source_blocks):
         source = plugin / f"src/blocks/{name}/block.json"
         built = plugin / f"build/blocks/{name}/block.json"

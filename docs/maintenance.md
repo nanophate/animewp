@@ -10,19 +10,41 @@
 | 検査 | 対象 | タイミング |
 | --- | --- | --- |
 | Dependabot version updates | GitHub Actions、ルートと `tests/serialization` の npm、`tests/security` の Composer | 毎週月曜 04:17 JST |
-| npm / Composer audit | 上記3箇所の lockfile。開発用依存も含む | PR、main の push、毎日 04:23 JST、手動 |
+| npm / Composer audit | 上記3箇所の lockfile。開発用依存も含む（扱いは下記） | PR、main の push、毎日 04:23 JST、手動 |
 | 既存のソース・ZIP・WordPress セキュリティ検査 | テーマとプラグイン | push、PR、毎週月曜 04:37 JST、手動 |
 
 GitHub Actions の cron は UTC に換算して記述しています。実行時刻は目安で、
 GitHub 側の混雑等で遅延することがあります。
 
-npm の high / critical と、Composer の既知脆弱性で audit を失敗させます。
-npm の low / moderate、Composer の abandoned package はログで確認できます。
-依存関係は lockfile から監査し、このジョブで install や audit fix は行いません。
-監査サービスに接続できない場合も、成功扱いにはしません。
+npm の監査は `tests/security/npm_audit.py` が行い、次の場合に失敗します。
 
-現行 lockfile には既知の脆弱性が残り、npm audit が失敗する状態です。
-失敗条件を緩めず、依存関係の更新で解消する必要があります。
+- 開発用（devDependencies）以外の依存に、既知の脆弱性が1件でもある。
+- 開発用ツールに high / critical の advisory があり、`tests/security/npm-audit-accepted.json` で確認済みになっていない。
+- 確認済みの advisory が、記録した見直し期限（`review_by`）を過ぎた。
+
+開発用ツールの low / moderate はログに件数を出すだけです。Composer は既知の脆弱性で失敗し、
+abandoned package はログで確認できます。依存関係は lockfile から監査し、このジョブで
+install や audit fix は行いません。監査サービスに接続できない場合も、成功扱いにはしません。
+
+確認済みとして記録するのは、WordPress 公式の開発ツール（`@wordpress/scripts`、`@wordpress/env`）の
+奥にあり、上流の更新を待つしかないものだけです。記録には、配布物に入らないことと
+影響が限られる理由を書き、見直し期限は3か月以内にします。上流で直ったら記録を削除します
+（監査ログに「No longer reported」と表示されます）。
+
+## 依存の方針
+
+- 配布する ZIP（テーマ、プラグイン）には、外部の JS / CSS ライブラリーもフォントも同梱せず、
+  外部のサーバーからも読み込みません。例外は、利用者が再生した動画プレーヤーと、
+  編集者が取り込んだ YouTube のサムネイルだけです。
+- ブロックのスクリプトが使うのは WordPress 本体が提供する部品（`wp-*`、`@wordpress/*`、React）だけです。
+- npm のパッケージは開発用の道具に限ります（`package.json` に `dependencies` を置かない）。
+  開発用も WordPress 公式の `@wordpress/scripts` と `@wordpress/env` を基本にし、
+  新しいパッケージは必要なときだけ足します。
+- ビルドは WordPress の方針に合わせます。`@wordpress/scripts` は将来、esbuild を使う
+  `@wordpress/build` の上で動く予定のため、独自のビルドへは移らず、公式の更新を取り込みます。
+
+上の3点は `tests/static_check.py` が検査します（外部参照、同梱ライブラリーのライセンス表記、
+WordPress が提供しないスクリプト依存、`package.json` の `dependencies`）。
 
 Dependabot の通常更新は npm / Composer の minor・patch をまとめ、major は個別 PR にします。
 GitHub Actions の更新は一つのグループにします。自動マージは設定していません。
