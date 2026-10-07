@@ -16,5 +16,13 @@
   "testsEnvironment": true,
   "mappings": {
     "wp-content/animewp-tests": "./tests"
+  },
+  "env": {
+    "tests": {
+      "config": {
+        "WP_DEBUG": true,
+        "SCRIPT_DEBUG": false
+      }
+    }
   }
 }
