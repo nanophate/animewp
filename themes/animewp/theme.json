@@ -82,6 +82,7 @@
         "vw",
         "vh"
       ],
+      "defaultSpacingSizes": false,
       "spacingSizes": [
         {
           "slug": "20",

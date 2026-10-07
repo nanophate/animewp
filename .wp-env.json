@@ -8,12 +8,21 @@
     "./plugins/animewp-blocks"
   ],
   "port": 8888,
+  "testsPort": 8889,
   "config": {
     "WP_DEBUG": true,
     "SCRIPT_DEBUG": false
   },
-  "testsEnvironment": false,
+  "testsEnvironment": true,
   "mappings": {
     "wp-content/animewp-tests": "./tests"
+  },
+  "env": {
+    "tests": {
+      "config": {
+        "WP_DEBUG": true,
+        "SCRIPT_DEBUG": false
+      }
+    }
   }
 }

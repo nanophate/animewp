@@ -2,8 +2,7 @@
 
 ## この変更の適用先
 
-この設定は PR #1 の `overhaul-phases` にある依存関係を対象とします。
-この PR を `overhaul-phases` に取り込んだ後、PR #1 を `main` へマージします。
+この設定は `main` にマージ済みの AnimeWP v2 の依存関係と検査構成を対象とします。
 定期実行と通常の Dependabot 更新 PR は、設定が既定ブランチに入ってから有効になります。
 
 ## 自動化する検査
@@ -22,6 +21,9 @@ npm の low / moderate、Composer の abandoned package はログで確認でき
 依存関係は lockfile から監査し、このジョブで install や audit fix は行いません。
 監査サービスに接続できない場合も、成功扱いにはしません。
 
+現行 lockfile には既知の脆弱性が残り、npm audit が失敗する状態です。
+失敗条件を緩めず、依存関係の更新で解消する必要があります。
+
 Dependabot の通常更新は npm / Composer の minor・patch をまとめ、major は個別 PR にします。
 GitHub Actions の更新は一つのグループにします。自動マージは設定していません。
 リポジトリ設定で Dependency graph、Dependabot alerts、Dependabot security updates も有効にしてください。
@@ -30,78 +32,57 @@ YAML の追加だけでリポジトリ側の security updates 設定を切り替
 
 既存の `npm run test:security` は PHPCS の WordPress セキュリティルール、
 Plugin Check の security category、Theme Check を実行します。
+Plugin Check と Theme Check はテスト用 WordPress（ポート 8889）を対象に、
+wp-env の `tests-cli` で実行します。
 Plugin Check は実行成功と ERROR findings の両方を判定し、
 Theme Check は CLI の終了コードを尊重します。
 WP-CLI からの通常の Plugin Check は静的検査です。wp-env 内で動くことだけを根拠に、
 動的な侵入テストやすべての認可テストまで完了したとは扱いません。
 
-## WordPress に AnimeWP の更新を表示する設計
+## 今後の更新配布方針
 
-この PR が導入するのは依存更新と定期検査です。以下は更新配布機能の実装方針です。
+この PR が導入するのは依存更新、定期セキュリティ検査と方針ドキュメントです。
+更新 JSON、WordPress 側 updater、Release ワークフローは未実装です。
+リポジトリの公開設定も変更していません。
 
-現在の配布単位を維持します。
+配布時は `nanophate/animewp` を公開し、同じリポジトリの Raw JSON と
+GitHub Releases のインストール用 ZIP を使います。
+更新 JSON は `main` のルートに二つ置き、`raw.githubusercontent.com` の
+`nanophate/animewp/main/wp-theme.json` と
+`nanophate/animewp/main/wp-plugin.json` から取得します。
 
-| 対象 | ソース | リリースのインストール用 ZIP |
-| --- | --- | --- |
-| テーマ | `themes/animewp/` | `animewp-X.Y.Z.zip` |
-| プラグイン | `plugins/animewp-blocks/` | `animewp-blocks-X.Y.Z.zip` |
+| 対象 | ソース | 更新 JSON | Release のインストール用 ZIP |
+| --- | --- | --- | --- |
+| テーマ | `themes/animewp/` | `wp-theme.json` | `animewp-X.Y.Z.zip` |
+| 任意のブロックプラグイン | `plugins/animewp-blocks/` | `wp-plugin.json` | `animewp-blocks-X.Y.Z.zip` |
 
-GitHub のソース ZIP、検証用 ZIP、リポジトリ全体をインストールに使いません。
-リリース公開前にビルド、既存 CI、`scripts/package.py`、ZIP のハッシュ検査を通し、
-タグと両パッケージの Version ヘッダーが一致することを確認します。
-正式 Release とインストール用 ZIP がそろった版だけを配布対象とします。
-draft、prerelease、未公開ブランチや単なるタグを更新候補にしません。
+各コンポーネントに Plugin Update Checker (PUC) を組み込み、generic JSON 方式で
+対応する JSON を参照します。一つの JSON は一つのコンポーネントの更新情報を持ち、
+PUC の theme / plugin 別の仕様に合わせます。`version` は対象 ZIP の Version ヘッダーと一致させ、
+`download_url` にその ZIP を指定します。必要な PHP / WordPress バージョンや変更内容も
+各仕様に従って記載します。
 
-WordPress には Plugin Update Checker (PUC) または独自の更新フィルタを導入し、
-最新版、必要な PHP / WordPress バージョン、対象 ZIP の URL を提供します。
-`Update URI` は WordPress.org の同名パッケージによる誤上書き防止にも使いますが、
-そのヘッダーだけでは GitHub の更新検出機能は付きません。
+テーマとプラグインは独立して更新できる構成にします。
+テーマの更新検出を、任意のブロックプラグインの有効化に依存させません。
+`Update URI` は WordPress.org の同名パッケージによる誤上書き防止に使いますが、
+そのヘッダーだけでは更新検出機能は付きません。
 
-この monorepo で PUC の GitHub 接続を使う場合は、次の処理が必要です。
+### リリースと導入の順序
 
-- テーマとプラグインを別々に登録する。テーマの更新を任意のブロックプラグインの有効化に依存させない。
-- それぞれのインストール用 asset 名を厳密に指定する。
-  `animewp-.*.zip` のようなパターンでは、プラグイン用・検証用の ZIP も一致し得る。
-- インストール用 asset が欠けたとき、リポジトリ全体の Source ZIP、tag、branch へフォールバックしない。
-  asset 必須の設定に加え、検出戦略を正式 Release に限定する。
-- PUC の GitHub 接続は通常、リポジトリ直下からヘッダーを探す。
-  コンポーネントごとのバージョンや必要 PHP / WordPress バージョンを正確に渡すため、
-  サブディレクトリに対応したアダプタか、パッケージ別の更新 JSON を用意する。
-- 更新コードを含まない旧版には、最初の一回だけ新しい ZIP を手動導入する。
-  停止中のコンポーネントも監視する必要があれば、常時動作する専用 updater を使う。
-
-### 他の利用者へ配布する構成
-
-利用者への配布を前提に、開発用の非公開リポジトリと更新配布先を分けます。
-配布先には、テーマ ZIP、プラグイン ZIP、各パッケージの更新 JSON と必要な検証情報だけを置きます。
-配布先の候補は、配布物専用の公開リポジトリやオブジェクトストレージ、
-またはアクセス制御を備えた更新 API です。
-
-推奨する公開順序は次のとおりです。
-
-1. main に取り込んだソースから正式版を作り、既存 CI と依存監査を通す。
-2. タグと両パッケージの Version、必要 PHP / WordPress バージョンを確認する。
-3. バージョン付きの二つの ZIP を作成し、必要な配布物だけをアップロードする。
-4. ZIP が取得できることを確認してから、テーマ用・プラグイン用の最新版 JSON を更新する。
+1. `main` に取り込んだソースをビルドし、既存 CI と依存監査を通す。
+2. `scripts/package.py` で単体 ZIP を作成し、各パッケージの Version、必要 PHP / WordPress バージョン、ZIP の内容とハッシュを確認する。
+3. 正式な GitHub Release にバージョン付きの単体 ZIP を公開し、ダウンロードできることを確認する。
+4. ZIP の公開成功後に、対象コンポーネントの JSON を `main` で更新する。
 5. WordPress が各 JSON を確認し、標準の更新画面に新バージョンを表示する。
 
-JSON にはパッケージ識別子、version、requires、requires_php、
-download_url、変更内容を含めます。テーマとプラグインの対応する ZIP を明示します。
-WordPress 側のクライアントに PUC を使う場合は、その plugin / theme JSON 仕様に合わせて出力します。
+`download_url` は `github.com` の `nanophate/animewp/releases/download/<tag>/<ZIP名>` のように、
+タグとファイル名で版を固定します。正式 Release と対応 ZIP がそろった版だけを JSON に載せ、
+draft、prerelease、移動する latest リンク、GitHub のソース ZIP、検証用 ZIP を指定しません。
+ZIP の公開に失敗した場合は JSON を更新しません。
 
-GitHub の認証は CI または更新サービス側で扱います。
-開発者の PAT を利用者の WordPress に埋め込んだり配布したりしません。
-配布 ZIP にもソースコードは含まれるため、配布物を公開するか利用者別の認証で限定するかは、
-配布先の設定時に決めます。この PR で非公開リポジトリや配布物の公開範囲は変更しません。
-
-署名を導入する場合は、公開したハッシュを見るだけで済ませず、
-WordPress クライアントに信頼する公開鍵を固定して署名と ZIP ハッシュを検証します。
-`SHA256SUMS` の作成だけでは WordPress の自動検証機能は付きません。
-
-自分が管理するサイトだけで非公開 Release を直接利用する代替案もあります。
-その場合は対象リポジトリ限定の fine-grained PAT の `Contents: read` を
-サーバー環境変数などから渡し、Git、配布 ZIP、ブラウザーへ出る URL には含めません。
-これは第三者への配布方式としては採用しません。
+初回導入は Release から単体 ZIP をダウンロードし、WordPress のテーマ／プラグインの
+アップロード画面でインストールします。更新コードを含まない旧版も、最初の一回は
+updater を含む新しい ZIP を手動でアップロードして置き換えます。
 
 ### 運用
 
@@ -122,5 +103,5 @@ Dependabot はこの開発リポジトリの依存関係を更新するもので
 
 Dependabot options reference、Dependabot on Actions、Actions schedule、
 npm audit、Composer audit、Plugin Update Checker、WordPress の Update URI、
-GitHub Release Asset API、Plugin Check、Theme Check CLI、CodeQL の公式資料を参照してください。
+GitHub Releases、Plugin Check、Theme Check CLI、CodeQL の公式資料を参照してください。
 参照先 URL はこの変更の PR 本文に記載します。

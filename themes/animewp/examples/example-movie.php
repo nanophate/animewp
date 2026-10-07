@@ -11,7 +11,7 @@
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 ?>
-<!-- wp:group {"tagName":"section","align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
+<!-- wp:group {"tagName":"section","align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained","contentSize":"var(\u002d\u002dwp\u002d\u002dstyle\u002d\u002dglobal\u002d\u002dwide-size)"}} -->
 <section class="wp-block-group alignfull" id="movie" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:animewp/backdrop {"blur":32,"veil":70} -->
 <div class="wp-block-animewp-backdrop is-mode-follow" style="--animewp-backdrop-blur:32px;--animewp-backdrop-veil:0.7;--animewp-backdrop-focus:50% 50%" aria-hidden="true"><span class="animewp-backdrop__veil"></span></div>
 <!-- /wp:animewp/backdrop -->

@@ -79,6 +79,9 @@ if ( $animewp_other_themes ) { switch_theme( $animewp_other_themes[0] ); switch_
 animewp_test( 'site editor customization survives theme switching', false !== strpos( get_block_template( 'animewp//page', 'wp_template' )->content, 'Saved template customization' ) );
 wp_delete_post( $animewp_style_post, true );
 foreach ( $animewp_original as $animewp_name => $animewp_value ) { update_option( $animewp_name, $animewp_value ); }
+// Remove the page and menu this run created, so repeated runs do not fill the site's navigation.
+wp_delete_post( $animewp_existing, true );
+wp_delete_post( $animewp_menu, true );
 $animewp_data = array( 'wordpress' => get_bloginfo( 'version' ), 'php' => PHP_VERSION, 'existing_page' => $animewp_existing, 'navigation' => $animewp_menu, 'author_id' => $animewp_author_id, 'imports' => $animewp_imports, 'results' => $GLOBALS['animewp_results'] );
 WP_CLI::line( wp_json_encode( $animewp_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE ) );
 foreach ( $GLOBALS['animewp_results'] as $animewp_result ) { if ( ! $animewp_result['pass'] ) { WP_CLI::halt(1); } }
