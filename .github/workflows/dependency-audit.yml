@@ -14,13 +14,9 @@ permissions:
 
 jobs:
   npm:
-    name: npm audit (${{ matrix.directory }})
+    name: npm audit
     runs-on: ubuntu-24.04
     timeout-minutes: 10
-    strategy:
-      fail-fast: false
-      matrix:
-        directory: [".", "tests/serialization"]
     steps:
       - name: Check out source
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -31,9 +27,10 @@ jobs:
         with:
           node-version: "22"
           package-manager-cache: false
-      - name: Audit locked dependencies, including development tooling
-        working-directory: ${{ matrix.directory }}
-        run: npm audit --package-lock-only --include=dev --audit-level=high --ignore-scripts
+      # Fails on any runtime vulnerability, and on high/critical development-tool
+      # advisories not reviewed in tests/security/npm-audit-accepted.json.
+      - name: Audit locked dependencies (root and tests/serialization)
+        run: python3 tests/security/npm_audit.py . tests/serialization
 
   composer:
     name: Composer audit (tests/security)
