@@ -4,7 +4,7 @@
 #      escaping, nonces, input sanitization, prepared SQL, dangerous functions,
 #      PHP 8.0+ compatibility.
 #   2. Plugin Check (WordPress.org), security category, in the wp-env tests site (localhost:8889).
-#   3. Theme Check (WordPress.org) in the wp-env tests site (localhost:8889): fails on REQUIRED items.
+#   3. Theme Check (WordPress.org) in the wp-env tests site (localhost:8889): honors its exit status.
 # Needs: Docker, npm ci, npm run build, npm run env:start.
 set -eu
 root=$(cd "$(dirname "$0")/../.." && pwd)
@@ -17,24 +17,29 @@ fi
 docker run --rm -v "$root:/work" -w /work php:8.0-cli tests/security/vendor/bin/phpcs --standard=phpcs.xml.dist --report=summary
 echo "PHPCS: no issues"
 
-wp() { npx wp-env run tests-cli -- wp "$@" 2>/dev/null; }
+wp() { npx wp-env run tests-cli -- wp "$@"; }
 wp plugin is-installed plugin-check || wp plugin install plugin-check --quiet
 wp plugin is-installed theme-check || wp plugin install theme-check --quiet
 wp plugin activate plugin-check theme-check --quiet
 
 echo "== Plugin Check (security)"
-plugin=$(wp plugin check animewp-blocks --categories=security --format=csv --fields=file,line,type,code,message || true)
-printf '%s\n' "$plugin" | grep -v '^\(ℹ\|✔\)'
+# Plugin Check may exit successfully even when its result contains ERROR rows.
+# Preserve invocation failures and inspect the findings as a separate check.
+if plugin=$(wp plugin check animewp-blocks --categories=security --format=csv --fields=file,line,type,code,message); then
+	printf '%s\n' "$plugin"
+else
+	status=$?
+	printf '%s\n' "$plugin"
+	echo "Plugin Check could not complete" >&2
+	exit "$status"
+fi
 if printf '%s' "$plugin" | grep -q ',ERROR,'; then
 	echo "Plugin Check found security errors" >&2
 	exit 1
 fi
 
 echo "== Theme Check"
-theme=$(wp theme-check run animewp || true)
-printf '%s\n' "$theme" | sed 's/<[^>]*>//g' | grep -v '^\(ℹ\|✔\)'
-if printf '%s' "$theme" | grep -q '^REQUIRED'; then
-	echo "Theme Check found required changes" >&2
-	exit 1
-fi
+# The default output is a table, so grepping for a line starting REQUIRED
+# misses failures. The CLI already reports failed checks with a nonzero exit.
+wp theme-check run animewp
 echo "Security checks passed."

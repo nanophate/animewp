@@ -1,0 +1,56 @@
+name: Dependency security audit
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    # Daily at 04:23 Asia/Tokyo (19:23 UTC).
+    - cron: "23 19 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  npm:
+    name: npm audit (${{ matrix.directory }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        directory: [".", "tests/serialization"]
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "22"
+          package-manager-cache: false
+      - name: Audit locked dependencies, including development tooling
+        working-directory: ${{ matrix.directory }}
+        run: npm audit --package-lock-only --include=dev --audit-level=high --ignore-scripts
+
+  composer:
+    name: Composer audit (tests/security)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Set up PHP and Composer
+        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
+        with:
+          php-version: "8.3"
+          coverage: none
+          tools: composer:v2
+      - name: Audit locked dependencies, including security tooling
+        working-directory: tests/security
+        # Report abandoned packages separately from known vulnerabilities.
+        run: composer --no-plugins --no-scripts audit --locked --abandoned=report --no-interaction

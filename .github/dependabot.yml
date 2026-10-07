@@ -1,0 +1,41 @@
+version: 2
+
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "04:17"
+      timezone: Asia/Tokyo
+    groups:
+      actions:
+        patterns: ["*"]
+
+  - package-ecosystem: npm
+    directories:
+      - /
+      - /tests/serialization
+    schedule:
+      interval: weekly
+      day: monday
+      time: "04:17"
+      timezone: Asia/Tokyo
+    open-pull-requests-limit: 5
+    groups:
+      npm-minor-and-patch:
+        patterns: ["*"]
+        update-types: [minor, patch]
+
+  - package-ecosystem: composer
+    directory: /tests/security
+    schedule:
+      interval: weekly
+      day: monday
+      time: "04:17"
+      timezone: Asia/Tokyo
+    open-pull-requests-limit: 5
+    groups:
+      composer-minor-and-patch:
+        patterns: ["*"]
+        update-types: [minor, patch]
