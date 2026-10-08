@@ -313,7 +313,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 <!-- wp:columns -->
 <div class="wp-block-columns"><!-- wp:column -->
-<div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"}} -->
+<div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"},"animewpMotion":{"entrance":"fade"}} -->
 <div class="wp-block-group is-style-animewp-card"><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading">フェードイン</h3>
 <!-- /wp:heading -->
@@ -325,7 +325,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:column -->
 
 <!-- wp:column -->
-<div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"}} -->
+<div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"},"animewpMotion":{"entrance":"rise"}} -->
 <div class="wp-block-group is-style-animewp-card"><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading">下から浮かぶ</h3>
 <!-- /wp:heading -->
@@ -337,7 +337,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:column -->
 
 <!-- wp:column -->
-<div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"}} -->
+<div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"},"animewpMotion":{"entrance":"slide-start"}} -->
 <div class="wp-block-group is-style-animewp-card"><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading">行頭側からスライド</h3>
 <!-- /wp:heading -->
@@ -349,7 +349,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:column -->
 
 <!-- wp:column -->
-<div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"}} -->
+<div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"},"animewpMotion":{"entrance":"slide-end"}} -->
 <div class="wp-block-group is-style-animewp-card"><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading">行末側からスライド</h3>
 <!-- /wp:heading -->
@@ -363,7 +363,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 <!-- wp:columns -->
 <div class="wp-block-columns"><!-- wp:column -->
-<div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"}} -->
+<div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"},"animewpMotion":{"entrance":"zoom"}} -->
 <div class="wp-block-group is-style-animewp-card"><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading">ズームイン</h3>
 <!-- /wp:heading -->
@@ -375,7 +375,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:column -->
 
 <!-- wp:column -->
-<div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"}} -->
+<div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"},"animewpMotion":{"entrance":"blur"}} -->
 <div class="wp-block-group is-style-animewp-card"><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading">ぼかしから鮮明に</h3>
 <!-- /wp:heading -->
@@ -387,7 +387,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:column -->
 
 <!-- wp:column -->
-<div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"}} -->
+<div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"},"animewpMotion":{"entrance":"mask"}} -->
 <div class="wp-block-group is-style-animewp-card"><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading">ワイプ</h3>
 <!-- /wp:heading -->
@@ -400,7 +400,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 <!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"}} -->
-<div class="wp-block-group is-style-animewp-card"><!-- wp:heading {"level":3} -->
+<div class="wp-block-group is-style-animewp-card"><!-- wp:heading {"level":3,"animewpMotion":{"entrance":"letters"}} -->
 <h3 class="wp-block-heading">1文字ずつ</h3>
 <!-- /wp:heading -->
 
@@ -423,7 +423,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 <!-- wp:columns -->
 <div class="wp-block-columns"><!-- wp:column -->
-<div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"}} -->
+<div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"},"animewpMotion":{"hover":"lift"}} -->
 <div class="wp-block-group is-style-animewp-card"><!-- wp:image -->
 <figure class="wp-block-image"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/' ) ); ?>animewp-key-visual-b.svg" alt=""/></figure>
 <!-- /wp:image -->
@@ -439,7 +439,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:column -->
 
 <!-- wp:column -->
-<div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"}} -->
+<div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"},"animewpMotion":{"hover":"zoom"}} -->
 <div class="wp-block-group is-style-animewp-card"><!-- wp:image -->
 <figure class="wp-block-image"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/' ) ); ?>animewp-key-visual-b.svg" alt=""/></figure>
 <!-- /wp:image -->
@@ -455,7 +455,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:column -->
 
 <!-- wp:column -->
-<div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"}} -->
+<div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"},"animewpMotion":{"hover":"glow"}} -->
 <div class="wp-block-group is-style-animewp-card"><!-- wp:image -->
 <figure class="wp-block-image"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/' ) ); ?>animewp-key-visual-b.svg" alt=""/></figure>
 <!-- /wp:image -->

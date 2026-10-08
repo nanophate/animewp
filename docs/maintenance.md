@@ -20,11 +20,13 @@ npm の監査は `tests/security/npm_audit.py` が行い、次の場合に失敗
 
 - 開発用（devDependencies）以外の依存に、既知の脆弱性が1件でもある。
 - 開発用ツールに high / critical の advisory があり、`tests/security/npm-audit-accepted.json` で確認済みになっていない。
-- 確認済みの advisory が、記録した見直し期限（`review_by`）を過ぎた。
+- 確認済みの advisory が、記録した見直し期限（`review_by`、UTCの日付）を過ぎた。
+- 同じ advisory でも、確認したディレクトリ・パッケージ・開発ツール経由の依存関係から外れた。
+- npmが異常終了した、監査JSONが不完全・未知形式、または集計と詳細が一致しない。
 
 開発用ツールの low / moderate はログに件数を出すだけです。Composer は既知の脆弱性で失敗し、
 abandoned package はログで確認できます。依存関係は lockfile から監査し、このジョブで
-install や audit fix は行いません。監査サービスに接続できない場合も、成功扱いにはしません。
+install や audit fix は行いません。prod / optional / peer を明示して環境の omit 設定による監査漏れを防ぎ、`--offline=false` でオンライン監査を明示し、監査サービスに接続できない場合も成功扱いにはしません。受容判定はIDだけでなく、lockfile内の実際の経路も検査します。別の開発ツールから同じ脆弱な依存へ到達する経路を追加した場合も、未確認として失敗します。
 
 確認済みとして記録するのは、WordPress 公式の開発ツール（`@wordpress/scripts`、`@wordpress/env`）の
 奥にあり、上流の更新を待つしかないものだけです。記録には、配布物に入らないことと
@@ -34,7 +36,7 @@ install や audit fix は行いません。監査サービスに接続できな�
 ## 依存の方針
 
 - 配布する ZIP（テーマ、プラグイン）には、外部の JS / CSS ライブラリーもフォントも同梱せず、
-  外部のサーバーからも読み込みません。例外は、利用者が再生した動画プレーヤーと、
+  外部のサーバーからも読み込みません。例外は、明示的に設定した動画プレーヤー（背景の無音自動再生を含む）と、
   編集者が取り込んだ YouTube のサムネイルだけです。
 - ブロックのスクリプトが使うのは WordPress 本体が提供する部品（`wp-*`、`@wordpress/*`、React）だけです。
 - npm のパッケージは開発用の道具に限ります（`package.json` に `dependencies` を置かない）。
@@ -43,8 +45,9 @@ install や audit fix は行いません。監査サービスに接続できな�
 - ビルドは WordPress の方針に合わせます。`@wordpress/scripts` は将来、esbuild を使う
   `@wordpress/build` の上で動く予定のため、独自のビルドへは移らず、公式の更新を取り込みます。
 
-上の3点は `tests/static_check.py` が検査します（外部参照、同梱ライブラリーのライセンス表記、
-WordPress が提供しないスクリプト依存、`package.json` の `dependencies`）。
+`scripts/build-policy.cjs` は本番用ビルドの各チャンクと結合モジュールを調べ、npmライブラリーがJavaScriptへ入ることと、npm由来のCSS/Sassの取り込みを拒否します。WordPress本体の外部依存とビルド用loaderは配布コードへ混ぜません。`tests/static_check.py` は外部参照、ライセンス表記、宣言されたスクリプト依存、`package.json` の `dependencies`、各ブロックとモーションの必須ビルドファイルを検査します。ライセンスコメントの有無だけでは、同梱されるコードを判定しません。
+
+開発環境はNode.js 24.18以上・npm 11.16以上・Python 3.10以上です。CIはNode.js 24とnpm 11.16.0を明示し、ホスト側の既定バージョンへ依存しません。
 
 Dependabot の通常更新は npm / Composer の minor・patch をまとめ、major は個別 PR にします。
 GitHub Actions の更新は一つのグループにします。自動マージは設定していません。
@@ -61,9 +64,11 @@ Theme Check は CLI の終了コードを尊重します。
 WP-CLI からの通常の Plugin Check は静的検査です。wp-env 内で動くことだけを根拠に、
 動的な侵入テストやすべての認可テストまで完了したとは扱いません。
 
+`npm run test:wp` は別途、実WordPressへHTTP要求を送り、権限・nonce、下書きの取り込み、旧設定とGlobal Stylesの保持、標準ページ表示を確認します。CIはWordPress 6.6/PHP 8.0とWordPress 7.1/PHP 8.3で実行し、空の結果・不正な結果・PHPの実行失敗も失敗扱いにします。
+
 ## 今後の更新配布方針
 
-この PR が導入するのは依存更新、定期セキュリティ検査と方針ドキュメントです。
+依存更新と定期セキュリティ検査は導入済みです。以下は配布の実装計画です。
 更新 JSON、WordPress 側 updater、Release ワークフローは未実装です。
 リポジトリの公開設定も変更していません。
 
@@ -78,13 +83,11 @@ GitHub Releases のインストール用 ZIP を使います。
 | テーマ | `themes/animewp/` | `wp-theme.json` | `animewp-X.Y.Z.zip` |
 | 任意のブロックプラグイン | `plugins/animewp-blocks/` | `wp-plugin.json` | `animewp-blocks-X.Y.Z.zip` |
 
-各コンポーネントに Plugin Update Checker (PUC) を組み込み、generic JSON 方式で
-対応する JSON を参照します。一つの JSON は一つのコンポーネントの更新情報を持ち、
-PUC の theme / plugin 別の仕様に合わせます。`version` は対象 ZIP の Version ヘッダーと一致させ、
-`download_url` にその ZIP を指定します。必要な PHP / WordPress バージョンや変更内容も
-各仕様に従って記載します。
+一つのJSONは一つのコンポーネントの更新情報を持ちます。`version` は対象ZIPのVersionヘッダーと一致させ、`download_url` にそのZIPを指定します。必要なPHP / WordPressバージョンや変更内容も記載します。
 
-テーマとプラグインは独立して更新できる構成にします。
+更新クライアントは実装時に方式を確定します。PHPライブラリーの同梱を許容するならPlugin Update Checker (PUC) のgeneric JSON方式を使えます。配布コード全体をライブラリーなしに揃える場合は、WordPress Coreの更新フィルターとHTTP・キャッシュAPIで実装します。いずれもJSONの型・HTTPSの配布先・バージョンを検証し、通信失敗時は通常の管理画面を妨げず、互換条件と期限付きキャッシュを扱います。
+
+現行の検査はテーマとプラグインのリリース番号を同じに揃えます。最初は同じタグから2つのZIPとJSONを作り、WordPress上での適用はそれぞれ行います。将来別々の番号へ分ける場合は、メタデータ検査とリリース処理も同時に変更します。
 テーマの更新検出を、任意のブロックプラグインの有効化に依存させません。
 `Update URI` は WordPress.org の同名パッケージによる誤上書き防止に使いますが、
 そのヘッダーだけでは更新検出機能は付きません。

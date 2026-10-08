@@ -69,14 +69,21 @@ function canvasElement( clientId ) {
 	return null;
 }
 
+const previews = new WeakMap();
+
 function preview( clientId, motion ) {
 	const element = canvasElement( clientId );
 	if ( ! element || motion.entrance === 'none' ) {
 		return;
 	}
+	// Finish the previous preview before starting another on the same block.
+	if ( previews.has( element ) ) {
+		previews.get( element )();
+	}
+	const entrance = motion.entrance === 'letters' ? 'rise' : motion.entrance;
 	const { className, style } = motionProps( {
 		...motion,
-		entrance: motion.entrance === 'letters' ? 'rise' : motion.entrance,
+		entrance,
 	} );
 	const classes = className.split( ' ' ).concat( 'is-motion-preview' );
 	Object.entries( style ).forEach( ( [ key, value ] ) =>
@@ -103,14 +110,18 @@ function preview( clientId, motion ) {
 		( motion.duration || 900 ) +
 		children.length * ( motion.stagger || 90 ) +
 		300;
-	setTimeout( () => {
+	const cleanup = () => {
+		clearTimeout( timer );
 		element.classList.remove(
 			'is-inview',
 			'is-motion-preview',
 			'has-entrance',
-			'has-entrance-' + motion.entrance
+			'has-entrance-' + entrance
 		);
-	}, total );
+		previews.delete( element );
+	};
+	previews.set( element, cleanup );
+	const timer = setTimeout( cleanup, total );
 }
 
 function MotionPanel( { attributes, setAttributes, clientId } ) {

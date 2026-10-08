@@ -6,7 +6,7 @@
 'use strict';
 const path = require( 'node:path' );
 const { installWordPress, loadPlugin } = require( './env' );
-const { documents, generatedBlocks } = require( './cases' );
+const { documents, generatedBlocks, coreMotionBlocks } = require( './cases' );
 
 const dir = path.resolve( process.argv[ 2 ] || '' );
 const { window, wp, version } = installWordPress();
@@ -29,10 +29,12 @@ function describe( blocks, prefix = '' ) {
 	] );
 }
 
+const operationErrors = [];
 function safe( fn ) {
 	try {
 		return fn();
 	} catch ( error ) {
+		operationErrors.push( error.stack || error.message );
 		return 'ERROR: ' + error.message;
 	}
 }
@@ -46,6 +48,8 @@ const result = {
 		.sort(),
 	documents: {},
 	blocks: {},
+	coreMotion: {},
+	operationErrors,
 };
 
 for ( const [ name, html ] of Object.entries( documents() ) ) {
@@ -104,6 +108,34 @@ for ( const [ name, create ] of Object.entries( generatedBlocks( make ) ) ) {
 		toGroup,
 		toMediaText,
 	};
+}
+
+// Standard blocks are a separate gate: a custom-block-only serializer can miss
+// attribute filters registered too late, silently dropping Motion in examples.
+for ( const [ name, create ] of Object.entries( coreMotionBlocks( make ) ) ) {
+	const block = create();
+	const type = wp.blocks.getBlockType( name );
+	const plain = wp.blocks.getSaveContent( type, block.attributes, block.innerBlocks );
+	const entry = { supported: Boolean( type.attributes.animewpMotion ), plain, checks: [] };
+	if ( entry.supported ) {
+		for ( const motion of [
+			{ entrance: 'rise' },
+			{ entrance: 'letters' },
+			{ entrance: 'fade', target: 'children', delay: 300, duration: 900, stagger: 90 },
+			{ hover: 'lift', loop: 'float', parallax: 20, scrolled: 'hide' },
+		] ) {
+			const animated = make( name, { ...block.attributes, animewpMotion: motion }, block.innerBlocks );
+			const markup = wp.blocks.getSaveContent( type, animated.attributes, animated.innerBlocks );
+			const saved = serialize( [ animated ] );
+			const parsed = parse( saved );
+			entry.checks.push( {
+				htmlUnchanged: markup === plain,
+				attributesRetained: parsed.length === 1 && JSON.stringify( parsed[ 0 ].attributes.animewpMotion ) === JSON.stringify( motion ),
+				reparsed: describe( parsed ),
+			} );
+		}
+	}
+	result.coreMotion[ name ] = entry;
 }
 
 process.stdout.write( JSON.stringify( result ) );

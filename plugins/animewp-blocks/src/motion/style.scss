@@ -17,12 +17,19 @@
 }
 
 .animewp-motion {
+	--animewp-loop-animation: none;
 	--animewp-motion-time: var(--animewp-duration, var(--wp--custom--animewp--motion--duration--slow, 900ms));
 	--animewp-motion-ease: var(--wp--custom--animewp--motion--easing--out, cubic-bezier(0.2, 0.7, 0.2, 1));
 	--animewp-motion-delay: var(--animewp-delay, 0ms);
 	--animewp-motion-stagger: var(--animewp-stagger, var(--wp--custom--animewp--motion--stagger, 90ms));
 	--animewp-motion-distance: var(--wp--custom--animewp--motion--distance, 1.5rem);
 	--animewp-motion-blur: var(--wp--custom--animewp--motion--blur, 8px);
+}
+
+/* Loop choices belong to their own block, including when an ancestor animates
+ * all children or splits letters. Do not copy its loop to those animation targets. */
+:where(.animewp-motion.is-target-children > *, .animewp-letter) {
+	--animewp-loop-animation: none;
 }
 
 /* Only where needed: `translate` creates a containing block, which would trap
@@ -35,7 +42,9 @@
 
 /* Entrances ------------------------------------------------------------- */
 @mixin play($name) {
-	animation: $name var(--animewp-motion-time) var(--animewp-motion-ease) calc(var(--animewp-motion-delay) + var(--animewp-i, 0) * var(--animewp-motion-stagger)) both;
+	animation:
+		$name var(--animewp-motion-time) var(--animewp-motion-ease) calc(var(--animewp-motion-delay) + var(--animewp-i, 0) * var(--animewp-motion-stagger)) both,
+		var(--animewp-loop-animation, none);
 }
 
 @each $preset in fade, rise, slide-start, slide-end, zoom, blur, mask {
@@ -56,6 +65,19 @@
 	&.is-inview .animewp-letter {
 		@include play(animewp-in-rise);
 	}
+}
+
+/* Keep the original text in the accessibility tree without giving paragraphs
+ * an unsupported aria-label or replacing the accessible names of their links. */
+.animewp-letter-text {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+	border: 0;
 }
 
 @keyframes animewp-in-fade {
@@ -139,16 +161,19 @@
 
 /* Loops (decorations) ---------------------------------------------------- */
 .has-loop-float {
-	animation: animewp-float 6s ease-in-out infinite alternate;
+	--animewp-loop-animation: animewp-float 6s ease-in-out infinite alternate;
+	animation: var(--animewp-loop-animation);
 }
 
 .has-loop-sway {
+	--animewp-loop-animation: animewp-sway 7s ease-in-out infinite alternate;
 	transform-origin: 50% 0;
-	animation: animewp-sway 7s ease-in-out infinite alternate;
+	animation: var(--animewp-loop-animation);
 }
 
 .has-loop-pulse {
-	animation: animewp-pulse 4s ease-in-out infinite alternate;
+	--animewp-loop-animation: animewp-pulse 4s ease-in-out infinite alternate;
+	animation: var(--animewp-loop-animation);
 }
 
 @keyframes animewp-float {

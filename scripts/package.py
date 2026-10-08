@@ -3,12 +3,14 @@
 import argparse
 import hashlib
 import io
+import json
+import posixpath
 import re
 import stat
 import subprocess
 import sys
 import zipfile
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGES = (
@@ -17,6 +19,39 @@ PACKAGES = (
 )
 ALLOWED_SUFFIXES = {".php", ".css", ".scss", ".js", ".json", ".html", ".svg", ".md", ".txt", ".po", ".pot", ".mo"}
 ZIP_DATE = (1980, 1, 1, 0, 0, 0)
+MOTION_FILES = (
+    "editor.js", "editor.asset.php", "view.js", "view.asset.php",
+    "style.js", "style.asset.php", "style-style.css",
+)
+
+
+def local_file_references(value):
+    """Read both scalar and array file references, including future metadata fields."""
+    if isinstance(value, str) and value.startswith("file:"):
+        yield value[5:]
+    elif isinstance(value, dict):
+        for child in value.values():
+            yield from local_file_references(child)
+    elif isinstance(value, list):
+        for child in value:
+            yield from local_file_references(child)
+
+
+def plugin_installation_files(source):
+    """Required ZIP entries from source metadata, plus non-block Motion entries."""
+    required = {"languages/animewp-blocks-ja.mo", "languages/animewp-blocks-ja.po"}
+    required.update(f"build/motion/{name}" for name in MOTION_FILES)
+    for metadata in sorted((source / "src/blocks").glob("*/block.json")):
+        built = PurePosixPath("build/blocks") / metadata.parent.name / "block.json"
+        required.add(built.as_posix())
+        for reference in local_file_references(json.loads(metadata.read_text(encoding="utf-8"))):
+            target = PurePosixPath(posixpath.normpath((built.parent / reference).as_posix()))
+            if not reference or "\\" in reference or "\0" in reference or not target.parts or target.is_absolute() or target.parts[0] == "..":
+                raise ValueError(f"Unsafe block file reference in {metadata.name}: {reference!r}")
+            required.add(target.as_posix())
+            if target.suffix == ".js":
+                required.add(target.with_suffix(".asset.php").as_posix())
+    return sorted(required)
 
 
 def version(source, header):
@@ -81,9 +116,7 @@ def main():
         if slug == "animewp":
             required += ["theme.json", "templates/index.html"]
         else:
-            for name in ("panel", "media", "video", "text-group"):
-                required += [f"build/blocks/{name}/{file}" for file in ("block.json", "index.js", "index.asset.php")]
-            required += ["build/blocks/video/view.js", "languages/animewp-blocks-ja.mo", "languages/animewp-blocks-ja.po"]
+            required += plugin_installation_files(source)
         inspect_archive(data, slug, required)
         outputs[f"{slug}-{version(source, header)}.zip"] = data
     manifest = "".join(f"{hashlib.sha256(data).hexdigest()}  {name}\n" for name, data in sorted(outputs.items()))

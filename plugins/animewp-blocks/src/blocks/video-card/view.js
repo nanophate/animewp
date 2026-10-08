@@ -28,6 +28,13 @@ document.addEventListener( 'click', ( event ) => {
 	) {
 		return;
 	}
+	if (
+		typeof window.HTMLDialogElement === 'undefined' ||
+		typeof window.HTMLDialogElement.prototype.showModal !== 'function' ||
+		typeof window.HTMLDialogElement.prototype.close !== 'function'
+	) {
+		return;
+	}
 	const { provider, videoId, start, file, closeLabel } = link.dataset;
 	if ( ! provider && ! file ) {
 		return;
@@ -38,17 +45,28 @@ document.addEventListener( 'click', ( event ) => {
 	if ( ! src ) {
 		return;
 	}
-	event.preventDefault();
-	if ( ! dialog ) {
-		dialog = createDialog( document.body, {
-			closeLabel,
-			className: 'animewp-dialog',
-		} );
+	try {
+		if ( ! dialog ) {
+			dialog = createDialog( document.body, {
+				closeLabel,
+				className: 'animewp-dialog',
+			} );
+		}
+		const title = link.getAttribute( 'aria-label' ) || '';
+		dialog.open(
+			provider ? iframePlayer( src, title ) : filePlayer( src, title ),
+			{ label: title, trigger: link }
+		);
+	} catch {
+		// Keep the saved link usable when enhancement cannot open a player.
+		if ( dialog ) {
+			dialog.element.replaceChildren();
+			dialog.element.remove();
+			dialog = null;
+		}
+		document.documentElement.classList.remove( 'animewp-has-dialog' );
+		return;
 	}
-	const title = link.getAttribute( 'aria-label' ) || '';
-	dialog.open(
-		provider ? iframePlayer( src, title ) : filePlayer( src, title ),
-		{ label: title, trigger: link }
-	);
+	event.preventDefault();
 	link.dispatchEvent( new CustomEvent( 'animewp:play', { bubbles: true } ) );
 } );

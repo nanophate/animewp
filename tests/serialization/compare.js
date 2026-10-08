@@ -75,6 +75,9 @@ try {
 const head = snapshot( path.join( ROOT, PLUGIN ) );
 
 const failures = [];
+if ( head.operationErrors && head.operationErrors.length ) {
+	failures.push( { label: 'working tree serialization/transform operations threw exceptions', head: head.operationErrors } );
+}
 function same( label, a, b ) {
 	if ( JSON.stringify( a ) !== JSON.stringify( b ) ) {
 		failures.push( { label, base: a, head: b } );
@@ -127,9 +130,26 @@ for ( const [ name, entry ] of Object.entries( head.documents ) ) {
 	}
 }
 
+const requiredCoreMotion = [ 'core/paragraph', 'core/heading', 'core/group', 'core/image', 'core/button', 'core/columns', 'core/cover' ];
+for ( const name of requiredCoreMotion ) {
+	const entry = head.coreMotion && head.coreMotion[ name ];
+	if ( ! entry || ! entry.supported || entry.checks.length !== 4 ) {
+		failures.push( { label: name + ' lacks Motion attribute/roundtrip coverage' } );
+		continue;
+	}
+	const previous = base.coreMotion && base.coreMotion[ name ];
+	if ( previous ) same( name + ' unanimated saved HTML', previous.plain, entry.plain );
+	for ( const check of entry.checks ) {
+		if ( ! check.htmlUnchanged || ! check.attributesRetained || check.reparsed.some( ( block ) => ! block.valid ) ) {
+			failures.push( { label: name + ' Motion changes HTML, loses attributes, or produces invalid blocks', head: check } );
+		}
+	}
+}
+
 console.log( `WordPress ${ head.wordpress } editor scripts. Baseline ${ base.layout } (${ baseDir }) vs working tree ${ head.layout }.` );
 const motionChecked = Object.values( head.blocks ).filter( ( entry ) => entry.motionChecked ).length;
 console.log( `Motion settings checked on ${ motionChecked } generated blocks: saved HTML must not change.` );
+console.log( `Core Motion checked on ${ requiredCoreMotion.length } standard block types × 4 configurations: HTML unchanged, attributes retained, re-parse valid.` );
 console.log( `Compared ${ documentCount } saved documents and ${ blockCount } generated blocks (save, re-parse, transforms); ${ newCount } blocks of new types checked for valid re-parse only.` );
 if ( invalidBase ) {
 	console.log( `Note: ${ invalidBase } blocks are already invalid in the baseline; head must match that exactly.` );

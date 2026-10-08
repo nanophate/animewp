@@ -47,11 +47,11 @@
 <!-- wp:group {"layout":{"type":"default"},"align":"wide","className":"animewp-footer-links"} -->
 <div class="wp-block-group alignwide animewp-footer-links">
 <!-- wp:navigation {"overlayMenu":"never","layout":{"type":"flex","justifyContent":"left"}} -->
-<!-- wp:navigation-link {"label":"お知らせ","url":"#animewp-news","kind":"custom","isTopLevelLink":true} /-->
-<!-- wp:navigation-link {"label":"作品紹介","url":"#animewp-introduction","kind":"custom","isTopLevelLink":true} /-->
-<!-- wp:navigation-link {"label":"人物","url":"#animewp-characters","kind":"custom","isTopLevelLink":true} /-->
-<!-- wp:navigation-link {"label":"放送・配信","url":"#animewp-onair","kind":"custom","isTopLevelLink":true} /-->
-<!-- wp:navigation-link {"label":"映像","url":"#animewp-movie","kind":"custom","isTopLevelLink":true} /-->
+<!-- wp:navigation-link {"label":"お知らせ","url":"#news","kind":"custom","isTopLevelLink":true} /-->
+<!-- wp:navigation-link {"label":"作品紹介","url":"#introduction","kind":"custom","isTopLevelLink":true} /-->
+<!-- wp:navigation-link {"label":"ストーリー","url":"#story","kind":"custom","isTopLevelLink":true} /-->
+<!-- wp:navigation-link {"label":"放送・配信","url":"#onair","kind":"custom","isTopLevelLink":true} /-->
+<!-- wp:navigation-link {"label":"スタッフ・キャスト","url":"#staff","kind":"custom","isTopLevelLink":true} /-->
 
 <!-- /wp:navigation -->
 <!-- wp:group {"layout":{"type":"default"},"className":"animewp-footer-meta"} -->

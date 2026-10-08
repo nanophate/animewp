@@ -9,6 +9,9 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+from package import plugin_installation_files
+
 EXCLUDED = {".git", ".testenv", ".claude", "artifacts", "node_modules", "vendor", "__pycache__"}
 # npm lockfiles list registry URLs; they are development-only and never packaged.
 URL_AUDIT_EXEMPT = {"package-lock.json"}
@@ -182,10 +185,15 @@ def main():
     source_blocks = {p.parent.name for p in (plugin / "src/blocks").glob("*/block.json")}
     built_blocks = {p.name for p in (plugin / "build/blocks").iterdir() if p.is_dir()} if (plugin / "build/blocks").is_dir() else set()
     check(source_blocks == built_blocks, f"build/blocks differs from src/blocks: {sorted(source_blocks ^ built_blocks)} (rebuild from a clean build/)")
+    try:
+        for required in plugin_installation_files(plugin):
+            check((plugin / required).is_file(), f"Missing installation file: {required} (run npm run build)")
+    except (OSError, ValueError) as error:
+        check(False, f"Invalid block installation metadata: {error}")
     # npm packages are development tools only; nothing installed from npm ships.
     check(not json.loads((ROOT / "package.json").read_text()).get("dependencies"), "package.json: runtime dependencies are not allowed; use devDependencies")
-    # Shipped scripts contain only this project's code: no bundled libraries
-    # (they would carry a license banner) and only dependencies WordPress provides.
+    # BuildPolicyPlugin checks emitted modules. Keep the independent banner and
+    # WordPress dependency checks as additional installation-package checks.
     for path in sorted((plugin / "build").rglob("*")):
         rel = path.relative_to(ROOT).as_posix()
         if path.suffix in (".js", ".css"):

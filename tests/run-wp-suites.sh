@@ -7,34 +7,23 @@ set -eu
 dir=wp-content/animewp-tests
 origin=http://tests-wordpress   # the tests WordPress container as seen from tests-cli
 # The tests site starts with a default theme; the suites expect this one.
-npx wp-env run tests-cli -- wp theme activate animewp > /dev/null 2>&1
+npx wp-env run tests-cli -- wp theme activate animewp
 status=0
 for suite in wp-smoke wp-fixtures wp-regressions-v12 wp-render wp-http; do
 	# wp-env occasionally fails its own Docker request ("lookup:" timing dump); retry once.
 	for attempt in 1 2; do
 		suite_status=0
-		output=$(npx wp-env run tests-cli -- env ANIMEWP_HTTP_ORIGIN="$origin" wp eval-file "$dir/$suite.php" 2>&1) || suite_status=1
-		case "$output" in *"lookup:"*) [ "$attempt" = 1 ] && sleep 3 && continue ;; esac
+		output=$(npx wp-env run tests-cli -- env ANIMEWP_HTTP_ORIGIN="$origin" wp eval-file "$dir/$suite.php" 2>&1) || suite_status=$?
+		if [ "$suite_status" != 0 ] && [ "$attempt" = 1 ]; then
+			case "$output" in *"lookup:"*) sleep 3; continue ;; esac
+		fi
 		break
 	done
-	[ "$suite_status" = 0 ] || status=1
-	summary=$(printf '%s' "$output" | python3 -c '
-import json, re, sys
-text = "\n".join(line for line in sys.stdin.read().splitlines() if not line.startswith(("ℹ", "✔")))
-start = min([i for i in (text.find("["), text.find("{")) if i != -1] or [-1])
-try:
-    data = json.loads(text[start:]) if start != -1 else None
-except ValueError:
-    data = None
-if isinstance(data, dict):
-    data = next((v for v in data.values() if isinstance(v, list) and v and isinstance(v[0], dict) and "pass" in v[0]), data)
-if not isinstance(data, list):
-    print("ran (no pass/fail list)" if data is not None and "Fatal" not in text else "ERROR: " + text[-400:]); sys.exit(0)
-results = data
-failed = [r for r in results if not r.get("pass")]
-print(f"{len(results) - len(failed)}/{len(results)} passed" + "".join(f"\n    FAIL {r}" for r in failed))
-')
+	if [ "$suite_status" != 0 ]; then
+		printf '%s\n' "$suite: command exited $suite_status" "$output" >&2
+		status=1
+	fi
+	summary=$(printf '%s' "$output" | python3 tests/wp_suite_report.py) || status=1
 	echo "$suite: $summary"
-	case "$summary" in *FAIL*|ERROR*) status=1 ;; esac
 done
 exit $status

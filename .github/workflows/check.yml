@@ -14,6 +14,7 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-24.04
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
@@ -25,6 +26,13 @@ jobs:
           persist-credentials: false
           # The serialization check compares against main.
           fetch-depth: 0
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "24"
+          package-manager-cache: false
+      - name: Use the reviewed npm version
+        run: npm install --global npm@11.16.0 --ignore-scripts
       - name: PHP syntax on the target runtime
         env:
           ANIMEWP_PHP_VERSION: ${{ matrix.php }}
@@ -53,16 +61,49 @@ jobs:
 
   security:
     runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - wordpress: "6.6-branch"
+            php: "8.0"
+          - wordpress: "7.1-branch"
+            php: "8.3"
     steps:
       - name: Check out source
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4; verified commit
         with:
           persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "24"
+          package-manager-cache: false
+      - name: Use the reviewed npm version
+        run: npm install --global npm@11.16.0 --ignore-scripts
       - name: Install build tooling
         run: npm ci
       - name: Build blocks
         run: npm run build
+      - name: Configure the WordPress and PHP test versions
+        env:
+          ANIMEWP_WP_BRANCH: ${{ matrix.wordpress }}
+          ANIMEWP_PHP_VERSION: ${{ matrix.php }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          path = Path('.wp-env.json')
+          config = json.loads(path.read_text())
+          config['core'] = 'WordPress/WordPress#' + os.environ['ANIMEWP_WP_BRANCH']
+          config['phpVersion'] = os.environ['ANIMEWP_PHP_VERSION']
+          path.write_text(json.dumps(config, indent=2) + '\n')
+          PY
       - name: Start WordPress in Docker (wp-env)
         run: npx wp-env start
       - name: PHPCS security sniffs, Plugin Check and Theme Check
         run: npm run test:security
+      - name: WordPress behavior and security regressions
+        run: npm run test:wp

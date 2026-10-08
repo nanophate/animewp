@@ -26,12 +26,12 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 <!-- wp:animewp/carousel {"effect":"fade","navStyle":"none","dotStyle":"numbers","autoplay":7,"label":"キービジュアル","align":"full","style":{"spacing":{"blockGap":"0"}}} -->
 <div class="wp-block-animewp-carousel alignfull has-nav-none is-effect-fade has-dots-numbers" style="--animewp-carousel-slide:100%;--animewp-carousel-gap:0" data-autoplay="7" data-prev-label="前へ" data-next-label="次へ" data-label="キービジュアル" data-pause-label="自動切り替えを一時停止"><div class="animewp-carousel__track"><!-- wp:cover {"url":"<?php echo esc_url( get_theme_file_uri( 'assets/images/' ) ); ?>animewp-key-visual-a.svg","dimRatio":0,"minHeight":86,"minHeightUnit":"vh","contentPosition":"bottom left","isDark":false,"style":{"spacing":{"padding":{"top":"var:preset|spacing|60","right":"max(var(\u002d\u002dwp\u002d\u002dstyle\u002d\u002droot\u002d\u002dpadding-left), calc((100% - var(\u002d\u002dwp\u002d\u002dstyle\u002d\u002dglobal\u002d\u002dwide-size)) / 2))","bottom":"var:preset|spacing|60","left":"max(var(\u002d\u002dwp\u002d\u002dstyle\u002d\u002droot\u002d\u002dpadding-left), calc((100% - var(\u002d\u002dwp\u002d\u002dstyle\u002d\u002dglobal\u002d\u002dwide-size)) / 2))"}}}} -->
-<div class="wp-block-cover is-light has-custom-content-position is-position-bottom-left" style="padding-top:var(--wp--preset--spacing--60);padding-right:max(var(--wp--style--root--padding-left), calc((100% - var(--wp--style--global--wide-size)) / 2));padding-bottom:var(--wp--preset--spacing--60);padding-left:max(var(--wp--style--root--padding-left), calc((100% - var(--wp--style--global--wide-size)) / 2));min-height:86vh"><span aria-hidden="true" class="wp-block-cover__background has-background-dim-0 has-background-dim"></span><img class="wp-block-cover__image-background" alt="" src="<?php echo esc_url( get_theme_file_uri( 'assets/images/' ) ); ?>animewp-key-visual-a.svg" data-object-fit="cover"/><div class="wp-block-cover__inner-container"><!-- wp:group {"className":"is-style-animewp-glass","layout":{"type":"constrained","contentSize":"36rem","justifyContent":"left"}} -->
+<div class="wp-block-cover is-light has-custom-content-position is-position-bottom-left" style="padding-top:var(--wp--preset--spacing--60);padding-right:max(var(--wp--style--root--padding-left), calc((100% - var(--wp--style--global--wide-size)) / 2));padding-bottom:var(--wp--preset--spacing--60);padding-left:max(var(--wp--style--root--padding-left), calc((100% - var(--wp--style--global--wide-size)) / 2));min-height:86vh"><span aria-hidden="true" class="wp-block-cover__background has-background-dim-0 has-background-dim"></span><img class="wp-block-cover__image-background" alt="" src="<?php echo esc_url( get_theme_file_uri( 'assets/images/' ) ); ?>animewp-key-visual-a.svg" data-object-fit="cover"/><div class="wp-block-cover__inner-container"><!-- wp:group {"className":"is-style-animewp-glass","layout":{"type":"constrained","contentSize":"36rem","justifyContent":"left"},"animewpMotion":{"entrance":"rise","target":"children"}} -->
 <div class="wp-block-group is-style-animewp-glass"><!-- wp:paragraph {"className":"is-style-animewp-label"} -->
 <p class="is-style-animewp-label">TV ANIMATION</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"level":1,"className":"is-style-animewp-display"} -->
+<!-- wp:heading {"level":1,"className":"is-style-animewp-display","animewpMotion":{"entrance":"rise"}} -->
 <h1 class="wp-block-heading is-style-animewp-display">作品タイトル</h1>
 <!-- /wp:heading -->
 
@@ -46,12 +46,12 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:cover -->
 
 <!-- wp:cover {"url":"<?php echo esc_url( get_theme_file_uri( 'assets/images/' ) ); ?>animewp-key-visual-b.svg","dimRatio":0,"minHeight":86,"minHeightUnit":"vh","contentPosition":"bottom left","isDark":false,"style":{"spacing":{"padding":{"top":"var:preset|spacing|60","right":"max(var(\u002d\u002dwp\u002d\u002dstyle\u002d\u002droot\u002d\u002dpadding-left), calc((100% - var(\u002d\u002dwp\u002d\u002dstyle\u002d\u002dglobal\u002d\u002dwide-size)) / 2))","bottom":"var:preset|spacing|60","left":"max(var(\u002d\u002dwp\u002d\u002dstyle\u002d\u002droot\u002d\u002dpadding-left), calc((100% - var(\u002d\u002dwp\u002d\u002dstyle\u002d\u002dglobal\u002d\u002dwide-size)) / 2))"}}}} -->
-<div class="wp-block-cover is-light has-custom-content-position is-position-bottom-left" style="padding-top:var(--wp--preset--spacing--60);padding-right:max(var(--wp--style--root--padding-left), calc((100% - var(--wp--style--global--wide-size)) / 2));padding-bottom:var(--wp--preset--spacing--60);padding-left:max(var(--wp--style--root--padding-left), calc((100% - var(--wp--style--global--wide-size)) / 2));min-height:86vh"><span aria-hidden="true" class="wp-block-cover__background has-background-dim-0 has-background-dim"></span><img class="wp-block-cover__image-background" alt="" src="<?php echo esc_url( get_theme_file_uri( 'assets/images/' ) ); ?>animewp-key-visual-b.svg" data-object-fit="cover"/><div class="wp-block-cover__inner-container"><!-- wp:group {"className":"is-style-animewp-glass","layout":{"type":"constrained","contentSize":"36rem","justifyContent":"left"}} -->
+<div class="wp-block-cover is-light has-custom-content-position is-position-bottom-left" style="padding-top:var(--wp--preset--spacing--60);padding-right:max(var(--wp--style--root--padding-left), calc((100% - var(--wp--style--global--wide-size)) / 2));padding-bottom:var(--wp--preset--spacing--60);padding-left:max(var(--wp--style--root--padding-left), calc((100% - var(--wp--style--global--wide-size)) / 2));min-height:86vh"><span aria-hidden="true" class="wp-block-cover__background has-background-dim-0 has-background-dim"></span><img class="wp-block-cover__image-background" alt="" src="<?php echo esc_url( get_theme_file_uri( 'assets/images/' ) ); ?>animewp-key-visual-b.svg" data-object-fit="cover"/><div class="wp-block-cover__inner-container"><!-- wp:group {"className":"is-style-animewp-glass","layout":{"type":"constrained","contentSize":"36rem","justifyContent":"left"},"animewpMotion":{"entrance":"rise","target":"children"}} -->
 <div class="wp-block-group is-style-animewp-glass"><!-- wp:paragraph {"className":"is-style-animewp-label"} -->
 <p class="is-style-animewp-label">TV ANIMATION</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"level":1,"className":"is-style-animewp-display"} -->
+<!-- wp:heading {"level":1,"className":"is-style-animewp-display","animewpMotion":{"entrance":"rise"}} -->
 <h1 class="wp-block-heading is-style-animewp-display">作品タイトル</h1>
 <!-- /wp:heading -->
 
@@ -68,7 +68,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:group -->
 
 <!-- wp:group {"tagName":"section","align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained","contentSize":"var(\u002d\u002dwp\u002d\u002dstyle\u002d\u002dglobal\u002d\u002dwide-size)"}} -->
-<section class="wp-block-group alignfull" id="introduction" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:columns {"verticalAlignment":"center","align":"wide","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|60"}}}} -->
+<section class="wp-block-group alignfull" id="introduction" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:columns {"verticalAlignment":"center","align":"wide","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|60"}}},"animewpMotion":{"entrance":"rise","target":"children"}} -->
 <div class="wp-block-columns alignwide are-vertically-aligned-center"><!-- wp:column {"width":"50%"} -->
 <div class="wp-block-column" style="flex-basis:50%"><!-- wp:image {"className":"is-style-animewp-fade-start"} -->
 <figure class="wp-block-image is-style-animewp-fade-start"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/' ) ); ?>animewp-key-visual-b.svg" alt="作品の場面写真（差し替えてください）"/></figure>
@@ -102,7 +102,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:group -->
 
 <!-- wp:group {"tagName":"section","align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained","contentSize":"var(\u002d\u002dwp\u002d\u002dstyle\u002d\u002dglobal\u002d\u002dwide-size)"}} -->
-<section class="wp-block-group alignfull" id="story" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:group {"style":{"spacing":{"blockGap":"0.25rem","margin":{"bottom":"var:preset|spacing|40"}}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"left"}} -->
+<section class="wp-block-group alignfull" id="story" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:group {"style":{"spacing":{"blockGap":"0.25rem","margin":{"bottom":"var:preset|spacing|40"}}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"left"},"animewpMotion":{"entrance":"fade"}} -->
 <div class="wp-block-group" style="margin-bottom:var(--wp--preset--spacing--40)"><!-- wp:heading {"className":"is-style-animewp-latin"} -->
 <h2 class="wp-block-heading is-style-animewp-latin">Story</h2>
 <!-- /wp:heading -->
@@ -112,7 +112,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
-<!-- wp:columns {"align":"wide","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|60"}}}} -->
+<!-- wp:columns {"align":"wide","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|60"}}},"animewpMotion":{"entrance":"rise","target":"children"}} -->
 <div class="wp-block-columns alignwide"><!-- wp:column {"width":"30%"} -->
 <div class="wp-block-column" style="flex-basis:30%"><!-- wp:group {"layout":{"type":"flex","justifyContent":"right"}} -->
 <div class="wp-block-group"><!-- wp:heading {"level":3,"className":"is-style-animewp-short-vertical"} -->
@@ -162,7 +162,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <div class="wp-block-animewp-decoration is-shape-sparkle is-layer-behind has-muted-color has-text-color" style="--animewp-decoration-x:75%;--animewp-decoration-y:12%;--animewp-decoration-size:2%;--animewp-decoration-rotation:0deg;--animewp-decoration-opacity:0.6" aria-hidden="true"><span class="animewp-decoration__art"></span></div>
 <!-- /wp:animewp/decoration -->
 
-<!-- wp:group {"style":{"spacing":{"blockGap":"0.25rem","margin":{"bottom":"var:preset|spacing|40"}}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"center"}} -->
+<!-- wp:group {"style":{"spacing":{"blockGap":"0.25rem","margin":{"bottom":"var:preset|spacing|40"}}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"center"},"animewpMotion":{"entrance":"fade"}} -->
 <div class="wp-block-group" style="margin-bottom:var(--wp--preset--spacing--40)"><!-- wp:heading {"className":"is-style-animewp-latin"} -->
 <h2 class="wp-block-heading is-style-animewp-latin">Movie</h2>
 <!-- /wp:heading -->
@@ -192,7 +192,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:group -->
 
 <!-- wp:group {"tagName":"section","align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained","contentSize":"var(\u002d\u002dwp\u002d\u002dstyle\u002d\u002dglobal\u002d\u002dwide-size)"}} -->
-<section class="wp-block-group alignfull" id="characters" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:group {"style":{"spacing":{"blockGap":"0.25rem","margin":{"bottom":"var:preset|spacing|40"}}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"left"}} -->
+<section class="wp-block-group alignfull" id="characters" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:group {"style":{"spacing":{"blockGap":"0.25rem","margin":{"bottom":"var:preset|spacing|40"}}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"left"},"animewpMotion":{"entrance":"fade"}} -->
 <div class="wp-block-group" style="margin-bottom:var(--wp--preset--spacing--40)"><!-- wp:heading {"className":"is-style-animewp-latin"} -->
 <h2 class="wp-block-heading is-style-animewp-latin">Characters</h2>
 <!-- /wp:heading -->
@@ -210,7 +210,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:image --></div>
 <!-- /wp:column -->
 
-<!-- wp:column -->
+<!-- wp:column {"animewpMotion":{"entrance":"rise","target":"children"}} -->
 <div class="wp-block-column"><!-- wp:paragraph {"className":"is-style-animewp-label"} -->
 <p class="is-style-animewp-label">CHARACTER 01</p>
 <!-- /wp:paragraph -->
@@ -236,7 +236,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:image --></div>
 <!-- /wp:column -->
 
-<!-- wp:column -->
+<!-- wp:column {"animewpMotion":{"entrance":"rise","target":"children"}} -->
 <div class="wp-block-column"><!-- wp:paragraph {"className":"is-style-animewp-label"} -->
 <p class="is-style-animewp-label">CHARACTER 02</p>
 <!-- /wp:paragraph -->
@@ -262,7 +262,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:image --></div>
 <!-- /wp:column -->
 
-<!-- wp:column -->
+<!-- wp:column {"animewpMotion":{"entrance":"rise","target":"children"}} -->
 <div class="wp-block-column"><!-- wp:paragraph {"className":"is-style-animewp-label"} -->
 <p class="is-style-animewp-label">CHARACTER 03</p>
 <!-- /wp:paragraph -->
@@ -284,7 +284,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:group -->
 
 <!-- wp:group {"tagName":"section","align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained","contentSize":"var(\u002d\u002dwp\u002d\u002dstyle\u002d\u002dglobal\u002d\u002dwide-size)"}} -->
-<section class="wp-block-group alignfull" id="staff" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:group {"style":{"spacing":{"blockGap":"0.25rem","margin":{"bottom":"var:preset|spacing|40"}}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"left"}} -->
+<section class="wp-block-group alignfull" id="staff" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:group {"style":{"spacing":{"blockGap":"0.25rem","margin":{"bottom":"var:preset|spacing|40"}}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"left"},"animewpMotion":{"entrance":"fade"}} -->
 <div class="wp-block-group" style="margin-bottom:var(--wp--preset--spacing--40)"><!-- wp:heading {"className":"is-style-animewp-latin"} -->
 <h2 class="wp-block-heading is-style-animewp-latin">Staff &amp; Cast</h2>
 <!-- /wp:heading -->
@@ -294,7 +294,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
-<!-- wp:columns {"align":"wide"} -->
+<!-- wp:columns {"align":"wide","animewpMotion":{"entrance":"rise","target":"children"}} -->
 <div class="wp-block-columns alignwide"><!-- wp:column -->
 <div class="wp-block-column"><!-- wp:paragraph {"className":"is-style-animewp-label"} -->
 <p class="is-style-animewp-label">STAFF</p>
@@ -318,7 +318,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:group -->
 
 <!-- wp:group {"tagName":"section","align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained","contentSize":"var(\u002d\u002dwp\u002d\u002dstyle\u002d\u002dglobal\u002d\u002dwide-size)"}} -->
-<section class="wp-block-group alignfull" id="onair" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:group {"style":{"spacing":{"blockGap":"0.25rem","margin":{"bottom":"var:preset|spacing|40"}}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"left"}} -->
+<section class="wp-block-group alignfull" id="onair" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:group {"style":{"spacing":{"blockGap":"0.25rem","margin":{"bottom":"var:preset|spacing|40"}}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"left"},"animewpMotion":{"entrance":"fade"}} -->
 <div class="wp-block-group" style="margin-bottom:var(--wp--preset--spacing--40)"><!-- wp:heading {"className":"is-style-animewp-latin"} -->
 <h2 class="wp-block-heading is-style-animewp-latin">On Air</h2>
 <!-- /wp:heading -->
@@ -328,7 +328,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
-<!-- wp:group {"layout":{"type":"constrained","justifyContent":"left"}} -->
+<!-- wp:group {"layout":{"type":"constrained","justifyContent":"left"},"animewpMotion":{"entrance":"rise","target":"children"}} -->
 <div class="wp-block-group"><!-- wp:table -->
 <figure class="wp-block-table"><table class="has-fixed-layout"><thead><tr><th>放送局・配信</th><th>日時</th></tr></thead><tbody><tr><td>放送局名</td><td>毎週土曜 24:00〜</td></tr><tr><td>配信サービス名</td><td>毎週土曜 24:30〜 順次配信</td></tr></tbody></table></figure>
 <!-- /wp:table -->
@@ -346,7 +346,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:group -->
 
 <!-- wp:group {"tagName":"section","align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained","contentSize":"var(\u002d\u002dwp\u002d\u002dstyle\u002d\u002dglobal\u002d\u002dwide-size)"}} -->
-<section class="wp-block-group alignfull" id="news" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:group {"style":{"spacing":{"blockGap":"0.25rem","margin":{"bottom":"var:preset|spacing|40"}}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"left"}} -->
+<section class="wp-block-group alignfull" id="news" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:group {"style":{"spacing":{"blockGap":"0.25rem","margin":{"bottom":"var:preset|spacing|40"}}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"left"},"animewpMotion":{"entrance":"fade"}} -->
 <div class="wp-block-group" style="margin-bottom:var(--wp--preset--spacing--40)"><!-- wp:heading {"className":"is-style-animewp-latin"} -->
 <h2 class="wp-block-heading is-style-animewp-latin">News</h2>
 <!-- /wp:heading -->
@@ -378,7 +378,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <div class="wp-block-animewp-decoration is-shape-sparkle is-layer-behind has-muted-color has-text-color" style="--animewp-decoration-x:75%;--animewp-decoration-y:12%;--animewp-decoration-size:2%;--animewp-decoration-rotation:0deg;--animewp-decoration-opacity:0.6" aria-hidden="true"><span class="animewp-decoration__art"></span></div>
 <!-- /wp:animewp/decoration -->
 
-<!-- wp:group {"layout":{"type":"flex","orientation":"vertical","justifyContent":"center"}} -->
+<!-- wp:group {"layout":{"type":"flex","orientation":"vertical","justifyContent":"center"},"animewpMotion":{"entrance":"rise","target":"children"}} -->
 <div class="wp-block-group"><!-- wp:paragraph {"align":"center","className":"is-style-animewp-label"} -->
 <p class="has-text-align-center is-style-animewp-label">COMING SOON</p>
 <!-- /wp:paragraph -->

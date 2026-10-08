@@ -80,6 +80,13 @@ def main():
     run([sys.executable, "scripts/design_tokens.py", "--check"])
     run([sys.executable, "scripts/assets_manifest.py", "--check"])
     run(["node", "tests/providers.test.js"])
+    run(["node", "--test", "tests/build-policy.test.js"])
+    if not (ROOT / "tests/serialization/node_modules").is_dir():
+        raise SystemExit("Run npm ci --prefix tests/serialization for frontend regression tests")
+    run(["node", "tests/serialization/frontend.test.js"])
+    run(["node", "tests/serialization/env.test.js"])
+    run([sys.executable, "-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"])
+    run([sys.executable, "-m", "unittest", "discover", "-s", "tests/security", "-p", "test_*.py"])
     run([sys.executable, "tests/palette_contrast.py"])
     run([sys.executable, "scripts/package.py", "--check"])
     if args.compare:
