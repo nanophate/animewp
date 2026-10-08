@@ -174,11 +174,13 @@
 }
 :where(.animewp-theme, .editor-styles-wrapper) :focus-visible { box-shadow: 0 0 0 2px var(--wp--preset--color--base, #fff); }
 .animewp-header a, .animewp-footer-links a, .animewp-page-top a { display: inline-flex; align-items: center; min-height: 44px; }
-header.wp-block-template-part:has(.animewp-header--glass) { position: sticky; top: var(--wp-admin--admin-bar--height, 0px); z-index: 25; }
+/* The glass header, and any header set to Position: Sticky in the Site Editor, stays at the top.
+ * Core puts sticky on the inner group, which cannot stick inside a wrapper of its own height. */
+header.wp-block-template-part:is(:has(.animewp-header--glass), :has(> .is-position-sticky)) { position: sticky; top: var(--wp-admin--admin-bar--height, 0px); z-index: 25; }
 /* In-page links (#news, a table of contents) stop below the sticky header, on any anchor, not only sections with their own padding. */
-html:has(header.wp-block-template-part .animewp-header--glass) { scroll-padding-top: calc(max(var(--wp--custom--animewp--header-height, 5rem), 88px) + var(--wp-admin--admin-bar--height, 0px)); } /* 88px: the header's min-height */
+html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-sticky)) { scroll-padding-top: calc(max(var(--wp--custom--animewp--header-height, 5rem), 88px) + var(--wp-admin--admin-bar--height, 0px)); } /* 88px: the header's min-height */
 /* v1 sections add the header height themselves; keep only their extra 1rem so the total stays as in v1. */
-html:has(header.wp-block-template-part .animewp-header--glass) .animewp-section { scroll-margin-top: 1rem; }
+html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-sticky)) .animewp-section { scroll-margin-top: 1rem; }
 .animewp-header--glass {
   background: var(--wp--preset--color--base, #fff); color: var(--wp--preset--color--contrast, #202020);
 }
@@ -244,7 +246,7 @@ html:has(header.wp-block-template-part .animewp-header--glass) .animewp-section 
 @media (prefers-reduced-motion: reduce) { .is-style-animewp-reveal[data-animewp-reveal-pending] { opacity: 1; transition: none; } }
 @media print {
   .is-style-animewp-reveal[data-animewp-reveal-pending] { opacity: 1; }
-  header.wp-block-template-part:has(.animewp-header--glass) { position: static; }
+  header.wp-block-template-part:is(:has(.animewp-header--glass), :has(> .is-position-sticky)) { position: static; }
   .is-style-animewp-fade-start img, .is-style-animewp-fade-bottom img { -webkit-mask-image: none; mask-image: none; }
 }
 
