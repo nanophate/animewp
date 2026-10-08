@@ -199,7 +199,7 @@ module.exports = ( { b, image, poster } ) => {
 	const news = ( look = 'plain' ) =>
 		section( [
 			sectionTitle( 'News', 'お知らせ', look ),
-			b( 'core/pattern', { slug: 'animewp/news-index' } ),
+			b( 'core/pattern', { slug: 'animewp/news-latest' } ),
 			buttons( [ [ 'お知らせ一覧', true ] ], { layout: { type: 'flex', justifyContent: 'right' } } ),
 		], look, { anchor: 'news' } );
 

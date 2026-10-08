@@ -3,10 +3,13 @@
 if ( ! defined( 'WP_CLI' ) || ! WP_CLI || ! defined( 'ANIMEWP_BROWSER_QA' ) || ! ANIMEWP_BROWSER_QA ) { exit( 1 ); }
 wp_set_current_user( 1 );
 $pages = array();
+$news_id = wp_insert_post( wp_slash( array( 'post_type' => 'post', 'post_status' => 'publish', 'post_title' => 'Browser QA news post', 'post_content' => '<!-- wp:paragraph --><p>Published news belongs in the sample page news list.</p><!-- /wp:paragraph -->' ) ), true );
+if ( is_wp_error( $news_id ) ) { WP_CLI::error( 'Cannot create browser news post.' ); }
+$pages['news'] = array( 'id' => $news_id, 'title' => 'Browser QA news post', 'url' => get_permalink( $news_id ) );
 function animewp_browser_page( $key, $content, $template = 'animewp-canvas' ) {
 	$id = wp_insert_post( wp_slash( array( 'post_type' => 'page', 'post_status' => 'publish', 'post_title' => 'Browser QA ' . $key, 'post_content' => $content, 'meta_input' => array( '_wp_page_template' => $template ) ) ), true );
 	if ( is_wp_error( $id ) ) { WP_CLI::error( 'Cannot create browser page.' ); }
-	return array( 'id' => $id, 'path' => '/?page_id=' . $id );
+	return array( 'id' => $id, 'path' => '/?page_id=' . $id, 'title' => 'Browser QA ' . $key );
 }
 foreach ( array( 'basic', 'simple', 'blur', 'drift' ) as $key ) {
 	$pages[ $key ] = animewp_browser_page( $key, animewp_pattern_content( 'animewp/page-' . $key ), 'basic' === $key ? 'animewp-canvas' : 'animewp-showcase' );

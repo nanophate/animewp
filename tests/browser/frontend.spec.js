@@ -19,14 +19,16 @@ test( 'core-only basic is readable at desktop and 375px', async ( { page } ) => 
 			await page.goto( fixtures().basic.path );
 			await expect( page.locator( 'main h1' ).first() ).toBeVisible();
 			await expect( page.locator( '#introduction' ) ).toBeVisible();
+			await expect( page.locator( '#news .animewp-news-query' ).getByRole( 'link', { name: fixtures().news.title, exact: true } ) ).toHaveAttribute( 'href', fixtures().news.url );
+			await expect( page.locator( '#news .animewp-news-query' ).getByRole( 'link', { name: fixtures().basic.title, exact: true } ) ).toHaveCount( 0 );
 			expect( await page.evaluate( () => document.documentElement.scrollWidth ) ).toBeLessThanOrEqual( width + 1 );
 			await capture( page, 'basic-' + width );
 		}
 	} finally { wp( 'plugin', 'activate', 'animewp-blocks' ); }
 } );
 
-test( 'plugin examples fit narrow screens and sticky navigation leaves headings visible', async ( { page } ) => {
-	for ( const key of [ 'simple', 'drift' ] ) {
+test( 'plugin examples show posts in News, fit narrow screens and leave anchor headings visible', async ( { page } ) => {
+	for ( const key of [ 'simple', 'blur', 'drift' ] ) {
 		for ( const width of [ 1280, 375 ] ) {
 			await page.setViewportSize( { width, height: 900 } );
 			await page.goto( fixtures()[ key ].path );
@@ -35,6 +37,11 @@ test( 'plugin examples fit narrow screens and sticky navigation leaves headings 
 			const hero = page.locator( '.animewp-carousel__track > .is-active' ).first();
 			await expect( hero ).toHaveCSS( 'opacity', '1' );
 			await expectOpaque( hero.locator( 'h1' ) );
+			if ( key === 'blur' ) {
+				const letters = hero.locator( 'h1 .animewp-letter' );
+				await expect( letters.first() ).toBeVisible();
+				await expect.poll( () => letters.evaluateAll( ( nodes ) => Math.min( ...nodes.map( ( node ) => Number( getComputedStyle( node ).opacity ) ) ) ) ).toBe( 1 );
+			}
 			// Record the visible hero before leaving it; offscreen entrance animations
 			// have not run yet and should not be mistaken for missing page content.
 			await capture( page, key + '-' + width + '-hero', { fullPage: false } );
@@ -42,6 +49,9 @@ test( 'plugin examples fit narrow screens and sticky navigation leaves headings 
 			await page.evaluate( () => { window.location.hash = 'news'; } );
 			await expect( page.locator( '#news h2' ).first() ).toBeInViewport();
 			await expectOpaque( page.locator( '#news h2' ).first() );
+			const news = page.locator( '#news .animewp-news-query' );
+			await expect( news.getByRole( 'link', { name: fixtures().news.title, exact: true } ) ).toHaveAttribute( 'href', fixtures().news.url );
+			await expect( news.getByRole( 'link', { name: fixtures()[ key ].title, exact: true } ) ).toHaveCount( 0 );
 			const positions = await page.evaluate( () => ( {
 				heading: document.querySelector( '#news h2' ).getBoundingClientRect().top,
 				header: document.querySelector( 'header' ).getBoundingClientRect().bottom,

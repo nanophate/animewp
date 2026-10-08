@@ -30,4 +30,5 @@ Original placeholder artwork and the theme preview are included under the same l
 = 2.0.1 =
 * WordPress標準の更新画面でGitHub配布版を確認・適用できる更新機能を追加。配布元・必要環境とZIPのSHA-256を検証します。
 * v2のメニュー、見本のモーション、公開側の操作と配布ファイル検査を修正。
+* 見本のNewsを通常投稿の新着3件に修正。アーカイブ・検索結果の記事一覧は対象のクエリーを引き続き使います。
 * 保存済みの本文・テンプレート・Global Stylesを更新時に一括変更しません。

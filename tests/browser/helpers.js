@@ -11,6 +11,9 @@ function wp( ...args ) {
 function fixtures() { return JSON.parse( fs.readFileSync( 'artifacts/browser-fixtures/pages.json', 'utf8' ) ); }
 async function login( page ) {
 	await page.goto( '/wp-login.php' );
+	// Core schedules autofocus after 200 ms; wait for it before typing so it
+	// cannot redirect a password fill into the selected username input.
+	await expect( page.locator( '#user_login' ) ).toBeFocused();
 	await page.locator( '#user_login' ).fill( process.env.WP_USERNAME || 'admin' );
 	await page.locator( '#user_pass' ).fill( process.env.WP_PASSWORD || 'password' );
 	await page.locator( '#wp-submit' ).click();
