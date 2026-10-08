@@ -16,7 +16,7 @@ module.exports = ( helpers ) => {
 			description: '補助プラグインなしで使える区画だけで組んだ作品紹介ページ。',
 			categories: category,
 			viewportWidth: 1280,
-			blocks: [ s.introduction(), s.story(), s.credits(), s.music(), s.onAir(), s.news(), s.closing() ],
+			blocks: [ helpers.b( 'core/heading', { level: 1, content: '作品タイトル', align: 'wide', className: 'is-style-animewp-display' } ), s.introduction(), s.story(), s.credits(), s.music(), s.onAir(), s.news(), s.closing() ],
 		},
 		{ slug: 'page-simple', title: '見本ページ：シンプル', description: '動きのない白黒の作品紹介ページ。すべての区画を含みます。', categories: category, viewportWidth: 1280, blocks: page( 'plain' ) },
 		{ slug: 'page-blur', title: '見本ページ：ぼかしから現れる', description: '同じ区画が、ぼかしから鮮明になりながら順に現れます。タイトルは1文字ずつ表示されます。', categories: category, viewportWidth: 1280, blocks: page( 'blur' ) },

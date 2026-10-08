@@ -59,7 +59,7 @@ def main():
             raise SystemExit("Run npm ci first: the block build needs @wordpress/scripts")
         run(["npm", "run", "--silent", "build"])
     php = php_linter(args.skip_php)
-    paths = [p for base in ("themes", "plugins", "scripts", "tests") for p in (ROOT / base).rglob("*")
+    paths = [p for base in ("themes", "plugins", "scripts", "tests", "shared") for p in (ROOT / base).rglob("*")
              if p.is_file() and not {"node_modules", "vendor"} & set(p.relative_to(ROOT).parts)]
     counts = {"php": 0, "js": 0, "py": 0}
     php_paths = []
@@ -75,10 +75,15 @@ def main():
     if php:
         lint_php(php, php_paths)
         counts["php"] = len(php_paths)
+        if php == "local":
+            run(["php", "tests/updater-bootstrap.php"])
+        else:
+            run(["docker", "run", "--rm", "-v", f"{ROOT}:/work:ro", "-w", "/work", "php:8.0-cli", "php", "tests/updater-bootstrap.php"])
     if not args.skip_build:
         run(["npx", "wp-scripts", "lint-js", "plugins/animewp-blocks/src"])
     run([sys.executable, "scripts/design_tokens.py", "--check"])
     run([sys.executable, "scripts/assets_manifest.py", "--check"])
+    run([sys.executable, "shared/sync-updater.py", "--check"])
     run(["node", "tests/providers.test.js"])
     run(["node", "--test", "tests/build-policy.test.js"])
     if not (ROOT / "tests/serialization/node_modules").is_dir():

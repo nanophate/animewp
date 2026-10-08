@@ -1,0 +1,140 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing main-derived version tag (vX.Y.Z)
+        type: string
+        required: true
+      publish:
+        description: Publish the release and both update feeds (public repository only)
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: read
+
+# Serialize the complete verification/publication transaction across versions.
+# Older queued runs still face a live-feed version check before publication.
+concurrency:
+  group: animewp-release
+  cancel-in-progress: false
+
+jobs:
+  resolve:
+    if: github.repository == 'nanophate/animewp'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      tag: ${{ steps.source.outputs.tag }}
+      sha: ${{ steps.source.outputs.sha }}
+      version: ${{ steps.source.outputs.version }}
+      skip: ${{ steps.source.outputs.skip }}
+      create_tag: ${{ steps.source.outputs.create_tag }}
+    steps:
+      - name: Check out main and its tags
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && github.sha || 'main' }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Resolve the immutable source or skip an existing automatic tag
+        id: source
+        env:
+          RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+          AUTO_PREPARE: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'true' || 'false' }}
+        run: |
+          if [ "$AUTO_PREPARE" = true ]; then
+            python3 scripts/release.py resolve --auto --github-output "$GITHUB_OUTPUT"
+          else
+            python3 scripts/release.py resolve --tag "$RELEASE_TAG" --github-output "$GITHUB_OUTPUT"
+          fi
+
+  source-checks:
+    needs: resolve
+    if: needs.resolve.outputs.skip != 'true'
+    uses: ./.github/workflows/check.yml
+    with:
+      ref: ${{ needs.resolve.outputs.sha }}
+
+  dependency-audit:
+    needs: resolve
+    if: needs.resolve.outputs.skip != 'true'
+    uses: ./.github/workflows/dependency-audit.yml
+    with:
+      ref: ${{ needs.resolve.outputs.sha }}
+
+  browser-checks:
+    needs: resolve
+    if: needs.resolve.outputs.skip != 'true'
+    uses: ./.github/workflows/browser.yml
+    with:
+      ref: ${{ needs.resolve.outputs.sha }}
+
+  package:
+    needs: [resolve, source-checks, dependency-audit, browser-checks]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out the verified source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.resolve.outputs.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Use the reviewed npm version
+        run: npm install --global npm@11.16.0 --ignore-scripts
+      - name: Build and validate both installation archives
+        env:
+          RELEASE_TAG: ${{ needs.resolve.outputs.tag }}
+          SOURCE_SHA: ${{ needs.resolve.outputs.sha }}
+          CREATE_TAG: ${{ needs.resolve.outputs.create_tag }}
+        run: |
+          npm ci
+          npm run build
+          python3 scripts/package.py
+          python3 scripts/release.py prepare --tag "$RELEASE_TAG" --source-sha "$SOURCE_SHA" --create-tag "$CREATE_TAG"
+      - name: Preserve the complete verified candidate
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-candidate-${{ needs.resolve.outputs.sha }}
+          path: artifacts/release-candidate/
+          # Retry the same run without a same-name artifact conflict. Published
+          # Release assets are independently immutable in scripts/release.py.
+          overwrite: true
+          if-no-files-found: error
+          retention-days: 14
+
+  publish:
+    needs: [resolve, package]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - name: Check out the verified source without stored credentials
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.resolve.outputs.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Retrieve this run's verified candidate
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
+        with:
+          name: release-candidate-${{ needs.resolve.outputs.sha }}
+          path: artifacts/release-candidate/
+      - name: Stage a draft, or explicitly publish and atomically advance both feeds
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PUBLISH: ${{ github.event_name == 'workflow_dispatch' && inputs.publish && 'true' || 'false' }}
+        run: python3 scripts/release.py publish --candidate artifacts/release-candidate --publish "$PUBLISH"

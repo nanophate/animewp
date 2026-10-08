@@ -9,7 +9,7 @@ origin=http://tests-wordpress   # the tests WordPress container as seen from tes
 # The tests site starts with a default theme; the suites expect this one.
 npx wp-env run tests-cli -- wp theme activate animewp
 status=0
-for suite in wp-smoke wp-fixtures wp-regressions-v12 wp-render wp-http; do
+for suite in wp-smoke wp-fixtures wp-regressions-v12 wp-render wp-http wp-updates; do
 	# wp-env occasionally fails its own Docker request ("lookup:" timing dump); retry once.
 	for attempt in 1 2; do
 		suite_status=0

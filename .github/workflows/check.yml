@@ -4,6 +4,13 @@ on:
   push:
   pull_request:
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      ref:
+        description: Source ref for release verification
+        type: string
+        required: false
+        default: ""
   schedule:
     # Mondays at 04:37 Asia/Tokyo (Sunday 19:37 UTC).
     - cron: "37 19 * * 0"
@@ -24,6 +31,7 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4; verified commit
         with:
           persist-credentials: false
+          ref: ${{ inputs.ref }}
           # The serialization check compares against main.
           fetch-depth: 0
       - name: Set up Node.js
@@ -37,7 +45,11 @@ jobs:
         env:
           ANIMEWP_PHP_VERSION: ${{ matrix.php }}
         run: |
-          docker run --rm -v "$PWD:/work:ro" -w /work "php:${ANIMEWP_PHP_VERSION}-cli" sh -eu -c 'find themes plugins tests -path "*/node_modules" -prune -o -type f -name "*.php" -print0 | xargs -0 -n 1 php -l'
+          docker run --rm -v "$PWD:/work:ro" -w /work "php:${ANIMEWP_PHP_VERSION}-cli" sh -eu -c 'find themes plugins tests shared -path "*/node_modules" -prune -o -type f -name "*.php" -print0 | xargs -0 -n 1 php -l'
+      - name: Updater loading across theme and plugin versions
+        env:
+          ANIMEWP_PHP_VERSION: ${{ matrix.php }}
+        run: docker run --rm -v "$PWD:/work:ro" -w /work "php:${ANIMEWP_PHP_VERSION}-cli" php tests/updater-bootstrap.php
       - name: Install build and test tooling
         run: |
           npm ci
@@ -75,6 +87,7 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4; verified commit
         with:
           persist-credentials: false
+          ref: ${{ inputs.ref }}
       - name: Set up Node.js
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:

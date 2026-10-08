@@ -1,4 +1,4 @@
-animewp 2.0.0
+animewp 2.0.1
 WordPress 6.6 以上 / PHP 8.0 以上
 ライセンス: GPL-2.0-or-later
 
@@ -23,3 +23,12 @@ See LICENSE for the full license text.
 Original placeholder artwork and the theme preview are included under the same license.
 
 作品紹介の文章・画像は「固定ページ → 対象ページ → 編集」で変更します。「外観 → エディター → テンプレート」は共通の外枠を編集する場所です。そこに表示される「コンテンツ」の仮文章は本文の差し込み位置を示しており、保存した本文ではありません。
+
+
+== Changelog ==
+
+= 2.0.1 =
+* WordPress標準の更新画面でGitHub配布版を確認・適用できる更新機能を追加。配布元・必要環境とZIPのSHA-256を検証します。
+* v2のメニュー、見本のモーション、公開側の操作と配布ファイル検査を修正。
+* 見本のNewsを通常投稿の新着3件に修正。アーカイブ・検索結果の記事一覧は対象のクエリーを引き続き使います。
+* 保存済みの本文・テンプレート・Global Stylesを更新時に一括変更しません。

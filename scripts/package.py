@@ -39,7 +39,7 @@ def local_file_references(value):
 
 def plugin_installation_files(source):
     """Required ZIP entries from source metadata, plus non-block Motion entries."""
-    required = {"languages/animewp-blocks-ja.mo", "languages/animewp-blocks-ja.po"}
+    required = {"languages/animewp-blocks-ja.mo", "languages/animewp-blocks-ja.po", "includes/distribution-updater.php"}
     required.update(f"build/motion/{name}" for name in MOTION_FILES)
     for metadata in sorted((source / "src/blocks").glob("*/block.json")):
         built = PurePosixPath("build/blocks") / metadata.parent.name / "block.json"
@@ -114,7 +114,7 @@ def main():
             raise ValueError("Source changed during packaging, or archive is not reproducible")
         required = [header, "LICENSE"]
         if slug == "animewp":
-            required += ["theme.json", "templates/index.html"]
+            required += ["theme.json", "templates/index.html", "inc/distribution-updater.php"]
         else:
             required += plugin_installation_files(source)
         inspect_archive(data, slug, required)

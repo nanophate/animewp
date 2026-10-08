@@ -36,6 +36,7 @@ class PackageAssetsTests(unittest.TestCase):
                 "build/blocks/example/style.css", "build/blocks/shared.css",
                 "build/blocks/example/render.php",
                 "languages/animewp-blocks-ja.mo", "languages/animewp-blocks-ja.po",
+                "includes/distribution-updater.php",
                 *(f"build/motion/{name}" for name in package.MOTION_FILES),
             }
             self.assertEqual(set(package.plugin_installation_files(source)), expected)
@@ -85,6 +86,7 @@ class PackageAssetsTests(unittest.TestCase):
                 "build/motion/editor.js",
                 "build/motion/view.asset.php",
                 "build/motion/style-style.css",
+                "includes/distribution-updater.php",
             )
             for missing in missing_files:
                 with self.subTest(missing=missing):
