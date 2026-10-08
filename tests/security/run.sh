@@ -18,8 +18,8 @@ docker run --rm -v "$root:/work" -w /work php:8.0-cli tests/security/vendor/bin/
 echo "PHPCS: no issues"
 
 wp() { npx wp-env run tests-cli -- wp "$@"; }
-wp plugin is-installed plugin-check || wp plugin install plugin-check --quiet
-wp plugin is-installed theme-check || wp plugin install theme-check --quiet
+wp plugin is-installed plugin-check || wp plugin install plugin-check
+wp plugin is-installed theme-check || wp plugin install theme-check
 wp plugin activate plugin-check theme-check --quiet
 
 echo "== Plugin Check (security)"

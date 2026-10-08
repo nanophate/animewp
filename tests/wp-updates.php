@@ -10,6 +10,8 @@ require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 
 $updater = $GLOBALS['animewp_distribution_active_v1'] ?? null;
 if ( ! $updater ) { WP_CLI::error( 'Activate AnimeWP or AnimeWP Blocks before running this suite.' ); }
+// WP-CLI eval-file evaluates this file inside a method, not global scope.
+global $results;
 $results = array();
 function animewp_update_check( $name, $pass ) {
 	global $results;
