@@ -1,0 +1,4019 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-10-08",
+  "decision": "hold_public_visibility",
+  "repository": "nanophate/animewp",
+  "main_sha": "9720ea42b1f310a3d582d0e91d95e3b6f107f834",
+  "main_tree": "a7c994bd9c3f3cf0c4b9b595a0ce1fdc1306a72e",
+  "pr11": {
+    "number": 11,
+    "merged": true,
+    "reviewed_head": "984851e5930449e9bb203cab29dade91c3e8e643",
+    "successful_checks": 18
+  },
+  "history_audit": {
+    "run_id": 37780327732,
+    "job_id": 113321505663,
+    "source_branch_head": "b22c7e4ee874737775d469c85714324935574535",
+    "coverage": {
+      "object_counts": {
+        "blob": 787,
+        "tree": 438,
+        "commit": 52,
+        "tag": 1
+      },
+      "total_object_bytes": 9634844,
+      "unique_identity_count": 5,
+      "binary_objects": [
+        "57fb1f44554917edf29cc8cea2aef0d5ab0927d4",
+        "7239893ad578f0a7a6d32e937bc818276d15ba5d",
+        "9acf207581e52ce2e5bc8abe4cd012d450a53ecf",
+        "9c6e72084adf28ffe7b9412a38ac1021810b89c0",
+        "da91c5a0b94ec689e2a63a54e8c68fd839df8217",
+        "fed47ff04b949a444022e3558261e8825c3b73bb"
+      ],
+      "archive_objects_requiring_review": [],
+      "lfs_pointer_objects_requiring_fetch": [],
+      "submodule_commits_requiring_separate_audit": [],
+      "expected_main": "9720ea42b1f310a3d582d0e91d95e3b6f107f834",
+      "advertised_ref_count": 26,
+      "refs": [
+        {
+          "category": "head",
+          "name_sha256": "6c8403dfa676538000b686d600b29db4615554d334cf9df682ad6dd563e0ca2c",
+          "oid": "b22c7e4ee874737775d469c85714324935574535"
+        },
+        {
+          "category": "head",
+          "name_sha256": "021b5214669cad1f73e7343bd8a4e3873d9499565c45e3ae91996df365a5ae16",
+          "oid": "06330ffdfcdf159e88b0b57b5205d1d3ed6ad424"
+        },
+        {
+          "category": "head",
+          "name_sha256": "34adf041289319f777518eb68bfb1bea68febb22470c99212e8dee78b615ac69",
+          "oid": "0dc661c3b40a49af2ddefb557fa8b27511d85bad"
+        },
+        {
+          "category": "head",
+          "name_sha256": "0ef083a6127e76d934d96ac034bceaf8fa79d6d50f264284fd9e292f2c1059b1",
+          "oid": "97e7493b08476aa79846b75f3a4b7a9099db0a2c"
+        },
+        {
+          "category": "head",
+          "name_sha256": "f921bd05e68b03740c450e565e0e6173e546193170b2dd404ddb6f153e9b5bf3",
+          "oid": "9720ea42b1f310a3d582d0e91d95e3b6f107f834"
+        },
+        {
+          "category": "pull",
+          "name_sha256": "f7f3ea43026f449866e996f8521f54f14ff85276c9083d9cfc30aa5a86655a26",
+          "oid": "d7f624bd0700a43501981fbc672e67b0cca12417"
+        },
+        {
+          "category": "pull",
+          "name_sha256": "c4ed1f7c0855ba44ffd66f4158b86a20da273d9df3c1a6f6fe77db931c7d7c34",
+          "oid": "06330ffdfcdf159e88b0b57b5205d1d3ed6ad424"
+        },
+        {
+          "category": "pull",
+          "name_sha256": "c7bf3a3928a97542d1f8a0055febecb0867466808eae96add76c6726add95532",
+          "oid": "63f24504ba5ad45059da0ede862a654bab03b38c"
+        },
+        {
+          "category": "pull",
+          "name_sha256": "0052b811823ad72e24a104ea3e83f351b10eb929e93d5e21424397f815eab821",
+          "oid": "984851e5930449e9bb203cab29dade91c3e8e643"
+        },
+        {
+          "category": "pull",
+          "name_sha256": "dde3b053fbc775a1bc80114afd79a66a65471eb766d8364a1b47fef996661754",
+          "oid": "6945a4dc596c649bfb7afc97e826df6ab43654d9"
+        },
+        {
+          "category": "pull",
+          "name_sha256": "c72ba2d2f558757c4003280c155740f14b6a52ab44c215f1b4a64f699426bbec",
+          "oid": "0dc661c3b40a49af2ddefb557fa8b27511d85bad"
+        },
+        {
+          "category": "pull",
+          "name_sha256": "46457dc08db2b771712a20e6707cca8f059baf6c547070b06bb7adeac9429ce0",
+          "oid": "83c3c44df2d34800e5bdf449647bb638aadd7ebf"
+        },
+        {
+          "category": "pull",
+          "name_sha256": "f92715d26635b76698fa00ad22dc45ab8fc262074e18adc2d800e7ad4e3f4add",
+          "oid": "deb561fb321c601df36b11b15d292941071fb246"
+        },
+        {
+          "category": "pull",
+          "name_sha256": "c4c00e64076f7b1c9ea154b228c4c56613963af45c58f64671b11c5304de986a",
+          "oid": "05bef422413818fef59e77ca0fe27ca84955e8d2"
+        },
+        {
+          "category": "pull",
+          "name_sha256": "379bc9848e5df89e58d0c6a56b31f44748ba377eca92870b76b957701bc892f7",
+          "oid": "97e7493b08476aa79846b75f3a4b7a9099db0a2c"
+        },
+        {
+          "category": "pull",
+          "name_sha256": "4ec23f4492b522f24c4b86ffa24c08246aa01273d21d520475845d49e584efed",
+          "oid": "0ca359f98fce10f8e1727fe2e03904b7b49a94b7"
+        },
+        {
+          "category": "pull",
+          "name_sha256": "7b35605898ef68db27b95665d4b1484eaf848ad45c0565ae99741c929232b8df",
+          "oid": "2928ba98a1a0a38e50481860177cc2bd66380f90"
+        },
+        {
+          "category": "pull",
+          "name_sha256": "ea34635a5de3d46398afbbf1a06567d12c2b672486b414767e2640c0c383d83a",
+          "oid": "97b021b4dffeabfd18bd9b711d9ea71d10418571"
+        },
+        {
+          "category": "pull",
+          "name_sha256": "178c44ad5202d1c7f310ee70660b0ed9a518d1f0e18ed555941fd0802d259fdd",
+          "oid": "b64e28ad3d9b125002fe864688a002588f23e060"
+        },
+        {
+          "category": "tag",
+          "name_sha256": "4ae92c749854a62efba1dfeb6604a29008e834840f228b574616bd0866f09168",
+          "oid": "4282d9b68153c8c62f5a4e91c6ca286653d17fd5"
+        },
+        {
+          "category": "tag",
+          "name_sha256": "bbd102bcdb925589bed0ccabddebd90f9bf825d06331352b07e4a982459612ca",
+          "oid": "ff6cf67046ac36325c3404b1ce1deb897140e1af"
+        },
+        {
+          "category": "tag",
+          "name_sha256": "58b6652ab3701362590ccff832835f8daf4e972346d164fda15f60ec1b98f1ee",
+          "oid": "8a625d95759f1af02ced2146e856351ede5e931e"
+        },
+        {
+          "category": "tag",
+          "name_sha256": "0adb4c0c068e53ed82285689eff1f5fd89a764025239ea07cdf0868b10521912",
+          "oid": "d984922753cfdbfd29d8f29ca9c017d70079a260"
+        },
+        {
+          "category": "tag",
+          "name_sha256": "710ebf4a0be2ead35f9fb96663f4bbf73b7ea4fae44c44132f9c5f63d4668492",
+          "oid": "46905fe45fb71b78ed3506acd650ceed807c310d"
+        },
+        {
+          "category": "tag",
+          "name_sha256": "8f84b7f16545b7707cfca5032712dc547af50dbbfe8366f2042ef13d47095a41",
+          "oid": "3cb020019cf925ff3741f02b5495f5178d458c60"
+        },
+        {
+          "category": "tag",
+          "name_sha256": "5e65d4e08a5b3227a73c2851b3f5b1f49ddb6e70f39577ec480c2f85c83b2a09",
+          "oid": "9720ea42b1f310a3d582d0e91d95e3b6f107f834"
+        }
+      ],
+      "reachable_commit_count": 52,
+      "state": "scanned",
+      "detector_version": "8.30.1",
+      "limits": [
+        "Only fetched reachable Git objects; not server-unreachable/cached objects or external forks.",
+        "LFS payloads, submodules, encrypted/embedded binary content require follow-up.",
+        "Issues, PR discussion, Release text/assets, Actions logs/artifacts, wiki are separate surfaces.",
+        "Pattern detectors cannot establish that all prose, names, media or licensed content may be published."
+      ],
+      "history_patch_findings": 0,
+      "object_text_findings": 0,
+      "private_data_candidate_count": 95,
+      "manual_review_required": true
+    },
+    "secret_findings": 0
+  },
+  "privacy": {
+    "personal_email_unique_count": 1,
+    "personal_email_commits": [
+      "022314160859d212a3dbfc472416520d90639df8",
+      "2928ba98a1a0a38e50481860177cc2bd66380f90",
+      "45117f3b855a5751d622634957d2593c1533f0b1",
+      "57f9ceb1a311bd7f3effafea3eca179f7c3f84bb",
+      "63aa2664373f2ad2cc8c6913d878b5bb7d173ae0",
+      "7a74ad46c064057b95e5d5e246128e82dc49a2fa",
+      "7da7793448754cc985bc7788f069d899d931a4a3",
+      "8ba4e310b004f02ede449d00bee9962c2dfd4ea9",
+      "8ee054af2c7e35655b09a2b7374374e447bc2d78",
+      "94c94f33b7b3804588980f5f7b87af453ba4e409",
+      "a889a595e975e74a90865771a9825049d8fb7592",
+      "b1348192c7efd5191fef87b7c6ddbffe3fdf3ecf",
+      "c005e69423de1b9bce344e78dec188e3b363efc9",
+      "cfc6574e931b2823c06c29937831e1c427077daa",
+      "d7f624bd0700a43501981fbc672e67b0cca12417",
+      "dcd30fbc8da5b4370675671048254feab4d0487b",
+      "e33d2659dcae1dcc1f81d40d941905d83b16ebdc",
+      "eebc4cbee5d7f4fec47b94dffa08aac2ac85946b",
+      "f8177f93eda5c45ecfbf96dc57591a41a5c70762"
+    ],
+    "address_intentionally_omitted": true,
+    "actions_metadata": {
+      "repository": "nanophate/animewp",
+      "snapshot_started_at": "2026-10-08T12:55:08Z",
+      "reviewed_run_count": 161,
+      "identity_category": "same_single_personal_me_domain_address_in_head_commit_author_or_committer",
+      "run_count": 52,
+      "runs": [
+        {
+          "run_id": 37769994552,
+          "head_sha": "022314160859d212a3dbfc472416520d90639df8",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37769994374,
+          "head_sha": "022314160859d212a3dbfc472416520d90639df8",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37769994252,
+          "head_sha": "022314160859d212a3dbfc472416520d90639df8",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37769990154,
+          "head_sha": "022314160859d212a3dbfc472416520d90639df8",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37769990120,
+          "head_sha": "022314160859d212a3dbfc472416520d90639df8",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37761112241,
+          "head_sha": "45117f3b855a5751d622634957d2593c1533f0b1",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37761112231,
+          "head_sha": "45117f3b855a5751d622634957d2593c1533f0b1",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37761112199,
+          "head_sha": "45117f3b855a5751d622634957d2593c1533f0b1",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37761106890,
+          "head_sha": "45117f3b855a5751d622634957d2593c1533f0b1",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37761106839,
+          "head_sha": "45117f3b855a5751d622634957d2593c1533f0b1",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37760131856,
+          "head_sha": "7a74ad46c064057b95e5d5e246128e82dc49a2fa",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37760131823,
+          "head_sha": "7a74ad46c064057b95e5d5e246128e82dc49a2fa",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37760131791,
+          "head_sha": "7a74ad46c064057b95e5d5e246128e82dc49a2fa",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37760124342,
+          "head_sha": "7a74ad46c064057b95e5d5e246128e82dc49a2fa",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37760124313,
+          "head_sha": "7a74ad46c064057b95e5d5e246128e82dc49a2fa",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37754659247,
+          "head_sha": "7da7793448754cc985bc7788f069d899d931a4a3",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37754659202,
+          "head_sha": "7da7793448754cc985bc7788f069d899d931a4a3",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37754659138,
+          "head_sha": "7da7793448754cc985bc7788f069d899d931a4a3",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37754653038,
+          "head_sha": "7da7793448754cc985bc7788f069d899d931a4a3",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37754653031,
+          "head_sha": "7da7793448754cc985bc7788f069d899d931a4a3",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37749654191,
+          "head_sha": "f8177f93eda5c45ecfbf96dc57591a41a5c70762",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37749654101,
+          "head_sha": "f8177f93eda5c45ecfbf96dc57591a41a5c70762",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37749654095,
+          "head_sha": "f8177f93eda5c45ecfbf96dc57591a41a5c70762",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37749647536,
+          "head_sha": "f8177f93eda5c45ecfbf96dc57591a41a5c70762",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37749647534,
+          "head_sha": "f8177f93eda5c45ecfbf96dc57591a41a5c70762",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37748491571,
+          "head_sha": "8ba4e310b004f02ede449d00bee9962c2dfd4ea9",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37748491312,
+          "head_sha": "8ba4e310b004f02ede449d00bee9962c2dfd4ea9",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37748491191,
+          "head_sha": "8ba4e310b004f02ede449d00bee9962c2dfd4ea9",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37748488181,
+          "head_sha": "8ba4e310b004f02ede449d00bee9962c2dfd4ea9",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37748488105,
+          "head_sha": "8ba4e310b004f02ede449d00bee9962c2dfd4ea9",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37741229725,
+          "head_sha": "57f9ceb1a311bd7f3effafea3eca179f7c3f84bb",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37741229713,
+          "head_sha": "57f9ceb1a311bd7f3effafea3eca179f7c3f84bb",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37741229553,
+          "head_sha": "57f9ceb1a311bd7f3effafea3eca179f7c3f84bb",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37741202713,
+          "head_sha": "57f9ceb1a311bd7f3effafea3eca179f7c3f84bb",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37741202668,
+          "head_sha": "57f9ceb1a311bd7f3effafea3eca179f7c3f84bb",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37659821913,
+          "head_sha": "2928ba98a1a0a38e50481860177cc2bd66380f90",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37659821902,
+          "head_sha": "2928ba98a1a0a38e50481860177cc2bd66380f90",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37659789102,
+          "head_sha": "2928ba98a1a0a38e50481860177cc2bd66380f90",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37655107820,
+          "head_sha": "d7f624bd0700a43501981fbc672e67b0cca12417",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37655099819,
+          "head_sha": "d7f624bd0700a43501981fbc672e67b0cca12417",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37652745125,
+          "head_sha": "cfc6574e931b2823c06c29937831e1c427077daa",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37652740989,
+          "head_sha": "cfc6574e931b2823c06c29937831e1c427077daa",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37628552635,
+          "head_sha": "94c94f33b7b3804588980f5f7b87af453ba4e409",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37628543771,
+          "head_sha": "94c94f33b7b3804588980f5f7b87af453ba4e409",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37627631000,
+          "head_sha": "a889a595e975e74a90865771a9825049d8fb7592",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37553487370,
+          "head_sha": "a889a595e975e74a90865771a9825049d8fb7592",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37553036534,
+          "head_sha": "8ee054af2c7e35655b09a2b7374374e447bc2d78",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37551405634,
+          "head_sha": "c005e69423de1b9bce344e78dec188e3b363efc9",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37548535199,
+          "head_sha": "dcd30fbc8da5b4370675671048254feab4d0487b",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37547296926,
+          "head_sha": "eebc4cbee5d7f4fec47b94dffa08aac2ac85946b",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37543406436,
+          "head_sha": "b1348192c7efd5191fef87b7c6ddbffe3fdf3ecf",
+          "identity_category": "personal_email_in_head_commit"
+        },
+        {
+          "run_id": 37541487107,
+          "head_sha": "e33d2659dcae1dcc1f81d40d941905d83b16ebdc",
+          "identity_category": "personal_email_in_head_commit"
+        }
+      ],
+      "limitations": [
+        "Addresses were compared in memory only; raw email values were not saved.",
+        "This report covers current run metadata returned for the original collection cutoff. It does not claim old Actions metadata changes when Git history is rewritten."
+      ]
+    },
+    "representative_run_independently_verified": 37769994552
+  },
+  "surface_audit": {
+    "run_id": 37780327732,
+    "job_id": 113321505286,
+    "coverage": {
+      "schema_version": 1,
+      "repository": "nanophate/animewp",
+      "expected_main": "9720ea42b1f310a3d582d0e91d95e3b6f107f834",
+      "snapshot_started_at": "2026-10-08T12:55:08Z",
+      "state": "scanned",
+      "collection_complete": true,
+      "counts": {
+        "text_files": 7039,
+        "pull_requests": 11,
+        "issue_comments": 2,
+        "releases": 5,
+        "release_assets": 29,
+        "archive_members": 6389,
+        "binary_files_requiring_review": 2860,
+        "workflow_runs": 161,
+        "workflow_log_attempts_collected": 157,
+        "actions_artifacts": 128,
+        "secret_findings": 10
+      },
+      "coverage_gap_count": 0,
+      "privacy_candidate_count": 3449,
+      "temporal_exclusion_count": 4,
+      "manual_review_required": true,
+      "network_bytes": 210366880,
+      "corpus_bytes": 44483739,
+      "limits": {
+        "pages_per_collection": 100,
+        "download_bytes_per_archive": 67108864,
+        "expanded_bytes_per_archive": 134217728,
+        "bytes_per_member": 16777216,
+        "members_per_archive": 4000,
+        "archive_depth": 2,
+        "total_network_bytes": 2147483648,
+        "total_corpus_bytes": 4294967296
+      },
+      "limitations": [
+        "Only currently returned REST objects and surviving downloads were collected; deleted objects, edited prior revisions, cached copies, inaccessible draft reviews and external forks are not enumerable.",
+        "Read-only GITHUB_TOKEN does not enumerate Draft Releases: GitHub requires push access for their listings. Verify the known Draft notes/assets separately through existing authorized access and validated Release candidate hashes; do not expand this job to write permissions.",
+        "Expired, removed, unavailable and size-limited historical objects are explicit gaps, not successful scans.",
+        "Current/in-progress runs at the cutoff are explicit temporal exclusions; review their completed logs and new Release/assets separately before any public decision.",
+        "Issue/PR attachments and arbitrary links were inventoried as candidates, never followed.",
+        "Binary string extraction is not OCR, visual review, malware analysis, or verification of media licensing and publication rights.",
+        "Workflow and artifact collections can change concurrently; API totals, duplicate IDs and reviewed main are checked, but the API offers no atomic snapshot.",
+        "Repository settings, collaborators, encrypted Actions secret values, security alerts, Discussions, wiki and external services need separately authorized/available checks.",
+        "A clean pattern scan is evidence for human review; it does not authorize visibility changes or prove all prose and media may be published."
+      ]
+    },
+    "gaps": [],
+    "temporal_exclusions": [
+      {
+        "kind": "run",
+        "id": 37780327801,
+        "url": "https://github.com/nanophate/animewp/actions/runs/37780327801",
+        "reason": "workflow_run_not_yet_complete_at_cutoff"
+      },
+      {
+        "kind": "run",
+        "id": 37780327732,
+        "url": "https://github.com/nanophate/animewp/actions/runs/37780327732",
+        "reason": "current_audit_run_not_yet_complete"
+      },
+      {
+        "kind": "run",
+        "id": 37780327808,
+        "url": "https://github.com/nanophate/animewp/actions/runs/37780327808",
+        "reason": "workflow_run_not_yet_complete_at_cutoff"
+      },
+      {
+        "kind": "run",
+        "id": 37778643727,
+        "url": "https://github.com/nanophate/animewp/actions/runs/37778643727",
+        "reason": "workflow_run_not_yet_complete_at_cutoff"
+      }
+    ],
+    "raw_job_conclusion": "failure",
+    "conclusion_reason": "10 detector candidates retained, subsequently reviewed as exact file checksums",
+    "email_review": {
+      "candidate_records": 586,
+      "direct_or_correspondence_reviewed": 549,
+      "archive_member_byte_correspondence_unconfirmed": 37,
+      "affected_runs_for_unconfirmed_members": 8,
+      "additional_job_log_runs": 102,
+      "additional_job_logs": 384,
+      "email_occurrences_in_job_logs": 886,
+      "job_log_email_classification": "all_exact_known_public_glob_maintainer_deprecation_notice",
+      "unknown_or_personal_emails_in_job_logs": 0,
+      "full_log_review_is_not_individual_archive_member_byte_identity": true,
+      "remaining_archive_member_job_attempts_match": true
+    },
+    "privacy_dispositions": {
+      "schema_version": 1,
+      "repository": "nanophate/animewp",
+      "snapshot_started_at": "2026-10-08T12:55:08Z",
+      "coverage": {
+        "collection_complete": true,
+        "coverage_gaps": 0,
+        "releases_visible_to_read_token": 5,
+        "release_assets": 29,
+        "workflow_runs": 161,
+        "collected_run_log_attempts": 157,
+        "actions_artifacts": 128,
+        "text_views": 7039
+      },
+      "privacy_candidate_records": 3449,
+      "categories": {
+        "email_address": 586,
+        "credential_in_url": 3,
+        "binary_or_visual_content_requires_manual_review": 2860,
+        "embedded_github_attachment_link": 0,
+        "private_ip_or_internal_host": 0
+      },
+      "email_dispositions": {
+        "metadata": {
+          "candidate_records": 161,
+          "verified_records": 161,
+          "personal_email_run_records": 52,
+          "categories": {
+            "occurrences": {
+              "github_noreply": 196,
+              "claude_public_noreply_coauthor": 52,
+              "personal_email": 104,
+              "dependabot_support_signature": 22
+            },
+            "run_counts": {
+              "github_noreply": 109,
+              "claude_public_noreply_coauthor": 52,
+              "personal_email": 52,
+              "dependabot_support_signature": 22
+            }
+          },
+          "evidence": "privacy.actions_metadata in this document"
+        },
+        "pull_requests": {
+          "candidate_records": 1,
+          "verified_records": 1,
+          "pr_number": 3,
+          "classification": "reserved_example_domain_in_dependabot_body"
+        },
+        "release_source_assets": {
+          "candidate_records": 8,
+          "classification": "historical_source_fixture_correspondence",
+          "proofs": [
+            {
+              "path": "tests/providers.test.js",
+              "git_blob": "5597903a1fc3d474bd166f15502fc8c9a5e1dd19",
+              "bytes": 1946,
+              "asset_ids": [
+                613399690,
+                612691707,
+                612199436
+              ],
+              "classification": "userinfo_password_in_rejected_provider_URL_fixture",
+              "fixture_line": 20,
+              "assert_null_line": 30
+            },
+            {
+              "path": "tests/wp-smoke.php",
+              "git_blob": "16657c44436049ea667f63d58b9abe57fdd62b0c",
+              "bytes": 8240,
+              "classification": "reserved_invalid_email_in_test_user_fixture",
+              "asset_ids": [
+                613399690,
+                612691707,
+                612199436
+              ]
+            },
+            {
+              "path": "tests/wp-smoke.php",
+              "git_blob": "b53b0550e7797ad60e2cef49b393d8c862af337b",
+              "bytes": 7904,
+              "classification": "reserved_invalid_email_in_test_user_fixture",
+              "fixture_line": 65,
+              "asset_ids": [
+                611888069,
+                611759260
+              ]
+            }
+          ],
+          "limitation": "Historical source archive members were correlated through tag, exact member byte size, and unique matching Git tree file, rather than downloaded a second time for binary hash equality."
+        },
+        "artifacts": {
+          "candidate_records": 3,
+          "verified_records": 3,
+          "proofs": [
+            {
+              "artifact_ids": [
+                11551123686,
+                11529102646
+              ],
+              "path": "animewp/examples/contact-page.php",
+              "bytes": 6658,
+              "sha256": "b17c3c3c508d3d1e3c005f80556a41755022469adb2fc97452c8a16c0035b4c4",
+              "classification": "four_reserved_example_email_occurrences_in_contact_example"
+            },
+            {
+              "artifact_id": 11529461659,
+              "archive_sha256": "b20eda9facba315a849b775327f9b402ff9565f717d0e2275f4ad7df247ec34a",
+              "path": "post-editor-drift.png",
+              "image_sha256": "f05c377028b499eeb26f070f23b79c647b3ecba94d60e7a71eb9c1846d5f0860",
+              "classification": "email_regex_in_compressed_PNG_IDAT",
+              "text_metadata": false,
+              "visual_review": "test_admin_and_placeholder_content_no_visible_email"
+            }
+          ]
+        },
+        "logs": {
+          "candidate_records": 413,
+          "complete_job_correspondences": 376,
+          "remaining_individual_archive_member_correspondences": 37,
+          "reviewed_runs": 102,
+          "reviewed_jobs": 384,
+          "known_public_glob_deprecation_email_occurrences": 886,
+          "unknown_or_personal_email_occurrences_in_reviewed_jobs": 0,
+          "evidence": "surface_audit.email_log_job_inventory and email_unmatched_archive_sources in this document",
+          "remaining_archive_member_job_attempts_match": true,
+          "remaining_archive_member_attempt_evidence": [
+            {
+              "run_id": 37779648278,
+              "collector_attempts": [
+                1
+              ],
+              "reviewed_job_attempts": [
+                1
+              ],
+              "reviewed_jobs": 4
+            },
+            {
+              "run_id": 37779648248,
+              "collector_attempts": [
+                1
+              ],
+              "reviewed_job_attempts": [
+                1
+              ],
+              "reviewed_jobs": 4
+            },
+            {
+              "run_id": 37778644364,
+              "collector_attempts": [
+                1
+              ],
+              "reviewed_job_attempts": [
+                1
+              ],
+              "reviewed_jobs": 13
+            },
+            {
+              "run_id": 37778643713,
+              "collector_attempts": [
+                1
+              ],
+              "reviewed_job_attempts": [
+                1
+              ],
+              "reviewed_jobs": 4
+            },
+            {
+              "run_id": 37777763043,
+              "collector_attempts": [
+                1
+              ],
+              "reviewed_job_attempts": [
+                1
+              ],
+              "reviewed_jobs": 4
+            },
+            {
+              "run_id": 37777763016,
+              "collector_attempts": [
+                1
+              ],
+              "reviewed_job_attempts": [
+                1
+              ],
+              "reviewed_jobs": 4
+            },
+            {
+              "run_id": 37777757445,
+              "collector_attempts": [
+                1
+              ],
+              "reviewed_job_attempts": [
+                1
+              ],
+              "reviewed_jobs": 4
+            },
+            {
+              "run_id": 37777757443,
+              "collector_attempts": [
+                1
+              ],
+              "reviewed_job_attempts": [
+                1
+              ],
+              "reviewed_jobs": 4
+            }
+          ]
+        }
+      },
+      "credential_in_url_disposition": "Three negative provider URL fixture occurrences in historical source archives; see release_source_assets proof.",
+      "binary_candidates": {
+        "release_asset_records": 50,
+        "actions_artifact_records": 2810,
+        "distinct_actions_artifacts": 125,
+        "distinct_release_assets": 12,
+        "full_visual_review_complete": false,
+        "limitation": "One flagged PNG was inspected directly; the count includes repeated CI media. No claim of per-image OCR, visual privacy review, or licensing verification for all 2860 records."
+      },
+      "temporal_exclusions": [
+        {
+          "run_id": 37780327801,
+          "name": "Browser and real ZIP upgrades",
+          "latest_conclusion": "success"
+        },
+        {
+          "run_id": 37780327732,
+          "name": "Private publication readiness audit",
+          "latest_conclusion": "failure",
+          "reason": "ten_secret_pattern_findings_retained_pending_separate_human_triage"
+        },
+        {
+          "run_id": 37780327808,
+          "name": "Source and package checks",
+          "latest_conclusion": "success"
+        },
+        {
+          "run_id": 37778643727,
+          "name": "Browser and real ZIP upgrades",
+          "latest_conclusion": "success"
+        }
+      ],
+      "limits": [
+        "Draft Releases require separate review through existing authorized access; read-only runner token cannot list them.",
+        "No embedded GitHub attachment links were flagged by the collector's specific pattern. Arbitrary URLs were not followed.",
+        "Deleted objects and prior edited text versions cannot be claimed covered.",
+        "Historical Actions head_commit metadata retains the personal email independently of rewriting current Git refs.",
+        "No public visibility or Release publish action was performed by this audit."
+      ]
+    },
+    "email_log_job_inventory": {
+      "columns": [
+        "run_id",
+        "job_id",
+        "attempt",
+        "email_match_count"
+      ],
+      "rows": [
+        [
+          37769994552,
+          113286933583,
+          1,
+          2
+        ],
+        [
+          37541487107,
+          112535293985,
+          1,
+          4
+        ],
+        [
+          37656967399,
+          112914398678,
+          1,
+          2
+        ],
+        [
+          37779648278,
+          113319221079,
+          1,
+          2
+        ],
+        [
+          37779648278,
+          113319221233,
+          1,
+          2
+        ],
+        [
+          37779648278,
+          113319221398,
+          1,
+          2
+        ],
+        [
+          37779648278,
+          113319221437,
+          1,
+          2
+        ],
+        [
+          37779648248,
+          113319219586,
+          1,
+          2
+        ],
+        [
+          37779648248,
+          113319219774,
+          1,
+          2
+        ],
+        [
+          37779648248,
+          113319219922,
+          1,
+          2
+        ],
+        [
+          37779648248,
+          113319219930,
+          1,
+          2
+        ],
+        [
+          37778644364,
+          113315847289,
+          1,
+          0
+        ],
+        [
+          37778644364,
+          113315906776,
+          1,
+          0
+        ],
+        [
+          37778644364,
+          113315906863,
+          1,
+          0
+        ],
+        [
+          37778644364,
+          113315906911,
+          1,
+          2
+        ],
+        [
+          37778644364,
+          113315906946,
+          1,
+          2
+        ],
+        [
+          37778644364,
+          113315906952,
+          1,
+          2
+        ],
+        [
+          37778644364,
+          113315906967,
+          1,
+          2
+        ],
+        [
+          37778644364,
+          113315906984,
+          1,
+          2
+        ],
+        [
+          37778644364,
+          113315906989,
+          1,
+          2
+        ],
+        [
+          37778644364,
+          113315907000,
+          1,
+          2
+        ],
+        [
+          37778644364,
+          113315907162,
+          1,
+          2
+        ],
+        [
+          37778644364,
+          113318122442,
+          1,
+          2
+        ],
+        [
+          37778644364,
+          113318530710,
+          1,
+          0
+        ],
+        [
+          37778643713,
+          113315834788,
+          1,
+          2
+        ],
+        [
+          37778643713,
+          113315834930,
+          1,
+          2
+        ],
+        [
+          37778643713,
+          113315835077,
+          1,
+          2
+        ],
+        [
+          37778643713,
+          113315835150,
+          1,
+          2
+        ],
+        [
+          37777763043,
+          113312830920,
+          1,
+          2
+        ],
+        [
+          37777763043,
+          113312831266,
+          1,
+          2
+        ],
+        [
+          37777763043,
+          113312831329,
+          1,
+          2
+        ],
+        [
+          37777763043,
+          113312831438,
+          1,
+          2
+        ],
+        [
+          37777763016,
+          113312830889,
+          1,
+          2
+        ],
+        [
+          37777763016,
+          113312831002,
+          1,
+          2
+        ],
+        [
+          37777763016,
+          113312831092,
+          1,
+          2
+        ],
+        [
+          37777763016,
+          113312831182,
+          1,
+          2
+        ],
+        [
+          37777757445,
+          113312811401,
+          1,
+          2
+        ],
+        [
+          37777757445,
+          113312811787,
+          1,
+          2
+        ],
+        [
+          37777757445,
+          113312811854,
+          1,
+          2
+        ],
+        [
+          37777757445,
+          113312812018,
+          1,
+          2
+        ],
+        [
+          37777757443,
+          113312810286,
+          1,
+          2
+        ],
+        [
+          37777757443,
+          113312810585,
+          1,
+          2
+        ],
+        [
+          37777757443,
+          113312810619,
+          1,
+          2
+        ],
+        [
+          37777757443,
+          113312810648,
+          1,
+          2
+        ],
+        [
+          37769994552,
+          113286933449,
+          1,
+          2
+        ],
+        [
+          37769994552,
+          113286933641,
+          1,
+          2
+        ],
+        [
+          37769994552,
+          113286933663,
+          1,
+          2
+        ],
+        [
+          37769994374,
+          113286932628,
+          1,
+          2
+        ],
+        [
+          37769994374,
+          113286932909,
+          1,
+          2
+        ],
+        [
+          37769994374,
+          113286932979,
+          1,
+          2
+        ],
+        [
+          37769994374,
+          113286933079,
+          1,
+          2
+        ],
+        [
+          37769990120,
+          113286918109,
+          1,
+          2
+        ],
+        [
+          37769990120,
+          113286918286,
+          1,
+          2
+        ],
+        [
+          37769990120,
+          113286918298,
+          1,
+          2
+        ],
+        [
+          37769990120,
+          113286918626,
+          1,
+          2
+        ],
+        [
+          37769990154,
+          113286918098,
+          1,
+          2
+        ],
+        [
+          37769990154,
+          113286918468,
+          1,
+          2
+        ],
+        [
+          37769990154,
+          113286918557,
+          1,
+          2
+        ],
+        [
+          37769990154,
+          113286918603,
+          1,
+          2
+        ],
+        [
+          37761112241,
+          113257467768,
+          1,
+          2
+        ],
+        [
+          37761112241,
+          113257468128,
+          1,
+          2
+        ],
+        [
+          37761112241,
+          113257468189,
+          1,
+          2
+        ],
+        [
+          37761112241,
+          113257468246,
+          1,
+          2
+        ],
+        [
+          37761112231,
+          113257467828,
+          1,
+          2
+        ],
+        [
+          37761112231,
+          113257468048,
+          1,
+          2
+        ],
+        [
+          37761112231,
+          113257468132,
+          1,
+          2
+        ],
+        [
+          37761112231,
+          113257468138,
+          1,
+          2
+        ],
+        [
+          37761106890,
+          113257450240,
+          1,
+          2
+        ],
+        [
+          37761106890,
+          113257450686,
+          1,
+          2
+        ],
+        [
+          37761106890,
+          113257450707,
+          1,
+          2
+        ],
+        [
+          37761106890,
+          113257450783,
+          1,
+          2
+        ],
+        [
+          37761106839,
+          113257450224,
+          1,
+          2
+        ],
+        [
+          37761106839,
+          113257450459,
+          1,
+          2
+        ],
+        [
+          37761106839,
+          113257450493,
+          1,
+          2
+        ],
+        [
+          37761106839,
+          113257450569,
+          1,
+          2
+        ],
+        [
+          37760131791,
+          113254247476,
+          1,
+          2
+        ],
+        [
+          37760131791,
+          113254247806,
+          1,
+          2
+        ],
+        [
+          37760131791,
+          113254247889,
+          1,
+          2
+        ],
+        [
+          37760131791,
+          113254247898,
+          1,
+          2
+        ],
+        [
+          37760131856,
+          113254245607,
+          1,
+          2
+        ],
+        [
+          37760131856,
+          113254245753,
+          1,
+          2
+        ],
+        [
+          37760131856,
+          113254245883,
+          1,
+          2
+        ],
+        [
+          37760131856,
+          113254246005,
+          1,
+          2
+        ],
+        [
+          37760124313,
+          113254223053,
+          1,
+          2
+        ],
+        [
+          37760124313,
+          113254223275,
+          1,
+          2
+        ],
+        [
+          37760124313,
+          113254223413,
+          1,
+          2
+        ],
+        [
+          37760124313,
+          113254223458,
+          1,
+          2
+        ],
+        [
+          37760124342,
+          113254222618,
+          1,
+          2
+        ],
+        [
+          37760124342,
+          113254222908,
+          1,
+          2
+        ],
+        [
+          37760124342,
+          113254223047,
+          1,
+          2
+        ],
+        [
+          37760124342,
+          113254223298,
+          1,
+          2
+        ],
+        [
+          37754659247,
+          113236118797,
+          1,
+          2
+        ],
+        [
+          37754659247,
+          113236119202,
+          1,
+          2
+        ],
+        [
+          37754659247,
+          113236119249,
+          1,
+          2
+        ],
+        [
+          37754659247,
+          113236119314,
+          1,
+          2
+        ],
+        [
+          37754659202,
+          113236118751,
+          1,
+          2
+        ],
+        [
+          37754659202,
+          113236119047,
+          1,
+          2
+        ],
+        [
+          37754659202,
+          113236119079,
+          1,
+          2
+        ],
+        [
+          37754659202,
+          113236119166,
+          1,
+          2
+        ],
+        [
+          37754653038,
+          113236098752,
+          1,
+          2
+        ],
+        [
+          37754653038,
+          113236099000,
+          1,
+          2
+        ],
+        [
+          37754653038,
+          113236099024,
+          1,
+          2
+        ],
+        [
+          37754653038,
+          113236099630,
+          1,
+          2
+        ],
+        [
+          37754653031,
+          113236098269,
+          1,
+          2
+        ],
+        [
+          37754653031,
+          113236098415,
+          1,
+          2
+        ],
+        [
+          37754653031,
+          113236098486,
+          1,
+          2
+        ],
+        [
+          37754653031,
+          113236098656,
+          1,
+          2
+        ],
+        [
+          37749654095,
+          113219477663,
+          1,
+          2
+        ],
+        [
+          37749654095,
+          113219477725,
+          1,
+          2
+        ],
+        [
+          37749654095,
+          113219477783,
+          1,
+          2
+        ],
+        [
+          37749654095,
+          113219477866,
+          1,
+          2
+        ],
+        [
+          37749654191,
+          113219478224,
+          1,
+          2
+        ],
+        [
+          37749654191,
+          113219478440,
+          1,
+          2
+        ],
+        [
+          37749654191,
+          113219478531,
+          1,
+          2
+        ],
+        [
+          37749654191,
+          113219478548,
+          1,
+          2
+        ],
+        [
+          37749647534,
+          113219456855,
+          1,
+          2
+        ],
+        [
+          37749647534,
+          113219457135,
+          1,
+          2
+        ],
+        [
+          37749647534,
+          113219457249,
+          1,
+          2
+        ],
+        [
+          37749647534,
+          113219458905,
+          1,
+          2
+        ],
+        [
+          37749647536,
+          113219457009,
+          1,
+          2
+        ],
+        [
+          37749647536,
+          113219457296,
+          1,
+          2
+        ],
+        [
+          37749647536,
+          113219457398,
+          1,
+          2
+        ],
+        [
+          37749647536,
+          113219457474,
+          1,
+          2
+        ],
+        [
+          37748491312,
+          113215634595,
+          1,
+          2
+        ],
+        [
+          37748491312,
+          113215634984,
+          1,
+          2
+        ],
+        [
+          37748491312,
+          113215634990,
+          1,
+          2
+        ],
+        [
+          37748491312,
+          113215635069,
+          1,
+          2
+        ],
+        [
+          37748491571,
+          113215634718,
+          1,
+          2
+        ],
+        [
+          37748491571,
+          113215635030,
+          1,
+          2
+        ],
+        [
+          37748491571,
+          113215635042,
+          1,
+          2
+        ],
+        [
+          37748491571,
+          113215635058,
+          1,
+          2
+        ],
+        [
+          37748488105,
+          113215624348,
+          1,
+          2
+        ],
+        [
+          37748488105,
+          113215624604,
+          1,
+          2
+        ],
+        [
+          37748488105,
+          113215624659,
+          1,
+          2
+        ],
+        [
+          37748488105,
+          113215624661,
+          1,
+          2
+        ],
+        [
+          37748488181,
+          113215625262,
+          1,
+          2
+        ],
+        [
+          37748488181,
+          113215625633,
+          1,
+          2
+        ],
+        [
+          37748488181,
+          113215625743,
+          1,
+          2
+        ],
+        [
+          37748488181,
+          113215625795,
+          1,
+          2
+        ],
+        [
+          37741229553,
+          113192166194,
+          1,
+          2
+        ],
+        [
+          37741229553,
+          113192166505,
+          1,
+          2
+        ],
+        [
+          37741229553,
+          113192166510,
+          1,
+          2
+        ],
+        [
+          37741229553,
+          113192166539,
+          1,
+          2
+        ],
+        [
+          37741229725,
+          113192167594,
+          1,
+          2
+        ],
+        [
+          37741229725,
+          113192167639,
+          1,
+          2
+        ],
+        [
+          37741229725,
+          113192167718,
+          1,
+          2
+        ],
+        [
+          37741229725,
+          113192167727,
+          1,
+          2
+        ],
+        [
+          37741202668,
+          113192084892,
+          1,
+          2
+        ],
+        [
+          37741202668,
+          113192085034,
+          1,
+          2
+        ],
+        [
+          37741202668,
+          113192085065,
+          1,
+          2
+        ],
+        [
+          37741202668,
+          113192085101,
+          1,
+          2
+        ],
+        [
+          37741202713,
+          113192084997,
+          1,
+          2
+        ],
+        [
+          37741202713,
+          113192085129,
+          1,
+          2
+        ],
+        [
+          37741202713,
+          113192085339,
+          1,
+          2
+        ],
+        [
+          37741202713,
+          113192085733,
+          1,
+          2
+        ],
+        [
+          37729908538,
+          113156441333,
+          1,
+          2
+        ],
+        [
+          37729908538,
+          113156441440,
+          1,
+          2
+        ],
+        [
+          37729908538,
+          113156441465,
+          1,
+          2
+        ],
+        [
+          37729908538,
+          113156441553,
+          1,
+          2
+        ],
+        [
+          37729908523,
+          113156441106,
+          1,
+          2
+        ],
+        [
+          37729908523,
+          113156441211,
+          1,
+          2
+        ],
+        [
+          37729908523,
+          113156441307,
+          1,
+          2
+        ],
+        [
+          37729908523,
+          113156441508,
+          1,
+          2
+        ],
+        [
+          37729901966,
+          113156421542,
+          1,
+          2
+        ],
+        [
+          37729901966,
+          113156421692,
+          1,
+          2
+        ],
+        [
+          37729901966,
+          113156421737,
+          1,
+          2
+        ],
+        [
+          37729901966,
+          113156421764,
+          1,
+          2
+        ],
+        [
+          37729901973,
+          113156421465,
+          1,
+          2
+        ],
+        [
+          37729901973,
+          113156421687,
+          1,
+          2
+        ],
+        [
+          37729901973,
+          113156421698,
+          1,
+          2
+        ],
+        [
+          37729901973,
+          113156421727,
+          1,
+          2
+        ],
+        [
+          37729705212,
+          113155811639,
+          1,
+          2
+        ],
+        [
+          37729705212,
+          113155811854,
+          1,
+          2
+        ],
+        [
+          37729705212,
+          113155811862,
+          1,
+          2
+        ],
+        [
+          37729705212,
+          113155811868,
+          1,
+          2
+        ],
+        [
+          37729705178,
+          113155811556,
+          1,
+          2
+        ],
+        [
+          37729705178,
+          113155811683,
+          1,
+          2
+        ],
+        [
+          37729705178,
+          113155811685,
+          1,
+          2
+        ],
+        [
+          37729705178,
+          113155811736,
+          1,
+          2
+        ],
+        [
+          37729705476,
+          113155812800,
+          1,
+          0
+        ],
+        [
+          37729705476,
+          113155848520,
+          1,
+          2
+        ],
+        [
+          37729705476,
+          113155848546,
+          1,
+          2
+        ],
+        [
+          37729705476,
+          113155848559,
+          1,
+          2
+        ],
+        [
+          37729705476,
+          113155848566,
+          1,
+          2
+        ],
+        [
+          37729705476,
+          113155848577,
+          1,
+          2
+        ],
+        [
+          37729705476,
+          113155848581,
+          1,
+          0
+        ],
+        [
+          37729705476,
+          113155848601,
+          1,
+          2
+        ],
+        [
+          37729705476,
+          113155848602,
+          1,
+          0
+        ],
+        [
+          37729705476,
+          113155848606,
+          1,
+          2
+        ],
+        [
+          37729705476,
+          113155848609,
+          1,
+          2
+        ],
+        [
+          37729705476,
+          113157131106,
+          1,
+          2
+        ],
+        [
+          37729705476,
+          113157326078,
+          1,
+          0
+        ],
+        [
+          37729173334,
+          113154150943,
+          1,
+          2
+        ],
+        [
+          37729173334,
+          113154151080,
+          1,
+          2
+        ],
+        [
+          37729173334,
+          113154151159,
+          1,
+          2
+        ],
+        [
+          37729173334,
+          113154151167,
+          1,
+          2
+        ],
+        [
+          37729173311,
+          113154151045,
+          1,
+          2
+        ],
+        [
+          37729173311,
+          113154151074,
+          1,
+          2
+        ],
+        [
+          37729173311,
+          113154151147,
+          1,
+          2
+        ],
+        [
+          37729173311,
+          113154151187,
+          1,
+          2
+        ],
+        [
+          37729170471,
+          113154141395,
+          1,
+          2
+        ],
+        [
+          37729170471,
+          113154141598,
+          1,
+          2
+        ],
+        [
+          37729170471,
+          113154141608,
+          1,
+          2
+        ],
+        [
+          37729170471,
+          113154141714,
+          1,
+          2
+        ],
+        [
+          37729170479,
+          113154142211,
+          1,
+          2
+        ],
+        [
+          37729170479,
+          113154142253,
+          1,
+          2
+        ],
+        [
+          37729170479,
+          113154142316,
+          1,
+          2
+        ],
+        [
+          37729170479,
+          113154142400,
+          1,
+          2
+        ],
+        [
+          37728210467,
+          113151102912,
+          1,
+          2
+        ],
+        [
+          37728210467,
+          113151103132,
+          1,
+          2
+        ],
+        [
+          37728210467,
+          113151103138,
+          1,
+          2
+        ],
+        [
+          37728210467,
+          113151103150,
+          1,
+          2
+        ],
+        [
+          37728210551,
+          113151103125,
+          1,
+          2
+        ],
+        [
+          37728210551,
+          113151103284,
+          1,
+          2
+        ],
+        [
+          37728210551,
+          113151103328,
+          1,
+          2
+        ],
+        [
+          37728210551,
+          113151103391,
+          1,
+          2
+        ],
+        [
+          37728206605,
+          113151089857,
+          1,
+          2
+        ],
+        [
+          37728206605,
+          113151090160,
+          1,
+          2
+        ],
+        [
+          37728206605,
+          113151090168,
+          1,
+          2
+        ],
+        [
+          37728206605,
+          113151090215,
+          1,
+          2
+        ],
+        [
+          37728206599,
+          113151089820,
+          1,
+          2
+        ],
+        [
+          37728206599,
+          113151089940,
+          1,
+          2
+        ],
+        [
+          37728206599,
+          113151090038,
+          1,
+          2
+        ],
+        [
+          37728206599,
+          113151090144,
+          1,
+          2
+        ],
+        [
+          37728005651,
+          113150465750,
+          1,
+          2
+        ],
+        [
+          37728005651,
+          113150466006,
+          1,
+          2
+        ],
+        [
+          37728005651,
+          113150466043,
+          1,
+          2
+        ],
+        [
+          37728005651,
+          113150466044,
+          1,
+          2
+        ],
+        [
+          37728005707,
+          113150465970,
+          1,
+          2
+        ],
+        [
+          37728005707,
+          113150465998,
+          1,
+          2
+        ],
+        [
+          37728005707,
+          113150466078,
+          1,
+          2
+        ],
+        [
+          37728005707,
+          113150466100,
+          1,
+          2
+        ],
+        [
+          37728002964,
+          113150456917,
+          1,
+          2
+        ],
+        [
+          37728002964,
+          113150457177,
+          1,
+          2
+        ],
+        [
+          37728002964,
+          113150457186,
+          1,
+          2
+        ],
+        [
+          37728002964,
+          113150457261,
+          1,
+          2
+        ],
+        [
+          37728003029,
+          113150457262,
+          1,
+          2
+        ],
+        [
+          37728003029,
+          113150457443,
+          1,
+          2
+        ],
+        [
+          37728003029,
+          113150457586,
+          1,
+          2
+        ],
+        [
+          37728003029,
+          113150457776,
+          1,
+          2
+        ],
+        [
+          37727260517,
+          113148163633,
+          1,
+          2
+        ],
+        [
+          37727260517,
+          113148163826,
+          1,
+          2
+        ],
+        [
+          37727260517,
+          113148163827,
+          1,
+          2
+        ],
+        [
+          37727260517,
+          113148163868,
+          1,
+          2
+        ],
+        [
+          37727260551,
+          113148163714,
+          1,
+          2
+        ],
+        [
+          37727260551,
+          113148163870,
+          1,
+          2
+        ],
+        [
+          37727260551,
+          113148163875,
+          1,
+          2
+        ],
+        [
+          37727260551,
+          113148163942,
+          1,
+          2
+        ],
+        [
+          37727256879,
+          113148152612,
+          1,
+          2
+        ],
+        [
+          37727256879,
+          113148152762,
+          1,
+          2
+        ],
+        [
+          37727256879,
+          113148152802,
+          1,
+          2
+        ],
+        [
+          37727256879,
+          113148153127,
+          1,
+          2
+        ],
+        [
+          37727256619,
+          113148151711,
+          1,
+          2
+        ],
+        [
+          37727256619,
+          113148151804,
+          1,
+          2
+        ],
+        [
+          37727256619,
+          113148151810,
+          1,
+          2
+        ],
+        [
+          37727256619,
+          113148151991,
+          1,
+          2
+        ],
+        [
+          37726221372,
+          113144883262,
+          1,
+          2
+        ],
+        [
+          37726221372,
+          113144883471,
+          1,
+          2
+        ],
+        [
+          37726221372,
+          113144883504,
+          1,
+          2
+        ],
+        [
+          37726221372,
+          113144883618,
+          1,
+          2
+        ],
+        [
+          37726221338,
+          113144883319,
+          1,
+          2
+        ],
+        [
+          37726221338,
+          113144883587,
+          1,
+          2
+        ],
+        [
+          37726221338,
+          113144883639,
+          1,
+          2
+        ],
+        [
+          37726221338,
+          113144883770,
+          1,
+          2
+        ],
+        [
+          37726191306,
+          113144788474,
+          1,
+          2
+        ],
+        [
+          37726191306,
+          113144788641,
+          1,
+          2
+        ],
+        [
+          37726191306,
+          113144788651,
+          1,
+          2
+        ],
+        [
+          37726191306,
+          113144788706,
+          1,
+          2
+        ],
+        [
+          37726191308,
+          113144788664,
+          1,
+          2
+        ],
+        [
+          37726191308,
+          113144788793,
+          1,
+          2
+        ],
+        [
+          37726191308,
+          113144788809,
+          1,
+          2
+        ],
+        [
+          37726191308,
+          113144788901,
+          1,
+          2
+        ],
+        [
+          37724020861,
+          113137959404,
+          1,
+          2
+        ],
+        [
+          37724020861,
+          113137959552,
+          1,
+          2
+        ],
+        [
+          37724020861,
+          113137959553,
+          1,
+          2
+        ],
+        [
+          37724020861,
+          113137959587,
+          1,
+          2
+        ],
+        [
+          37724016040,
+          113137944095,
+          1,
+          2
+        ],
+        [
+          37724016040,
+          113137944298,
+          1,
+          2
+        ],
+        [
+          37724016040,
+          113137944344,
+          1,
+          2
+        ],
+        [
+          37724016040,
+          113137944384,
+          1,
+          2
+        ],
+        [
+          37723845173,
+          113137391937,
+          1,
+          2
+        ],
+        [
+          37723845173,
+          113137392018,
+          1,
+          2
+        ],
+        [
+          37723845173,
+          113137392021,
+          1,
+          2
+        ],
+        [
+          37723845173,
+          113137392156,
+          1,
+          2
+        ],
+        [
+          37664875566,
+          112941422004,
+          1,
+          2
+        ],
+        [
+          37664875566,
+          112941422232,
+          1,
+          2
+        ],
+        [
+          37664875566,
+          112941422281,
+          1,
+          2
+        ],
+        [
+          37664875566,
+          112941422302,
+          1,
+          2
+        ],
+        [
+          37664816741,
+          112941225946,
+          1,
+          2
+        ],
+        [
+          37664816741,
+          112941226161,
+          1,
+          2
+        ],
+        [
+          37664816741,
+          112941226282,
+          1,
+          2
+        ],
+        [
+          37664816741,
+          112941226443,
+          1,
+          2
+        ],
+        [
+          37660523574,
+          112926571479,
+          1,
+          2
+        ],
+        [
+          37660523574,
+          112926571929,
+          1,
+          2
+        ],
+        [
+          37660523574,
+          112926571998,
+          1,
+          2
+        ],
+        [
+          37660516673,
+          112926548887,
+          1,
+          2
+        ],
+        [
+          37660516673,
+          112926549056,
+          1,
+          2
+        ],
+        [
+          37660516673,
+          112926549194,
+          1,
+          2
+        ],
+        [
+          37660221067,
+          112925533415,
+          1,
+          2
+        ],
+        [
+          37660221067,
+          112925533943,
+          1,
+          2
+        ],
+        [
+          37660221067,
+          112925533976,
+          1,
+          2
+        ],
+        [
+          37659821913,
+          112924166819,
+          1,
+          2
+        ],
+        [
+          37659821913,
+          112924167371,
+          1,
+          2
+        ],
+        [
+          37659821913,
+          112924167576,
+          1,
+          2
+        ],
+        [
+          37659789102,
+          112924057831,
+          1,
+          2
+        ],
+        [
+          37659789102,
+          112924058062,
+          1,
+          2
+        ],
+        [
+          37659789102,
+          112924058412,
+          1,
+          2
+        ],
+        [
+          37659065827,
+          112921608522,
+          1,
+          4
+        ],
+        [
+          37659065827,
+          112921609157,
+          1,
+          4
+        ],
+        [
+          37659065827,
+          112921609179,
+          1,
+          4
+        ],
+        [
+          37659060477,
+          112921589789,
+          1,
+          4
+        ],
+        [
+          37659060477,
+          112921590039,
+          1,
+          4
+        ],
+        [
+          37659060477,
+          112921590057,
+          1,
+          4
+        ],
+        [
+          37659052285,
+          112921561719,
+          1,
+          2
+        ],
+        [
+          37659052285,
+          112921562121,
+          1,
+          2
+        ],
+        [
+          37659052285,
+          112921562192,
+          1,
+          2
+        ],
+        [
+          37659044101,
+          112921533356,
+          1,
+          2
+        ],
+        [
+          37659044101,
+          112921533793,
+          1,
+          2
+        ],
+        [
+          37659044101,
+          112921533891,
+          1,
+          2
+        ],
+        [
+          37658909863,
+          112921071677,
+          1,
+          4
+        ],
+        [
+          37658909863,
+          112921071989,
+          1,
+          4
+        ],
+        [
+          37658909863,
+          112921072225,
+          1,
+          4
+        ],
+        [
+          37658901017,
+          112921041608,
+          1,
+          4
+        ],
+        [
+          37658901017,
+          112921041794,
+          1,
+          4
+        ],
+        [
+          37658901017,
+          112921041970,
+          1,
+          4
+        ],
+        [
+          37658747837,
+          112920521497,
+          1,
+          4
+        ],
+        [
+          37658747837,
+          112920521718,
+          1,
+          4
+        ],
+        [
+          37658747837,
+          112920521803,
+          1,
+          4
+        ],
+        [
+          37657501259,
+          112916237606,
+          1,
+          4
+        ],
+        [
+          37657501259,
+          112916237989,
+          1,
+          4
+        ],
+        [
+          37657501259,
+          112916238027,
+          1,
+          4
+        ],
+        [
+          37657495746,
+          112916218366,
+          1,
+          4
+        ],
+        [
+          37657495746,
+          112916218684,
+          1,
+          4
+        ],
+        [
+          37657495746,
+          112916218765,
+          1,
+          4
+        ],
+        [
+          37656975751,
+          112914426614,
+          1,
+          2
+        ],
+        [
+          37656975751,
+          112914426938,
+          1,
+          2
+        ],
+        [
+          37656975751,
+          112914427100,
+          1,
+          2
+        ],
+        [
+          37656967399,
+          112914398374,
+          1,
+          2
+        ],
+        [
+          37656967399,
+          112914398756,
+          1,
+          2
+        ],
+        [
+          37656287917,
+          112912021189,
+          1,
+          4
+        ],
+        [
+          37656287917,
+          112912021443,
+          1,
+          4
+        ],
+        [
+          37656287917,
+          112912021624,
+          1,
+          4
+        ],
+        [
+          37655107820,
+          112908121219,
+          1,
+          4
+        ],
+        [
+          37655107820,
+          112908121730,
+          1,
+          4
+        ],
+        [
+          37655107820,
+          112908121811,
+          1,
+          4
+        ],
+        [
+          37655099819,
+          112908102552,
+          1,
+          4
+        ],
+        [
+          37655099819,
+          112908102605,
+          1,
+          4
+        ],
+        [
+          37655099819,
+          112908102749,
+          1,
+          4
+        ],
+        [
+          37652745125,
+          112900024408,
+          1,
+          4
+        ],
+        [
+          37652745125,
+          112900024488,
+          1,
+          4
+        ],
+        [
+          37652745125,
+          112900024624,
+          1,
+          4
+        ],
+        [
+          37652740989,
+          112900010247,
+          1,
+          4
+        ],
+        [
+          37652740989,
+          112900010507,
+          1,
+          4
+        ],
+        [
+          37652740989,
+          112900010813,
+          1,
+          4
+        ],
+        [
+          37652439301,
+          112898964022,
+          1,
+          4
+        ],
+        [
+          37652439301,
+          112898964065,
+          1,
+          4
+        ],
+        [
+          37652439301,
+          112898964269,
+          1,
+          4
+        ],
+        [
+          37652433161,
+          112898946669,
+          1,
+          4
+        ],
+        [
+          37652433161,
+          112898946960,
+          1,
+          4
+        ],
+        [
+          37652433161,
+          112898946975,
+          1,
+          4
+        ],
+        [
+          37652253847,
+          112898306534,
+          1,
+          4
+        ],
+        [
+          37652253847,
+          112898306890,
+          1,
+          4
+        ],
+        [
+          37652253847,
+          112898307028,
+          1,
+          4
+        ],
+        [
+          37628552635,
+          112816548048,
+          1,
+          4
+        ],
+        [
+          37628552635,
+          112816548384,
+          1,
+          4
+        ],
+        [
+          37628552635,
+          112816548643,
+          1,
+          4
+        ],
+        [
+          37628543771,
+          112816510021,
+          1,
+          4
+        ],
+        [
+          37628543771,
+          112816510262,
+          1,
+          4
+        ],
+        [
+          37628543771,
+          112816510356,
+          1,
+          4
+        ],
+        [
+          37627631000,
+          112813405597,
+          1,
+          4
+        ],
+        [
+          37627631000,
+          112813406092,
+          1,
+          4
+        ],
+        [
+          37553487370,
+          112574208805,
+          1,
+          4
+        ],
+        [
+          37553487370,
+          112574209008,
+          1,
+          4
+        ],
+        [
+          37553036534,
+          112572763463,
+          1,
+          4
+        ],
+        [
+          37553036534,
+          112572763725,
+          1,
+          4
+        ],
+        [
+          37551405634,
+          112567510554,
+          1,
+          4
+        ],
+        [
+          37551405634,
+          112567510720,
+          1,
+          4
+        ],
+        [
+          37548535199,
+          112558266172,
+          1,
+          4
+        ],
+        [
+          37548535199,
+          112558266393,
+          1,
+          4
+        ],
+        [
+          37547296926,
+          112554234104,
+          1,
+          4
+        ],
+        [
+          37547296926,
+          112554234289,
+          1,
+          4
+        ],
+        [
+          37543406436,
+          112541545237,
+          1,
+          4
+        ],
+        [
+          37543406436,
+          112541545505,
+          1,
+          4
+        ],
+        [
+          37541487107,
+          112535294266,
+          1,
+          4
+        ]
+      ]
+    },
+    "email_unmatched_archive_sources": [
+      {
+        "source_id": "ee6454fe9119dfd55ea262ba5cac56936374a75fb7d90d0cfea7a77522a38b0e",
+        "run_id": 37779648278,
+        "attempt": 1,
+        "member_path": [
+          9
+        ],
+        "bytes": 4099,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "e3d3a17ac014c3e7dc90524f6cd3c96b7a68a17234387e7fa766e5498da44d9f",
+        "run_id": 37779648278,
+        "attempt": 1,
+        "member_path": [
+          26
+        ],
+        "bytes": 4099,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "39d8da4e2ba13184c71f94f388bd9048fc130de36bde2b16db3102f006b45fb5",
+        "run_id": 37779648278,
+        "attempt": 1,
+        "member_path": [
+          41
+        ],
+        "bytes": 3528,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "667af896f0e67f44981c0151a5c1b5b6f5f87a251ddcd3e90b10b592d02f0715",
+        "run_id": 37779648278,
+        "attempt": 1,
+        "member_path": [
+          56
+        ],
+        "bytes": 3528,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "5fb23e25948db11511e959af9133dd854d2b02de35dd862332b90af6d07ff0ec",
+        "run_id": 37779648248,
+        "attempt": 1,
+        "member_path": [
+          7
+        ],
+        "bytes": 11934,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "c85808edd54feb0bd4e1a0ee40fe1a3c7aa3cf8286f106715c0e9806436ae932",
+        "run_id": 37779648248,
+        "attempt": 1,
+        "member_path": [
+          23
+        ],
+        "bytes": 11933,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "f7986fb961c56b7d0b07c28a0966a4094b6cd44f94291eb7d37ffb466bd1c83d",
+        "run_id": 37779648248,
+        "attempt": 1,
+        "member_path": [
+          39
+        ],
+        "bytes": 11935,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "6ee7782585cbe21a8abc1a65d34aaa39c3b35630a8afe8976103acbddff47a89",
+        "run_id": 37779648248,
+        "attempt": 1,
+        "member_path": [
+          55
+        ],
+        "bytes": 11935,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "350bd0843fdc39bfeebf30979f3fb5c8bfa90778581a799f9031c484856a4174",
+        "run_id": 37778644364,
+        "attempt": 1,
+        "member_path": [
+          15
+        ],
+        "bytes": 12033,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "6b4dba296a5bbf6acedc606782700a258ac3cba7c0b60555be750145ae32e4cc",
+        "run_id": 37778644364,
+        "attempt": 1,
+        "member_path": [
+          28
+        ],
+        "bytes": 4102,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "d3d6deb1ff0790361e2355c3fce7f533cd0e0680ac1f5b893873939d4d27ed1a",
+        "run_id": 37778644364,
+        "attempt": 1,
+        "member_path": [
+          45
+        ],
+        "bytes": 4099,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "2cb22f9eb17a1994bd549dde9ea4d77f2e31b2cd5b405fa92dc4c73100562bd2",
+        "run_id": 37778644364,
+        "attempt": 1,
+        "member_path": [
+          60
+        ],
+        "bytes": 11935,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "df2f7834b1384aaea728ed7cfa44fca5259ef210fbbef8b70b1afcc8d372f38c",
+        "run_id": 37778644364,
+        "attempt": 1,
+        "member_path": [
+          76
+        ],
+        "bytes": 3528,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "f81ec1b856345207bab2efeb6136f4b713cc72134df61b2ff64262c67608ea83",
+        "run_id": 37778644364,
+        "attempt": 1,
+        "member_path": [
+          91
+        ],
+        "bytes": 11934,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "5b3f8410b1128546bf7d122a0d3f3b1001b344a3a49a62799a6f18056fe7ccae",
+        "run_id": 37778644364,
+        "attempt": 1,
+        "member_path": [
+          107
+        ],
+        "bytes": 11933,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "4e2ff9e64efaee44ddc01dca7586526473be7ce2ea83f1789b89d1fdb2ae1c5f",
+        "run_id": 37778644364,
+        "attempt": 1,
+        "member_path": [
+          131
+        ],
+        "bytes": 3528,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "9ab8b2dc336590cb40495e3bdca8ab23a053859b580081ed9d3f9b47e468617f",
+        "run_id": 37778644364,
+        "attempt": 1,
+        "member_path": [
+          146
+        ],
+        "bytes": 11935,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "2b806b300cd8859b083391740f8fb75d0af50774cba4787cf7570da1bcd0c4db",
+        "run_id": 37778643713,
+        "attempt": 1,
+        "member_path": [
+          9
+        ],
+        "bytes": 4099,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "bd29a78ebe379ad1592813f1cc127458bbd6662577b4cebd4bf41b83a6528a29",
+        "run_id": 37778643713,
+        "attempt": 1,
+        "member_path": [
+          24
+        ],
+        "bytes": 3528,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "fed08c82c39e5e87608a8a13ae1ab7179215f0036c357d5d58c274dbbeeb9cc4",
+        "run_id": 37778643713,
+        "attempt": 1,
+        "member_path": [
+          41
+        ],
+        "bytes": 4102,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "ef0e41b0571dbab3159af25800378d4e58493a00dcd09295d78af03f3205c1a9",
+        "run_id": 37778643713,
+        "attempt": 1,
+        "member_path": [
+          56
+        ],
+        "bytes": 3528,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "16461cc7ce68cf5748b827db1f4081f669d3f7afefadc55ee8410c82f589c3b2",
+        "run_id": 37777763043,
+        "attempt": 1,
+        "member_path": [
+          9
+        ],
+        "bytes": 4099,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "ae9fe2f77a49257a2417a65586143779d27c1645487b4d8f16447b9d21797b1e",
+        "run_id": 37777763043,
+        "attempt": 1,
+        "member_path": [
+          26
+        ],
+        "bytes": 4102,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "9fee063b5b22dd5b76aa9eaeba94f9538e3105c448225cf7517bb632e7267e74",
+        "run_id": 37777763043,
+        "attempt": 1,
+        "member_path": [
+          41
+        ],
+        "bytes": 3528,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "a6ca174010e3c8482a709cd138da70c16152a33f41d68a7b1a9292a6471ff07f",
+        "run_id": 37777763043,
+        "attempt": 1,
+        "member_path": [
+          56
+        ],
+        "bytes": 3528,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "cfe133a824759bcd657bdba9140026494035bed925babf99c9d4aa80df3d8b00",
+        "run_id": 37777763016,
+        "attempt": 1,
+        "member_path": [
+          7
+        ],
+        "bytes": 11935,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "714b8624da97cda0ac140624f53063843a4082bf76d77227dbfdb733786096da",
+        "run_id": 37777763016,
+        "attempt": 1,
+        "member_path": [
+          23
+        ],
+        "bytes": 11933,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "3389c1b65a967acfeeddd64ca4d22f97197903c570310f1aff8e667c83635139",
+        "run_id": 37777763016,
+        "attempt": 1,
+        "member_path": [
+          39
+        ],
+        "bytes": 11935,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "d5940f6cdfa6e772b05ebfb3d4ae127e9f521ec8a6f0820054e44526e0b06dd0",
+        "run_id": 37777763016,
+        "attempt": 1,
+        "member_path": [
+          55
+        ],
+        "bytes": 11934,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "a648a64b4b3e497d7f13d68063f76e75fcec2587eccf45d5b86bd73cf329f12c",
+        "run_id": 37777757445,
+        "attempt": 1,
+        "member_path": [
+          7
+        ],
+        "bytes": 3528,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "616f2fcf39f1f0949836e4d65a86da108a9f1afa460300dc1166790867b1c84a",
+        "run_id": 37777757445,
+        "attempt": 1,
+        "member_path": [
+          24
+        ],
+        "bytes": 4102,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "750f1597276d666c44cf9f7b1c33f55b6521250639b33e1eb3697bc113158de4",
+        "run_id": 37777757445,
+        "attempt": 1,
+        "member_path": [
+          41
+        ],
+        "bytes": 4099,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "26e39e726c74ebaca391324c45dd2279770e7d0f03aa0bf20b4be2c4e41670d2",
+        "run_id": 37777757445,
+        "attempt": 1,
+        "member_path": [
+          56
+        ],
+        "bytes": 3528,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "d07d3ea74a593c3924800b447302d792eec4d8e327cb4c7ce1e5ec27bd825c4d",
+        "run_id": 37777757443,
+        "attempt": 1,
+        "member_path": [
+          7
+        ],
+        "bytes": 11934,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "77648b56ec6d4d8d8c80522f5272d8427ed55bd12a0870a0d655ac5a45a35274",
+        "run_id": 37777757443,
+        "attempt": 1,
+        "member_path": [
+          23
+        ],
+        "bytes": 11935,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "5bdbccb0054743982be606dd9d8e623770fb4f3dcdf9774dd246841d52b806d8",
+        "run_id": 37777757443,
+        "attempt": 1,
+        "member_path": [
+          39
+        ],
+        "bytes": 11933,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      },
+      {
+        "source_id": "995a8c4a2b500f8a50b3d8f867f6cfde36b474ad5b1d9bfa81bdb9a16d1265bb",
+        "run_id": 37777757443,
+        "attempt": 1,
+        "member_path": [
+          55
+        ],
+        "bytes": 11935,
+        "email_match_count": 2,
+        "disposition": "not_matched_to_complete_job_log_bytes"
+      }
+    ]
+  },
+  "triage": {
+    "run_id": 37781266990,
+    "job_id": 113324664127,
+    "raw_job_conclusion": "failure",
+    "dispositions": [
+      {
+        "asset_id": 613399693,
+        "member_name": "animewp-1.3.0-verification/theme-check/minimum-environment.json",
+        "start_line": 48,
+        "end_line": 48,
+        "rule": "generic-api-key",
+        "file_sha256": "1e808167486311c7414f33478eef8ae703a3ebfa630dc70e492a1c9f53752f1d",
+        "line_sha256": "d7fa734d40f85868c68572c6f2458112be854aa5bd788aca22bf374d2a74c4fb",
+        "scalar_sha256": "0d904406c7b3618433bb9c654ffa402b4c09e6d84c6f4139499b3b646a2ceabd",
+        "disposition": "false_positive_verified_file_sha256",
+        "proof": "checks/class-escaping-check.php",
+        "proof_repository": "WordPress/theme-check"
+      },
+      {
+        "asset_id": 613399693,
+        "member_name": "animewp-1.3.0-verification/theme-check/release-manifest.json",
+        "start_line": 12,
+        "end_line": 12,
+        "rule": "generic-api-key",
+        "file_sha256": "873798faab14e8d9125b6119afa60e8f4ab77adbdba0a1ff9587f891973ea76f",
+        "line_sha256": "077ee67af0a447c84a04a83633413c96677082b6bd7c9704b5e76fbf4351f7cd",
+        "scalar_sha256": "d7c6e10a05dd003b8d4e73ae01e6dac628b7181bae85e157faf906b0edd5fbde",
+        "disposition": "false_positive_verified_file_sha256",
+        "proof": "themes/animewp/assets/images/animewp-key-visual-a.svg",
+        "proof_repository": "nanophate/animewp"
+      },
+      {
+        "asset_id": 613399693,
+        "member_name": "animewp-1.3.0-verification/theme-check/release-manifest.json",
+        "start_line": 13,
+        "end_line": 13,
+        "rule": "generic-api-key",
+        "file_sha256": "873798faab14e8d9125b6119afa60e8f4ab77adbdba0a1ff9587f891973ea76f",
+        "line_sha256": "bf9293fba416c9d556634438e9162982a1b3bbbeeed1eb55b859179290e24d19",
+        "scalar_sha256": "8d64766720775423e1de984546f854cef9370152a5435ff0fb42d7135e0bef49",
+        "disposition": "false_positive_verified_file_sha256",
+        "proof": "themes/animewp/assets/images/animewp-key-visual-b.svg",
+        "proof_repository": "nanophate/animewp"
+      },
+      {
+        "asset_id": 613399693,
+        "member_name": "animewp-1.3.0-verification/theme-check/release-manifest.json",
+        "start_line": 18,
+        "end_line": 18,
+        "rule": "generic-api-key",
+        "file_sha256": "873798faab14e8d9125b6119afa60e8f4ab77adbdba0a1ff9587f891973ea76f",
+        "line_sha256": "b888cbd34e5448217bb1eaee7c7e8897bde5679d6829508ffe637121f6d53e27",
+        "scalar_sha256": "963e9da673be303cad00db40d924461a399099a7d595c141a99358d1e1957d51",
+        "disposition": "false_positive_verified_file_sha256",
+        "proof": "themes/animewp/inc/design-tokens.json",
+        "proof_repository": "nanophate/animewp"
+      },
+      {
+        "asset_id": 612691713,
+        "member_name": "animewp-verification-1.2.1/theme-check-1.2.1/minimum-environment.json",
+        "start_line": 48,
+        "end_line": 48,
+        "rule": "generic-api-key",
+        "file_sha256": "0563773ac24911d27abb3fbee14b7806877fb6ffa24f5d4a0fb026bfa72f3e58",
+        "line_sha256": "d7fa734d40f85868c68572c6f2458112be854aa5bd788aca22bf374d2a74c4fb",
+        "scalar_sha256": "0d904406c7b3618433bb9c654ffa402b4c09e6d84c6f4139499b3b646a2ceabd",
+        "disposition": "false_positive_verified_file_sha256",
+        "proof": "checks/class-escaping-check.php",
+        "proof_repository": "WordPress/theme-check"
+      },
+      {
+        "asset_id": 612691713,
+        "member_name": "animewp-verification-1.2.1/theme-check-1.2.1/release-manifest.json",
+        "start_line": 12,
+        "end_line": 12,
+        "rule": "generic-api-key",
+        "file_sha256": "6b8a050610b023eaa0e794d8950d42885ec81962ebbbe31fde5491aab4cb5047",
+        "line_sha256": "077ee67af0a447c84a04a83633413c96677082b6bd7c9704b5e76fbf4351f7cd",
+        "scalar_sha256": "d7c6e10a05dd003b8d4e73ae01e6dac628b7181bae85e157faf906b0edd5fbde",
+        "disposition": "false_positive_verified_file_sha256",
+        "proof": "themes/animewp/assets/images/animewp-key-visual-a.svg",
+        "proof_repository": "nanophate/animewp"
+      },
+      {
+        "asset_id": 612691713,
+        "member_name": "animewp-verification-1.2.1/theme-check-1.2.1/release-manifest.json",
+        "start_line": 13,
+        "end_line": 13,
+        "rule": "generic-api-key",
+        "file_sha256": "6b8a050610b023eaa0e794d8950d42885ec81962ebbbe31fde5491aab4cb5047",
+        "line_sha256": "bf9293fba416c9d556634438e9162982a1b3bbbeeed1eb55b859179290e24d19",
+        "scalar_sha256": "8d64766720775423e1de984546f854cef9370152a5435ff0fb42d7135e0bef49",
+        "disposition": "false_positive_verified_file_sha256",
+        "proof": "themes/animewp/assets/images/animewp-key-visual-b.svg",
+        "proof_repository": "nanophate/animewp"
+      },
+      {
+        "asset_id": 612691713,
+        "member_name": "animewp-verification-1.2.1/theme-check-1.2.1/release-manifest.json",
+        "start_line": 18,
+        "end_line": 18,
+        "rule": "generic-api-key",
+        "file_sha256": "6b8a050610b023eaa0e794d8950d42885ec81962ebbbe31fde5491aab4cb5047",
+        "line_sha256": "b888cbd34e5448217bb1eaee7c7e8897bde5679d6829508ffe637121f6d53e27",
+        "scalar_sha256": "963e9da673be303cad00db40d924461a399099a7d595c141a99358d1e1957d51",
+        "disposition": "false_positive_verified_file_sha256",
+        "proof": "themes/animewp/inc/design-tokens.json",
+        "proof_repository": "nanophate/animewp"
+      },
+      {
+        "asset_id": 613399693,
+        "member_name": "animewp-1.3.0-verification/theme-check/current-environment.json",
+        "start_line": 51,
+        "end_line": 51,
+        "rule": "generic-api-key",
+        "file_sha256": "3e6a575c44632f8e359e55e65f910458a1f9ad86e964584213cb371e2acd7b37",
+        "line_sha256": "d7fa734d40f85868c68572c6f2458112be854aa5bd788aca22bf374d2a74c4fb",
+        "scalar_sha256": "0d904406c7b3618433bb9c654ffa402b4c09e6d84c6f4139499b3b646a2ceabd",
+        "disposition": "false_positive_verified_file_sha256",
+        "proof": "checks/class-escaping-check.php",
+        "proof_repository": "WordPress/theme-check"
+      },
+      {
+        "asset_id": 612691713,
+        "member_name": "animewp-verification-1.2.1/theme-check-1.2.1/current-environment.json",
+        "start_line": 51,
+        "end_line": 51,
+        "rule": "generic-api-key",
+        "file_sha256": "785376a2e2bb390b67d5ef512ff012ec8207f652053fce82959bf0e3cdfca1ba",
+        "line_sha256": "d7fa734d40f85868c68572c6f2458112be854aa5bd788aca22bf374d2a74c4fb",
+        "scalar_sha256": "0d904406c7b3618433bb9c654ffa402b4c09e6d84c6f4139499b3b646a2ceabd",
+        "disposition": "false_positive_verified_file_sha256",
+        "proof": "checks/class-escaping-check.php",
+        "proof_repository": "WordPress/theme-check"
+      }
+    ],
+    "source_proofs": [
+      {
+        "repository": "nanophate/animewp",
+        "ref": "9720ea42b1f310a3d582d0e91d95e3b6f107f834",
+        "file": "themes/animewp/assets/images/animewp-key-visual-a.svg",
+        "json_key": "assets/images/animewp-key-visual-a.svg",
+        "sha256": "59eb91fe51d829345efe74e20da110f2c70d5f97061f22c08cbd2e6de4e257b2",
+        "scalar_sha256": "d7c6e10a05dd003b8d4e73ae01e6dac628b7181bae85e157faf906b0edd5fbde",
+        "key_sha256": "168bc0dbc0706c480f9666e1e84281934ee0d7c81fd0b61f48fc72f05bc176c8",
+        "git_blob": "f5214102a49ad1480dd31ddbaf73a821d7a4ba4c"
+      },
+      {
+        "repository": "nanophate/animewp",
+        "ref": "9720ea42b1f310a3d582d0e91d95e3b6f107f834",
+        "file": "themes/animewp/assets/images/animewp-key-visual-b.svg",
+        "json_key": "assets/images/animewp-key-visual-b.svg",
+        "sha256": "b83f89b7ce55be318ddbe15f9cdc452e12443114f15fdd20b90516112d5baf33",
+        "scalar_sha256": "8d64766720775423e1de984546f854cef9370152a5435ff0fb42d7135e0bef49",
+        "key_sha256": "3c3298c1e6e38277fbfdfb4a8dd918a30de77567d2d13bcd0beb83e217c7270f",
+        "git_blob": "6ec4ef2d581e213885dd550f8188755fa5d51d6c"
+      },
+      {
+        "repository": "nanophate/animewp",
+        "ref": "v1.3.0",
+        "file": "themes/animewp/inc/design-tokens.json",
+        "json_key": "inc/design-tokens.json",
+        "sha256": "f33aff2ff951fef521a2d1f2af10d8a4102d29826f9f59b596ae762c0bef5318",
+        "scalar_sha256": "963e9da673be303cad00db40d924461a399099a7d595c141a99358d1e1957d51",
+        "key_sha256": "fc3c84dc037a8afbd2a446f9489e8669d41f1dc572ad05a9d38f231f9d1e61c4",
+        "git_blob": "f76d6623c64f8f652740d9c4263d3e2ee18a661f"
+      },
+      {
+        "repository": "WordPress/theme-check",
+        "git_blob": "f233d27f15eeb0f6124ab237b906d0c52d20fcb7",
+        "file": "checks/class-escaping-check.php",
+        "json_key": "checks/class-escaping-check.php",
+        "sha256": "75395167583b0a18726944d364c7cd02ad303890d2600e641c78201f9488edff",
+        "scalar_sha256": "0d904406c7b3618433bb9c654ffa402b4c09e6d84c6f4139499b3b646a2ceabd",
+        "key_sha256": "be30af0ac5d09c11b13e85142b6a02b9ea1b9600fe6bd6176b8a3e8ed0ebfcab"
+      }
+    ],
+    "unresolved_secret_candidates": 0,
+    "detector_allowlist_changes": 0
+  },
+  "release": {
+    "run_id": 37778644364,
+    "successful_jobs": 13,
+    "release_id": 406821507,
+    "tag": "v2.0.2",
+    "target_sha": "9720ea42b1f310a3d582d0e91d95e3b6f107f834",
+    "draft": true,
+    "feeds": "unpublished",
+    "assets": [
+      {
+        "id": 621819215,
+        "name": "animewp-2.0.2.zip",
+        "bytes": 519323,
+        "sha256": "45874fb6678dcb73bc3a1759685f9a63dd63069fde92788b49884d975ed27008"
+      },
+      {
+        "id": 621819257,
+        "name": "animewp-blocks-2.0.2.zip",
+        "bytes": 604009,
+        "sha256": "7caeadc1cb92d3b58ff262f57e89cc198e0d7e0c363da37a44f5efd7b932e562"
+      },
+      {
+        "id": 621819181,
+        "name": "SHA256SUMS",
+        "bytes": 175,
+        "sha256": "1f1867bba4bd3006bcefbb8d0bb5f468fc96e4b5ccb12709a4ba89603306f9e7"
+      }
+    ],
+    "ci_local_module_comparison": [
+      {
+        "file": "animewp-blocks/build/blocks/backdrop/index.js",
+        "definitions": [
+          [
+            485,
+            155
+          ]
+        ],
+        "calls": [
+          [
+            485,
+            155
+          ]
+        ],
+        "normalized_byte_equal": true,
+        "all_other_ast_nodes_equal": true
+      },
+      {
+        "file": "animewp-blocks/build/blocks/backdrop/view.js",
+        "definitions": [
+          [
+            840,
+            319
+          ]
+        ],
+        "calls": [
+          [
+            840,
+            319
+          ]
+        ],
+        "normalized_byte_equal": true,
+        "all_other_ast_nodes_equal": true
+      },
+      {
+        "file": "animewp-blocks/build/blocks/carousel/index.js",
+        "definitions": [
+          [
+            459,
+            441
+          ]
+        ],
+        "calls": [
+          [
+            459,
+            441
+          ]
+        ],
+        "normalized_byte_equal": true,
+        "all_other_ast_nodes_equal": true
+      },
+      {
+        "file": "animewp-blocks/build/blocks/decoration/index.js",
+        "definitions": [
+          [
+            388,
+            231
+          ]
+        ],
+        "calls": [
+          [
+            388,
+            231
+          ]
+        ],
+        "normalized_byte_equal": true,
+        "all_other_ast_nodes_equal": true
+      },
+      {
+        "file": "animewp-blocks/build/blocks/video-card/index.js",
+        "definitions": [
+          [
+            510,
+            211
+          ],
+          [
+            840,
+            319
+          ]
+        ],
+        "calls": [
+          [
+            840,
+            319
+          ],
+          [
+            510,
+            211
+          ]
+        ],
+        "normalized_byte_equal": true,
+        "all_other_ast_nodes_equal": true
+      },
+      {
+        "file": "animewp-blocks/build/blocks/video-card/view.js",
+        "definitions": [
+          [
+            840,
+            319
+          ]
+        ],
+        "calls": [
+          [
+            840,
+            319
+          ]
+        ],
+        "normalized_byte_equal": true,
+        "all_other_ast_nodes_equal": true
+      },
+      {
+        "file": "animewp-blocks/build/blocks/video/index.js",
+        "definitions": [
+          [
+            840,
+            319
+          ]
+        ],
+        "calls": [
+          [
+            840,
+            319
+          ]
+        ],
+        "normalized_byte_equal": true,
+        "all_other_ast_nodes_equal": true
+      },
+      {
+        "file": "animewp-blocks/build/blocks/video/view.js",
+        "definitions": [
+          [
+            840,
+            319
+          ]
+        ],
+        "calls": [
+          [
+            840,
+            319
+          ]
+        ],
+        "normalized_byte_equal": true,
+        "all_other_ast_nodes_equal": true
+      },
+      {
+        "file": "animewp-blocks/build/motion/style.js",
+        "definitions": [
+          [
+            544,
+            807
+          ]
+        ],
+        "calls": [
+          [
+            544,
+            807
+          ]
+        ],
+        "normalized_byte_equal": true,
+        "all_other_ast_nodes_equal": true
+      }
+    ]
+  },
+  "limitations": [
+    "Human review of retrieved evidence is not a proof that all historical deleted/cached/external data can be enumerated.",
+    "Binary string extraction is not full OCR, malware analysis or intellectual-property proof.",
+    "This one-time branch audit has not installed recurring secret scanning on main.",
+    "No repository visibility change, formal Release publication, history rewrite, tag movement or historical asset deletion was performed."
+  ],
+  "history_binary_review": {
+    "repo": "nanophate/animewp",
+    "main": "9720ea42b1f310a3d582d0e91d95e3b6f107f834",
+    "visibility_changed": false,
+    "findings": "No private information or credential findings identified in the six binary blobs.",
+    "items": [
+      {
+        "sha": "9acf207581e52ce2e5bc8abe4cd012d450a53ecf",
+        "type": "GNU gettext MO",
+        "path": "plugins/animewp-blocks/languages/animewp-blocks-ja.mo",
+        "bytes": 15333,
+        "revision": "e33d2659dcae1dcc1f81d40d941905d83b16ebdc",
+        "entries": 146
+      },
+      {
+        "sha": "57fb1f44554917edf29cc8cea2aef0d5ab0927d4",
+        "type": "GNU gettext MO",
+        "path": "plugins/animewp-blocks/languages/animewp-blocks-ja.mo",
+        "bytes": 22797,
+        "revision": "eebc4cbee5d7f4fec47b94dffa08aac2ac85946b",
+        "entries": 222
+      },
+      {
+        "sha": "7239893ad578f0a7a6d32e937bc818276d15ba5d",
+        "type": "GNU gettext MO",
+        "path": "plugins/animewp-blocks/languages/animewp-blocks-ja.mo",
+        "bytes": 27651,
+        "revision": "dcd30fbc8da5b4370675671048254feab4d0487b",
+        "entries": 292
+      },
+      {
+        "sha": "9c6e72084adf28ffe7b9412a38ac1021810b89c0",
+        "type": "GNU gettext MO",
+        "path": "plugins/animewp-blocks/languages/animewp-blocks-ja.mo",
+        "bytes": 27890,
+        "revision": "8ee054af2c7e35655b09a2b7374374e447bc2d78",
+        "entries": 295,
+        "current": true
+      },
+      {
+        "sha": "da91c5a0b94ec689e2a63a54e8c68fd839df8217",
+        "type": "PNG",
+        "path": "themes/animewp/screenshot.png",
+        "bytes": 110598,
+        "verified_ref": "ff6cf67046ac36325c3404b1ce1deb897140e1af",
+        "tags": [
+          "v1.0.0",
+          "v1.1.0",
+          "v1.2.0"
+        ],
+        "dimensions": [
+          1200,
+          702
+        ]
+      },
+      {
+        "sha": "fed47ff04b949a444022e3558261e8825c3b73bb",
+        "type": "PNG",
+        "path": "themes/animewp/screenshot.png",
+        "bytes": 148539,
+        "verified_ref": "9720ea42b1f310a3d582d0e91d95e3b6f107f834",
+        "dimensions": [
+          1200,
+          900
+        ],
+        "current": true
+      }
+    ],
+    "verification": {
+      "git_blob_sha1": "All six verified against actual bytes and Git blob framing.",
+      "catalogue_po_match": "All four catalogs exactly equal corresponding version of tracked source .po, including metadata.",
+      "catalogue_metadata": "Last-Translator, Language-Team, Report-Msgid-Bugs-To are blank in all four.",
+      "catalogue_patterns": {
+        "emails": 0,
+        "urls": 0,
+        "private_ipv4": 0,
+        "local_absolute_paths": 0,
+        "representative_private_key_and_token_patterns": 0
+      },
+      "catalogue_structure": "All bytes accounted for by the GNU MO header, offset tables, and strings. No extra bytes.",
+      "manual_catalogue_review": "295 distinct source message keys and 282 distinct Japanese translations across all four historical catalogs reviewed; block editor UI text only.",
+      "png_structure": "All chunk CRCs verified. IHDR/sRGB/eXIf/IDAT/IEND only; no text chunks, no trailing data.",
+      "png_metadata": "Only sRGB plus EXIF ColorSpace=1 and image dimensions; no author, device, GPS, or timestamps.",
+      "png_visual": "Both show dummy animewp verification site with generic placeholder art/text. No private individuals, credentials, URLs, or admin/browser UI observed."
+    },
+    "scope": "All six binary object IDs supplied by root mapped and inspected. GitHub default-main path histories return 2 screenshot revisions and 4 MO revisions. Representative immutable commit/tag refs verified; did not exhaustively enumerate alternate paths across all 52 historical commits. Authorship beyond repository copyright declarations not independently proven."
+  }
+}
