@@ -40,7 +40,8 @@ test( 'Site Editor iframe keeps edited template content after save and reload', 
 	await page.goto( '/wp-admin/site-editor.php?postType=wp_template&postId=' + encodeURIComponent( fixtures().template.id ) + '&canvas=edit' );
 	await ready( page, editor, 'core/edit-site' );
 	await editor.canvas.locator( '[data-type="core/paragraph"][contenteditable="true"]' ).first().fill( 'Browser QA template saved through the editor.' );
-	await editor.saveSiteEditorEntities();
+	// Only this saved template is dirty, so core saves without a second entities panel.
+	await editor.saveSiteEditorEntities( { isOnlyCurrentEntityDirty: true } );
 	await page.reload();
 	await ready( page, editor, 'core/edit-site' );
 	await expect( editor.canvas.getByText( 'Browser QA template saved through the editor.', { exact: true } ) ).toBeVisible();

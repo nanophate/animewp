@@ -21,6 +21,12 @@ test( 'plugin examples fit narrow screens and sticky navigation leaves headings 
 			await page.goto( fixtures()[ key ].path );
 			await expect( page.locator( 'main h1' ).first() ).toBeVisible();
 			expect( await page.evaluate( () => document.documentElement.scrollWidth ) ).toBeLessThanOrEqual( width + 1 );
+			const hero = page.locator( '.animewp-carousel__track > .is-active' ).first();
+			await expect( hero ).toHaveCSS( 'opacity', '1' );
+			await expect( hero.locator( 'h1' ) ).toHaveCSS( 'opacity', '1' );
+			// Record the visible hero before leaving it; offscreen entrance animations
+			// have not run yet and should not be mistaken for missing page content.
+			await capture( page, key + '-' + width + '-hero', { fullPage: false } );
 			// Hash navigation also exercises mobile pages without requiring a hamburger click.
 			await page.evaluate( () => { window.location.hash = 'news'; } );
 			await expect( page.locator( '#news h2' ).first() ).toBeInViewport();
@@ -29,7 +35,7 @@ test( 'plugin examples fit narrow screens and sticky navigation leaves headings 
 				header: document.querySelector( 'header' ).getBoundingClientRect().bottom,
 			} ) );
 			expect( positions.heading ).toBeGreaterThanOrEqual( positions.header - 1 );
-			await capture( page, key + '-' + width );
+			await capture( page, key + '-' + width + '-anchor', { fullPage: false } );
 		}
 	}
 } );
@@ -75,9 +81,13 @@ test( 'carousel respects inputs and video connects only on explicit keyboard act
 test( 'combined motion stops when reduced motion changes during the visit', async ( { page } ) => {
 	await page.goto( fixtures().interaction.path );
 	const motion = page.locator( '#qa-motion' );
-	await motion.scrollIntoViewIfNeeded();
-	await motion.hover();
+	// A floating element never becomes stable. Move the viewport without disabling
+	// its animation, then verify the real hover state rather than waiting for stillness.
+	await motion.evaluate( ( element ) => element.scrollIntoView( { block: 'center', behavior: 'instant' } ) );
+	await motion.hover( { force: true } );
+	await expect.poll( () => motion.evaluate( ( element ) => element.matches( ':hover' ) ) ).toBe( true );
 	await expect( motion ).toHaveClass( /has-parallax/ );
+	await expect.poll( () => motion.evaluate( ( element ) => getComputedStyle( element ).animationName ) ).toContain( 'animewp-float' );
 	await page.emulateMedia( { reducedMotion: 'reduce' } );
 	await expect.poll( () => motion.evaluate( ( element ) => {
 		const style = getComputedStyle( element );
@@ -86,16 +96,16 @@ test( 'combined motion stops when reduced motion changes during the visit', asyn
 	await capture( page, 'reduced-motion' );
 } );
 
-test( 'no-JavaScript preserves content and the original video link', async ( { browser, baseURL } ) => {
-	const context = await browser.newContext( { javaScriptEnabled: false, baseURL, viewport: { width: 375, height: 900 } } );
-	try {
-		const page = await context.newPage();
+test.describe( 'JavaScript disabled', () => {
+	test.use( { javaScriptEnabled: false, viewport: { width: 375, height: 900 } } );
+	test( 'no-JavaScript preserves content and the original video link', async ( { page } ) => {
 		await page.goto( fixtures().interaction.path );
 		await expect( page.getByText( 'First slide', { exact: true } ) ).toBeVisible();
 		await expect( page.getByRole( 'link', { name: 'Play QA video' } ) ).toHaveAttribute( 'href', /youtube\.com\/watch/ );
 		await expect( page.locator( 'iframe' ) ).toHaveCount( 0 );
-		await page.locator( '#qa-motion' ).scrollIntoViewIfNeeded();
+		// CSS float also runs without JavaScript; opacity and full-page capture do
+		// not require Playwright's stable-element scrolling precondition.
 		await expect( page.locator( '#qa-motion' ) ).toHaveCSS( 'opacity', '1' );
 		await capture( page, 'no-javascript-375' );
-	} finally { await context.close(); }
+	} );
 } );

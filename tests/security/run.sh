@@ -41,5 +41,6 @@ fi
 echo "== Theme Check"
 # The default output is a table, so grepping for a line starting REQUIRED
 # misses failures. The CLI already reports failed checks with a nonzero exit.
-wp theme-check run animewp
+wp eval-file wp-content/animewp-tests/security/theme-check-policy-test.php
+wp --require=wp-content/animewp-tests/security/theme-check-policy.php theme-check run animewp
 echo "Security checks passed."

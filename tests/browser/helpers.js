@@ -16,9 +16,9 @@ async function login( page ) {
 	await page.locator( '#wp-submit' ).click();
 	await expect( page.locator( '#wpadminbar' ) ).toBeVisible();
 }
-async function capture( page, name ) {
+async function capture( page, name, options = {} ) {
 	fs.mkdirSync( 'artifacts/browser-results', { recursive: true } );
-	await page.screenshot( { path: path.resolve( 'artifacts/browser-results', name + '.png' ), fullPage: true } );
+	await page.screenshot( { path: path.resolve( 'artifacts/browser-results', name + '.png' ), fullPage: true, ...options } );
 }
 const test = base.extend( {} );
 test.afterEach( async ( { page }, info ) => {

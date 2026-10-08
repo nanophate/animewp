@@ -109,6 +109,9 @@ jobs:
         with:
           name: release-candidate-${{ needs.resolve.outputs.sha }}
           path: artifacts/release-candidate/
+          # Retry the same run without a same-name artifact conflict. Published
+          # Release assets are independently immutable in scripts/release.py.
+          overwrite: true
           if-no-files-found: error
           retention-days: 14
 

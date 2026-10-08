@@ -78,5 +78,7 @@ jobs:
         with:
           name: browser-${{ matrix.browser }}-${{ matrix.wordpress }}-php${{ matrix.php }}
           path: artifacts/browser-results/
+          # A failed-job rerun replaces only this run's temporary QA artifact.
+          overwrite: true
           if-no-files-found: warn
           retention-days: 14
