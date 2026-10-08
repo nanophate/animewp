@@ -175,6 +175,8 @@
 :where(.animewp-theme, .editor-styles-wrapper) :focus-visible { box-shadow: 0 0 0 2px var(--wp--preset--color--base, #fff); }
 .animewp-header a, .animewp-footer-links a, .animewp-page-top a { display: inline-flex; align-items: center; min-height: 44px; }
 header.wp-block-template-part:has(.animewp-header--glass) { position: sticky; top: var(--wp-admin--admin-bar--height, 0px); z-index: 25; }
+/* In-page links (#news, a table of contents) stop below the sticky header, on any anchor, not only sections with their own padding. */
+html:has(header.wp-block-template-part .animewp-header--glass) { scroll-padding-top: calc(var(--wp--custom--animewp--header-height, 5rem) + var(--wp-admin--admin-bar--height, 0px)); }
 .animewp-header--glass {
   background: var(--wp--preset--color--base, #fff); color: var(--wp--preset--color--contrast, #202020);
 }
