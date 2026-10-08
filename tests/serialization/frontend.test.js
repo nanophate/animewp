@@ -270,6 +270,20 @@ test( 'letter motion preserves paragraph text and the name of an embedded link',
 	assert.ok( paragraph.querySelector( '.animewp-letter' ) );
 } );
 
+test( 'carousel dot names read slide titles once, after letter motion and across elements', ( t ) => {
+	const env = environment( t, '<div class="wp-block-animewp-carousel has-dots-dots"><div class="animewp-carousel__track">'
+		+ '<div><h1 class="animewp-motion has-entrance has-entrance-letters">Title</h1></div>'
+		+ '<figure><figcaption><span>TRAILER 01</span><span>Main</span></figcaption></figure>'
+		+ '</div></div>' );
+	// Letter motion runs first here, so its aria-hidden copy is in the heading when dots are named.
+	env.run( 'motion/view.js' );
+	env.run( 'blocks/carousel/view.js', ( code ) =>
+		source( 'shared/engines/carousel.js' ).replace( 'export function createCarousel', 'function createCarousel' )
+		+ '\n' + code.replace( /^import .*$/m, '' ) );
+	const names = [ ...env.document.querySelectorAll( '.animewp-carousel__dot' ) ].map( ( dot ) => dot.getAttribute( 'aria-label' ) );
+	assert.deepEqual( names, [ '1 / 2 Title', '2 / 2 TRAILER 01 Main' ] );
+} );
+
 test( 'letter motion retains an explicit accessible label supplied by the author', ( t ) => {
 	const env = environment( t, '<h2 aria-label="Season two" class="animewp-motion has-entrance has-entrance-letters">II</h2>' );
 	env.run( 'motion/view.js' );

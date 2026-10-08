@@ -14,6 +14,25 @@ function element( tag, className, text ) {
 	return node;
 }
 
+// The text a screen reader reads: skips aria-hidden copies, such as the
+// per-letter spans of the "letters" entrance, which may run before or after this.
+function readableText( node ) {
+	const copy = node.cloneNode( true );
+	copy.querySelectorAll( '[aria-hidden="true"]' ).forEach( ( hidden ) =>
+		hidden.remove()
+	);
+	// Separate text from different elements ("TRAILER 01" + "メイン映像").
+	const walker = document.createTreeWalker(
+		copy,
+		window.NodeFilter.SHOW_TEXT
+	);
+	const parts = [];
+	while ( walker.nextNode() ) {
+		parts.push( walker.currentNode.nodeValue );
+	}
+	return parts.join( ' ' ).replace( /\s+/g, ' ' ).trim();
+}
+
 function arrow( direction, style, label ) {
 	const button = element(
 		'button',
@@ -77,7 +96,7 @@ function enhance( root ) {
 			const heading = slide.querySelector(
 				'h1, h2, h3, h4, h5, h6, figcaption, .animewp-video-card__title'
 			);
-			const name = heading ? heading.textContent.trim() : '';
+			const name = heading ? readableText( heading ) : '';
 			dot.setAttribute(
 				'aria-label',
 				( index + 1 + ' / ' + slides.length + ' ' + name ).trim()

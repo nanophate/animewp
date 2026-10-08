@@ -15,6 +15,12 @@
 }
 :where(.animewp-theme, .editor-styles-wrapper) a { text-underline-offset: 0.2em; }
 :where(.animewp-theme, .editor-styles-wrapper) img { max-width: 100%; height: auto; }
+/* Short display text breaks between Japanese phrases and in balanced lines, so
+ * one character is not left alone on the last line. Unsupported browsers ignore it. */
+:where(.animewp-theme, .editor-styles-wrapper) :where(h1, h2, h3, h4, h5, h6, .is-style-animewp-catchphrase) {
+  word-break: auto-phrase;
+  text-wrap: balance;
+}
 :where(.animewp-theme, .editor-styles-wrapper) .wp-block-button__link { min-height: 44px; box-sizing: border-box; }
 .animewp-header {
   min-height: 88px;
