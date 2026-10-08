@@ -27,6 +27,38 @@ $interaction = <<<'HTML'
 <!-- wp:spacer {"height":"400px"} --><div style="height:400px" aria-hidden="true" class="wp-block-spacer"></div><!-- /wp:spacer -->
 HTML;
 $pages['interaction'] = animewp_browser_page( 'interaction', $interaction );
+
+// Saved Core groups exercise the same Position: Sticky and Motion controls as
+// an edited header. An image taller than the fallback token exposes bad offsets.
+$header_body = <<<'HTML'
+<!-- wp:heading {"level":1} --><h1 class="wp-block-heading">Header layout checks</h1><!-- /wp:heading -->
+<!-- wp:paragraph --><p><a href="#qa-header-target">Jump to header target</a></p><!-- /wp:paragraph -->
+<!-- wp:spacer {"height":"1000px"} --><div style="height:1000px" aria-hidden="true" class="wp-block-spacer"></div><!-- /wp:spacer -->
+<!-- wp:heading {"anchor":"qa-header-target"} --><h2 class="wp-block-heading" id="qa-header-target">Header target stays visible</h2><!-- /wp:heading -->
+<!-- wp:paragraph --><p>Content following an in-page link.</p><!-- /wp:paragraph -->
+<!-- wp:spacer {"height":"1200px"} --><div style="height:1200px" aria-hidden="true" class="wp-block-spacer"></div><!-- /wp:spacer -->
+HTML;
+foreach ( array( 'tall' => 144, 'compact' => 44 ) as $variant => $image_height ) {
+	$slug = 'qa-header-' . $variant;
+	$motion = 'compact' === $variant ? ',"animewpMotion":{"scrolled":"shrink"}' : '';
+	$header = '<!-- wp:group {"className":"animewp-header qa-sticky-header","style":{"position":{"type":"sticky","top":"0px"},"spacing":{"padding":{"top":"20px","bottom":"20px"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"flex","justifyContent":"space-between"}' . $motion . '} -->'
+		. '<div class="wp-block-group animewp-header qa-sticky-header" style="margin-top:0;margin-bottom:0;padding-top:20px;padding-bottom:20px">'
+		. '<!-- wp:paragraph --><p>Saved sticky header</p><!-- /wp:paragraph -->'
+		. '<!-- wp:html --><img id="qa-header-image" src="' . esc_url( get_theme_file_uri( 'assets/images/animewp-character-a.svg' ) ) . '" alt="" width="44" height="' . $image_height . '" style="height:' . $image_height . 'px;width:44px;object-fit:contain" /><!-- /wp:html -->'
+		. '</div><!-- /wp:group -->';
+	$part = wp_insert_post( wp_slash( array( 'post_type' => 'wp_template_part', 'post_status' => 'publish', 'post_name' => $slug, 'post_title' => 'Browser QA header ' . $variant, 'post_content' => $header ) ), true );
+	if ( is_wp_error( $part ) ) { WP_CLI::error( 'Cannot create saved sticky header.' ); }
+	wp_set_object_terms( $part, 'animewp', 'wp_theme' );
+	wp_set_object_terms( $part, 'header', 'wp_template_part_area' );
+	$content = '<!-- wp:template-part {"slug":"' . $slug . '","theme":"animewp","tagName":"header"} /--><!-- wp:group {"tagName":"main","layout":{"type":"constrained"}} --><main class="wp-block-group"><!-- wp:post-content /--></main><!-- /wp:group -->';
+	$template = wp_insert_post( wp_slash( array( 'post_type' => 'wp_template', 'post_status' => 'publish', 'post_name' => $slug, 'post_title' => 'Browser QA layout ' . $variant, 'post_content' => $content ) ), true );
+	if ( is_wp_error( $template ) ) { WP_CLI::error( 'Cannot create saved header layout.' ); }
+	wp_set_object_terms( $template, 'animewp', 'wp_theme' );
+	$pages[ 'header_' . $variant ] = animewp_browser_page( 'header_' . $variant, $header_body, $slug );
+}
+foreach ( array( 'left', 'right' ) as $side ) {
+	$pages[ 'header_' . $side ] = animewp_browser_page( 'header_' . $side, $header_body, 'animewp-' . $side );
+}
 $template_id = wp_insert_post( wp_slash( array( 'post_type' => 'wp_template', 'post_status' => 'publish', 'post_name' => 'qa-browser', 'post_title' => 'Browser QA template', 'post_content' => '<!-- wp:group {"tagName":"main"} --><main class="wp-block-group"><!-- wp:paragraph --><p>Editable template sentinel.</p><!-- /wp:paragraph --><!-- wp:post-content /--></main><!-- /wp:group -->' ) ), true );
 if ( is_wp_error( $template_id ) ) { WP_CLI::error( 'Cannot create browser template.' ); }
 wp_set_object_terms( $template_id, 'animewp', 'wp_theme' );

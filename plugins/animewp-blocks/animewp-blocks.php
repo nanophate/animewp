@@ -2,7 +2,7 @@
 /**
  * Plugin Name: AnimeWP Blocks
  * Description: Decorated panels, rotated text, image and text layouts, and video buttons for anime and film sites. Saved content stays readable if the plugin is turned off.
- * Version: 2.0.1
+ * Version: 2.0.2
  * Update URI: https://github.com/nanophate/animewp/tree/main/plugins/animewp-blocks
  * Requires at least: 6.6
  * Requires PHP: 8.0
@@ -33,7 +33,7 @@ add_action( 'init', __NAMESPACE__ . '\\load_textdomain', 0 );
 
 /** Register blocks from their built block.json; scripts come from build/, styles are shared. */
 function register_blocks(): void {
-	$animewp_version = '2.0.1';
+	$animewp_version = '2.0.2';
 	wp_register_style( 'animewp-blocks-style', plugins_url( 'assets/style.css', __FILE__ ), array(), $animewp_version );
 	wp_register_style( 'animewp-blocks-editor-style', plugins_url( 'assets/editor.css', __FILE__ ), array( 'animewp-blocks-style' ), $animewp_version );
 

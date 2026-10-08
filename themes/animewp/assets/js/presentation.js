@@ -32,9 +32,16 @@
             if (position === 'sticky' || position === 'fixed') {
                 document.documentElement.style.setProperty('--animewp-sticky-header-height', header.offsetHeight + 'px');
                 // A page opened at #anchor jumped before this ran; settle it with the real height.
-                var target = first && window.location.hash && document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
-                if (target) { target.scrollIntoView(); }
-                first = false;
+                if (first) {
+                    first = false;
+                    var fragment = window.location.hash.slice(1);
+                    var target = fragment && document.getElementById(fragment);
+                    if (fragment && !target) {
+                        // Literal percent signs are valid in IDs; a malformed URI must not break resize updates.
+                        try { target = document.getElementById(decodeURIComponent(fragment)); } catch (error) { /* Keep the browser's fragment position. */ }
+                    }
+                    if (target) { target.scrollIntoView(); }
+                }
             } else {
                 document.documentElement.style.removeProperty('--animewp-sticky-header-height');
             }
