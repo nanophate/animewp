@@ -139,7 +139,8 @@
   .animewp-theme .animewp-header--right { right: 0; border-left: 1px solid var(--animewp-line); }
   .animewp-theme:has(.animewp-header--left) .wp-site-blocks { padding-left: var(--animewp-side-width); }
   .animewp-theme:has(.animewp-header--right) .wp-site-blocks { padding-right: var(--animewp-side-width); }
-  .animewp-theme :is(.animewp-header--left, .animewp-header--right) .wp-block-navigation { flex: 0; margin-top: 40px; }
+  /* nav only: core also gives the inner <ul> the wp-block-navigation class, and flex: 0 there squeezed labels to one character per line. */
+  .animewp-theme :is(.animewp-header--left, .animewp-header--right) nav.wp-block-navigation { flex: 0; margin-top: 40px; }
   .animewp-theme :is(.animewp-header--left, .animewp-header--right) .wp-block-navigation__container { align-items: var(--navigation-layout-align, flex-start); }
 }
 @media (max-width: 1000px) {
@@ -178,7 +179,7 @@
  * Core puts sticky on the inner group, which cannot stick inside a wrapper of its own height. */
 header.wp-block-template-part:is(:has(.animewp-header--glass), :has(> .is-position-sticky)) { position: sticky; top: var(--wp-admin--admin-bar--height, 0px); z-index: 25; }
 /* In-page links (#news, a table of contents) stop below the sticky header, on any anchor, not only sections with their own padding. */
-html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-sticky)) { scroll-padding-top: calc(max(var(--wp--custom--animewp--header-height, 5rem), 88px) + var(--wp-admin--admin-bar--height, 0px)); } /* 88px: the header's min-height */
+html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-sticky)) { scroll-padding-top: calc(var(--animewp-sticky-header-height, max(var(--wp--custom--animewp--header-height, 5rem), 88px)) + var(--wp-admin--admin-bar--height, 0px)); } /* Measured by presentation.js; otherwise the token, at least the 88px min-height. */
 /* v1 sections add the header height themselves; keep only their extra 1rem so the total stays as in v1. */
 html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-sticky)) .animewp-section { scroll-margin-top: 1rem; }
 .animewp-header--glass {
