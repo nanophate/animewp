@@ -142,6 +142,8 @@
   /* nav only: core also gives the inner <ul> the wp-block-navigation class, and flex: 0 there squeezed labels to one character per line. */
   .animewp-theme :is(.animewp-header--left, .animewp-header--right) nav.wp-block-navigation { flex: 0; margin-top: 40px; }
   .animewp-theme :is(.animewp-header--left, .animewp-header--right) .wp-block-navigation__container { align-items: var(--navigation-layout-align, flex-start); }
+  /* The menu's default "right" places the phone hamburger; in the left column it would push the links away from the edge they hang from. */
+  .animewp-theme .animewp-header--left :is(nav, ul).items-justified-right { --navigation-layout-align: flex-start; --navigation-layout-justify: flex-start; --navigation-layout-justification-setting: flex-start; }
 }
 @media (max-width: 1000px) {
   .animewp-news-row { grid-template-columns: 1fr; gap: 8px; }
