@@ -11,10 +11,16 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from package import plugin_installation_files
+from release import COMPONENTS, ReleaseError, validate_feed
 
-EXCLUDED = {".git", ".testenv", ".claude", "artifacts", "node_modules", "vendor", "__pycache__"}
+EXCLUDED = {".git", ".testenv", ".claude", ".wp-env.override.json", "artifacts", "node_modules", "vendor", "__pycache__"}
 # npm lockfiles list registry URLs; they are development-only and never packaged.
 URL_AUDIT_EXEMPT = {"package-lock.json"}
+LOCAL_WORKFLOWS = {
+    "./.github/workflows/check.yml",
+    "./.github/workflows/dependency-audit.yml",
+    "./.github/workflows/browser.yml",
+}
 LICENSE_SHA256 = "e1c15e91ce22ab264ab9919b44f16f6420e80f0e44444295853e8236d0470947"
 URL = re.compile(r"(?:https?://|(?<![\w:\\])//|www\.)[A-Za-z0-9][^\s<>\"']*")
 SCHEMA = re.compile(r"https:" + r"/" + r"/schemas\.wp\.org/(?:wp/6\.6/theme|trunk/block)\.json\Z")
@@ -29,6 +35,24 @@ RUNTIME_ENDPOINTS = {
     "plugins/animewp-blocks/src/shared/providers.js": PROVIDER_ENDPOINTS,
     "plugins/animewp-blocks/includes/video-providers.php": PROVIDER_ENDPOINTS,
     "plugins/animewp-blocks/includes/youtube-poster.php": {"https://i.ytimg.com/vi/"},
+}
+# These PHP-only requests fetch update metadata and installation archives; they
+# do not load JavaScript, CSS, fonts, or other browser resources from GitHub.
+UPDATER_ENDPOINTS = {
+    "https://github.com/nanophate/animewp",
+    "https://raw.githubusercontent.com/nanophate/animewp/main/wp-",
+    r"https://github\.com/nanophate/animewp/releases/download/v[0-9.]+/(animewp-blocks|animewp)-[0-9.]+\.zip\z#",
+}
+SERVER_ENDPOINTS = {
+    "shared/distribution-updater.php": UPDATER_ENDPOINTS,
+    "themes/animewp/inc/distribution-updater.php": UPDATER_ENDPOINTS,
+    "plugins/animewp-blocks/includes/distribution-updater.php": UPDATER_ENDPOINTS,
+    "themes/animewp/style.css": {"https://github.com/nanophate/animewp/tree/main/themes/animewp"},
+    "plugins/animewp-blocks/animewp-blocks.php": {"https://github.com/nanophate/animewp/tree/main/plugins/animewp-blocks"},
+    "scripts/release.py": {
+        "https://github.com/{REPOSITORY}", "https://api.github.com", "https://uploads.github.com",
+        "https://api.github.com{self.prefix}/releases/assets/{asset[",
+    },
 }
 SECRET_PATTERNS = (
     re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
@@ -91,6 +115,14 @@ def audit(path):
                 check(isinstance(schema, str) and bool(SCHEMA.fullmatch(schema)), f"{rel}: unexpected machine schema")
                 if isinstance(schema, str) and SCHEMA.fullmatch(schema):
                     audit_text = audit_text.replace(schema, "MACHINE_SCHEMA")
+            if rel in COMPONENTS:
+                validate_feed(obj, rel)
+                if obj["status"] == "published":
+                    # The feed validator checks exact owner/repo/tag/asset URLs.
+                    for field in ("homepage", "download_url"):
+                        audit_text = audit_text.replace(obj[field], "VALIDATED_UPDATE_ENDPOINT")
+        except ReleaseError as error:
+            errors.append(f"{rel}: invalid update feed ({error})")
         except (ValueError, TypeError) as error:
             errors.append(f"{rel}: invalid JSON ({error})")
     if path.suffix == ".svg":
@@ -125,6 +157,8 @@ def audit(path):
             continue
         if match.group() in RUNTIME_ENDPOINTS.get(rel, set()):
             continue
+        if match.group() in SERVER_ENDPOINTS.get(rel, set()):
+            continue
         if rel.startswith("plugins/animewp-blocks/build/") and match.group() in PROVIDER_ENDPOINTS:
             continue
         errors.append(f"{rel}:{audit_text[:match.start()].count(chr(10)) + 1}: external reference (value omitted)")
@@ -158,6 +192,15 @@ def main():
         audit(path)
     theme = ROOT / "themes/animewp"
     plugin = ROOT / "plugins/animewp-blocks"
+    canonical_updater = ROOT / "shared/distribution-updater.php"
+    for target in (theme / "inc/distribution-updater.php", plugin / "includes/distribution-updater.php"):
+        check(target.is_file(), f"Missing installation file: {target.relative_to(theme if target.is_relative_to(theme) else plugin)}")
+        if target.is_file():
+            check(target.read_bytes() == canonical_updater.read_bytes(), f"{target.relative_to(ROOT)}: updater copy differs from shared source")
+    for feed in COMPONENTS:
+        check((ROOT / feed).is_file(), f"Missing update feed: {feed}")
+    check(header((theme / "style.css").read_text(), "Update URI") == "https://github.com/nanophate/animewp/tree/main/themes/animewp", "Theme Update URI must identify this repository and component")
+    check(header((plugin / "animewp-blocks.php").read_text(), "Update URI") == "https://github.com/nanophate/animewp/tree/main/plugins/animewp-blocks", "Plugin Update URI must identify this repository and component")
     theme_version = header((theme / "style.css").read_text(), "Version")
     plugin_version = header((plugin / "animewp-blocks.php").read_text(), "Version")
     check(theme_version == plugin_version, "Theme and plugin release versions must match")
@@ -221,7 +264,10 @@ def main():
             check("enum" not in attr or value in attr["enum"], f"{name}.{key}: default/enum mismatch")
     for workflow in (ROOT / ".github/workflows").glob("*.yml"):
         for action in re.findall(r"uses:\s*([^\s#]+)", workflow.read_text()):
-            check(bool(re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_./-]+@[a-f0-9]{40}", action)), f"{workflow.name}: action must use a full commit SHA")
+            if action.startswith("./"):
+                check(action in LOCAL_WORKFLOWS and (ROOT / action).is_file(), f"{workflow.name}: unknown local workflow {action}")
+            else:
+                check(bool(re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_./-]+@[a-f0-9]{40}", action)), f"{workflow.name}: action must use a full commit SHA")
     if errors:
         print("\n".join(errors), file=sys.stderr)
         raise SystemExit(1)

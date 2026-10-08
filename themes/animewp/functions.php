@@ -9,6 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+require_once __DIR__ . '/inc/distribution-updater.php';
+
 function animewp_setup() {
 	load_theme_textdomain( 'animewp', get_template_directory() . '/languages' );
 	// Block template canvas renders the document title.

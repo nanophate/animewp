@@ -1,6 +1,6 @@
 # AnimeWP v2 の構成
 
-この文書は、テーマと任意の補助プラグインが 2.0.0 のソースに揃った時点の構成を説明します。今後の製品案は [overhaul-plan.md](overhaul-plan.md)、確認できた問題と残作業は [review-2026-10.md](review-2026-10.md) を参照してください。
+この文書は、テーマと任意の補助プラグインを2.0.1へ揃えた構成を説明します。今後の製品案は [overhaul-plan.md](overhaul-plan.md)、最初のv2レビューは [review-2026-10.md](review-2026-10.md)、追加検証は [verification-2.0.1.md](verification-2.0.1.md) を参照してください。
 
 ## テーマとプラグインの境界
 
@@ -22,8 +22,9 @@
 | `plugins/animewp-blocks/src/motion` | 標準・独自ブロックに共通の Motion 属性、編集、公開側コード |
 | `plugins/animewp-blocks/src/shared`、`includes` | 動画プロバイダー、共通表示処理、PHP の認可・URL処理など |
 | `scripts` | ビルド方針、見本生成、翻訳、資産・ZIP検査 |
+| `shared/distribution-updater.php` | 両ZIPへ同期する、外部ライブラリーなしのWordPress更新クライアント |
 | `tests` | 静的検査、保存互換性、フロントエンド回帰、実 WordPress 統合試験 |
-| `.github` | Dependabot、通常CI、日次依存監査、週次セキュリティ検査 |
+| `.github` | Dependabot、通常CI、日次依存監査、週次検査、ブラウザー試験、Release作成 |
 
 ## 保存データと表示
 
@@ -39,7 +40,7 @@ npm は開発ツールに限り、配布コードは自作の JS / CSS と WordP
 
 `scripts/build-policy.cjs` は本番ビルドで実際に出力されるモジュールを確認し、npm ライブラリーの混入を拒否します。結合済みモジュール、遅延チャンク、CSS/Sass の取り込みも対象です。WordPress の提供する外部依存はバンドルへコピーしません。
 
-`scripts/package.py` はテーマとプラグインを別々の ZIP にし、SHA-256 を生成します。プラグインの必須ファイルは各 `block.json` の `file:` 参照、対応する `.asset.php`、Motion のエントリーから導出します。現構成では49ファイルです。開発用依存、ソース、テスト環境をインストール ZIP へ入れません。
+`scripts/package.py` はテーマとプラグインを別々の ZIP にし、SHA-256 を生成します。プラグインの必須ファイルは各 `block.json` の `file:` 参照、対応する `.asset.php`、Motion のエントリー、翻訳と更新クライアントから導出します。開発用の node_modules やテスト環境はインストール ZIP へ入れません。プラグイン自身の編集用 src は、ビルド済みコードと一緒に同梱します。リポジトリ全体のソースアーカイブとは別の ZIP です。
 
 現在の検査はテーマ・プラグインの版番号が一致することを要求します。初回の配布自動化も共通の版番号・タグで設計し、WordPress 側では各コンポーネントの更新を独立して適用します。別々に版番号を進める場合は、この検査と配布フローを変更します。
 
@@ -52,11 +53,12 @@ npm は開発ツールに限り、配布コードは自作の JS / CSS と WordP
 | JS 回帰 | jsdom 内の DOM、イベント、タイマー、エラー伝播、コンパイル後 CSS の契約 |
 | PHP / WordPress | PHP 8.0 / 8.3 の構文、PHPCS、Plugin Check、Theme Check、実 WordPress の権限・nonce・下書き・設定保持・HTTP表示 |
 | 依存監査 | lockfile 全体と実行時依存の監査、開発ツールの既知 advisory の範囲・期限確認 |
+| 実ブラウザー・ZIP | Chromium / Firefox / WebKitの操作、旧Releaseからの置換、WordPress標準の更新通知・適用、保存データの保持 |
 
-jsdom は実ブラウザーのレイアウト、映像再生、支援技術を検証しません。実 ZIP を管理画面から更新する試験、保存済みテンプレートを含む更新前後の比較、複数ブラウザーでの操作は別途必要です。
+jsdomの回帰試験とは別に、Playwrightと使い捨てWordPressでブラウザー・ZIP更新を確認します。WebKitはSafari実機そのものではなく、支援技術、実際の外部動画サービスの再生、運用先固有の組合せは別途確認します。
 
 ## 更新配信の状態
 
-ソースの版番号は2.0.0ですが、レビュー開始時点の最新 Release は1.3.0です。更新 JSON、WordPress の更新情報取得コード、Release 自動作成はまだ実装されていません。非公開リポジトリの Raw と Release を、そのまま認証なしの各 WordPress サイトから取得する構成にはできません。
+2.0.1はWordPressの標準更新フィルター、HTTP、キャッシュ、アップグレーダーAPIを使います。両ZIPが同じ実装を持ち、両方ロードされた場合は新しい実装を一度だけ登録します。テーマだけ、または別テーマとプラグインだけでも動作します。両コンポーネントが無効なら更新コードはロードされません。
 
-今後は公開先を決め、テーマ用・プラグイン用の JSON と、版番号を固定した2つの ZIP を用意します。詳細と実装順は [maintenance.md](maintenance.md) と [レビューの残作業](review-2026-10.md#残作業と完了条件) にまとめています。
+固定JSONの検証、必要環境、取得先、ZIPのSHA-256を確認してから標準アップグレーダーへ渡します。JSONはReleaseのZIP公開確認後にのみ進めます。`main`への新バージョンのマージで検証済みDraftを作り、公開はpublicリポジトリかつ明示的な`publish=true`実行が条件です。初期JSONは`status: unpublished`です。詳細と復旧手順は [maintenance.md](maintenance.md) を参照してください。
