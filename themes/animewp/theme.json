@@ -92,22 +92,22 @@
         {
           "slug": "30",
           "name": "標準",
-          "size": "24px"
+          "size": "clamp(16px, 2.5vw, 24px)"
         },
         {
           "slug": "40",
           "name": "中",
-          "size": "40px"
+          "size": "clamp(24px, 4vw, 40px)"
         },
         {
           "slug": "50",
           "name": "大",
-          "size": "64px"
+          "size": "clamp(32px, 5vw, 64px)"
         },
         {
           "slug": "60",
           "name": "余白",
-          "size": "96px"
+          "size": "clamp(48px, 7.5vw, 96px)"
         }
       ]
     },

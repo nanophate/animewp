@@ -22,4 +22,31 @@
             motion.addEventListener('change', function () { if (motion.matches) { pending.forEach(show); observer.disconnect(); } });
         } catch (error) { pending.forEach(show); if (observer) { observer.disconnect(); } }
     }
+    // A sticky header's real height (logo, illustration, shrink) sets how far
+    // in-page links stop below it. Without this, CSS uses the header-height token.
+    var header = document.querySelector('header.wp-block-template-part');
+    if (header && 'ResizeObserver' in window) {
+        var first = true;
+        var measure = function () {
+            var position = window.getComputedStyle(header).position;
+            if (position === 'sticky' || position === 'fixed') {
+                document.documentElement.style.setProperty('--animewp-sticky-header-height', header.offsetHeight + 'px');
+                // A page opened at #anchor jumped before this ran; settle it with the real height.
+                if (first) {
+                    first = false;
+                    var fragment = window.location.hash.slice(1);
+                    var target = fragment && document.getElementById(fragment);
+                    if (fragment && !target) {
+                        // Literal percent signs are valid in IDs; a malformed URI must not break resize updates.
+                        try { target = document.getElementById(decodeURIComponent(fragment)); } catch (error) { /* Keep the browser's fragment position. */ }
+                    }
+                    if (target) { target.scrollIntoView(); }
+                }
+            } else {
+                document.documentElement.style.removeProperty('--animewp-sticky-header-height');
+            }
+        };
+        new ResizeObserver(measure).observe(header);
+        window.addEventListener('resize', measure, { passive: true });
+    }
 }());

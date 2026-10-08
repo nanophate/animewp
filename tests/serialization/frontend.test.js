@@ -88,6 +88,47 @@ function carousel( t, options = {} ) {
 	return { ...env, api, track, root: track.parentElement, input: track.querySelector( 'input' ), outside: document.querySelector( '#outside' ) };
 }
 
+test( 'sticky header fragment correction handles literal and encoded IDs without repeated jumps', ( t ) => {
+	const cases = [
+		{ hash: '#news', html: '<h2 id="news">News</h2>', target: 'news' },
+		{ hash: '#%E3%83%8B%E3%83%A5%E3%83%BC%E3%82%B9', html: '<h2 id="ニュース">News</h2>', target: 'ニュース' },
+		{ hash: '#100%', html: '<h2 id="100%">Percent</h2>', target: '100%' },
+		{ hash: '#literal%20id', html: '<h2 id="literal%20id">Literal</h2><h2 id="literal id">Decoded</h2>', target: 'literal%20id' },
+		{ hash: '#%E0%A4%A', html: '', target: null },
+		{ hash: '#missing', html: '', target: null },
+		{ hash: '', html: '', target: null },
+	];
+	const presentation = fs.readFileSync( path.resolve( __dirname, '../../themes/animewp/assets/js/presentation.js' ), 'utf8' );
+	for ( const scenario of cases ) {
+		const env = environment( t, '<header class="wp-block-template-part" style="position:sticky"></header>' + scenario.html + '<h2 id="later">Later</h2>', true );
+		env.window.history.replaceState( null, '', '/' + scenario.hash );
+		const header = env.document.querySelector( 'header' );
+		let height = 120;
+		Object.defineProperty( header, 'offsetHeight', { get: () => height } );
+		let measure;
+		env.window.ResizeObserver = class {
+			constructor( callback ) { measure = callback; }
+			observe( node ) { assert.equal( node, header ); }
+		};
+		const scrolls = [];
+		env.window.HTMLElement.prototype.scrollIntoView = function () { scrolls.push( this.id ); };
+		env.window.eval( presentation );
+		assert.doesNotThrow( () => measure(), scenario.hash );
+		assert.deepEqual( scrolls, scenario.target ? [ scenario.target ] : [], scenario.hash );
+		assert.equal( env.document.documentElement.style.getPropertyValue( '--animewp-sticky-header-height' ), '120px' );
+		// A new fragment or a resized logo must update the offset without taking
+		// over scrolling after the initial correction, including a malformed URL.
+		env.window.history.replaceState( null, '', '/#later' );
+		height = 160;
+		assert.doesNotThrow( () => measure(), scenario.hash );
+		assert.equal( env.document.documentElement.style.getPropertyValue( '--animewp-sticky-header-height' ), '160px' );
+		assert.deepEqual( scrolls, scenario.target ? [ scenario.target ] : [], scenario.hash );
+		header.style.position = 'static';
+		env.window.dispatchEvent( new env.window.Event( 'resize' ) );
+		assert.equal( env.document.documentElement.style.getPropertyValue( '--animewp-sticky-header-height' ), '' );
+	}
+} );
+
 test( 'carousel advances normally and its explicit pause survives other events', async ( t ) => {
 	const env = carousel( t );
 	await env.tick( 1000 );
@@ -268,6 +309,20 @@ test( 'letter motion preserves paragraph text and the name of an embedded link',
 	assert.equal( exposedText( paragraph ), 'Watch the trailer now.' );
 	assert.equal( paragraph.hasAttribute( 'aria-label' ), false );
 	assert.ok( paragraph.querySelector( '.animewp-letter' ) );
+} );
+
+test( 'carousel dot names read slide titles once, after letter motion and across elements', ( t ) => {
+	const env = environment( t, '<div class="wp-block-animewp-carousel has-dots-dots"><div class="animewp-carousel__track">'
+		+ '<div><h1 class="animewp-motion has-entrance has-entrance-letters">Title</h1></div>'
+		+ '<figure><figcaption><span>TRAILER 01</span><span>Main</span></figcaption></figure>'
+		+ '</div></div>' );
+	// Letter motion runs first here, so its aria-hidden copy is in the heading when dots are named.
+	env.run( 'motion/view.js' );
+	env.run( 'blocks/carousel/view.js', ( code ) =>
+		source( 'shared/engines/carousel.js' ).replace( 'export function createCarousel', 'function createCarousel' )
+		+ '\n' + code.replace( /^import .*$/m, '' ) );
+	const names = [ ...env.document.querySelectorAll( '.animewp-carousel__dot' ) ].map( ( dot ) => dot.getAttribute( 'aria-label' ) );
+	assert.deepEqual( names, [ '1 / 2 Title', '2 / 2 TRAILER 01 Main' ] );
 } );
 
 test( 'letter motion retains an explicit accessible label supplied by the author', ( t ) => {

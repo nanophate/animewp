@@ -42,6 +42,8 @@ test( 'plugin examples show posts in News, fit narrow screens and leave anchor h
 				await expect( letters.first() ).toBeVisible();
 				await expect.poll( () => letters.evaluateAll( ( nodes ) => Math.min( ...nodes.map( ( node ) => Number( getComputedStyle( node ).opacity ) ) ) ) ).toBe( 1 );
 			}
+			await expect( page.getByRole( 'region', { name: 'キービジュアル', exact: true } ).locator( '.animewp-carousel__dot' ).first() ).toHaveAccessibleName( '1 / 2 作品タイトル' );
+			await expect( page.getByRole( 'region', { name: '映像', exact: true } ).locator( '.animewp-carousel__dot' ).first() ).toHaveAccessibleName( '1 / 3 TRAILER 01 メイン映像' );
 			// Record the visible hero before leaving it; offscreen entrance animations
 			// have not run yet and should not be mistaken for missing page content.
 			await capture( page, key + '-' + width + '-hero', { fullPage: false } );

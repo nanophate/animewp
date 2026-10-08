@@ -389,6 +389,9 @@ class LocalGitTests(unittest.TestCase):
             git("init", "--initial-branch=main")
             git("config", "user.email", "test@example.invalid")
             git("config", "user.name", "Release Test")
+            # A developer's global signing setup (e.g. a password manager) must not block the fixture.
+            git("config", "commit.gpgsign", "false")
+            git("config", "tag.gpgsign", "false")
             for relative in ("themes/animewp/style.css", "plugins/animewp-blocks/animewp-blocks.php"):
                 path = root / relative
                 path.parent.mkdir(parents=True)
