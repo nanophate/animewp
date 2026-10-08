@@ -99,10 +99,15 @@ class Client:
         require('..' not in urllib.parse.urlsplit(path).path.split('/'), 'unexpected_api_endpoint')
         url = API + path
         limit = MAX_DOWNLOAD_BYTES if binary else MAX_API_BYTES
+        # Actions downloads negotiate a redirect with the normal GitHub JSON
+        # media type. Only the Release asset API needs octet-stream to select
+        # the payload instead of its metadata; using it for Actions gives 415.
+        release_payload = binary and re.fullmatch(re.escape(PREFIX) + r'/releases/assets/[1-9]\d*', path)
+        api_accept = 'application/octet-stream' if release_payload else 'application/vnd.github+json'
         authenticated = True
         for attempt in range(5):
             headers = {'User-Agent': 'animewp-private-publication-audit',
-                       'Accept': 'application/octet-stream' if binary else 'application/vnd.github+json',
+                       'Accept': api_accept if authenticated else 'application/octet-stream',
                        'X-GitHub-Api-Version': '2022-11-28'}
             request = urllib.request.Request(url, headers=headers, method='GET')
             if authenticated:
@@ -444,6 +449,7 @@ class Audit:
                        'total_network_bytes': MAX_TOTAL_NETWORK, 'total_corpus_bytes': MAX_TOTAL_EXPANDED},
             'limitations': [
                 'Only currently returned REST objects and surviving downloads were collected; deleted objects, edited prior revisions, cached copies, inaccessible draft reviews and external forks are not enumerable.',
+                'Read-only GITHUB_TOKEN does not enumerate Draft Releases: GitHub requires push access for their listings. Verify the known Draft notes/assets separately through existing authorized access and validated Release candidate hashes; do not expand this job to write permissions.',
                 'Expired, removed, unavailable and size-limited historical objects are explicit gaps, not successful scans.',
                 'Current/in-progress runs at the cutoff are explicit temporal exclusions; review their completed logs and new Release/assets separately before any public decision.',
                 'Issue/PR attachments and arbitrary links were inventoried as candidates, never followed.',

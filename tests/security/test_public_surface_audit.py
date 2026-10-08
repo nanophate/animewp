@@ -53,6 +53,35 @@ class CollectorTest(unittest.TestCase):
             with self.subTest(url=url), self.assertRaises(audit.Gap):
                 audit.validate_download_redirect(url)
 
+    def test_actions_binary_endpoints_use_json_accept_but_release_payload_uses_octet(self):
+        endpoints = (
+            ('/actions/runs/1/attempts/1/logs', 'application/vnd.github+json'),
+            ('/actions/artifacts/1/zip', 'application/vnd.github+json'),
+            ('/releases/assets/1', 'application/octet-stream'),
+        )
+        for endpoint, expected in endpoints:
+            with self.subTest(endpoint=endpoint):
+                requests = []
+                class Opener:
+                    def open(self, request, timeout):
+                        requests.append(request)
+                        if len(requests) == 1:
+                            # Model the real Actions API's 415 response to an
+                            # unsupported media type before its signed redirect.
+                            if request.get_header('Accept') != expected:
+                                raise urllib.error.HTTPError(request.full_url, 415, 'media type', {}, None)
+                            raise urllib.error.HTTPError(request.full_url, 302, 'redirect',
+                                {'Location': 'https://objects.githubusercontent.com/asset?sig=synthetic'}, None)
+                        return Response(b'payload')
+                client = audit.Client('synthetic-test-token')
+                client.opener = Opener()
+                data, _ = client.request(audit.PREFIX + endpoint, binary=True)
+                self.assertEqual(data, b'payload')
+                self.assertEqual(requests[0].get_header('Accept'), expected)
+                self.assertTrue(requests[0].has_header('Authorization'))
+                self.assertFalse(requests[1].has_header('Authorization'))
+                self.assertEqual(requests[1].get_header('Accept'), 'application/octet-stream')
+
     def test_pagination_ignores_remote_link_target(self):
         client = audit.Client('synthetic-test-token')
         calls = []
