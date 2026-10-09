@@ -150,6 +150,10 @@ test( 'hero header keeps the artwork clear and follows the cover boundary withou
 	await expect( header ).toHaveClass( /is-scrolled-active/ );
 	await expect( menu ).not.toBeVisible();
 	await expect( header.getByRole( 'link' ).first() ).toBeVisible();
+	// Screenshot the settled navigation, not an in-between animation frame.
+	await expect.poll( () => header.locator( '.wp-block-navigation__container' ).first().evaluate(
+		( element ) => getComputedStyle( element ).opacity
+	) ).toBe( '1' );
 	expect( await documentTop( page.locator( 'main' ) ) ).toBeCloseTo( initialMainTop, 0 );
 	expect( ( await part.boundingBox() ).height ).toBeLessThan( 80 );
 	await capture( page, 'header-hero-after-cover-end', { fullPage: false } );
@@ -229,6 +233,7 @@ test.describe( 'header navigation without JavaScript', () => {
 		expect( await documentTop( page.locator( 'main' ) ) ).toBeLessThanOrEqual( 1 );
 		await expect( header.getByRole( 'link' ).first() ).toBeVisible();
 		await expect( header.locator( '.wp-block-navigation__responsive-container-open' ) ).not.toBeVisible();
+		await expect( header.locator( '.wp-block-navigation__responsive-container-close' ) ).not.toBeVisible();
 		expect( await page.evaluate( () => document.documentElement.scrollWidth ) ).toBeLessThanOrEqual( 376 );
 		await capture( page, 'header-hero-no-javascript', { fullPage: false } );
 		await header.getByRole( 'link' ).first().click();

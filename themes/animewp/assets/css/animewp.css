@@ -293,7 +293,8 @@ html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-
   }
 }
 @keyframes animewp-header-links-reveal {
-  from { opacity: 0; translate: 0 -4px; }
+  /* Readable even during the brief transition into the glass bar. */
+  from { opacity: 0.75; translate: 0 -2px; }
   to { opacity: 1; translate: 0 0; }
 }
 /* One Navigation block owns both views, including the saved menu and focus.
@@ -304,6 +305,9 @@ html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-
   position: static;
   width: auto;
 }
+/* Do not display Core's close button when only the normal fallback links
+ * are visible (no JavaScript, plugin, or usable Cover). */
+.animewp-header--hero:not(.animewp-scroll-ready) .wp-block-navigation__responsive-container:not(.is-menu-open) .wp-block-navigation__responsive-container-close { display: none; }
 .animewp-header--hero:not(.animewp-scroll-ready) .wp-block-navigation__responsive-container-content { padding-block-start: 0; }
 .animewp-header--hero:not(.animewp-scroll-ready) .wp-block-navigation__container { flex-wrap: wrap; }
 .animewp-header--hero.animewp-scroll-ready:not(.is-scrolled-active)::before { opacity: 0; }
