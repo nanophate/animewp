@@ -53,14 +53,15 @@ def plan(event_name, ref, event):
         tag = ref[len(TAG_PREFIX):]
         release.tag_version(tag)
         release.require(event.get("created") is True, "Tag updates are not release requests")
-        # after is the ref object (a commit for lightweight tags, a tag object
-        # for annotated tags). Resolve to a commit only after this race check.
+        # Accept the pushed ref object or its peeled commit. An annotated tag
+        # has distinct object/commit SHAs; either representation must identify
+        # this same immutable code, not a ref that moved to a different commit.
         after = event.get("after")
         release.require(isinstance(after, str) and re.fullmatch(SHA_PATTERN, after),
                         "Invalid tag event SHA")
-        release.require(release.git("rev-parse", "--verify", ref) == after,
-                        "Tag changed since the triggering event")
         source = release.resolve_tag(tag)
+        release.require(after in (release.git("rev-parse", "--verify", ref), source),
+                        "Tag changed since the triggering event")
         live = True
     elif event_name == "workflow_dispatch":
         release.require(ref == MAIN_REF, "Manual recovery must run from main")
