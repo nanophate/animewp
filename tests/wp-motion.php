@@ -2,10 +2,9 @@
 /** Motion attributes must survive Core rendering with bounded, per-block values. */
 if ( ! defined( 'WP_CLI' ) || ! WP_CLI ) { exit( 1 ); }
 if ( ! function_exists( 'Animewp\\Blocks\\motion_normalize' ) ) { WP_CLI::error( 'AnimeWP Blocks must be active for motion regressions.' ); }
-$results = array();
+$GLOBALS['animewp_motion_results'] = array();
 function animewp_motion_check( $name, $pass ) {
-	global $results;
-	$results[] = array( 'test' => $name, 'pass' => (bool) $pass );
+	$GLOBALS['animewp_motion_results'][] = array( 'test' => $name, 'pass' => (bool) $pass );
 	if ( ! $pass ) { WP_CLI::warning( $name ); }
 }
 function animewp_motion_fixture( $motion, $core_attributes = array() ) {
@@ -60,5 +59,5 @@ foreach ( array(
 	animewp_motion_check( 'header surface carries the native ' . $case[0], str_contains( $rendered['style'], '--animewp-header-background:' . $case[2] . ';' ) );
 }
 
-WP_CLI::line( wp_json_encode( array( 'results' => $results ), JSON_PRETTY_PRINT ) );
-foreach ( $results as $result ) { if ( ! $result['pass'] ) { WP_CLI::halt( 1 ); } }
+WP_CLI::line( wp_json_encode( array( 'results' => $GLOBALS['animewp_motion_results'] ), JSON_PRETTY_PRINT ) );
+foreach ( $GLOBALS['animewp_motion_results'] as $result ) { if ( ! $result['pass'] ) { WP_CLI::halt( 1 ); } }

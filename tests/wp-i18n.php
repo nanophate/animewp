@@ -4,10 +4,9 @@ if ( ! defined( 'WP_CLI' ) || ! WP_CLI ) {
 	exit( 1 );
 }
 
-$animewp_i18n_results = array();
+$GLOBALS['animewp_i18n_results'] = array();
 function animewp_i18n_test( string $label, bool $condition ): void {
-	global $animewp_i18n_results;
-	$animewp_i18n_results[] = array( 'test' => $label, 'pass' => $condition );
+	$GLOBALS['animewp_i18n_results'][] = array( 'test' => $label, 'pass' => $condition );
 	if ( ! $condition ) {
 		WP_CLI::warning( $label );
 	}
@@ -82,8 +81,8 @@ foreach ( $animewp_sources as $animewp_handle => $animewp_source ) {
 remove_filter( 'locale', $animewp_japanese );
 remove_filter( 'determine_locale', $animewp_japanese );
 unload_textdomain( 'animewp-blocks', true );
-WP_CLI::line( wp_json_encode( array( 'wordpress' => get_bloginfo( 'version' ), 'results' => $animewp_i18n_results ), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE ) );
-foreach ( $animewp_i18n_results as $animewp_result ) {
+WP_CLI::line( wp_json_encode( array( 'wordpress' => get_bloginfo( 'version' ), 'results' => $GLOBALS['animewp_i18n_results'] ), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE ) );
+foreach ( $GLOBALS['animewp_i18n_results'] as $animewp_result ) {
 	if ( ! $animewp_result['pass'] ) {
 		WP_CLI::halt( 1 );
 	}

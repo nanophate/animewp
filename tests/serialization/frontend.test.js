@@ -538,6 +538,14 @@ test( 'per-block scroll distances have strict boundaries while the legacy marker
 		}
 		assert.equal( env.document.documentElement.classList.contains( 'animewp-is-scrolled' ), top > 64 );
 	}
+	// Older custom CSS can also observe this marker on pages that initialize
+	// the scroll runtime through parallax alone, without any scroll actions.
+	const parallax = scrollMotion( t, '<div class="animewp-motion has-parallax"></div>' );
+	parallax.run( 'motion/view.js' );
+	await parallax.scroll( 65 );
+	assert.equal( parallax.document.documentElement.classList.contains( 'animewp-is-scrolled' ), true );
+	await parallax.scroll( 0 );
+	assert.equal( parallax.document.documentElement.classList.contains( 'animewp-is-scrolled' ), false );
 } );
 
 test( 'hero selection skips hidden and collapsed covers and measures the outer carousel', async ( t ) => {

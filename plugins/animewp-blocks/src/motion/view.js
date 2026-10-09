@@ -168,12 +168,12 @@ function firstHero( element ) {
 }
 
 function updateScrolled() {
-	if ( ! scrolled.length ) {
-		return;
-	}
 	// Retain the previous public marker for saved custom CSS. New blocks use
 	// their own state, so one block's threshold never controls another block.
 	root.classList.toggle( 'animewp-is-scrolled', window.scrollY > 64 );
+	if ( ! scrolled.length ) {
+		return;
+	}
 	let changed = false;
 	const entries = scrolled.map( ( item ) => {
 		const hero = item.trigger === 'hero' ? firstHero( item.element ) : null;
