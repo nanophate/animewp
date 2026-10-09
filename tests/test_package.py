@@ -100,6 +100,32 @@ class PackageAssetsTests(unittest.TestCase):
                     finally:
                         path.write_bytes(content)
 
+            # The historical publication report and its JSON evidence contain
+            # reference links, but must never turn into a blanket URL exemption.
+            forbidden = "https://unapproved.example/private-path"
+            for relative in (
+                "docs/public-readiness-2026-10-08.md",
+                "docs/public-readiness-evidence-2026-10-08.json",
+            ):
+                with self.subTest(unapproved_reference=relative):
+                    document = root / relative
+                    original = document.read_text(encoding="utf-8")
+                    if relative.endswith(".json"):
+                        old_url = "https://github.com/nanophate/animewp/actions/runs/37780327801"
+                        self.assertIn(old_url, original)
+                        changed = original.replace(old_url, forbidden, 1)
+                        json.loads(changed)
+                    else:
+                        changed = original + "\n" + forbidden + "\n"
+                    document.write_text(changed, encoding="utf-8")
+                    try:
+                        result = audit()
+                        self.assertNotEqual(result.returncode, 0)
+                        self.assertIn(relative + ":", result.stderr)
+                        self.assertIn("external reference", result.stderr)
+                    finally:
+                        document.write_text(original, encoding="utf-8")
+
 
 if __name__ == "__main__":
     unittest.main()
