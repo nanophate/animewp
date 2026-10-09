@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Validate two installation ZIPs, stage a Release, then atomically publish feeds.
+"""Validate two installation ZIPs, stage a Release, and propose reviewed update feeds.
 
 Only the publish subcommand writes to GitHub. Private repositories always stop
-at the draft; --publish true is also required before publishing public releases.
+at the draft; --publish true is required before publishing public releases.
+The publish command never updates protected main: it opens a two-feed PR.
 """
 import argparse
 import base64
@@ -90,6 +91,16 @@ def source_checkout(sha):
     require(isinstance(sha, str) and re.fullmatch(r"[0-9a-f]{40}", sha), "Invalid source SHA")
     require(git("rev-parse", "HEAD") == sha, "Checkout does not match the validated source")
     git("merge-base", "--is-ancestor", sha, "refs/remotes/origin/main")
+
+
+def publisher_checkout(source, tooling):
+    """Use trusted main tooling even when the immutable Release tag is older."""
+    require(isinstance(tooling, str) and re.fullmatch(r"[0-9a-f]{40}", tooling),
+            "RELEASE_TOOL_SHA must be a pinned main commit")
+    require(git("rev-parse", "HEAD") == tooling, "Publishing checkout does not match main tooling SHA")
+    require(isinstance(source, str) and re.fullmatch(r"[0-9a-f]{40}", source), "Invalid Release source SHA")
+    git("merge-base", "--is-ancestor", tooling, "refs/remotes/origin/main")
+    git("merge-base", "--is-ancestor", source, "refs/remotes/origin/main")
 
 
 def auto_candidate():
@@ -345,21 +356,88 @@ class GitHub:
         return self.request("PATCH", self.prefix + f"/releases/{release['id']}",
                             {"draft": False, "prerelease": False, "make_latest": "legacy"})
 
-    def commit_feeds(self, parent, tree, feeds):
-        current = self.request("GET", self.prefix + "/git/ref/heads/main")["object"]["sha"]
-        require(current == parent, "main changed before feed commit; rerun the same release")
-        tree_data = self.request("POST", self.prefix + "/git/trees", {
-            "base_tree": tree, "tree": [{"path": path, "mode": "100644", "type": "blob", "content": dumps(feed)}
-                                        for path, feed in sorted(feeds.items())],
-        })
-        commit = self.request("POST", self.prefix + "/git/commits", {
-            "message": "Publish WordPress update feeds for v" + feeds["wp-theme.json"]["version"],
-            "tree": tree_data["sha"], "parents": [parent],
-        })
-        # A concurrent commit makes this non-fast-forward. Never force or bypass
-        # branch protection; an orphaned commit does not alter either live feed.
-        self.request("PATCH", self.prefix + "/git/refs/heads/main", {"sha": commit["sha"], "force": False})
-        return commit["sha"]
+    def stage_feed_pr(self, parent, tree, feeds, tag, source):
+        """Stage exactly two feeds against current main and request human-reviewed merge.
+
+        No force push, no main ref write, and no automatic approval/merge. An
+        existing branch is reusable only if it has the exact expected tree
+        and the single parent we inspected: an altered/stale branch fails closed.
+        """
+        version = tag_version(tag)
+        require(all(feeds[path]["version"] == version for path in COMPONENTS),
+                "The two feed versions must match the release tag")
+        require(re.fullmatch(r"[0-9a-f]{40}", source), "Invalid release source SHA")
+        branch = "release/feeds-" + tag
+        branch_ref = self.prefix + "/git/ref/heads/" + branch
+        main_ref = self.prefix + "/git/ref/heads/main"
+        require(self.request("GET", main_ref)["object"]["sha"] == parent,
+                "main changed before staging the feed PR; rerun the same release")
+        expected_tree = self.request("POST", self.prefix + "/git/trees", {
+            "base_tree": tree, "tree": [
+                {"path": path, "mode": "100644", "type": "blob", "content": dumps(feed)}
+                for path, feed in sorted(feeds.items())
+            ],
+        })["sha"]
+        try:
+            branch_sha = self.request("GET", branch_ref)["object"]["sha"]
+        except APIError as error:
+            if error.status != 404:
+                raise
+            new_commit = self.request("POST", self.prefix + "/git/commits", {
+                "message": "Propose reviewed WordPress update feeds for " + tag,
+                "tree": expected_tree, "parents": [parent],
+            })
+            branch_sha = new_commit["sha"]
+            # GitHub's create-ref API cannot overwrite an existing branch.
+            # A competing workflow gets 422 and must verify the winning ref.
+            try:
+                self.request("POST", self.prefix + "/git/refs",
+                             {"ref": "refs/heads/" + branch, "sha": branch_sha})
+            except APIError as error:
+                if error.status != 422:
+                    raise
+                branch_sha = self.request("GET", branch_ref)["object"]["sha"]
+        saved = self.request("GET", self.prefix + "/git/commits/" + branch_sha)
+        require([item["sha"] for item in saved.get("parents", [])] == [parent],
+                "Existing feed branch is based on different main; review/recreate it without force push")
+        require(saved["tree"]["sha"] == expected_tree,
+                "Existing feed branch has different files; do not overwrite it")
+        require(self.request("GET", main_ref)["object"]["sha"] == parent,
+                "main changed during feed PR preparation; update the branch through normal review")
+        prs = self.request("GET", self.prefix + "/pulls?state=all&head=" +
+                           urllib.parse.quote("nanophate:" + branch, safe="") + "&per_page=100")
+        require(isinstance(prs, list) and len(prs) <= 1, "Multiple PRs for the same feed branch")
+        if prs:
+            pr = prs[0]
+        else:
+            try:
+                pr = self.request("POST", self.prefix + "/pulls", {
+                    "title": "Publish verified AnimeWP " + tag + " update feeds",
+                    "head": branch, "base": "main", "draft": False,
+                    "body": (
+                        "Proposes the theme and plugin update feeds together for " + tag + ".\n\n"
+                        "Verified source commit: `" + source + "`.\n"
+                        "The Release assets were published and independently fetched with matching SHA-256 before "
+                        "this PR was created. Both JSON files are inert until the PR is merged.\n\n"
+                        "Review the exact two-file diff and required checks. GitHub may require approving "
+                        "CI execution on a PR opened by GITHUB_TOKEN. Merge normally; do not bypass branch protection."
+                    ),
+                })
+            except APIError as error:
+                if error.status in (403, 422):
+                    raise ReleaseError(
+                        "Verified feed branch " + branch + " is staged, but GitHub did not create the PR. "
+                        "Enable 'Allow GitHub Actions to create and approve pull requests' in "
+                        "Settings > Actions > General, or open the PR manually from that branch; "
+                        "then rerun Release with the same tag and publish=true."
+                    ) from error
+                raise
+        require(pr.get("state") == "open" and pr.get("base", {}).get("ref") == "main"
+                and pr.get("head", {}).get("ref") == branch and pr["head"]["sha"] == branch_sha,
+                "Feed PR does not target the reviewed branch/commit on main")
+        require(str(pr.get("html_url", "")).startswith(HOMEPAGE + "/pull/"),
+                "Unexpected feed PR URL")
+        return pr["html_url"]
 
 
 def final_feeds(candidate_data, timestamp):
@@ -425,13 +503,16 @@ def publish(api, artifacts, data, live, anonymous=download):
         print("This exact release is already in both live feeds; nothing to update.")
         return "unchanged"
     try:
-        commit = api.commit_feeds(parent, tree, feeds)
+        pr_url = api.stage_feed_pr(parent, tree, feeds, tag, source)
     except ReleaseError as error:
-        raise ReleaseError(f"Release is published, but live feeds were not updated: {error}\n"
-                           f"Resolve the main-branch protection/conflict using the normal review process, then rerun Release with tag {tag} and publish=true. "
-                           "Do not delete assets, move tags, or force-push main.") from error
-    print(f"Published both WordPress update feeds in one commit: {commit}")
-    return "published"
+        raise ReleaseError(
+            f"Release is published, but the feed PR is not ready: {error}\n"
+            f"Fix the reviewed branch/PR and rerun Release with tag {tag} and publish=true. "
+            "The live feeds remain unchanged; do not move tags or force-push main."
+        ) from error
+    print(f"Release published. Review and merge the two-feed PR: {pr_url}. "
+          "WordPress update feeds remain unchanged until the PR is merged.")
+    return "pending"
 
 
 def main():
@@ -478,9 +559,11 @@ def main():
     else:
         data = json.loads((args.candidate / "candidate.json").read_text())
         require(data == candidate(args.candidate, data["tag"], data["source_sha"], data["create_tag"]), "Candidate metadata does not match the ZIPs")
-        source_checkout(data["source_sha"])
+        # The immutable ZIP candidate may predate the release tooling on main.
+        # Never execute a tag's stale publisher or an unreviewed workflow branch.
+        publisher_checkout(data["source_sha"], os.environ.get("RELEASE_TOOL_SHA"))
         if not data["create_tag"]:
-            require(resolve_tag(data["tag"], require_checkout=True) == data["source_sha"], "Checkout/tag differs from candidate")
+            require(resolve_tag(data["tag"]) == data["source_sha"], "Checkout/tag differs from candidate")
         publish(GitHub(os.environ.get("GITHUB_TOKEN", "")), args.candidate, data, args.publish == "true")
 
 

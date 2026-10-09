@@ -11,7 +11,7 @@ on:
         type: string
         required: true
       publish:
-        description: Publish the release and both update feeds (public repository only)
+        description: Publish the Release and open a reviewed update-feed PR (public only)
         type: boolean
         required: false
         default: false
@@ -27,12 +27,13 @@ concurrency:
 
 jobs:
   resolve:
-    if: github.repository == 'nanophate/animewp'
+    if: github.repository == 'nanophate/animewp' && (github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/main')
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     outputs:
       tag: ${{ steps.source.outputs.tag }}
       sha: ${{ steps.source.outputs.sha }}
+      tool_sha: ${{ steps.source.outputs.tool_sha }}
       version: ${{ steps.source.outputs.version }}
       skip: ${{ steps.source.outputs.skip }}
       create_tag: ${{ steps.source.outputs.create_tag }}
@@ -53,6 +54,8 @@ jobs:
             python3 scripts/release.py resolve --auto --github-output "$GITHUB_OUTPUT"
           else
             python3 scripts/release.py resolve --tag "$RELEASE_TAG" --github-output "$GITHUB_OUTPUT"
+          # Pin the already-reviewed main publisher separately from the old tag.
+          echo "tool_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
           fi
 
   source-checks:
@@ -121,11 +124,12 @@ jobs:
     timeout-minutes: 15
     permissions:
       contents: write
+      pull-requests: write
     steps:
-      - name: Check out the verified source without stored credentials
+      - name: Check out the reviewed main publishing tool without stored credentials
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
-          ref: ${{ needs.resolve.outputs.sha }}
+          ref: ${{ needs.resolve.outputs.tool_sha }}
           fetch-depth: 0
           persist-credentials: false
       - name: Retrieve this run's verified candidate
@@ -133,8 +137,9 @@ jobs:
         with:
           name: release-candidate-${{ needs.resolve.outputs.sha }}
           path: artifacts/release-candidate/
-      - name: Stage a draft, or explicitly publish and atomically advance both feeds
+      - name: Stage a draft or publish verified assets and propose reviewed feed PR
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          RELEASE_TOOL_SHA: ${{ needs.resolve.outputs.tool_sha }}
           PUBLISH: ${{ github.event_name == 'workflow_dispatch' && inputs.publish && 'true' || 'false' }}
         run: python3 scripts/release.py publish --candidate artifacts/release-candidate --publish "$PUBLISH"
