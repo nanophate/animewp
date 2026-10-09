@@ -27,9 +27,12 @@ test( 'core-only basic is readable at desktop and 375px', async ( { page } ) => 
 	} finally { wp( 'plugin', 'activate', 'animewp-blocks' ); }
 } );
 
-test( 'plugin examples show posts in News, fit narrow screens and leave anchor headings visible', async ( { page } ) => {
-	for ( const key of [ 'simple', 'blur', 'drift' ] ) {
-		for ( const width of [ 1280, 375 ] ) {
+// Each width/example gets an isolated Playwright page and context. Reusing
+// one page through six animated pages could intermittently close WebKit and
+// made it impossible to tell which case failed.
+for ( const key of [ 'simple', 'blur', 'drift' ] ) {
+	for ( const width of [ 1280, 375 ] ) {
+		test( `plugin ${key} at ${width}px shows posts, fits and keeps anchor headings visible`, async ( { page } ) => {
 			await page.setViewportSize( { width, height: 900 } );
 			await page.goto( fixtures()[ key ].path );
 			await expect( page.locator( 'main h1' ).first() ).toBeVisible();
@@ -60,9 +63,9 @@ test( 'plugin examples show posts in News, fit narrow screens and leave anchor h
 			} ) );
 			expect( positions.heading ).toBeGreaterThanOrEqual( positions.header - 1 );
 			await capture( page, key + '-' + width + '-anchor', { fullPage: false } );
-		}
+		} );
 	}
-} );
+}
 
 test( 'carousel respects inputs and video connects only on explicit keyboard activation', async ( { page } ) => {
 	const external = [];
