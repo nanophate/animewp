@@ -19,6 +19,9 @@ on:
 permissions:
   contents: read
 
+# No shared Actions cache is needed; deny access even to executed build code.
+cache-mode: none
+
 jobs:
   npm:
     name: npm audit

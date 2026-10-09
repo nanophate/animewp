@@ -19,6 +19,10 @@ on:
 permissions:
   contents: read
 
+# The caller and all verification jobs deny the shared Actions cache.
+# Run-scoped release/QA artifacts remain available; they are not caches.
+cache-mode: none
+
 # Serializes main pushes, tag pushes and recovery. Tags created with GITHUB_TOKEN
 # do not trigger another push run; stage and publish complete in this same run.
 concurrency:
