@@ -108,8 +108,15 @@ test( 'combined motion stops when reduced motion changes during the visit', asyn
 	// A floating element never becomes stable. Move the viewport without disabling
 	// its animation, then verify the real hover state rather than waiting for stillness.
 	await motion.evaluate( ( element ) => element.scrollIntoView( { block: 'center', behavior: 'instant' } ) );
-	await motion.hover( { force: true } );
-	await expect.poll( () => motion.evaluate( ( element ) => element.matches( ':hover' ) ) ).toBe( true );
+	// Re-target the pointer while the element floats. A one-time forced hover
+	// can lose :hover as the box moves, particularly in Firefox; simply
+	// polling the old pointer location is not a meaningful interaction check.
+	await expect.poll( async () => {
+		const rect = await motion.boundingBox();
+		if ( ! rect ) { return false; }
+		await page.mouse.move( rect.x + rect.width / 2, rect.y + rect.height / 2 );
+		return motion.evaluate( ( element ) => element.matches( ':hover' ) );
+	} ).toBe( true );
 	await expect( motion ).toHaveClass( /has-parallax/ );
 	await expect.poll( () => motion.evaluate( ( element ) => getComputedStyle( element ).animationName ) ).toContain( 'animewp-float' );
 	await page.emulateMedia( { reducedMotion: 'reduce' } );
