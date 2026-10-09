@@ -7,11 +7,11 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: Existing main-derived version tag (vX.Y.Z)
+        description: Existing main-derived tag to verify or resume (vX.Y.Z)
         type: string
         required: true
       publish:
-        description: Publish the Release and open a reviewed update-feed PR (public only)
+        description: Recovery only - publish the Release and propose the feed PR
         type: boolean
         required: false
         default: false
@@ -19,15 +19,15 @@ on:
 permissions:
   contents: read
 
-# Serialize the complete verification/publication transaction across versions.
-# Older queued runs still face a live-feed version check before publication.
+# Serializes main pushes, tag pushes and recovery. Tags created with GITHUB_TOKEN
+# do not trigger another push run; stage and publish complete in this same run.
 concurrency:
   group: animewp-release
   cancel-in-progress: false
 
 jobs:
   resolve:
-    if: github.repository == 'nanophate/animewp' && (github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/main')
+    if: github.repository == 'nanophate/animewp' && (github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/main') && (github.event_name != 'push' || !github.event.deleted)
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     outputs:
@@ -37,6 +37,7 @@ jobs:
       version: ${{ steps.source.outputs.version }}
       skip: ${{ steps.source.outputs.skip }}
       create_tag: ${{ steps.source.outputs.create_tag }}
+      publish: ${{ steps.source.outputs.publish }}
     steps:
       - name: Check out main and its tags
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -44,19 +45,9 @@ jobs:
           ref: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && github.sha || 'main' }}
           fetch-depth: 0
           persist-credentials: false
-      - name: Resolve the immutable source or skip an existing automatic tag
+      - name: Resolve the release event without writing tags or assets
         id: source
-        env:
-          RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
-          AUTO_PREPARE: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'true' || 'false' }}
-        run: |
-          if [ "$AUTO_PREPARE" = true ]; then
-            python3 scripts/release.py resolve --auto --github-output "$GITHUB_OUTPUT"
-          else
-            python3 scripts/release.py resolve --tag "$RELEASE_TAG" --github-output "$GITHUB_OUTPUT"
-          fi
-          # Pin the already-reviewed main publisher separately from the old tag.
-          echo "tool_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+        run: python3 scripts/release_automation.py resolve --github-output "$GITHUB_OUTPUT"
 
   source-checks:
     needs: resolve
@@ -112,8 +103,6 @@ jobs:
         with:
           name: release-candidate-${{ needs.resolve.outputs.sha }}
           path: artifacts/release-candidate/
-          # Retry the same run without a same-name artifact conflict. Published
-          # Release assets are independently immutable in scripts/release.py.
           overwrite: true
           if-no-files-found: error
           retention-days: 14
@@ -137,9 +126,9 @@ jobs:
         with:
           name: release-candidate-${{ needs.resolve.outputs.sha }}
           path: artifacts/release-candidate/
-      - name: Stage a draft or publish verified assets and propose reviewed feed PR
+      - name: Stage immutable assets then publish and propose the feed PR
         env:
           GITHUB_TOKEN: ${{ github.token }}
           RELEASE_TOOL_SHA: ${{ needs.resolve.outputs.tool_sha }}
-          PUBLISH: ${{ github.event_name == 'workflow_dispatch' && inputs.publish && 'true' || 'false' }}
-        run: python3 scripts/release.py publish --candidate artifacts/release-candidate --publish "$PUBLISH"
+          PUBLISH: ${{ needs.resolve.outputs.publish }}
+        run: python3 scripts/release_automation.py publish --candidate artifacts/release-candidate --publish "$PUBLISH"
