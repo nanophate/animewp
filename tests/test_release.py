@@ -61,7 +61,9 @@ class FakeGitHub:
         self.blobs = {}
         self.events = []
         self.commits = []
-        self.fail_commit = False
+        self.fail_pr = False
+        self.pending = None
+        self.proposals = []
 
     def repository(self):
         return {"private": self.private}
@@ -112,13 +114,21 @@ class FakeGitHub:
         self.release = {**item, "draft": False, "published_at": TIMESTAMP}
         return self.release
 
-    def commit_feeds(self, parent, tree, feeds):
-        self.events.append("commit")
-        if self.fail_commit:
-            raise release.ReleaseError("branch protection or CAS conflict")
-        self.commits.append(copy.deepcopy(feeds))
-        self.feeds = copy.deepcopy(feeds)
-        return "d" * 40
+    def stage_feed_pr(self, parent, tree, feeds, tag, source):
+        self.events.append("feed-pr")
+        if self.fail_pr:
+            raise release.ReleaseError("review PR creation blocked")
+        if self.pending is None:
+            self.pending = copy.deepcopy(feeds)
+            self.proposals.append(copy.deepcopy(feeds))
+        else:
+            release.require(self.pending == feeds, "Existing feed PR differs from verified candidate")
+        return release.HOMEPAGE + "/pull/73"
+
+    def merge_pending(self):
+        if self.pending is None:
+            raise AssertionError("No verified feed PR to merge")
+        self.feeds = copy.deepcopy(self.pending)
 
     def anonymous(self, url):
         self.events.append("anonymous:" + url.rsplit("/", 1)[1])
@@ -192,19 +202,24 @@ class ReleaseTests(unittest.TestCase):
         self.assertNotIn("publish", api.events)
         self.assertEqual(api.commits, [])
 
-    def test_publication_checks_anonymous_bytes_before_atomic_pair_commit(self):
+    def test_publication_checks_anonymous_bytes_before_two_feed_pr_and_waits_for_merge(self):
         api = FakeGitHub(private=False)
-        self.assertEqual(self.run_publish(api), "published")
-        self.assertEqual(len(api.commits), 1)
-        self.assertEqual(set(api.commits[0]), set(release.COMPONENTS))
-        self.assertTrue(all(feed["last_updated"] == TIMESTAMP for feed in api.feeds.values()))
-        publish_index, commit_index = api.events.index("publish"), api.events.index("commit")
+        self.assertEqual(self.run_publish(api), "pending")
+        self.assertEqual(api.feeds, initial_feeds(), "Publication must never write directly to main")
+        self.assertEqual(api.commits, [])
+        self.assertEqual(len(api.proposals), 1)
+        self.assertEqual(set(api.proposals[0]), set(release.COMPONENTS))
+        self.assertTrue(all(feed["last_updated"] == TIMESTAMP for feed in api.proposals[0].values()))
+        publish_index, pr_index = api.events.index("publish"), api.events.index("feed-pr")
         downloads = [index for index, event in enumerate(api.events) if event.startswith("anonymous:")]
         self.assertEqual(len(downloads), 2)
-        self.assertTrue(all(publish_index < index < commit_index for index in downloads))
+        self.assertTrue(all(publish_index < index < pr_index for index in downloads))
         previous_uploads = sum(event.startswith("upload:") for event in api.events)
+        self.assertEqual(self.run_publish(api), "pending", "Retry reuses the same reviewed PR")
+        self.assertEqual(len(api.proposals), 1)
+        api.merge_pending()
         self.assertEqual(self.run_publish(api), "unchanged")
-        self.assertEqual(len(api.commits), 1)
+        self.assertEqual(len(api.proposals), 1)
         self.assertEqual(sum(event.startswith("upload:") for event in api.events), previous_uploads)
 
     def test_partial_draft_resumes_without_overwriting_an_asset(self):
@@ -262,7 +277,8 @@ class ReleaseTests(unittest.TestCase):
 
     def test_same_version_different_hash_or_partial_feed_state_rejected(self):
         api = FakeGitHub(private=False)
-        self.run_publish(api)
+        self.assertEqual(self.run_publish(api), "pending")
+        api.merge_pending()
         api.feeds["wp-theme.json"]["sha256"] = "0" * 64
         with self.assertRaisesRegex(release.ReleaseError, "different metadata"):
             self.run_publish(api)
@@ -295,15 +311,17 @@ class ReleaseTests(unittest.TestCase):
             self.run_publish(api)
         self.assertEqual(api.commits, [])
 
-    def test_protection_or_cas_failure_preserves_feeds_and_explains_resume(self):
+    def test_feed_pr_permission_failure_keeps_live_feeds_and_allows_resume(self):
         api = FakeGitHub(private=False)
-        api.fail_commit = True
-        with self.assertRaisesRegex(release.ReleaseError, "normal review process.*rerun Release.*publish=true"):
+        api.fail_pr = True
+        with self.assertRaisesRegex(release.ReleaseError, r"feed PR is not ready[\s\S]*rerun Release[\s\S]*publish=true"):
             self.run_publish(api)
         self.assertFalse(api.release["draft"])
         self.assertEqual(api.feeds, initial_feeds())
-        api.fail_commit = False
-        self.assertEqual(self.run_publish(api), "published")
+        self.assertEqual(api.commits, [])
+        api.fail_pr = False
+        self.assertEqual(self.run_publish(api), "pending")
+        self.assertEqual(api.feeds, initial_feeds())
 
     def test_automatic_tag_is_created_only_for_draft_and_races_do_not_move_it(self):
         automatic = {**self.data, "create_tag": True}
@@ -323,27 +341,115 @@ class ReleaseTests(unittest.TestCase):
             self.run_publish(api, live=True, data=automatic)
         self.assertIsNone(api.tag)
 
-    def test_git_api_feed_commit_is_one_two_file_commit_and_nonforced_cas(self):
+    def test_git_api_stages_an_exact_two_file_pr_without_writing_main(self):
         api = release.GitHub("test-token")
+        calls = []
+        parent, source, tree_sha, branch_sha = "b" * 40, SHA, "d" * 40, "e" * 40
+        def request(method, path, data=None):
+            calls.append((method, path, data))
+            if method == "GET" and path.endswith("/git/ref/heads/main"):
+                return {"object": {"sha": parent}}
+            if method == "GET" and path.endswith("/git/ref/heads/release/feeds-v2.0.1"):
+                raise release.APIError(404, "missing")
+            if method == "GET" and path.endswith("/git/commits/" + branch_sha):
+                return {"tree": {"sha": tree_sha}, "parents": [{"sha": parent}]}
+            if method == "GET" and "/pulls?state=all&head=" in path:
+                return []
+            if method == "POST" and path.endswith("/git/trees"):
+                return {"sha": tree_sha}
+            if method == "POST" and path.endswith("/git/commits"):
+                return {"sha": branch_sha}
+            if method == "POST" and path.endswith("/git/refs"):
+                return {"ref": "refs/heads/release/feeds-v2.0.1"}
+            if method == "POST" and path.endswith("/pulls"):
+                return {"html_url": release.HOMEPAGE + "/pull/73", "state": "open",
+                        "head": {"ref": "release/feeds-v2.0.1", "sha": branch_sha},
+                        "base": {"ref": "main"}}
+            raise AssertionError("Unexpected GitHub request: " + method + " " + path)
+        api.request = request
+        feeds = release.final_feeds(self.data, TIMESTAMP)
+        self.assertEqual(api.stage_feed_pr(parent, "c" * 40, feeds, "v2.0.1", source),
+                         release.HOMEPAGE + "/pull/73")
+        tree = next(item for method, path, item in calls if path.endswith("/git/trees"))
+        self.assertEqual(tree["base_tree"], "c" * 40)
+        self.assertEqual({item["path"] for item in tree["tree"]}, set(release.COMPONENTS))
+        for item in tree["tree"]:
+            self.assertEqual(item["content"], release.dumps(feeds[item["path"]]))
+        creation = next(item for method, path, item in calls if path.endswith("/git/commits"))
+        self.assertEqual(creation["parents"], [parent])
+        self.assertEqual(creation["tree"], tree_sha)
+        self.assertIn(("POST", api.prefix + "/git/refs",
+                       {"ref": "refs/heads/release/feeds-v2.0.1", "sha": branch_sha}), calls)
+        self.assertTrue(any(method == "POST" and path.endswith("/pulls") for method, path, _ in calls))
+        self.assertFalse(any(method == "PATCH" or path.endswith("/git/refs/heads/main")
+                             for method, path, _ in calls), "Never PATCH the main ref")
+
+    def test_existing_feed_pr_is_reused_only_for_exact_main_parent_and_contents(self):
+        api = release.GitHub("test-token")
+        state = {"parent": "b" * 40, "tree": "d" * 40, "open": True}
+        branch_sha = "e" * 40
+        def request(method, path, data=None):
+            if method == "GET" and path.endswith("/git/ref/heads/main"):
+                return {"object": {"sha": "b" * 40}}
+            if method == "GET" and path.endswith("/git/ref/heads/release/feeds-v2.0.1"):
+                return {"object": {"sha": branch_sha}}
+            if method == "GET" and path.endswith("/git/commits/" + branch_sha):
+                return {"tree": {"sha": state["tree"]}, "parents": [{"sha": state["parent"]}]}
+            if method == "GET" and "/pulls?state=all&head=" in path:
+                return [{"html_url": release.HOMEPAGE + "/pull/73", "state": "open" if state["open"] else "closed",
+                         "head": {"ref": "release/feeds-v2.0.1", "sha": branch_sha},
+                         "base": {"ref": "main"}}]
+            if method == "POST" and path.endswith("/git/trees"):
+                return {"sha": "d" * 40}
+            raise AssertionError("Existing PR must never be modified: " + method + " " + path)
+        api.request = request
+        feeds = release.final_feeds(self.data, TIMESTAMP)
+        self.assertEqual(api.stage_feed_pr("b" * 40, "c" * 40, feeds, "v2.0.1", SHA),
+                         release.HOMEPAGE + "/pull/73")
+        for key, bad, message in (("tree", "f" * 40, "different files"),
+                                  ("parent", "f" * 40, "different main"),
+                                  ("open", False, "does not target")):
+            with self.subTest(mutation=key):
+                old = state[key]
+                state[key] = bad
+                with self.assertRaisesRegex(release.ReleaseError, message):
+                    api.stage_feed_pr("b" * 40, "c" * 40, feeds, "v2.0.1", SHA)
+                state[key] = old
+        with self.assertRaisesRegex(release.ReleaseError, "versions must match"):
+            bad_feeds = copy.deepcopy(feeds)
+            bad_feeds["wp-plugin.json"]["version"] = "2.0.0"
+            api.stage_feed_pr("b" * 40, "c" * 40, bad_feeds, "v2.0.1", SHA)
+
+    def test_pr_creation_permission_error_keeps_reviewed_branch_and_gives_remedy(self):
+        api = release.GitHub("test-token")
+        branch_sha = "e" * 40
         calls = []
         def request(method, path, data=None):
             calls.append((method, path, data))
-            if method == "GET":
+            if method == "GET" and path.endswith("/git/ref/heads/main"):
                 return {"object": {"sha": "b" * 40}}
-            return {"sha": "e" * 40}
+            if method == "GET" and path.endswith("/git/ref/heads/release/feeds-v2.0.1"):
+                raise release.APIError(404, "missing")
+            if method == "GET" and path.endswith("/git/commits/" + branch_sha):
+                return {"tree": {"sha": "d" * 40}, "parents": [{"sha": "b" * 40}]}
+            if method == "GET" and "/pulls?state=all&head=" in path:
+                return []
+            if method == "POST" and path.endswith("/git/trees"):
+                return {"sha": "d" * 40}
+            if method == "POST" and path.endswith("/git/commits"):
+                return {"sha": branch_sha}
+            if method == "POST" and path.endswith("/git/refs"):
+                return {}
+            if method == "POST" and path.endswith("/pulls"):
+                raise release.APIError(403, "Pull requests cannot be created by GitHub Actions")
+            raise AssertionError("Unexpected request " + path)
         api.request = request
-        feeds = release.final_feeds(self.data, TIMESTAMP)
-        api.commit_feeds("b" * 40, "c" * 40, feeds)
-        tree = next(data for method, path, data in calls if path.endswith("/git/trees"))
-        self.assertEqual({entry["path"] for entry in tree["tree"]}, set(release.COMPONENTS))
-        self.assertEqual(tree["base_tree"], "c" * 40)
-        commit = next(data for method, path, data in calls if path.endswith("/git/commits"))
-        self.assertEqual(commit["parents"], ["b" * 40])
-        self.assertEqual(calls[-1], ("PATCH", api.prefix + "/git/refs/heads/main", {"sha": "e" * 40, "force": False}))
-        calls.clear()
-        with self.assertRaisesRegex(release.ReleaseError, "main changed"):
-            api.commit_feeds("f" * 40, "c" * 40, feeds)
-        self.assertEqual(len(calls), 1)
+        with self.assertRaisesRegex(release.ReleaseError, "Allow GitHub Actions to create and approve pull requests"):
+            api.stage_feed_pr("b" * 40, "c" * 40, release.final_feeds(self.data, TIMESTAMP),
+                              "v2.0.1", SHA)
+        self.assertEqual(sum(method == "POST" and path.endswith("/git/refs")
+                             for method, path, _ in calls), 1)
+        self.assertFalse(any(method == "PATCH" for method, _, _ in calls))
 
     def test_git_api_tag_is_create_only_and_non404_errors_abort(self):
         api = release.GitHub("test-token")
@@ -412,6 +518,37 @@ class LocalGitTests(unittest.TestCase):
                 git("tag", "v2.0.2")
                 with self.assertRaises(release.ReleaseError):
                     release.resolve_tag("v2.0.2")
+
+    def test_newer_reviewed_main_tooling_can_publish_an_older_immutable_tag(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            def git(*args):
+                return subprocess.check_output(["git", *args], cwd=root, text=True,
+                                               stderr=subprocess.DEVNULL).strip()
+            git("init", "--initial-branch=main")
+            git("config", "user.email", "test@example.invalid")
+            git("config", "user.name", "Release Test")
+            git("config", "commit.gpgsign", "false")
+            (root / "source.txt").write_text("v2.0.2")
+            git("add", ".")
+            git("commit", "-m", "verified tagged source")
+            source = git("rev-parse", "HEAD")
+            git("tag", "v2.0.2")
+            (root / "publisher.txt").write_text("reviewed newer code")
+            git("add", ".")
+            git("commit", "-m", "newer main publish tool")
+            tooling = git("rev-parse", "HEAD")
+            git("update-ref", "refs/remotes/origin/main", tooling)
+            with patch.object(release, "ROOT", root):
+                release.publisher_checkout(source, tooling)
+                with self.assertRaisesRegex(release.ReleaseError, "does not match main tooling"):
+                    release.publisher_checkout(source, source)
+                with self.assertRaises(release.ReleaseError):
+                    release.publisher_checkout("f" * 40, tooling)
+            workflow = (Path(__file__).resolve().parents[1] / ".github/workflows/release.yml").read_text()
+            self.assertIn("ref: ${{ needs.resolve.outputs.tool_sha }}", workflow)
+            self.assertIn("RELEASE_TOOL_SHA: ${{ needs.resolve.outputs.tool_sha }}", workflow)
+            self.assertIn("pull-requests: write", workflow)
 
 
 if __name__ == "__main__":

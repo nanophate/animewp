@@ -2,6 +2,7 @@ name: Browser and real ZIP upgrades
 
 on:
   push:
+    branches: [main]
   pull_request:
   workflow_dispatch:
   workflow_call:
