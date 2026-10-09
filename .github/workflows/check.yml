@@ -120,7 +120,9 @@ jobs:
           path.write_text(json.dumps(config, indent=2) + '\n')
           PY
       - name: Prefetch Docker Official Images for isolated WordPress and PHPCS
-        run: sh scripts/ci/prefetch-images.sh mariadb:lts phpmyadmin:latest composer:2 php:8.0-cli
+        env:
+          ANIMEWP_PHP_VERSION: ${{ matrix.php }}
+        run: sh scripts/ci/prefetch-images.sh mariadb:lts phpmyadmin:latest composer:2 php:8.0-cli "wordpress:php${ANIMEWP_PHP_VERSION}" "wordpress:cli-php${ANIMEWP_PHP_VERSION}"
       - name: Start WordPress in Docker (wp-env)
         run: npx wp-env start
       - name: PHPCS security sniffs, Plugin Check and Theme Check

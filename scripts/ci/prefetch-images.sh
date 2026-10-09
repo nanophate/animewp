@@ -8,7 +8,7 @@
 set -eu
 for image in "$@"; do
   case "$image" in
-    php:8.0-cli|php:8.3-cli|mariadb:lts|phpmyadmin:latest|composer:2) ;;
+    php:8.0-cli|php:8.3-cli|mariadb:lts|phpmyadmin:latest|composer:2|wordpress:php8.0|wordpress:cli-php8.0|wordpress:php8.3|wordpress:cli-php8.3) ;;
     *) echo "Disallowed CI image: $image" >&2; exit 2 ;;
   esac
   if docker image inspect "$image" >/dev/null 2>&1; then
