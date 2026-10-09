@@ -314,7 +314,7 @@ class ReleaseTests(unittest.TestCase):
     def test_feed_pr_permission_failure_keeps_live_feeds_and_allows_resume(self):
         api = FakeGitHub(private=False)
         api.fail_pr = True
-        with self.assertRaisesRegex(release.ReleaseError, "feed PR is not ready.*rerun Release.*publish=true"):
+        with self.assertRaisesRegex(release.ReleaseError, r"feed PR is not ready[\s\S]*rerun Release[\s\S]*publish=true"):
             self.run_publish(api)
         self.assertFalse(api.release["draft"])
         self.assertEqual(api.feeds, initial_feeds())
