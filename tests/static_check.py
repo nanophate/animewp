@@ -151,6 +151,12 @@ def audit(path):
     if rel in ("themes/animewp/style.css", "plugins/animewp-blocks/readme.txt"):
         audit_text = re.sub(r"^License URI: https://www\.gnu\.org/licenses/gpl-2\.0\.html$", "License URI: GPL_LICENSE", audit_text, flags=re.M)
     for match in URL.finditer(audit_text):
+        # This exact, non-shipped audit report cites upstream advisory and
+        # documentation links. Permit only reviewed HTTPS documentation hosts;
+        # arbitrary endpoints in the report and every runtime file still fail.
+        if rel == "docs/public-readiness-2026-10-08.md":
+            if re.match(r"^https://(?:github\\.com|docs\\.github\\.com|registry\\.npmjs\\.org)(?:/|$)", match.group()):
+                continue
         # Test fixtures intentionally exercise allowed and rejected third-party URLs.
         # They are never distributed in either installation ZIP.
         if rel.startswith("tests/") or rel == "docs/test-results.json" or path.name in URL_AUDIT_EXEMPT:
