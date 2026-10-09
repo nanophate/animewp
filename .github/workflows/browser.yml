@@ -67,6 +67,8 @@ jobs:
           python3 tests/browser/verify-baseline.py
       - name: Install the browser engine and system dependencies
         run: npx --no-install playwright install --with-deps "$ANIMEWP_BROWSER"
+      - name: Prefetch Docker Official Images for isolated WordPress
+        run: sh scripts/ci/prefetch-images.sh mariadb:lts phpmyadmin:latest
       - name: Start an isolated WordPress site
         run: npx --no-install wp-env start
       - name: Replace old ZIPs and verify saved content and settings

@@ -42,6 +42,10 @@ jobs:
           package-manager-cache: false
       - name: Use the reviewed npm version
         run: npm install --global npm@11.16.0 --ignore-scripts
+      - name: Prefetch official PHP test image from public ECR
+        env:
+          ANIMEWP_PHP_VERSION: ${{ matrix.php }}
+        run: sh scripts/ci/prefetch-images.sh "php:${ANIMEWP_PHP_VERSION}-cli"
       - name: PHP syntax on the target runtime
         env:
           ANIMEWP_PHP_VERSION: ${{ matrix.php }}
@@ -115,6 +119,8 @@ jobs:
           config['phpVersion'] = os.environ['ANIMEWP_PHP_VERSION']
           path.write_text(json.dumps(config, indent=2) + '\n')
           PY
+      - name: Prefetch Docker Official Images for isolated WordPress and PHPCS
+        run: sh scripts/ci/prefetch-images.sh mariadb:lts phpmyadmin:latest composer:2 php:8.0-cli
       - name: Start WordPress in Docker (wp-env)
         run: npx wp-env start
       - name: PHPCS security sniffs, Plugin Check and Theme Check

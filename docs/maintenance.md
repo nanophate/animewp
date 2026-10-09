@@ -18,6 +18,8 @@
 GitHub Actions の cron は UTC に換算して記述しています。実行時刻は目安で、
 GitHub 側の混雑等で遅延することがあります。
 
+GitHub-hosted runnerの共有送信元がDocker Hubの匿名pull制限に達すると、PHP/WordPress検査はコード実行前に落ちます。テスト専用の `scripts/ci/prefetch-images.sh` は Docker公式イメージのAmazon ECR Publicミラーを先に取得し、元の `php:...`・`mariadb:lts`・`phpmyadmin:latest`・`composer:2` タグとしてローカルに登録します。利用するのは許可した5タグだけです。ミラーが利用できない場合は既存のDocker Hub経路へ戻ります。配布物には影響しません。別レジストリの利用でも必ずイメージの出所と更新内容を確認してください。
+
 npm の監査は `tests/security/npm_audit.py` が行い、次の場合に失敗します。
 
 - 開発用（devDependencies）以外の依存に、既知の脆弱性が1件でもある。
