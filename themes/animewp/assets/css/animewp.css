@@ -131,6 +131,8 @@
     bottom: 0;
     width: var(--animewp-side-width);
     display: flex;
+    /* Tall menus scroll in this column instead of wrapping beside the logo. */
+    flex-wrap: nowrap;
     overflow-y: auto;
     background: var(--wp--preset--color--base, #fff);
     color: var(--wp--preset--color--contrast, #202020);

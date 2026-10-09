@@ -7,16 +7,32 @@ const { test, expect, wp, fixtures, capture } = require( './helpers' );
 const username = 'animewp-qa-ja-' + randomBytes( 6 ).toString( 'hex' );
 const password = randomBytes( 24 ).toString( 'hex' );
 let created = false;
+let pageId;
+
+function createdId( output ) {
+	const match = output.match( /^\s*(\d+)\s*$/m );
+	if ( ! match ) { throw new Error( 'WP-CLI did not return the localization fixture ID.' ); }
+	return Number( match[ 1 ] );
+}
 
 test.use( { locale: 'ja-JP' } );
 test.beforeAll( () => {
-	wp( 'user', 'create', username, username + '@example.invalid', '--role=administrator', '--user_pass=' + password );
+	const userOutput = wp( 'user', 'create', username, username + '@example.invalid', '--role=administrator', '--user_pass=' + password, '--porcelain' );
 	created = true;
+	const userId = createdId( userOutput );
 	wp( 'user', 'meta', 'update', username, 'locale', 'ja' );
+	// The regular editor suite visits basic as another user. Reusing that page
+	// can open Core's post-lock modal, which hides the toolbar from role locators.
+	pageId = createdId( wp( 'post', 'create', '--post_type=page', '--post_status=draft',
+		'--post_author=' + userId, '--post_title=Japanese Motion controls ' + username,
+		'--post_content=<!-- wp:group --><div class="wp-block-group"><!-- wp:paragraph --><p>Japanese editor controls fixture.</p><!-- /wp:paragraph --></div><!-- /wp:group -->',
+		'--porcelain' ) );
 } );
 test.afterAll( () => {
-	if ( created ) {
-		wp( 'user', 'delete', username, '--reassign=1', '--yes' );
+	try {
+		if ( pageId ) { wp( 'post', 'delete', String( pageId ), '--force' ); }
+	} finally {
+		if ( created ) { wp( 'user', 'delete', username, '--reassign=1', '--yes' ); }
 	}
 } );
 
@@ -34,7 +50,7 @@ for ( const kind of [ 'post', 'site' ] ) {
 		await loginJapanese( page );
 		const editor = new Editor( { page } );
 		const url = kind === 'post'
-			? '/wp-admin/post.php?post=' + fixtures().basic.id + '&action=edit'
+			? '/wp-admin/post.php?post=' + pageId + '&action=edit'
 			: '/wp-admin/site-editor.php?postType=wp_template&postId=' + encodeURIComponent( fixtures().template.id ) + '&canvas=edit';
 		await page.goto( url );
 		await editor.setPreferences( kind === 'post' ? 'core/edit-post' : 'core/edit-site', {
@@ -66,15 +82,20 @@ for ( const kind of [ 'post', 'site' ] ) {
 			window.wp.data.dispatch( 'core/block-editor' ).selectBlock( block.clientId );
 		} );
 		// The upstream helper hard-codes English Core labels. Resolve these in
-		// the current locale so this also works when Core's ja pack is installed.
+		// the current locale, including the Settings context introduced after 6.6.
 		const labels = await page.evaluate( () => ( {
-			topBar: window.wp.i18n.__( 'Editor top bar' ), settings: window.wp.i18n.__( 'Settings' ),
+			topBar: window.wp.i18n.__( 'Editor top bar' ),
+			settings: window.wp.i18n._x( 'Settings', 'panel button label' ),
+			legacySettings: window.wp.i18n.__( 'Settings' ),
 		} ) );
-		const settings = page.getByRole( 'region', { name: labels.topBar, exact: true } )
-			.getByRole( 'button', { name: labels.settings, exact: true, disabled: false } );
+		const topBar = page.getByRole( 'region', { name: labels.topBar, exact: true } );
+		const settings = topBar.getByRole( 'button', { name: labels.settings, exact: true, disabled: false } )
+			.or( topBar.getByRole( 'button', { name: labels.legacySettings, exact: true, disabled: false } ) );
+		await expect( settings ).toBeVisible();
 		if ( await settings.getAttribute( 'aria-expanded' ) === 'false' ) {
 			await settings.click();
 		}
+		await expect( settings ).toHaveAttribute( 'aria-expanded', 'true' );
 		const panelButton = page.getByRole( 'button', { name: 'モーション', exact: true } );
 		await expect( panelButton ).toBeVisible();
 		if ( await panelButton.getAttribute( 'aria-expanded' ) !== 'true' ) {
