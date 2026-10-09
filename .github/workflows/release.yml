@@ -54,9 +54,9 @@ jobs:
             python3 scripts/release.py resolve --auto --github-output "$GITHUB_OUTPUT"
           else
             python3 scripts/release.py resolve --tag "$RELEASE_TAG" --github-output "$GITHUB_OUTPUT"
+          fi
           # Pin the already-reviewed main publisher separately from the old tag.
           echo "tool_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
-          fi
 
   source-checks:
     needs: resolve
