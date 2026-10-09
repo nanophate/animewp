@@ -137,6 +137,9 @@ const scrolled = [
 	};
 } );
 
+// Reusing the first rendered hero avoids scanning every Cover on each scroll
+// frame. Recheck visibility: a carousel or responsive layout can hide/remove it.
+const heroCache = new WeakMap();
 function firstHero( element ) {
 	const content = document.querySelector(
 		'main, [role="main"], .wp-block-post-content'
@@ -144,27 +147,36 @@ function firstHero( element ) {
 	if ( ! content ) {
 		return null;
 	}
-	// The carousel wrapper appears before its nested Covers in document order.
-	// Its full bounds remain stable when the active slide changes.
-	return (
-		[
-			...content.querySelectorAll(
-				'.wp-block-animewp-carousel, .wp-block-cover'
-			),
-		].find( ( candidate ) => {
-			const style = window.getComputedStyle( candidate );
-			const rect = candidate.getBoundingClientRect();
-			return (
-				! element.contains( candidate ) &&
-				! candidate.closest( '[hidden], header' ) &&
-				style.display !== 'none' &&
-				style.visibility !== 'hidden' &&
-				candidate.getClientRects().length > 0 &&
-				rect.width > 0 &&
-				rect.height > 0
-			);
-		} ) || null
-	);
+	const usable = ( candidate ) => {
+		const style = window.getComputedStyle( candidate );
+		const rect = candidate.getBoundingClientRect();
+		return (
+			! element.contains( candidate ) &&
+			! candidate.closest( '[hidden], header' ) &&
+			style.display !== 'none' &&
+			style.visibility !== 'hidden' &&
+			candidate.getClientRects().length > 0 &&
+			rect.width > 0 &&
+			rect.height > 0
+		);
+	};
+	const previous = heroCache.get( element );
+	if ( previous && content.contains( previous ) && usable( previous ) ) {
+		return previous;
+	}
+	// The carousel wrapper comes before its nested Covers and remains stable
+	// while slides change. If the cached one disappears, use the next hero.
+	const hero = [
+		...content.querySelectorAll(
+			'.wp-block-animewp-carousel, .wp-block-cover'
+		),
+	].find( usable ) || null;
+	if ( hero ) {
+		heroCache.set( element, hero );
+	} else {
+		heroCache.delete( element );
+	}
+	return hero;
 }
 
 function updateScrolled() {

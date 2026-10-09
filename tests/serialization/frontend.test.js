@@ -588,6 +588,26 @@ test( 'hero geometry is measured after enhancement and updates on resize without
 	assert.equal( header.classList.contains( 'is-scrolled-active' ), true );
 } );
 
+test( 'a cached cover may become hidden or be removed without leaving stale header timing', async ( t ) => {
+	const env = scrollMotion( t, '<header class="is-scrolled-navigation" data-animewp-scroll-trigger="hero"></header><main>'
+		+ '<div id="first" class="wp-block-cover"></div>'
+		+ '<div id="second" class="wp-block-cover"></div></main>' );
+	const first = env.box( '#first', { top: 0, height: 400 } );
+	env.box( '#second', { top: 500, height: 500 } );
+	env.run( 'motion/view.js' );
+	const header = env.document.querySelector( 'header' );
+	await env.scroll( 450 );
+	assert.equal( header.classList.contains( 'is-scrolled-active' ), true );
+	first.style.display = 'none';
+	await env.resize();
+	assert.equal( header.classList.contains( 'is-scrolled-active' ), false, 'use the next visible cover instead of stale cached geometry' );
+	await env.scroll( 1001 );
+	assert.equal( header.classList.contains( 'is-scrolled-active' ), true );
+	first.remove();
+	await env.resize();
+	assert.equal( header.classList.contains( 'is-scrolled-active' ), true, 'removed covers cannot break the current threshold' );
+} );
+
 test( 'hero-triggered blocks stay unenhanced and visible when no usable hero exists', ( t ) => {
 	for ( const body of [ '<main><p>No cover</p></main>', '<main><div id="empty" class="wp-block-cover"></div></main>', '<p>No main content region</p>' ] ) {
 		const env = scrollMotion( t, '<header class="is-scrolled-show" data-animewp-scroll-trigger="hero"><a href="#news">News</a></header>' + body );
