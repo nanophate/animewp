@@ -7,8 +7,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-06T19:24:45+00:00\n"
-"PO-Revision-Date: 2026-10-06T19:24:45+00:00\n"
+"POT-Creation-Date: 2026-10-09T19:52:11+00:00\n"
+"PO-Revision-Date: 2026-10-09T19:52:11+00:00\n"
 "Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Domain: animewp-blocks\n"
@@ -1212,8 +1212,64 @@ msgid "For headers: for example, hide the full logo and show a short one once th
 msgstr "ヘッダー向け：たとえばスクロールしたら正式ロゴを隠し、短いロゴを表示します。"
 
 #: build/motion/editor.js:1
-msgid "Visitors who ask their device for reduced motion see everything without movement."
-msgstr "端末で「視差効果を減らす」などを設定した訪問者には、動きなしで表示します。"
+msgid "Reduced motion disables animation. Scroll-based navigation remains usable."
+msgstr "端末で動きを減らす設定をしている場合、アニメーションを無効にします。スクロールに応じたメニューの切り替えは引き続き使えます。"
+
+#: build/motion/editor.js:1
+msgid "Expand the navigation"
+msgstr "メニューを展開する"
+
+#: build/motion/editor.js:1
+msgid "Scroll trigger"
+msgstr "切り替えのきっかけ"
+
+#: build/motion/editor.js:1
+msgid "Scroll distance"
+msgstr "スクロール距離"
+
+#: build/motion/editor.js:1
+msgid "After the first cover"
+msgstr "キービジュアルを通過した後"
+
+#: build/motion/editor.js:1
+msgid "Uses the first Cover or Carousel in the page content. If none is found, navigation stays available."
+msgstr "ページ本文の最初の「カバー」または「カルーセル」を基準にします。見つからない場合は、メニューを表示したままにします。"
+
+#: build/motion/editor.js:1
+msgid "Each block can use its own distance. Existing settings start at 64 px."
+msgstr "ブロックごとに距離を設定できます。これまでの設定は64pxのまま引き継ぎます。"
+
+#: build/motion/editor.js:1
+msgid "Scroll distance (px)"
+msgstr "スクロール距離（px）"
+
+#: build/motion/editor.js:1
+msgid "Check the scroll behavior on the site preview. Blocks stay visible while editing."
+msgstr "スクロール時の動作はサイトのプレビューで確認してください。編集中はブロックを表示したままにします。"
+
+#: build/motion/editor.js:1
+msgid "Header appearance"
+msgstr "ヘッダーの見た目"
+
+#: build/motion/editor.js:1
+msgid "Background opacity (%)"
+msgstr "背景の不透明度（%）"
+
+#: build/motion/editor.js:1
+msgid "Only the background becomes transparent; text and links stay opaque."
+msgstr "背景だけを透過します。文字やリンクは薄くなりません。"
+
+#: build/motion/editor.js:1
+msgid "Background blur (px)"
+msgstr "背景のぼかし（px）"
+
+#: build/motion/editor.js:1
+msgid "Minimum height (px)"
+msgstr "最小の高さ（px）"
+
+#: build/motion/editor.js:1
+msgid "The header can grow if menu items need more space. Open menus always have a solid background."
+msgstr "メニュー項目が収まらない場合は、ヘッダーの高さが広がります。メニューを開いている間は背景を透過しません。"
 
 #: build/blocks/decoration/block.json
 msgctxt "block title"

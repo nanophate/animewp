@@ -19,6 +19,13 @@ Post/Site Editor iframe editing and saving. The last three tests use the standar
 WordPress Updates screen to install a test-only 99.0.0 ZIP with the optional
 plugin inactive or another theme active, and to reject a mismatched checksum.
 
+Header regressions also cover saved per-block scroll distances, keyboard focus
+across a threshold, Cover resizing, the small-menu-to-navigation layout without
+a content jump, full-screen menus at desktop and phone widths, missing-cover
+fallbacks, reduced-motion transitions, and usable links with JavaScript disabled.
+Post/Site Editor localization tests load the plugin's bundled Japanese labels;
+Core labels such as 「メニュー」 use the site's installed WordPress language pack.
+
 `prepare.py` creates a local wp-env override with physical installation
 directories, avoiding source bind mounts that cannot be replaced by WordPress.
 It refuses to overwrite an existing override. The MU fixture intercepts only
