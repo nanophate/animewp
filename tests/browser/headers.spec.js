@@ -133,8 +133,11 @@ test( 'hero header keeps the artwork clear and follows the cover boundary withou
 	const cover = page.locator( '#qa-header-cover' );
 	const menu = header.locator( '.wp-block-navigation__responsive-container-open' );
 	await expect( part ).toHaveCSS( 'position', 'fixed' );
+	await expect( header ).toHaveClass( /animewp-header--petal/ );
+	await expect( header ).toHaveCSS( 'min-height', '56px' );
 	await expect( header.locator( '.wp-block-site-logo, .wp-block-site-title' ) ).toHaveCount( 0 );
 	await expect( menu ).toBeVisible();
+	await expect.poll( () => menu.evaluate( ( element ) => getComputedStyle( element, '::after' ).width ) ).toBe( '8px' );
 	await expect( header ).not.toHaveClass( /is-scrolled-active/ );
 	const initialMainTop = await documentTop( page.locator( 'main' ) );
 	expect( initialMainTop ).toBeLessThanOrEqual( 1 );
@@ -203,6 +206,7 @@ test( 'missing covers fail open and reduced-motion headers change state without 
 	await page.goto( fixtures().header_after_hero_missing.path );
 	await expect( page.locator( 'html' ) ).toHaveClass( /animewp-motion-ready/ );
 	const header = page.locator( '.animewp-header--hero' );
+	await expect( page.locator( 'header.wp-block-template-part' ) ).not.toHaveCSS( 'position', 'fixed' );
 	await expect( header ).not.toHaveClass( /animewp-scroll-ready/ );
 	await expect( header.getByRole( 'link' ).first() ).toBeVisible();
 
@@ -221,6 +225,8 @@ test.describe( 'header navigation without JavaScript', () => {
 	test( 'hero links remain available without a scripted menu or scroll controller', async ( { page } ) => {
 		await page.goto( fixtures().header_after_hero.path );
 		const header = page.locator( '.animewp-header--hero' );
+		await expect( page.locator( 'header.wp-block-template-part' ) ).toHaveCSS( 'position', 'fixed' );
+		expect( await documentTop( page.locator( 'main' ) ) ).toBeLessThanOrEqual( 1 );
 		await expect( header.getByRole( 'link' ).first() ).toBeVisible();
 		await expect( header.locator( '.wp-block-navigation__responsive-container-open' ) ).not.toBeVisible();
 		expect( await page.evaluate( () => document.documentElement.scrollWidth ) ).toBeLessThanOrEqual( 376 );
