@@ -70,6 +70,8 @@ jobs:
       - name: Prefetch Docker Official Images for isolated WordPress
         run: sh scripts/ci/prefetch-images.sh mariadb:lts phpmyadmin:latest "wordpress:php${ANIMEWP_PHP_VERSION}" "wordpress:cli-php${ANIMEWP_PHP_VERSION}"
       - name: Start an isolated WordPress site
+        env:
+          DOCKER_BUILDKIT: "0"
         run: npx --no-install wp-env start
       - name: Replace old ZIPs and verify saved content and settings
         run: sh tests/browser/setup.sh

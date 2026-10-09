@@ -16,12 +16,24 @@ for image in "$@"; do
     continue
   fi
   mirror="public.ecr.aws/docker/library/$image"
-  if docker pull "$mirror"; then
+  attempt=1
+  # ECR Public anonymous requests from a shared Actions egress IP can exceed
+  # their 1 TPS ceiling when multiple CI jobs pull at the same time.
+  while ! docker image inspect "$mirror" >/dev/null 2>&1; do
+    if docker pull "$mirror"; then
+      break
+    fi
+    if [ "$attempt" -ge 4 ]; then
+      printf '::warning::Public ECR unavailable for %s; Docker Hub fallback remains enabled\n' "$image"
+      break
+    fi
+    sleep "$((attempt * 8))"
+    attempt=$((attempt + 1))
+  done
+  if docker image inspect "$mirror" >/dev/null 2>&1; then
     docker tag "$mirror" "$image"
     printf 'Cached Docker Official Image for CI: %s\n' "$image"
-  else
-    printf '::warning::Public ECR image unavailable: %s; Docker Hub fallback remains enabled\n' "$image"
   fi
-  # Public ECR unauthenticated requests are rate-limited to 1 TPS off AWS.
-  sleep 2
+  # Reduce ECR Public request bursts across successive image pulls.
+  sleep 3
 done

@@ -124,6 +124,10 @@ jobs:
           ANIMEWP_PHP_VERSION: ${{ matrix.php }}
         run: sh scripts/ci/prefetch-images.sh mariadb:lts phpmyadmin:latest composer:2 php:8.0-cli "wordpress:php${ANIMEWP_PHP_VERSION}" "wordpress:cli-php${ANIMEWP_PHP_VERSION}"
       - name: Start WordPress in Docker (wp-env)
+        # The classic builder consumes the trusted local WordPress image instead
+        # of resolving Docker Hub metadata for an already-cached FROM tag.
+        env:
+          DOCKER_BUILDKIT: "0"
         run: npx wp-env start
       - name: PHPCS security sniffs, Plugin Check and Theme Check
         run: npm run test:security
