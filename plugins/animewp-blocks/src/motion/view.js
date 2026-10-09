@@ -166,11 +166,10 @@ function firstHero( element ) {
 	}
 	// The carousel wrapper comes before its nested Covers and remains stable
 	// while slides change. If the cached one disappears, use the next hero.
-	const hero = [
-		...content.querySelectorAll(
-			'.wp-block-animewp-carousel, .wp-block-cover'
-		),
-	].find( usable ) || null;
+	const candidates = content.querySelectorAll(
+		'.wp-block-animewp-carousel, .wp-block-cover'
+	);
+	const hero = [ ...candidates ].find( usable ) || null;
 	if ( hero ) {
 		heroCache.set( element, hero );
 	} else {
