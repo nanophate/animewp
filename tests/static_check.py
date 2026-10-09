@@ -7,6 +7,7 @@ import sys
 import struct
 import xml.etree.ElementTree as ET
 from pathlib import Path
+from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -151,6 +152,18 @@ def audit(path):
     if rel in ("themes/animewp/style.css", "plugins/animewp-blocks/readme.txt"):
         audit_text = re.sub(r"^License URI: https://www\.gnu\.org/licenses/gpl-2\.0\.html$", "License URI: GPL_LICENSE", audit_text, flags=re.M)
     for match in URL.finditer(audit_text):
+        # The two non-shipped publication audit documents cite review evidence.
+        # Permit only these HTTPS documentation hosts, never arbitrary endpoints
+        # or runtime references. All files still receive common-secret checks.
+        if rel in {
+            "docs/public-readiness-2026-10-08.md",
+            "docs/public-readiness-evidence-2026-10-08.json",
+        }:
+            reference = urlsplit(match.group())
+            if reference.scheme == "https" and reference.netloc in {
+                "github.com", "docs.github.com", "registry.npmjs.org",
+            }:
+                continue
         # Test fixtures intentionally exercise allowed and rejected third-party URLs.
         # They are never distributed in either installation ZIP.
         if rel.startswith("tests/") or rel == "docs/test-results.json" or path.name in URL_AUDIT_EXEMPT:

@@ -1,0 +1,113 @@
+# One-time evidence collection after PR #11, limited to the private audit branch.
+# Results inform an owner decision; this workflow never publishes anything.
+name: Private publication readiness audit
+on:
+  push:
+    branches: [codex/public-readiness-audit]
+    paths:
+      - .github/workflows/public-history-audit.yml
+      - tests/security/public-history-audit.py
+      - tests/security/public-surface-audit.py
+      - tests/security/test_public_surface_audit.py
+permissions:
+  contents: read
+concurrency:
+  group: animewp-publication-readiness-audit
+  cancel-in-progress: false
+jobs:
+  reachable-history:
+    if: github.repository == 'nanophate/animewp' && github.event.repository.private == true
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      AUDIT_EXPECTED_MAIN: 9720ea42b1f310a3d582d0e91d95e3b6f107f834
+    steps:
+      - name: Read the reviewed audit program
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+          submodules: false
+          lfs: false
+          show-progress: false
+      - name: Collect all advertised Git refs and reachable objects privately
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 tests/security/public-history-audit.py collect --root "$RUNNER_TEMP/animewp-public-audit" --expected-main "$AUDIT_EXPECTED_MAIN"
+      - name: Scan without repository credentials or ignore files
+        run: python3 tests/security/public-history-audit.py scan --root "$RUNNER_TEMP/animewp-public-audit"
+      - name: Emit complete redacted evidence for private review
+        if: always()
+        run: python3 tests/security/public-history-audit.py summary --root "$RUNNER_TEMP/animewp-public-audit"
+      - name: Preserve only summaries and redacted locations
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: publication-audit-redacted-${{ github.run_id }}
+          path: ${{ runner.temp }}/animewp-public-audit/report/*.json
+          retention-days: 3
+          if-no-files-found: error
+          overwrite: true
+          include-hidden-files: false
+      - name: Remove private source material from the runner
+        if: always()
+        run: python3 tests/security/public-history-audit.py cleanup --root "$RUNNER_TEMP/animewp-public-audit"
+
+  github-surfaces:
+    if: github.repository == 'nanophate/animewp' && github.event.repository.private == true
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    permissions:
+      contents: read
+      actions: read
+      issues: read
+      pull-requests: read
+    steps:
+      - name: Read the reviewed audit programs
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+          submodules: false
+          lfs: false
+          show-progress: false
+      - name: Verify collector credential, pagination and archive boundaries
+        run: python3 -m unittest discover -s tests/security -p test_public_surface_audit.py
+      - name: Scan retained discussions, Release assets, Actions logs and artifacts
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: >-
+          python3 tests/security/public-surface-audit.py
+          --root "$RUNNER_TEMP/animewp-public-audit-surfaces"
+          --expected-main 9720ea42b1f310a3d582d0e91d95e3b6f107f834
+          --detector tests/security/public-history-audit.py
+      - name: Emit sanitized coverage and finding counts
+        if: always()
+        run: |
+          python3 - "$RUNNER_TEMP/animewp-public-audit-surfaces/report" <<'PY'
+          import json, pathlib, sys
+          root = pathlib.Path(sys.argv[1])
+          names = ('surface-coverage.json', 'surface-coverage-gaps.json', 'surface-secret-findings-redacted.json', 'surface-temporal-exclusions.json')
+          reports = {name: json.loads((root / name).read_text()) for name in names if (root / name).is_file()}
+          if not reports:
+              raise SystemExit('No sanitized surface evidence was produced.')
+          output = json.dumps(reports, separators=(',', ':'))
+          if len(output.encode()) > 190000:
+              output = json.dumps({'artifact_required': True, 'coverage': reports.get('surface-coverage.json'), 'items': {name: len(data) for name, data in reports.items() if isinstance(data, list)}}, separators=(',', ':'))
+          print('ANIMEWP_SURFACE_REDACTED_JSON_BEGIN')
+          print(output)
+          print('ANIMEWP_SURFACE_REDACTED_JSON_END')
+          PY
+      - name: Preserve only sanitized surface evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: publication-surfaces-redacted-${{ github.run_id }}
+          path: ${{ runner.temp }}/animewp-public-audit-surfaces/report/*.json
+          retention-days: 3
+          if-no-files-found: error
+          overwrite: true
+          include-hidden-files: false
+      - name: Remove any private corpus left by an interrupted collector
+        if: always()
+        run: python3 tests/security/public-history-audit.py cleanup --root "$RUNNER_TEMP/animewp-public-audit-surfaces"

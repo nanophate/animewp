@@ -1,0 +1,39 @@
+name: Private verification artifact triage
+on:
+  push:
+    branches: [codex/public-readiness-audit]
+    paths:
+      - .github/workflows/public-artifact-triage.yml
+      - tests/security/public-artifact-triage.py
+permissions:
+  contents: read
+jobs:
+  old-verification-findings:
+    if: github.repository == 'nanophate/animewp' && github.event.repository.private == true
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Read the reviewed triage program
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+          submodules: false
+          lfs: false
+          show-progress: false
+      - name: Inspect only the two identified verification assets
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 tests/security/public-artifact-triage.py --root "$RUNNER_TEMP/animewp-public-audit-artifact-triage"
+      - name: Preserve only structural evidence and redacted locations
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: publication-artifact-triage-redacted-${{ github.run_id }}
+          path: ${{ runner.temp }}/animewp-public-audit-artifact-triage/report/*.json
+          retention-days: 3
+          if-no-files-found: error
+          overwrite: true
+      - name: Remove private material after interruption
+        if: always()
+        run: python3 tests/security/public-history-audit.py cleanup --root "$RUNNER_TEMP/animewp-public-audit-artifact-triage"
