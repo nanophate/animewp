@@ -11,7 +11,9 @@
 | --- | --- | --- |
 | Dependabot version updates | GitHub Actions、ルートと `tests/serialization` の npm、`tests/security` の Composer | 毎週月曜 04:17 JST |
 | npm / Composer audit | 上記3箇所の lockfile。開発用依存も含む（扱いは下記） | PR、main の push、毎日 04:23 JST、手動 |
-| 既存のソース・ZIP・WordPress セキュリティ検査 | テーマとプラグイン | push、PR、毎週月曜 04:37 JST、手動 |
+| 既存のソース・ZIP・WordPress セキュリティ検査 | テーマとプラグイン | main への push、PR、毎週月曜 04:37 JST、手動 |
+
+ソース／WordPress／ブラウザーの検証は PR に対して実行し、ブランチへの単独 push では重複起動しません。main への push は別途検証します。GitHub Actions の無料枠とランナー使用量のため、同一変更の二重実行を避けます。
 
 GitHub Actions の cron は UTC に換算して記述しています。実行時刻は目安で、
 GitHub 側の混雑等で遅延することがあります。
