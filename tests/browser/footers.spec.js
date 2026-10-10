@@ -13,11 +13,12 @@ test( 'official footer uses the Core social icons, editable branding and vertica
 	const firstLink = footer.locator( '.animewp-footer-official__sitemap .wp-block-navigation-item__content' ).first();
 	await expect( firstLink ).toBeVisible();
 	const nav = footer.locator( '.animewp-footer-official__sitemap .wp-block-navigation__container' ).first();
-	await expect( nav ).toHaveCSS( 'flex-direction', 'row-reverse' );
-	await expect( firstLink ).toHaveCSS( 'writing-mode', 'horizontal-tb' );
+	await expect( nav ).toHaveCSS( 'flex-direction', 'column' );
+	await expect( nav ).toHaveCSS( 'writing-mode', 'vertical-rl' );
+	await expect( firstLink ).toHaveCSS( 'writing-mode', 'vertical-rl' );
 	await expect( firstLink.locator( '.wp-block-navigation-item__label' ) ).toHaveCSS( 'writing-mode', 'vertical-rl' );
-	// Vertical text belongs to the label, never to the Core clickable link's
-	// flex box. Every Japanese character must have room to render in a column.
+	// A single vertical writing axis for Core navigation and its links
+	// preserves every Japanese glyph in Chromium, Firefox and WebKit.
 	const labels = footer.locator( '.animewp-footer-official__sitemap .wp-block-navigation-item__label' );
 	await expect( labels ).toHaveCount( 7 );
 	// Keep a visual diagnostic even when the following glyph geometry fails.
@@ -62,6 +63,8 @@ test( 'official footer uses the Core social icons, editable branding and vertica
 	await capture( page, 'official-footer-desktop', { fullPage: false } );
 
 	await page.setViewportSize( { width: 375, height: 900 } );
+	await expect( nav ).toHaveCSS( 'writing-mode', 'horizontal-tb' );
+	await expect( nav ).toHaveCSS( 'flex-direction', 'row' );
 	await expect( firstLink ).toHaveCSS( 'writing-mode', 'horizontal-tb' );
 	await expect( socials.first() ).toBeVisible();
 	await expect( footer.getByRole( 'link', { name: 'TO TOP ↑' } ) ).toBeVisible();

@@ -475,47 +475,49 @@ html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-
   text-decoration: none;
 }
 @media (min-width: 961px) {
+  /* Put the whole Navigation list on one vertical writing axis. Keeping
+   * horizontal flex links with vertical-only labels caused short Japanese
+   * labels to collapse into a 6px glyph rect in Chromium and Firefox. */
   .animewp-footer-official__sitemap .wp-block-navigation__container {
     display: flex;
-    flex-direction: row-reverse;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    flex-direction: column;
     justify-content: flex-start;
     flex-wrap: nowrap;
     align-items: flex-start;
+    width: max-content;
+    height: max-content;
     gap: clamp(0.75rem, 2vw, 2rem);
   }
   .animewp-footer-official__sitemap .wp-block-navigation-item {
+    display: block;
+    writing-mode: inherit;
     flex: 0 0 auto;
-    width: auto;
+    width: max-content;
     max-width: none;
     align-self: flex-start;
   }
-  /* Keep Core's clickable link in a horizontal flex formatting context.
-   * Only its Japanese label is vertical. Applying writing-mode to the link
-   * itself collapses the link box to a few pixels on Firefox/WebKit. */
   .animewp-footer-official__sitemap .wp-block-navigation-item__content {
-    display: inline-flex;
+    display: block;
     width: auto;
     height: auto;
     min-height: 44px;
     max-height: none;
     overflow: visible;
-    white-space: normal;
-    writing-mode: horizontal-tb;
-    text-orientation: mixed;
-    align-items: flex-start;
+    white-space: nowrap;
+    writing-mode: inherit;
+    text-orientation: inherit;
     line-height: 1.6;
   }
   .animewp-footer-official__sitemap .wp-block-navigation-item__label {
-    display: inline-block;
+    display: block;
     width: auto;
     height: auto;
-    /* Core Navigation's flex sizing can collapse a vertical intrinsic
-     * max-content label to ~6px on Chromium and Firefox. Reserve a full
-     * vertical column while letting longer labels grow naturally. */
-    min-height: 12em;
+    min-height: 0;
     max-height: none;
     white-space: nowrap;
-    writing-mode: vertical-rl;
+    writing-mode: inherit;
     text-orientation: upright;
     line-height: 1.6;
     letter-spacing: 0.09em;
@@ -528,12 +530,24 @@ html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-
     width: 100%;
   }
   .animewp-footer-official__sitemap .wp-block-navigation__container {
+    writing-mode: horizontal-tb;
+    text-orientation: mixed;
+    flex-direction: row;
     justify-content: flex-start;
     flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    height: auto;
     gap: 0.5rem 1.5rem;
   }
-  .animewp-footer-official__sitemap .wp-block-navigation-item__content {
+  .animewp-footer-official__sitemap .wp-block-navigation-item,
+  .animewp-footer-official__sitemap .wp-block-navigation-item__content,
+  .animewp-footer-official__sitemap .wp-block-navigation-item__label {
     writing-mode: horizontal-tb;
+    text-orientation: mixed;
+    width: auto;
+    height: auto;
+    white-space: normal;
     letter-spacing: normal;
   }
 }
