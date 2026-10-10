@@ -20,6 +20,8 @@ test( 'official footer uses the Core social icons, editable branding and vertica
 	// flex box. Every Japanese character must have room to render in a column.
 	const labels = footer.locator( '.animewp-footer-official__sitemap .wp-block-navigation-item__label' );
 	await expect( labels ).toHaveCount( 7 );
+	// Keep a visual diagnostic even when the following glyph geometry fails.
+	await capture( page, 'official-footer-desktop-before-glyph-check', { fullPage: false } );
 	for ( const label of await labels.all() ) {
 		const size = await label.evaluate( ( node ) => {
 			const block = node.getBoundingClientRect();
@@ -32,9 +34,26 @@ test( 'official footer uses the Core social icons, editable branding and vertica
 				glyphHeight: glyphs.height,
 				visibleWithinColumn: glyphs.top >= block.top - 1 &&
 					glyphs.bottom <= block.bottom + 1,
+				labelText: node.textContent.trim(),
+				boxWidth: block.width,
+				glyphWidth: glyphs.width,
+				computed: {
+					display: getComputedStyle( node ).display,
+					writingMode: getComputedStyle( node ).writingMode,
+					orientation: getComputedStyle( node ).textOrientation,
+					whiteSpace: getComputedStyle( node ).whiteSpace,
+					fontSize: getComputedStyle( node ).fontSize,
+					height: getComputedStyle( node ).height,
+					minHeight: getComputedStyle( node ).minHeight,
+					inlineSize: getComputedStyle( node ).inlineSize,
+				},
+				parent: node.parentElement?.outerHTML.slice( 0, 800 ),
 			};
 		} );
 		expect( size.height ).toBeGreaterThanOrEqual( size.characters * 11 );
+		if ( size.glyphHeight <= size.characters * 8 ) {
+			console.log( 'FOOTER_GLYPH_GEOMETRY:', JSON.stringify( size ) );
+		}
 		expect( size.glyphHeight ).toBeGreaterThan( size.characters * 8 );
 		expect( size.visibleWithinColumn ).toBe( true );
 	}
