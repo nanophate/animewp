@@ -239,25 +239,48 @@ test.describe( 'header navigation without JavaScript', () => {
 		await header.getByRole( 'link' ).first().click();
 		await expect( page.locator( '#news' ) ).toBeInViewport();
 	} );
+	test( 'explicit hero falls back to ordinary links with no JS or marker', async ( { page } ) => {
+		await page.goto( fixtures().header_explicit_missing.path );
+		await expect( page.locator( 'header.wp-block-template-part' ) ).not.toHaveCSS( 'position', 'fixed' );
+		await expect( page.locator( '.animewp-header--hero' ).getByRole( 'link' ).first() ).toBeVisible();
+		await page.goto( fixtures().header_explicit_marked.path );
+		await expect( page.locator( 'header.wp-block-template-part' ) ).toHaveCSS( 'position', 'fixed' );
+		await expect( page.locator( '.animewp-header--hero' ).getByRole( 'link' ).first() ).toBeVisible();
+	} );
 } );
 
-// A cover deep in an article cannot change the hero-header mode implicitly.
-test( 'late cover does not become a hero unless explicitly marked', async ( { page } ) => {
-	await page.goto( fixtures().header_after_hero_late.path );
+// Compatibility regression: pre-existing saved headers still pin to the
+// first Cover anywhere in the content. Explicit-only headers are opt-in.
+test( 'legacy nested heroes keep their layout and explicit mode requires marking', async ( { page } ) => {
+	for ( const key of [ 'header_after_hero_late', 'header_after_hero_nested_late' ] ) {
+		await page.goto( fixtures()[ key ].path );
+		const header = page.locator( '.animewp-header--hero' );
+		const part = page.locator( 'header.wp-block-template-part' );
+		await expect( part ).toHaveCSS( 'position', 'fixed' );
+		await expect( header ).toHaveClass( /animewp-scroll-ready/ );
+		const initialMainTop = await documentTop( page.locator( 'main' ) );
+		const cover = page.locator( '#qa-header-cover' );
+		const boundary = await cover.evaluate( ( el ) => el.getBoundingClientRect().bottom + window.scrollY );
+		await scrollTo( page, boundary + 20 );
+		await expect( header ).toHaveClass( /is-scrolled-active/ );
+		expect( await documentTop( page.locator( 'main' ) ) ).toBeCloseTo( initialMainTop, 0 );
+	}
+
+	await page.goto( fixtures().header_explicit_missing.path );
 	const header = page.locator( '.animewp-header--hero' );
 	const part = page.locator( 'header.wp-block-template-part' );
-	await expect( page.locator( 'html' ) ).toHaveClass( /animewp-motion-ready/ );
+	await expect( header ).toHaveClass( /animewp-header--explicit-hero/ );
 	await expect( part ).not.toHaveCSS( 'position', 'fixed' );
 	await expect( header ).not.toHaveClass( /animewp-scroll-ready/ );
 	await expect( header.getByRole( 'link' ).first() ).toBeVisible();
 	await page.evaluate( () => window.scrollTo( { top: 1100, behavior: 'instant' } ) );
 	await expect( header ).not.toHaveClass( /is-scrolled-active/ );
 
-	await page.goto( fixtures().header_after_hero_marked.path );
+	await page.goto( fixtures().header_explicit_marked.path );
 	await expect( part ).toHaveCSS( 'position', 'fixed' );
 	await expect( header ).toHaveClass( /animewp-scroll-ready/ );
 	const cover = page.locator( '#qa-header-cover' );
-	const boundary = await cover.evaluate( ( element ) => element.getBoundingClientRect().bottom + window.scrollY );
+	const boundary = await cover.evaluate( ( el ) => el.getBoundingClientRect().bottom + window.scrollY );
 	await scrollTo( page, boundary + 20 );
 	await expect( header ).toHaveClass( /is-scrolled-active/ );
 } );

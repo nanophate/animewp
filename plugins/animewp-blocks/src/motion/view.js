@@ -137,12 +137,14 @@ const scrolled = [
 	};
 } );
 
-// A named hero wins. Otherwise only a Cover/Carousel near the beginning of
-// the post content is a hero; an illustration deep in an article is not.
+// Existing hero headers keep the historical first-visible Cover/Carousel
+// behavior, including nested and later artwork. Explicit-only is opt-in via
+// animewp-header--explicit-hero on the header and animewp-hero-trigger on the
+// chosen Cover/Carousel. Both modes have matching first-paint CSS selectors.
 const heroCache = new WeakMap();
 function firstHero( element ) {
 	const content = document.querySelector(
-		'main .wp-block-post-content, [role="main"] .wp-block-post-content, .wp-block-post-content, main, [role="main"]'
+		'main, [role="main"], .wp-block-post-content'
 	);
 	if ( ! content ) {
 		return null;
@@ -160,30 +162,27 @@ function firstHero( element ) {
 			rect.height > 0
 		);
 	};
-	const start = content.getBoundingClientRect().top + window.scrollY;
-	const nearStart = ( candidate ) =>
-		candidate.getBoundingClientRect().top + window.scrollY - start <= 96;
 	const marked = content.querySelectorAll(
 		'.animewp-hero-trigger.wp-block-cover, .animewp-hero-trigger.wp-block-animewp-carousel'
 	);
-	let hero = [ ...marked ].find( usable );
-	if ( ! hero ) {
-		const previous = heroCache.get( element );
-		const eligible = ( candidate ) =>
-			usable( candidate ) && nearStart( candidate );
-		if (
-			previous &&
-			content.contains( previous ) &&
-			eligible( previous )
-		) {
-			hero = previous;
-		} else {
-			const candidates = content.querySelectorAll(
-				'.wp-block-animewp-carousel, .wp-block-cover'
-			);
-			hero = [ ...candidates ].find( eligible ) || null;
-		}
+	const chosen = [ ...marked ].find( usable );
+	if ( chosen ) {
+		heroCache.set( element, chosen );
+		return chosen;
 	}
+	if ( element.classList.contains( 'animewp-header--explicit-hero' ) ) {
+		heroCache.delete( element );
+		return null;
+	}
+	const previous = heroCache.get( element );
+	if ( previous && content.contains( previous ) && usable( previous ) ) {
+		return previous;
+	}
+	// The first rendered carousel wrapper remains stable across slide changes.
+	const candidates = content.querySelectorAll(
+		'.wp-block-animewp-carousel, .wp-block-cover'
+	);
+	const hero = [ ...candidates ].find( usable ) || null;
 	if ( hero ) {
 		heroCache.set( element, hero );
 	} else {
