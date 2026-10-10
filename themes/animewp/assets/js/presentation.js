@@ -25,9 +25,17 @@
     // A sticky header's real height (logo, illustration, shrink) sets how far
     // in-page links stop below it. Without this, CSS uses the header-height token.
     var header = document.querySelector('header.wp-block-template-part');
-    if (header && 'ResizeObserver' in window) {
+    if (header) {
+        var heroHeader = header.querySelector('.animewp-header--hero');
+        var toolbar = heroHeader && document.getElementById('wpadminbar');
         var first = true;
         var measure = function () {
+            if (toolbar) {
+                // On small screens Core's toolbar scrolls away. Keep the menu
+                // usable above the cover, then remove the gap as it disappears.
+                var toolbarOffset = Math.max(0, toolbar.getBoundingClientRect().bottom);
+                document.documentElement.style.setProperty('--animewp-sticky-admin-offset', toolbarOffset + 'px');
+            }
             var position = window.getComputedStyle(header).position;
             if (position === 'sticky' || position === 'fixed') {
                 document.documentElement.style.setProperty('--animewp-sticky-header-height', header.offsetHeight + 'px');
@@ -46,7 +54,18 @@
                 document.documentElement.style.removeProperty('--animewp-sticky-header-height');
             }
         };
-        new ResizeObserver(measure).observe(header);
+        if ('ResizeObserver' in window) { new ResizeObserver(measure).observe(header); }
+        // The new hero header starts as a normal, usable menu until the scroll
+        // runtime is ready. Its fixed position can change without a resize.
+        document.addEventListener('animewp:scroll-state', measure);
         window.addEventListener('resize', measure, { passive: true });
+        if (toolbar) {
+            var frame;
+            window.addEventListener('scroll', function () {
+                if (frame) { return; }
+                frame = window.requestAnimationFrame(function () { frame = null; measure(); });
+            }, { passive: true });
+        }
+        measure();
     }
 }());

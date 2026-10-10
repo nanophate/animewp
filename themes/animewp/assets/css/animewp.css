@@ -131,6 +131,8 @@
     bottom: 0;
     width: var(--animewp-side-width);
     display: flex;
+    /* Tall menus scroll in this column instead of wrapping beside the logo. */
+    flex-wrap: nowrap;
     overflow-y: auto;
     background: var(--wp--preset--color--base, #fff);
     color: var(--wp--preset--color--contrast, #202020);
@@ -180,14 +182,26 @@
 /* The glass header, and any header set to Position: Sticky in the Site Editor, stays at the top.
  * Core puts sticky on the inner group, which cannot stick inside a wrapper of its own height. */
 header.wp-block-template-part:is(:has(.animewp-header--glass), :has(> .is-position-sticky)) { position: sticky; top: var(--animewp-sticky-admin-offset, var(--wp-admin--admin-bar--height, 0px)); z-index: 25; }
+/* This opt-in header floats above the cover. It never reserves a blank strip
+ * or moves the content when the navigation changes from a button to links. */
+/* Pin the hero header from first paint to avoid moving the artwork when Motion loads.
+ * Pages with no Cover or Carousel retain an ordinary in-flow fallback header. */
+.animewp-theme:has(main :is(.wp-block-cover, .wp-block-animewp-carousel)) header.wp-block-template-part:has(.animewp-header--hero) {
+  position: fixed;
+  inset: var(--animewp-sticky-admin-offset, var(--wp-admin--admin-bar--height, 0px)) 0 auto;
+  z-index: 25;
+  margin: 0;
+  pointer-events: none;
+}
+.animewp-theme:has(main :is(.wp-block-cover, .wp-block-animewp-carousel)) header.wp-block-template-part:has(.animewp-header--hero) + * { margin-block-start: 0; }
 /* In-page links (#news, a table of contents) stop below the sticky header, on any anchor, not only sections with their own padding. */
-html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-sticky)) { --animewp-sticky-admin-offset: var(--wp-admin--admin-bar--height, 0px); scroll-padding-top: calc(var(--animewp-sticky-header-height, max(var(--wp--custom--animewp--header-height, 5rem), 88px)) + var(--animewp-sticky-admin-offset)); } /* Measured by presentation.js; otherwise the token, at least the 88px min-height. */
+html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-sticky, .animewp-header--hero)) { --animewp-sticky-admin-offset: var(--wp-admin--admin-bar--height, 0px); scroll-padding-top: calc(var(--animewp-sticky-header-height, max(var(--wp--custom--animewp--header-height, 5rem), 88px)) + var(--animewp-sticky-admin-offset)); } /* Measured by presentation.js; otherwise the token, at least the 88px min-height. */
 /* Core's toolbar scrolls away on phones, so it must not leave a permanent 46px gap. */
 @media screen and (max-width: 600px) {
-  html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-sticky)) { --animewp-sticky-admin-offset: 0px; }
+  html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-sticky, .animewp-header--hero)) { --animewp-sticky-admin-offset: 0px; }
 }
 /* v1 sections add the header height themselves; keep only their extra 1rem so the total stays as in v1. */
-html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-sticky)) .animewp-section { scroll-margin-top: 1rem; }
+html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-sticky, .animewp-header--hero)) .animewp-section { scroll-margin-top: 1rem; }
 .animewp-header--glass {
   background: var(--wp--preset--color--base, #fff); color: var(--wp--preset--color--contrast, #202020);
 }
@@ -195,6 +209,135 @@ html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-
   .animewp-header--glass { background: color-mix(in srgb, var(--wp--preset--color--base, #fff) 94%, transparent); backdrop-filter: blur(12px); }
 }
 .animewp-header--glass:has(.is-menu-open) { backdrop-filter: none; }
+/* The tint and blur live behind the navigation, on a pseudo-element. A blur,
+ * transform or opacity on the header itself would trap Core's fixed modal in
+ * the height of the bar. Header appearance controls set these three variables. */
+.animewp-header--hero {
+  position: relative;
+  isolation: isolate;
+  min-height: var(--animewp-header-height, 60px);
+  border: 0;
+}
+/* Core retains the author's background setting in saved markup. Once the
+ * scroll runtime is ready, paint that color on the glass surface instead of
+ * leaving an opaque native fill underneath the adjustable transparency. */
+.animewp-header--hero.animewp-scroll-ready { background-color: transparent !important; }
+/* Fixed fallback: if Blocks is inactive, navigation remains readable. */
+.animewp-header--hero:not(.animewp-motion) { background: var(--wp--preset--color--base, #fff); border-bottom: 1px solid var(--animewp-line); }
+.animewp-header--hero:not(.animewp-motion)::before { display: none; }
+.animewp-header--hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--animewp-header-background, var(--wp--preset--color--base, #fff));
+  border-bottom: 1px solid var(--animewp-line);
+  transition: opacity var(--wp--custom--animewp--motion--duration--fast, 160ms) ease;
+}
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .animewp-header--hero::before {
+    background: color-mix(in srgb, var(--animewp-header-background, var(--wp--preset--color--base, #fff)) var(--animewp-header-opacity, 82%), transparent);
+    -webkit-backdrop-filter: blur(var(--animewp-header-blur, 12px));
+    backdrop-filter: blur(var(--animewp-header-blur, 12px));
+  }
+}
+.animewp-header--hero > * { pointer-events: auto; }
+.animewp-header--hero nav.wp-block-navigation { flex: 0 1 auto; margin-inline: auto; }
+.animewp-header--hero .wp-block-navigation__responsive-container-open {
+  position: relative;
+  gap: 0.55rem;
+  box-shadow: 0 4px 18px rgba(22, 18, 29, 0.12);
+  transition: box-shadow 180ms ease, border-color 180ms ease;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--animewp-line);
+  border-radius: 999px;
+  letter-spacing: 0.08em;
+  background: var(--animewp-header-background, var(--wp--preset--color--base, #fff));
+}
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .animewp-header--hero .wp-block-navigation__responsive-container-open {
+    background: color-mix(in srgb, var(--animewp-header-background, var(--wp--preset--color--base, #fff)) var(--animewp-header-opacity, 82%), transparent);
+    -webkit-backdrop-filter: blur(var(--animewp-header-blur, 12px));
+    backdrop-filter: blur(var(--animewp-header-blur, 12px));
+  }
+}
+/* Opt-in accent that echoes a page's petal decorations without duplicating
+ * animation or adding extra DOM controls to the Core navigation. */
+.animewp-header--hero.animewp-header--petal .wp-block-navigation__responsive-container-open::after {
+  content: '';
+  display: block;
+  flex: 0 0 auto;
+  width: 8px;
+  height: 11px;
+  margin-inline-start: 1px;
+  border-radius: 100% 0 100% 0;
+  background: var(--wp--preset--color--accent, #817b89);
+  opacity: 0.7;
+  transform: rotate(-28deg);
+}
+.animewp-header--hero .wp-block-navigation-item__content:is(:hover, :focus-visible) {
+  text-decoration-color: var(--wp--preset--color--accent, currentColor);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.35em;
+}
+.animewp-header--hero.animewp-scroll-ready.is-scrolled-active::before {
+  box-shadow: 0 2px 14px rgba(22, 18, 29, 0.06);
+}
+@media (min-width: 782px) and (prefers-reduced-motion: no-preference) {
+  .animewp-header--hero.animewp-scroll-ready.is-scrolled-active .wp-block-navigation__container {
+    animation: animewp-header-links-reveal 200ms ease-out both;
+  }
+}
+@keyframes animewp-header-links-reveal {
+  /* Readable even during the brief transition into the glass bar. */
+  from { opacity: 0.75; translate: 0 -2px; }
+  to { opacity: 1; translate: 0 0; }
+}
+/* One Navigation block owns both views, including the saved menu and focus.
+ * Without the scroll runtime (or a usable cover), leave the inline links open. */
+.animewp-header--hero:not(.animewp-scroll-ready) .wp-block-navigation__responsive-container-open { display: none; }
+.animewp-header--hero:not(.animewp-scroll-ready) .wp-block-navigation__responsive-container:not(.is-menu-open) {
+  display: block;
+  position: static;
+  width: auto;
+}
+/* Do not display Core's close button when only the normal fallback links
+ * are visible (no JavaScript, plugin, or usable Cover). */
+.animewp-header--hero:not(.animewp-scroll-ready) .wp-block-navigation__responsive-container:not(.is-menu-open) .wp-block-navigation__responsive-container-close { display: none; }
+.animewp-header--hero:not(.animewp-scroll-ready) .wp-block-navigation__responsive-container-content { padding-block-start: 0; }
+.animewp-header--hero:not(.animewp-scroll-ready) .wp-block-navigation__container { flex-wrap: wrap; }
+.animewp-header--hero.animewp-scroll-ready:not(.is-scrolled-active)::before { opacity: 0; }
+.animewp-header--hero.animewp-scroll-ready:not(.is-scrolled-active) nav.wp-block-navigation { margin-inline: auto 0; }
+.animewp-header--hero.animewp-scroll-ready:not(.is-scrolled-active) .wp-block-navigation__responsive-container:not(.is-menu-open) { display: none; }
+.animewp-header--hero.animewp-scroll-ready:not(.is-scrolled-active) .wp-block-navigation__responsive-container-open { display: flex; }
+.animewp-header--hero .wp-block-navigation__responsive-container.is-menu-open { padding: clamp(24px, 5vw, 64px); }
+.animewp-header--hero .wp-block-navigation__responsive-container.is-menu-open:not(.has-background) { background: var(--wp--preset--color--base, #fff); }
+.animewp-header--hero .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__responsive-container-content { padding-top: 70px; }
+@media (max-width: 781px) {
+  .animewp-header--hero nav.wp-block-navigation { margin-inline: auto 0; }
+  .animewp-header--hero.animewp-scroll-ready .wp-block-navigation__responsive-container:not(.is-menu-open) { display: none; }
+  .animewp-header--hero.animewp-scroll-ready .wp-block-navigation__responsive-container-open { display: flex; }
+}
+/* Changing orientation must not hide the link that currently has keyboard
+ * focus. Keep its inline view until focus leaves; the same saved menu then
+ * returns to the normal layout for the new viewport. */
+.animewp-header--hero.animewp-scroll-ready .wp-block-navigation__responsive-container:not(.is-menu-open):focus-within {
+  display: block;
+  position: static;
+  width: auto;
+}
+.animewp-header--hero.animewp-scroll-ready .wp-block-navigation__responsive-container:not(.is-menu-open):focus-within .wp-block-navigation__container { flex-wrap: wrap; }
+.animewp-header--hero.animewp-scroll-ready:has(.wp-block-navigation__responsive-container:not(.is-menu-open):focus-within) .wp-block-navigation__responsive-container-open { display: none; }
+.animewp-header--hero.animewp-scroll-ready .wp-block-navigation__responsive-container-open:focus { display: flex; }
+@media (prefers-reduced-motion: reduce) {
+  .animewp-header--hero::before,
+  .animewp-header--hero .wp-block-navigation__responsive-container-open { transition: none; }
+  .animewp-header--hero .wp-block-navigation__container { animation: none; }
+}
 .animewp-section { scroll-margin-top: calc(var(--wp--custom--animewp--header-height, 5rem) + var(--wp-admin--admin-bar--height, 0px) + 1rem); }
 .animewp-eyebrow { font-size: clamp(0.875rem, 1vw, 1rem); letter-spacing: 0.16em; line-height: 1.7; }
 .animewp-section-heading .animewp-eyebrow { font-size: clamp(1.75rem, 3.8vw, 3rem); letter-spacing: 0.04em; margin-block: 0 0.4rem; }
@@ -253,7 +396,10 @@ html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-
 @media (prefers-reduced-motion: reduce) { .is-style-animewp-reveal[data-animewp-reveal-pending] { opacity: 1; transition: none; } }
 @media print {
   .is-style-animewp-reveal[data-animewp-reveal-pending] { opacity: 1; }
-  header.wp-block-template-part:is(:has(.animewp-header--glass), :has(> .is-position-sticky)) { position: static; }
+  header.wp-block-template-part:is(:has(.animewp-header--glass), :has(> .is-position-sticky), :has(.animewp-header--hero)) { position: static; pointer-events: auto; }
+  .animewp-header--hero .wp-block-navigation__responsive-container:not(.is-menu-open) { display: block !important; }
+  .animewp-header--hero .wp-block-navigation__responsive-container-open { display: none !important; }
+  .animewp-header--hero::before { display: none; }
   .is-style-animewp-fade-start img, .is-style-animewp-fade-bottom img { -webkit-mask-image: none; mask-image: none; }
 }
 

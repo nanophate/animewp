@@ -407,10 +407,15 @@ for ( const loop of [ 'float', 'sway', 'pulse' ] ) {
 	} );
 }
 
+function motionSettings( env ) {
+	env.window.frontendSanitize = env.run( 'shared/sanitize.js', ( code ) => code.replace( /export /g, '' ), 'return { enumValue, numberValue, safeColor };' );
+	env.window.frontendMotion = env.run( 'motion/shared.js', ( code ) => code.replace( "import { enumValue, numberValue, safeColor } from '../shared/sanitize';", 'const { enumValue, numberValue, safeColor } = window.frontendSanitize;' ).replace( /export /g, '' ), 'return { normalized, isActive, motionProps };' );
+	return env.window.frontendMotion;
+}
+
 function preview( t ) {
 	const env = environment( t, '<div data-block="preview">Preview</div>' );
-	env.window.frontendSanitize = env.run( 'shared/sanitize.js', ( code ) => code.replace( /export /g, '' ), 'return { enumValue, numberValue };' );
-	env.window.frontendMotion = env.run( 'motion/shared.js', ( code ) => code.replace( "import { enumValue, numberValue } from '../shared/sanitize';", 'const { enumValue, numberValue } = window.frontendSanitize;' ).replace( /export /g, '' ), 'return { motionProps };' );
+	motionSettings( env );
 	const show = env.run( 'motion/editor.js', ( code ) => 'const { motionProps } = window.frontendMotion;\n' + code.slice( code.indexOf( 'function canvasElement(' ), code.indexOf( 'function MotionPanel(' ) ), 'return preview;' );
 	return { ...env, show, element: env.document.querySelector( '[data-block]' ) };
 }
@@ -435,6 +440,229 @@ test( 'an earlier preview cleanup cannot interrupt the next preview', async ( t 
 	assert.equal( env.element.classList.contains( 'has-entrance-fade' ), true );
 	await env.tick( 500 );
 	assert.equal( env.element.classList.contains( 'is-inview' ), false );
+} );
+
+// Supply layout facts that JSDOM cannot calculate. Selection, readiness,
+// thresholds, focus handling and observers still run through the real module.
+function scrollMotion( t, html ) {
+	const env = environment( t, html );
+	const observed = new Set();
+	let resized;
+	env.window.ResizeObserver = class {
+		constructor( callback ) { resized = callback; }
+		observe( element ) { observed.add( element ); }
+	};
+	return {
+		...env, observed,
+		box( selector, geometry = {}, rendered = true ) {
+			const element = env.document.querySelector( selector );
+			element.getBoundingClientRect = () => {
+				const value = typeof geometry === 'function' ? geometry() : geometry;
+				const top = ( value.top ?? 0 ) - env.window.scrollY;
+				const width = value.width ?? 1280;
+				const height = value.height ?? 900;
+				return { x: 0, y: top, top, left: 0, bottom: top + height, right: width, width, height };
+			};
+			element.getClientRects = () => rendered ? [ element.getBoundingClientRect() ] : [];
+			return element;
+		},
+		async scroll( top ) {
+			env.window.scrollY = top;
+			env.window.dispatchEvent( new env.window.Event( 'scroll' ) );
+			await env.tick( 32 );
+		},
+		async resize() {
+			assert.equal( typeof resized, 'function', 'the runtime registered a ResizeObserver' );
+			resized();
+			await env.tick( 32 );
+		},
+	};
+}
+
+test( 'motion settings keep legacy distances and bound new appearance values without losing zero', ( t ) => {
+	const env = environment( t, '' );
+	const { normalized, motionProps, isActive } = motionSettings( env );
+	assert.equal( normalized( { scrolled: 'show' } ).scrollDistance, 64 );
+	assert.equal( normalized( {} ).scrollTrigger, 'distance' );
+	for ( const value of [ null, false, '', '500', '1e309', Infinity, NaN, [] ] ) {
+		assert.equal( normalized( { scrollDistance: value } ).scrollDistance, 64 );
+	}
+	for ( const [ value, expected ] of [ [ -100, 0 ], [ 0, 0 ], [ 360.6, 361 ], [ 10001, 10000 ] ] ) {
+		assert.equal( normalized( { scrollDistance: value } ).scrollDistance, expected );
+	}
+	assert.equal( normalized( { scrollTrigger: 'hero" onclick="bad()' } ).scrollTrigger, 'distance' );
+	assert.equal( isActive( { scrollDistance: 500 } ), false );
+	assert.equal( isActive( { headerAppearance: true } ), true );
+	const transparent = motionProps( { scrolled: 'navigation', headerAppearance: true, headerOpacity: 0, headerBlur: 0, headerHeight: 48 } );
+	assert.match( transparent.className, /is-scrolled-navigation/ );
+	assert.equal( transparent.style[ '--animewp-header-opacity' ], '0%' );
+	assert.equal( transparent.style[ '--animewp-header-blur' ], '0px' );
+	assert.equal( transparent.style[ '--animewp-header-height' ], '48px' );
+	const bounded = normalized( { headerOpacity: 101, headerBlur: -1, headerHeight: 999 } );
+	assert.deepEqual( [ bounded.headerOpacity, bounded.headerBlur, bounded.headerHeight ], [ 100, 0, 120 ] );
+	const invalid = normalized( { headerOpacity: '20%;color:red', headerBlur: {}, headerHeight: false } );
+	assert.deepEqual( [ invalid.headerOpacity, invalid.headerBlur, invalid.headerHeight ], [ 82, 12, 60 ] );
+	assert.equal( motionProps( { headerAppearance: false, headerOpacity: 5 } ).style[ '--animewp-header-opacity' ], undefined );
+} );
+
+test( 'header surfaces use native solid and preset colors without accepting injected CSS', ( t ) => {
+	const env = environment( t, '' );
+	const { motionProps } = motionSettings( env );
+	const fallback = 'var(--wp--preset--color--base, #fff)';
+	const cases = [
+		[ {}, fallback ],
+		[ { backgroundColor: 'accent' }, 'var(--wp--preset--color--accent, ' + fallback + ')' ],
+		[ { style: { color: { background: '#123456' } } }, '#123456' ],
+		[ { backgroundColor: 'accent);color:red', style: { color: { background: 'rgb(10 20 30 / 50%)' } } }, 'rgb(10 20 30 / 50%)' ],
+		[ { backgroundColor: 'bad;slug', style: { color: { background: '#fff;opacity:0' } } }, fallback ],
+		[ { style: { color: { background: 'linear-gradient(red, blue)' } } }, fallback ],
+	];
+	for ( const [ attributes, expected ] of cases ) {
+		assert.equal( motionProps( { headerAppearance: true }, attributes ).style[ '--animewp-header-background' ], expected );
+	}
+	assert.equal( motionProps( { headerAppearance: false }, { backgroundColor: 'accent' } ).style[ '--animewp-header-background' ], undefined );
+} );
+
+test( 'per-block scroll distances have strict boundaries while the legacy marker stays at 64px', async ( t ) => {
+	const env = scrollMotion( t, '<div id="zero" class="is-scrolled-show" data-animewp-scroll-distance="0"></div>'
+		+ '<div id="legacy" class="is-scrolled-hide"></div>'
+		+ '<div id="custom" class="is-scrolled-show" data-animewp-scroll-distance="240"></div>'
+		+ '<div id="invalid" class="is-scrolled-show" data-animewp-scroll-distance="Infinity"></div>' );
+	env.run( 'motion/view.js' );
+	for ( const top of [ 0, 1, 64, 65, 240, 241 ] ) {
+		await env.scroll( top );
+		for ( const [ id, threshold ] of [ [ 'zero', 0 ], [ 'legacy', 64 ], [ 'custom', 240 ], [ 'invalid', 64 ] ] ) {
+			const element = env.document.getElementById( id );
+			assert.equal( element.classList.contains( 'animewp-scroll-ready' ), true );
+			assert.equal( element.classList.contains( 'is-scrolled-active' ), top > threshold, id + ' at ' + top );
+		}
+		assert.equal( env.document.documentElement.classList.contains( 'animewp-is-scrolled' ), top > 64 );
+	}
+	// Older custom CSS can also observe this marker on pages that initialize
+	// the scroll runtime through parallax alone, without any scroll actions.
+	const parallax = scrollMotion( t, '<div class="animewp-motion has-parallax"></div>' );
+	parallax.run( 'motion/view.js' );
+	await parallax.scroll( 65 );
+	assert.equal( parallax.document.documentElement.classList.contains( 'animewp-is-scrolled' ), true );
+	await parallax.scroll( 0 );
+	assert.equal( parallax.document.documentElement.classList.contains( 'animewp-is-scrolled' ), false );
+} );
+
+test( 'hero selection skips hidden and collapsed covers and measures the outer carousel', async ( t ) => {
+	const env = scrollMotion( t, '<header class="is-scrolled-navigation" data-animewp-scroll-trigger="hero"></header><main>'
+		+ '<div style="display:none"><div id="css-hidden" class="wp-block-cover"></div></div>'
+		+ '<div hidden><div id="attribute-hidden" class="wp-block-cover"></div></div>'
+		+ '<div id="invisible" class="wp-block-cover" style="visibility:hidden"></div>'
+		+ '<div id="collapsed" class="wp-block-cover"></div>'
+		+ '<div id="carousel" class="wp-block-animewp-carousel"><div id="slide" class="wp-block-cover"></div></div></main>' );
+	env.box( '#css-hidden', {}, false ); // Its own computed display is block, but the ancestor removes its layout box.
+	env.box( '#attribute-hidden', { height: 20 } );
+	env.box( '#invisible', { height: 20 } );
+	env.box( '#collapsed', { height: 0 } );
+	const carouselElement = env.box( '#carousel', { height: 900 } );
+	env.box( '#slide', { height: 100 } );
+	env.run( 'motion/view.js' );
+	const header = env.document.querySelector( 'header' );
+	assert.equal( env.observed.has( carouselElement ), true );
+	await env.scroll( 200 );
+	assert.equal( header.classList.contains( 'is-scrolled-active' ), false );
+	await env.scroll( 901 );
+	assert.equal( header.classList.contains( 'is-scrolled-active' ), true );
+} );
+
+test( 'hero geometry is measured after enhancement and updates on resize without another scroll', async ( t ) => {
+	const env = scrollMotion( t, '<header class="is-scrolled-navigation" data-animewp-scroll-trigger="hero"></header><main><div id="cover" class="wp-block-cover"></div></main>' );
+	const header = env.document.querySelector( 'header' );
+	let height = 900;
+	const cover = env.box( '#cover', () => ( { top: header.classList.contains( 'animewp-scroll-ready' ) ? 0 : 90, height } ) );
+	env.window.scrollY = 901;
+	env.run( 'motion/view.js' );
+	assert.equal( header.classList.contains( 'is-scrolled-active' ), true, 'the former inline header height must not delay activation' );
+	assert.equal( env.observed.has( cover ), true );
+	height = 1200;
+	await env.resize();
+	assert.equal( env.window.scrollY, 901 );
+	assert.equal( header.classList.contains( 'is-scrolled-active' ), false );
+	height = 800;
+	await env.resize();
+	assert.equal( header.classList.contains( 'is-scrolled-active' ), true );
+} );
+
+test( 'a cached cover may become hidden or be removed without leaving stale header timing', async ( t ) => {
+	const env = scrollMotion( t, '<header class="is-scrolled-navigation" data-animewp-scroll-trigger="hero"></header><main>'
+		+ '<div id="first" class="wp-block-cover"></div>'
+		+ '<div id="second" class="wp-block-cover"></div></main>' );
+	const first = env.box( '#first', { top: 0, height: 400 } );
+	env.box( '#second', { top: 500, height: 500 } );
+	env.run( 'motion/view.js' );
+	const header = env.document.querySelector( 'header' );
+	await env.scroll( 450 );
+	assert.equal( header.classList.contains( 'is-scrolled-active' ), true );
+	first.style.display = 'none';
+	await env.resize();
+	assert.equal( header.classList.contains( 'is-scrolled-active' ), false, 'use the next visible cover instead of stale cached geometry' );
+	await env.scroll( 1001 );
+	assert.equal( header.classList.contains( 'is-scrolled-active' ), true );
+	first.remove();
+	await env.resize();
+	assert.equal( header.classList.contains( 'is-scrolled-active' ), true, 'removed covers cannot break the current threshold' );
+} );
+
+test( 'hero-triggered blocks stay unenhanced and visible when no usable hero exists', ( t ) => {
+	for ( const body of [ '<main><p>No cover</p></main>', '<main><div id="empty" class="wp-block-cover"></div></main>', '<p>No main content region</p>' ] ) {
+		const env = scrollMotion( t, '<header class="is-scrolled-show" data-animewp-scroll-trigger="hero"><a href="#news">News</a></header>' + body );
+		if ( env.document.querySelector( '#empty' ) ) env.box( '#empty', { height: 0 } );
+		env.run( 'motion/view.js' );
+		const header = env.document.querySelector( 'header' );
+		assert.equal( header.classList.contains( 'animewp-scroll-ready' ), false );
+		assert.notEqual( declaration( motionCss, header, 'display' ), 'none' );
+	}
+} );
+
+test( 'delayed enhancement preserves focused fallback links until focus leaves', async ( t ) => {
+	for ( const action of [ 'show', 'hide', 'navigation' ] ) {
+		const env = scrollMotion( t, '<section class="is-scrolled-' + action + '" data-animewp-scroll-distance="100"><a id="inside" href="#news">News</a></section><button id="outside">Outside</button>' );
+		const element = env.document.querySelector( 'section' );
+		const inside = env.document.querySelector( '#inside' );
+		inside.focus();
+		env.run( 'motion/view.js' );
+		assert.equal( element.classList.contains( 'animewp-scroll-ready' ), false, action + ' keeps its actual fallback presentation, including on phones' );
+		assert.equal( env.document.activeElement, inside );
+		await env.scroll( 200 );
+		assert.equal( element.classList.contains( 'animewp-scroll-ready' ), false );
+		env.document.querySelector( '#outside' ).focus();
+		await env.tick( 32 );
+		assert.equal( element.classList.contains( 'animewp-scroll-ready' ), true );
+		assert.equal( element.classList.contains( 'is-scrolled-active' ), true );
+	}
+} );
+
+test( 'an open Core menu defers enhancement and preserves its state until the menu closes', async ( t ) => {
+	const env = scrollMotion( t, '<header class="is-scrolled-navigation" data-animewp-scroll-distance="100"><nav class="is-menu-open"><a href="#news">News</a></nav></header>' );
+	const header = env.document.querySelector( 'header' );
+	const menu = env.document.querySelector( 'nav' );
+	env.window.scrollY = 200;
+	env.run( 'motion/view.js' );
+	assert.equal( header.classList.contains( 'animewp-scroll-ready' ), false );
+	menu.classList.remove( 'is-menu-open' );
+	await env.tick( 32 );
+	assert.equal( header.classList.contains( 'animewp-scroll-ready' ), true );
+	assert.equal( header.classList.contains( 'is-scrolled-active' ), true );
+	menu.classList.add( 'is-menu-open' );
+	await env.scroll( 0 );
+	assert.equal( header.classList.contains( 'is-scrolled-active' ), true );
+	menu.classList.remove( 'is-menu-open' );
+	await env.tick( 32 );
+	assert.equal( header.classList.contains( 'is-scrolled-active' ), false, 'Core closing its menu triggers reevaluation without an extra scroll' );
+} );
+
+test( 'compact headers still update while a navigation link has focus', async ( t ) => {
+	const env = scrollMotion( t, '<header class="is-scrolled-shrink"><a href="#news">News</a></header>' );
+	env.run( 'motion/view.js' );
+	env.document.querySelector( 'a' ).focus();
+	await env.scroll( 200 );
+	assert.equal( env.document.querySelector( 'header' ).classList.contains( 'is-scrolled-active' ), true );
+	assert.equal( env.document.activeElement.tagName, 'A' );
 } );
 
 function videoCard( t, { supported = true, setup } = {} ) {

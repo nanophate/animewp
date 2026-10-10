@@ -124,15 +124,27 @@ function preview( clientId, motion ) {
 	const timer = setTimeout( cleanup, total );
 }
 
-function MotionPanel( { attributes, setAttributes, clientId } ) {
+function MotionPanel( { attributes, setAttributes, clientId, name } ) {
 	const motion = normalized( attributes[ ATTRIBUTE ] );
+	const heroHeader =
+		name === 'core/group' &&
+		/(?:^|\s)animewp-header--hero(?:\s|$)/.test(
+			attributes.className || ''
+		);
 	const hasChildren = useSelect(
 		( select ) => select( blockEditorStore ).getBlockCount( clientId ) > 0,
 		[ clientId ]
 	);
 	const set = ( key ) => ( value ) =>
 		setAttributes( {
-			[ ATTRIBUTE ]: compact( { ...motion, [ key ]: value } ),
+			[ ATTRIBUTE ]: compact( {
+				...motion,
+				...( key.startsWith( 'header' ) ||
+				( key === 'scrolled' && value === 'navigation' )
+					? { headerAppearance: true }
+					: {} ),
+				[ key ]: value,
+			} ),
 		} );
 	const select = ( key, label, options, help ) => (
 		<SelectControl
@@ -159,182 +171,327 @@ function MotionPanel( { attributes, setAttributes, clientId } ) {
 		/>
 	);
 	return (
-		<PanelBody
-			title={ __( 'Motion', 'animewp-blocks' ) }
-			initialOpen={ isActive( attributes[ ATTRIBUTE ] ) }
-		>
-			{ select(
-				'entrance',
-				__( 'Entrance', 'animewp-blocks' ),
-				[
-					{ label: __( 'None', 'animewp-blocks' ), value: 'none' },
-					{ label: __( 'Fade in', 'animewp-blocks' ), value: 'fade' },
-					{ label: __( 'Rise', 'animewp-blocks' ), value: 'rise' },
-					{
-						label: __(
-							'Slide from the start side',
-							'animewp-blocks'
-						),
-						value: 'slide-start',
-					},
-					{
-						label: __(
-							'Slide from the end side',
-							'animewp-blocks'
-						),
-						value: 'slide-end',
-					},
-					{ label: __( 'Zoom in', 'animewp-blocks' ), value: 'zoom' },
-					{
-						label: __( 'Come into focus (blur)', 'animewp-blocks' ),
-						value: 'blur',
-					},
-					{
-						label: __( 'Wipe (mask)', 'animewp-blocks' ),
-						value: 'mask',
-					},
-					{
-						label: __( 'Letter by letter', 'animewp-blocks' ),
-						value: 'letters',
-					},
-				],
-				__(
-					'Plays once when the block scrolls into view.',
-					'animewp-blocks'
-				)
-			) }
-			{ motion.entrance !== 'none' && (
-				<>
-					{ hasChildren &&
-						select( 'target', __( 'Apply to', 'animewp-blocks' ), [
-							{
-								label: __( 'This block', 'animewp-blocks' ),
-								value: 'self',
-							},
-							{
-								label: __(
-									'Each inner block in turn',
-									'animewp-blocks'
-								),
-								value: 'children',
-							},
-						] ) }
-					{ range(
-						'delay',
-						__( 'Delay (ms)', 'animewp-blocks' ),
-						0,
-						3000,
-						50
-					) }
-					{ range(
-						'duration',
-						__( 'Duration (ms)', 'animewp-blocks' ),
-						0,
-						4000,
-						50,
-						__(
-							'0 uses the site’s motion speed.',
-							'animewp-blocks'
-						)
-					) }
-					{ motion.target === 'children' &&
-						range(
-							'stagger',
-							__(
-								'Gap between inner blocks (ms)',
+		<>
+			<PanelBody
+				title={ __( 'Motion', 'animewp-blocks' ) }
+				initialOpen={ isActive( attributes[ ATTRIBUTE ] ) }
+			>
+				{ select(
+					'entrance',
+					__( 'Entrance', 'animewp-blocks' ),
+					[
+						{
+							label: __( 'None', 'animewp-blocks' ),
+							value: 'none',
+						},
+						{
+							label: __( 'Fade in', 'animewp-blocks' ),
+							value: 'fade',
+						},
+						{
+							label: __( 'Rise', 'animewp-blocks' ),
+							value: 'rise',
+						},
+						{
+							label: __(
+								'Slide from the start side',
 								'animewp-blocks'
 							),
+							value: 'slide-start',
+						},
+						{
+							label: __(
+								'Slide from the end side',
+								'animewp-blocks'
+							),
+							value: 'slide-end',
+						},
+						{
+							label: __( 'Zoom in', 'animewp-blocks' ),
+							value: 'zoom',
+						},
+						{
+							label: __(
+								'Come into focus (blur)',
+								'animewp-blocks'
+							),
+							value: 'blur',
+						},
+						{
+							label: __( 'Wipe (mask)', 'animewp-blocks' ),
+							value: 'mask',
+						},
+						{
+							label: __( 'Letter by letter', 'animewp-blocks' ),
+							value: 'letters',
+						},
+					],
+					__(
+						'Plays once when the block scrolls into view.',
+						'animewp-blocks'
+					)
+				) }
+				{ motion.entrance !== 'none' && (
+					<>
+						{ hasChildren &&
+							select(
+								'target',
+								__( 'Apply to', 'animewp-blocks' ),
+								[
+									{
+										label: __(
+											'This block',
+											'animewp-blocks'
+										),
+										value: 'self',
+									},
+									{
+										label: __(
+											'Each inner block in turn',
+											'animewp-blocks'
+										),
+										value: 'children',
+									},
+								]
+							) }
+						{ range(
+							'delay',
+							__( 'Delay (ms)', 'animewp-blocks' ),
 							0,
-							1000,
-							10,
-							__( '0 uses the site’s default.', 'animewp-blocks' )
+							3000,
+							50
 						) }
-					<Button
-						variant="secondary"
-						onClick={ () => preview( clientId, motion ) }
-					>
-						{ __( 'Preview', 'animewp-blocks' ) }
-					</Button>
-				</>
-			) }
-			<hr />
-			{ select(
-				'hover',
-				__( 'On hover', 'animewp-blocks' ),
-				[
-					{ label: __( 'None', 'animewp-blocks' ), value: 'none' },
-					{ label: __( 'Lift', 'animewp-blocks' ), value: 'lift' },
-					{
-						label: __( 'Zoom the image', 'animewp-blocks' ),
-						value: 'zoom',
-					},
-					{ label: __( 'Glow', 'animewp-blocks' ), value: 'glow' },
-				],
-				hasChildren
-					? __(
-							'Follows “Apply to”: this block, or each inner block.',
+						{ range(
+							'duration',
+							__( 'Duration (ms)', 'animewp-blocks' ),
+							0,
+							4000,
+							50,
+							__(
+								'0 uses the site’s motion speed.',
+								'animewp-blocks'
+							)
+						) }
+						{ motion.target === 'children' &&
+							range(
+								'stagger',
+								__(
+									'Gap between inner blocks (ms)',
+									'animewp-blocks'
+								),
+								0,
+								1000,
+								10,
+								__(
+									'0 uses the site’s default.',
+									'animewp-blocks'
+								)
+							) }
+						<Button
+							variant="secondary"
+							onClick={ () => preview( clientId, motion ) }
+						>
+							{ __( 'Preview', 'animewp-blocks' ) }
+						</Button>
+					</>
+				) }
+				<hr />
+				{ select(
+					'hover',
+					__( 'On hover', 'animewp-blocks' ),
+					[
+						{
+							label: __( 'None', 'animewp-blocks' ),
+							value: 'none',
+						},
+						{
+							label: __( 'Lift', 'animewp-blocks' ),
+							value: 'lift',
+						},
+						{
+							label: __( 'Zoom the image', 'animewp-blocks' ),
+							value: 'zoom',
+						},
+						{
+							label: __( 'Glow', 'animewp-blocks' ),
+							value: 'glow',
+						},
+					],
+					hasChildren
+						? __(
+								'Follows “Apply to”: this block, or each inner block.',
+								'animewp-blocks'
+							)
+						: undefined
+				) }
+				{ select(
+					'loop',
+					__( 'Keep moving', 'animewp-blocks' ),
+					[
+						{
+							label: __( 'None', 'animewp-blocks' ),
+							value: 'none',
+						},
+						{
+							label: __( 'Float', 'animewp-blocks' ),
+							value: 'float',
+						},
+						{
+							label: __( 'Sway', 'animewp-blocks' ),
+							value: 'sway',
+						},
+						{
+							label: __( 'Pulse', 'animewp-blocks' ),
+							value: 'pulse',
+						},
+					],
+					__(
+						'A slow, endless movement for decorations.',
+						'animewp-blocks'
+					)
+				) }
+				{ range(
+					'parallax',
+					__( 'Parallax', 'animewp-blocks' ),
+					-50,
+					50,
+					5,
+					__(
+						'Moves slower (negative) or faster (positive) than the page while scrolling. 0 is off.',
+						'animewp-blocks'
+					)
+				) }
+				{ select(
+					'scrolled',
+					__( 'After scrolling down', 'animewp-blocks' ),
+					[
+						{
+							label: __( 'No change', 'animewp-blocks' ),
+							value: 'none',
+						},
+						{
+							label: __( 'Hide', 'animewp-blocks' ),
+							value: 'hide',
+						},
+						{
+							label: __(
+								'Show (hidden at the top)',
+								'animewp-blocks'
+							),
+							value: 'show',
+						},
+						{
+							label: __( 'Make compact', 'animewp-blocks' ),
+							value: 'shrink',
+						},
+						...( heroHeader || motion.scrolled === 'navigation'
+							? [
+									{
+										label: __(
+											'Expand the navigation',
+											'animewp-blocks'
+										),
+										value: 'navigation',
+									},
+								]
+							: [] ),
+					],
+					__(
+						'For headers: for example, hide the full logo and show a short one once the visitor scrolls.',
+						'animewp-blocks'
+					)
+				) }
+				{ motion.scrolled !== 'none' && (
+					<>
+						{ select(
+							'scrollTrigger',
+							__( 'Scroll trigger', 'animewp-blocks' ),
+							[
+								{
+									label: __(
+										'Scroll distance',
+										'animewp-blocks'
+									),
+									value: 'distance',
+								},
+								{
+									label: __(
+										'After the first cover',
+										'animewp-blocks'
+									),
+									value: 'hero',
+								},
+							],
+							motion.scrollTrigger === 'hero'
+								? __(
+										'Uses the first Cover or Carousel in the page content. If none is found, navigation stays available.',
+										'animewp-blocks'
+									)
+								: __(
+										'Each block can use its own distance. Existing settings start at 64 px.',
+										'animewp-blocks'
+									)
+						) }
+						{ motion.scrollTrigger === 'distance' &&
+							range(
+								'scrollDistance',
+								__( 'Scroll distance (px)', 'animewp-blocks' ),
+								0,
+								10000,
+								1
+							) }
+						<p>
+							{ __(
+								'Check the scroll behavior on the site preview. Blocks stay visible while editing.',
+								'animewp-blocks'
+							) }
+						</p>
+					</>
+				) }
+				<p className="animewp-motion-note">
+					{ __(
+						'Reduced motion disables animation. Scroll-based navigation remains usable.',
+						'animewp-blocks'
+					) }
+				</p>
+			</PanelBody>
+			{ ( heroHeader || motion.headerAppearance ) && (
+				<PanelBody
+					title={ __( 'Header appearance', 'animewp-blocks' ) }
+					initialOpen={ false }
+				>
+					{ range(
+						'headerOpacity',
+						__( 'Background opacity (%)', 'animewp-blocks' ),
+						0,
+						100,
+						1,
+						__(
+							'Only the background becomes transparent; text and links stay opaque.',
 							'animewp-blocks'
 						)
-					: undefined
-			) }
-			{ select(
-				'loop',
-				__( 'Keep moving', 'animewp-blocks' ),
-				[
-					{ label: __( 'None', 'animewp-blocks' ), value: 'none' },
-					{ label: __( 'Float', 'animewp-blocks' ), value: 'float' },
-					{ label: __( 'Sway', 'animewp-blocks' ), value: 'sway' },
-					{ label: __( 'Pulse', 'animewp-blocks' ), value: 'pulse' },
-				],
-				__(
-					'A slow, endless movement for decorations.',
-					'animewp-blocks'
-				)
-			) }
-			{ range(
-				'parallax',
-				__( 'Parallax', 'animewp-blocks' ),
-				-50,
-				50,
-				5,
-				__(
-					'Moves slower (negative) or faster (positive) than the page while scrolling. 0 is off.',
-					'animewp-blocks'
-				)
-			) }
-			{ select(
-				'scrolled',
-				__( 'After scrolling down', 'animewp-blocks' ),
-				[
-					{
-						label: __( 'No change', 'animewp-blocks' ),
-						value: 'none',
-					},
-					{ label: __( 'Hide', 'animewp-blocks' ), value: 'hide' },
-					{
-						label: __(
-							'Show (hidden at the top)',
+					) }
+					{ range(
+						'headerBlur',
+						__( 'Background blur (px)', 'animewp-blocks' ),
+						0,
+						24,
+						1
+					) }
+					{ range(
+						'headerHeight',
+						__( 'Minimum height (px)', 'animewp-blocks' ),
+						48,
+						120,
+						1,
+						__(
+							'The header can grow if menu items need more space. Open menus always have a solid background.',
 							'animewp-blocks'
-						),
-						value: 'show',
-					},
-					{
-						label: __( 'Make compact', 'animewp-blocks' ),
-						value: 'shrink',
-					},
-				],
-				__(
-					'For headers: for example, hide the full logo and show a short one once the visitor scrolls.',
-					'animewp-blocks'
-				)
+						)
+					) }
+				</PanelBody>
 			) }
-			<p className="animewp-motion-note">
-				{ __(
-					'Visitors who ask their device for reduced motion see everything without movement.',
-					'animewp-blocks'
-				) }
-			</p>
-		</PanelBody>
+		</>
 	);
 }
 
@@ -367,15 +524,22 @@ addFilter(
 				return <BlockListBlock { ...props } />;
 			}
 			const motion = normalized( value );
-			const { className } = motionProps( {
-				...motion,
-				entrance: 'none',
-				parallax: 0,
-				scrolled: 'none',
-			} );
+			const { className, style } = motionProps(
+				{
+					...motion,
+					entrance: 'none',
+					parallax: 0,
+					scrolled: 'none',
+				},
+				props.attributes
+			);
 			return (
 				<BlockListBlock
 					{ ...props }
+					wrapperProps={ {
+						...props.wrapperProps,
+						style: { ...props.wrapperProps?.style, ...style },
+					} }
 					className={ [ props.className, className ]
 						.filter( Boolean )
 						.join( ' ' ) }

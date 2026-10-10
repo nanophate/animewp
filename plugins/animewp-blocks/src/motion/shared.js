@@ -4,7 +4,7 @@
  * into classes and custom properties when the page renders, so saved HTML
  * never changes and the content stays valid without this plugin.
  */
-import { enumValue, numberValue } from '../shared/sanitize';
+import { enumValue, numberValue, safeColor } from '../shared/sanitize';
 
 export const ATTRIBUTE = 'animewpMotion';
 export const ENTRANCES = [
@@ -20,7 +20,7 @@ export const ENTRANCES = [
 ];
 export const HOVERS = [ 'none', 'lift', 'zoom', 'glow' ];
 export const LOOPS = [ 'none', 'float', 'sway', 'pulse' ];
-export const SCROLLED = [ 'none', 'hide', 'show', 'shrink' ];
+export const SCROLLED = [ 'none', 'hide', 'show', 'shrink', 'navigation' ];
 
 /** Blocks the panel is not offered on. */
 export const SKIP = [
@@ -44,6 +44,18 @@ export function normalized( value ) {
 		loop: enumValue( m.loop, LOOPS, 'none' ),
 		parallax: numberValue( m.parallax, -50, 50, 0 ),
 		scrolled: enumValue( m.scrolled, SCROLLED, 'none' ),
+		scrollTrigger: enumValue(
+			m.scrollTrigger,
+			[ 'distance', 'hero' ],
+			'distance'
+		),
+		scrollDistance: Math.round(
+			numberValue( m.scrollDistance, 0, 10000, 64 )
+		),
+		headerAppearance: m.headerAppearance === true,
+		headerOpacity: Math.round( numberValue( m.headerOpacity, 0, 100, 82 ) ),
+		headerBlur: Math.round( numberValue( m.headerBlur, 0, 24, 12 ) ),
+		headerHeight: Math.round( numberValue( m.headerHeight, 48, 120, 60 ) ),
 	};
 }
 
@@ -54,15 +66,17 @@ export function isActive( value ) {
 		m.hover !== 'none' ||
 		m.loop !== 'none' ||
 		m.parallax !== 0 ||
-		m.scrolled !== 'none'
+		m.scrolled !== 'none' ||
+		m.headerAppearance
 	);
 }
 
 /**
  * Classes and custom properties; mirrored in includes/motion.php.
- * @param {Object} value Saved motion attribute.
+ * @param {Object} value      Saved motion attribute.
+ * @param {Object} attributes Optional Core attributes for the editor preview.
  */
-export function motionProps( value ) {
+export function motionProps( value, attributes ) {
 	const m = normalized( value );
 	const classes = [ 'animewp-motion' ];
 	const style = {};
@@ -84,6 +98,22 @@ export function motionProps( value ) {
 	}
 	if ( m.scrolled !== 'none' ) {
 		classes.push( 'is-scrolled-' + m.scrolled );
+	}
+	if ( m.headerAppearance ) {
+		style[ '--animewp-header-opacity' ] = m.headerOpacity + '%';
+		style[ '--animewp-header-blur' ] = m.headerBlur + 'px';
+		style[ '--animewp-header-height' ] = m.headerHeight + 'px';
+		if ( attributes ) {
+			const fallback = 'var(--wp--preset--color--base, #fff)';
+			const preset = attributes.backgroundColor;
+			style[ '--animewp-header-background' ] =
+				typeof preset === 'string' && /^[a-z0-9-]+$/i.test( preset )
+					? `var(--wp--preset--color--${ preset }, ${ fallback })`
+					: safeColor(
+							attributes.style?.color?.background,
+							fallback
+						);
+		}
 	}
 	if ( m.delay ) {
 		style[ '--animewp-delay' ] = m.delay + 'ms';

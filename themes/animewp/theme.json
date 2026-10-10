@@ -485,6 +485,11 @@
       "area": "header"
     },
     {
+      "name": "header-hero",
+      "title": "キービジュアルを見せるヘッダー",
+      "area": "header"
+    },
+    {
       "name": "footer-visual",
       "title": "画像とサイトマップのフッター",
       "area": "footer"

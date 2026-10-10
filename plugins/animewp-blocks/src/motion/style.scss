@@ -198,19 +198,19 @@
 	}
 }
 
-html.animewp-is-scrolled :where(body:not(.editor-styles-wrapper)) .is-scrolled-hide,
-html:not(.animewp-is-scrolled) :where(body:not(.editor-styles-wrapper)) .is-scrolled-show {
+:where(body:not(.editor-styles-wrapper)) .animewp-scroll-ready.is-scrolled-hide.is-scrolled-active,
+:where(body:not(.editor-styles-wrapper)) .animewp-scroll-ready.is-scrolled-show:not(.is-scrolled-active) {
 	display: none !important;
 }
 
-html.animewp-is-scrolled :where(body:not(.editor-styles-wrapper)) .is-scrolled-shrink {
+:where(body:not(.editor-styles-wrapper)) .animewp-scroll-ready.is-scrolled-shrink.is-scrolled-active {
 	padding-top: 0.5rem !important;
 	padding-bottom: 0.5rem !important;
 	// A theme's header min-height would otherwise keep the full height.
 	min-height: 0 !important;
 }
 
-/* Reduced motion: everything visible, nothing moves. -------------------- */
+/* Reduced motion: nothing moves; navigation remains operable. ----------- */
 @media (prefers-reduced-motion: reduce) {
 	.animewp-motion,
 	.animewp-motion.is-target-children > *,

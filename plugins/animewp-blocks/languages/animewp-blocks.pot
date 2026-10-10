@@ -9,8 +9,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-07T00:37:07+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2026-10-09T19:52:11+00:00\n"
+"PO-Revision-Date: 2026-10-09T19:52:11+00:00\n"
 "X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: animewp-blocks\n"
 
@@ -1032,7 +1032,63 @@ msgid "For headers: for example, hide the full logo and show a short one once th
 msgstr ""
 
 #: build/motion/editor.js:1
-msgid "Visitors who ask their device for reduced motion see everything without movement."
+msgid "Reduced motion disables animation. Scroll-based navigation remains usable."
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Expand the navigation"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Scroll trigger"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Scroll distance"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "After the first cover"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Uses the first Cover or Carousel in the page content. If none is found, navigation stays available."
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Each block can use its own distance. Existing settings start at 64 px."
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Scroll distance (px)"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Check the scroll behavior on the site preview. Blocks stay visible while editing."
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Header appearance"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Background opacity (%)"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Only the background becomes transparent; text and links stay opaque."
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Background blur (px)"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "Minimum height (px)"
+msgstr ""
+
+#: build/motion/editor.js:1
+msgid "The header can grow if menu items need more space. Open menus always have a solid background."
 msgstr ""
 
 #: build/blocks/backdrop/block.json
