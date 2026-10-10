@@ -106,6 +106,17 @@ $check( 'official footer includes legal and production placeholders',
 	is_array( $official )
 	&& false !== strpos( $official['content'], '制作会社名' )
 	&& false !== strpos( $official['content'], 'プライバシーポリシー' ) );
+// Keep the latest-news Query Loop isolated from the page's main query. This
+// guards against accidentally reverting the explicit post-only source pattern.
+$news_latest = $registry->get_registered( 'animewp/news-latest' );
+$news_tree   = is_array( $news_latest ) ? parse_blocks( trim( $news_latest['content'] ) ) : array();
+$news_query  = $news_tree[0]['attrs']['query'] ?? array();
+$check( 'latest news is an independent post-only Query Loop',
+	'core/query' === ( $news_tree[0]['blockName'] ?? null )
+	&& 'post' === ( $news_query['postType'] ?? null )
+	&& false === ( $news_query['inherit'] ?? null )
+	&& 3 === ( $news_query['perPage'] ?? null )
+);
 $check( 'official footer remains a single reusable parsed block', 1 === count( $footer_tree )
 	&& '' !== trim( serialize_block( $footer_tree[0] ) ) );
 $check( 'invalid nested path fails closed', null === animewp_component_node(

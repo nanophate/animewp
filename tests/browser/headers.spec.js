@@ -284,3 +284,32 @@ test( 'legacy nested heroes keep their layout and explicit mode requires marking
 	await scrollTo( page, boundary + 20 );
 	await expect( header ).toHaveClass( /is-scrolled-active/ );
 } );
+
+// A marked Cover inside a hidden region must not pin an explicit-only header.
+// WordPress block layout often hides desktop/mobile variants with [hidden].
+test( 'explicit hero ignores a hidden Cover and its hidden ancestors', async ( { page } ) => {
+	await page.goto( fixtures().header_explicit_marked.path );
+	const part = page.locator( 'header.wp-block-template-part' );
+	const header = page.locator( '.animewp-header--hero' );
+	const cover = page.locator( '#qa-header-cover' );
+	await expect( part ).toHaveCSS( 'position', 'fixed' );
+	await expect( header ).toHaveClass( /animewp-scroll-ready/ );
+
+	await cover.evaluate( ( element ) => { element.hidden = true; } );
+	await expect( part ).not.toHaveCSS( 'position', 'fixed' );
+	await page.evaluate( () => window.dispatchEvent( new Event( 'resize' ) ) );
+	await expect( header ).not.toHaveClass( /animewp-scroll-ready/ );
+	await expect( header.getByRole( 'link' ).first() ).toBeVisible();
+
+	await cover.evaluate( ( element ) => {
+		element.hidden = false;
+		const wrapper = element.ownerDocument.createElement( 'div' );
+		wrapper.hidden = true;
+		element.parentNode.insertBefore( wrapper, element );
+		wrapper.append( element );
+	} );
+	await expect( part ).not.toHaveCSS( 'position', 'fixed' );
+	await page.evaluate( () => window.dispatchEvent( new Event( 'resize' ) ) );
+	await expect( header ).not.toHaveClass( /animewp-scroll-ready/ );
+	await expect( header.getByRole( 'link' ).first() ).toBeVisible();
+} );
