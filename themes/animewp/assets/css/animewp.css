@@ -508,7 +508,12 @@ html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-
   .animewp-footer-official__sitemap .wp-block-navigation-item__label {
     display: inline-block;
     width: auto;
-    height: max-content;
+    height: auto;
+    /* Core Navigation's flex sizing can collapse a vertical intrinsic
+     * max-content label to ~6px on Chromium and Firefox. Reserve a full
+     * vertical column while letting longer labels grow naturally. */
+    min-height: 12em;
+    max-height: none;
     white-space: nowrap;
     writing-mode: vertical-rl;
     text-orientation: upright;

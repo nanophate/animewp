@@ -21,11 +21,22 @@ test( 'official footer uses the Core social icons, editable branding and vertica
 	const labels = footer.locator( '.animewp-footer-official__sitemap .wp-block-navigation-item__label' );
 	await expect( labels ).toHaveCount( 7 );
 	for ( const label of await labels.all() ) {
-		const size = await label.evaluate( ( node ) => ( {
-			characters: [ ...node.textContent.trim() ].length,
-			height: node.getBoundingClientRect().height,
-		} ) );
+		const size = await label.evaluate( ( node ) => {
+			const block = node.getBoundingClientRect();
+			const range = document.createRange();
+			range.selectNodeContents( node );
+			const glyphs = range.getBoundingClientRect();
+			return {
+				characters: [ ...node.textContent.trim() ].length,
+				height: block.height,
+				glyphHeight: glyphs.height,
+				visibleWithinColumn: glyphs.top >= block.top - 1 &&
+					glyphs.bottom <= block.bottom + 1,
+			};
+		} );
 		expect( size.height ).toBeGreaterThanOrEqual( size.characters * 11 );
+		expect( size.glyphHeight ).toBeGreaterThan( size.characters * 8 );
+		expect( size.visibleWithinColumn ).toBe( true );
 	}
 	const initial = await page.evaluate( () => document.documentElement.scrollWidth );
 	expect( initial ).toBeLessThanOrEqual( 1281 );
