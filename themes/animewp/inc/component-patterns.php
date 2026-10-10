@@ -336,10 +336,10 @@ function animewp_component_catalog(): array {
 		),
 		'part-footer-vertical-links' => array(
 			'title' => __( '縦書きのサイトマップ', 'animewp' ),
-			'description' => __( '大画面では縦書き、小画面では横並びのサイト内ナビゲーション。', 'animewp' ),
+			'description' => __( '大画面では縦書き、小画面では横並びの編集可能なリンク集。', 'animewp' ),
 			'source' => 'animewp/footer-official',
 			'path' => array( 0, 0, 0, 1, 0 ),
-			'block' => 'core/navigation',
+			'block' => 'core/group',
 			'category' => 'animewp-layout-parts',
 			'width' => 920,
 		),

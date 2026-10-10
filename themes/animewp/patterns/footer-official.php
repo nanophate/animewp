@@ -40,15 +40,31 @@
 <!-- /wp:column -->
 <!-- wp:column {"width":"62%"} -->
 <div class="wp-block-column" style="flex-basis:62%">
-<!-- wp:navigation {"overlayMenu":"never","className":"animewp-footer-official__sitemap","layout":{"type":"flex","justifyContent":"right"}} -->
-<!-- wp:navigation-link {"label":"最新情報","url":"#news","kind":"custom","isTopLevelLink":true} /-->
-<!-- wp:navigation-link {"label":"映像","url":"#movie","kind":"custom","isTopLevelLink":true} /-->
-<!-- wp:navigation-link {"label":"作品紹介","url":"#introduction","kind":"custom","isTopLevelLink":true} /-->
-<!-- wp:navigation-link {"label":"ストーリー","url":"#story","kind":"custom","isTopLevelLink":true} /-->
-<!-- wp:navigation-link {"label":"スタッフ・キャスト","url":"#staff","kind":"custom","isTopLevelLink":true} /-->
-<!-- wp:navigation-link {"label":"音楽","url":"#music","kind":"custom","isTopLevelLink":true} /-->
-<!-- wp:navigation-link {"label":"放送・配信","url":"#onair","kind":"custom","isTopLevelLink":true} /-->
-<!-- /wp:navigation -->
+<!-- wp:group {"tagName":"nav","className":"animewp-footer-official__sitemap","layout":{"type":"flex","justifyContent":"right","flexWrap":"nowrap"}} -->
+<nav class="wp-block-group animewp-footer-official__sitemap">
+<!-- wp:paragraph {"className":"animewp-footer-official__nav-item"} -->
+<p class="animewp-footer-official__nav-item"><a href="#news">最新情報</a></p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"animewp-footer-official__nav-item"} -->
+<p class="animewp-footer-official__nav-item"><a href="#movie">映像</a></p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"animewp-footer-official__nav-item"} -->
+<p class="animewp-footer-official__nav-item"><a href="#introduction">作品紹介</a></p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"animewp-footer-official__nav-item"} -->
+<p class="animewp-footer-official__nav-item"><a href="#story">ストーリー</a></p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"animewp-footer-official__nav-item"} -->
+<p class="animewp-footer-official__nav-item"><a href="#staff">スタッフ・キャスト</a></p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"animewp-footer-official__nav-item"} -->
+<p class="animewp-footer-official__nav-item"><a href="#music">音楽</a></p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"className":"animewp-footer-official__nav-item"} -->
+<p class="animewp-footer-official__nav-item"><a href="#onair">放送・配信</a></p>
+<!-- /wp:paragraph -->
+</nav>
+<!-- /wp:group -->
 </div>
 <!-- /wp:column -->
 </div>
