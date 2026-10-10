@@ -196,7 +196,7 @@ header.wp-block-template-part:is(:has(.animewp-header--glass), :has(> .is-positi
   margin: 0;
   pointer-events: none;
 }
-.animewp-theme:has(main :is(.wp-block-cover, .wp-block-animewp-carousel)) header.wp-block-template-part:has(.animewp-header--hero:not(.animewp-header--explicit-hero)),
+.animewp-theme:has(main :is(.wp-block-cover, .wp-block-animewp-carousel)) header.wp-block-template-part:has(.animewp-header--hero:not(.animewp-header--explicit-hero)) + *,
 .animewp-theme:has(main .animewp-hero-trigger:is(.wp-block-cover, .wp-block-animewp-carousel)) header.wp-block-template-part:has(.animewp-header--hero.animewp-header--explicit-hero) + * { margin-block-start: 0; }
 /* In-page links (#news, a table of contents) stop below the sticky header, on any anchor, not only sections with their own padding. */
 html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-sticky, .animewp-header--hero)) { --animewp-sticky-admin-offset: var(--wp-admin--admin-bar--height, 0px); scroll-padding-top: calc(var(--animewp-sticky-header-height, max(var(--wp--custom--animewp--header-height, 5rem), 88px)) + var(--animewp-sticky-admin-offset)); } /* Measured by presentation.js; otherwise the token, at least the 88px min-height. */
@@ -457,20 +457,20 @@ html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-
  * links. Core Navigation's responsive flex/label wrappers collapsed some
  * Japanese vertical labels to 6px in Chromium and Firefox. Keep a single
  * text element in each column, retaining the same links on every viewport. */
-.animewp-footer-official .animewp-footer-official__sitemap {
+.animewp-footer-official .animewp-footer-official__sitemap,
 .animewp-footer-official__sitemap {
   display: flex;
   align-items: flex-start;
   width: 100%;
   gap: clamp(0.75rem, 2vw, 2rem);
 }
-.animewp-footer-official .animewp-footer-official__nav-item {
+.animewp-footer-official .animewp-footer-official__nav-item,
 .animewp-footer-official__nav-item {
   flex: 0 0 auto;
   min-width: 0;
   margin: 0;
 }
-.animewp-footer-official .animewp-footer-official__nav-item a {
+.animewp-footer-official .animewp-footer-official__nav-item a,
 .animewp-footer-official__nav-item a {
   display: block;
   color: inherit;
@@ -482,7 +482,7 @@ html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-
   text-decoration-thickness: 1px;
   text-underline-offset: 0.4em;
 }
-.animewp-footer-official .animewp-footer-official__nav-item a:is(:hover, :focus-visible) {
+.animewp-footer-official .animewp-footer-official__nav-item a:is(:hover, :focus-visible),
 .animewp-footer-official__nav-item a:is(:hover, :focus-visible) {
   text-decoration: underline;
 }
@@ -509,13 +509,13 @@ html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-
   text-decoration: none;
 }
 @media (min-width: 961px) {
-  .animewp-footer-official .animewp-footer-official__sitemap {
+  .animewp-footer-official .animewp-footer-official__sitemap,
 .animewp-footer-official__sitemap {
     flex-direction: row-reverse;
     flex-wrap: nowrap;
     justify-content: flex-start;
   }
-  .animewp-footer-official .animewp-footer-official__nav-item a {
+  .animewp-footer-official .animewp-footer-official__nav-item a,
 .animewp-footer-official__nav-item a {
     display: inline-block;
     writing-mode: vertical-rl;
@@ -542,14 +542,14 @@ html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-
     flex-basis: auto !important;
     width: 100%;
   }
-  .animewp-footer-official .animewp-footer-official__sitemap {
+  .animewp-footer-official .animewp-footer-official__sitemap,
 .animewp-footer-official__sitemap {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-start;
     gap: 0.5rem 1.5rem;
   }
-  .animewp-footer-official .animewp-footer-official__nav-item a {
+  .animewp-footer-official .animewp-footer-official__nav-item a,
 .animewp-footer-official__nav-item a {
     writing-mode: horizontal-tb;
     white-space: normal;
