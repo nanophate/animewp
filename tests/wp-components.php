@@ -54,6 +54,17 @@ foreach ( $catalog as $slug => $definition ) {
 		&& '' !== trim( serialize_block( $roundtrip[0] ) )
 	);
 }
+// Registered component patterns must also render in isolation: a valid
+// serialized tree alone does not guarantee its blocks render on the frontend.
+foreach ( $catalog as $slug => $definition ) {
+	$pattern = $registry->get_registered( 'animewp/' . $slug );
+	if ( ! is_array( $pattern ) ) {
+		continue; // Optional plugin blocks may be disabled.
+	}
+	$check( 'isolated frontend render ' . $slug,
+		'' !== trim( do_blocks( $pattern['content'] ) )
+	);
+}
 $check( 'at least the Core-only reusable parts remain available', $expected_count >= 20 );
 $check( 'Core-only content remains valid without optional blocks', animewp_component_blocks_available(
 	array( 'blockName' => 'core/group', 'innerBlocks' => array(
