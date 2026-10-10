@@ -379,6 +379,176 @@ html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-
 .animewp-footer-links .wp-block-navigation__container { gap: 0.5rem 1.5rem; }
 .animewp-footer-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1.5rem; border-top: 1px solid var(--animewp-line); margin-block-start: 1.5rem; padding-block-start: 1rem; font-size: 0.875rem; }
 .animewp-footer-meta p { margin-block: 0; }
+
+/* Official footer. The Cover block owns the background color/image/overlay;
+ * all accents and typography inherit the editable WordPress theme palette.
+ * No third-party icon CSS, image requests, or animation dependencies. */
+.animewp-footer-official {
+  margin-block: 0;
+  padding: clamp(3rem, 6vw, 5.5rem) clamp(16px, 4vw, 48px) clamp(2rem, 4vw, 3rem);
+  background-color: var(--wp--preset--color--contrast, #242424);
+  min-height: 440px;
+}
+.animewp-footer-official > .wp-block-cover__inner-container {
+  width: 100%;
+  max-width: var(--wp--style--global--wide-size, 1180px);
+  position: relative;
+  z-index: 2;
+}
+.animewp-footer-official__content { width: 100%; }
+.animewp-footer-official__top { column-gap: clamp(2rem, 6vw, 6rem); row-gap: 2.5rem; }
+.animewp-footer-official__brand { gap: 0.9rem; align-items: center; }
+.animewp-footer-official__brand .wp-block-site-logo { flex: 0 0 auto; }
+.animewp-footer-official__brand .wp-block-site-logo img { max-height: 6rem; width: auto; object-fit: contain; }
+.animewp-footer-official__brand .wp-block-site-title {
+  margin: 0;
+  font-size: clamp(1.25rem, 2.2vw, 2.25rem);
+  line-height: 1.25;
+  font-weight: 650;
+}
+.animewp-footer-official__social { margin-block-start: clamp(1.5rem, 3vw, 2.5rem); }
+.animewp-footer-official__social .is-style-animewp-label {
+  margin-block: 0 0 0.5rem;
+  color: inherit;
+  opacity: 0.85;
+  letter-spacing: 0.12em;
+}
+.animewp-footer-official__icons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+}
+.animewp-footer-official__icons .wp-social-link { color: inherit; background: transparent; }
+.animewp-footer-official__icons .wp-social-link-anchor {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  border-radius: var(--wp--custom--animewp--radius--small, 4px);
+  color: inherit;
+  transition: background-color 180ms ease, transform 180ms ease;
+}
+.animewp-footer-official__icons .wp-social-link-anchor:hover,
+.animewp-footer-official__icons .wp-social-link-anchor:focus-visible {
+  background: color-mix(in srgb, currentColor 12%, transparent);
+  transform: translateY(-1px);
+}
+/* The site map uses a semantic Core Group <nav> with editable Paragraph
+ * links. Core Navigation's responsive flex/label wrappers collapsed some
+ * Japanese vertical labels to 6px in Chromium and Firefox. Keep a single
+ * text element in each column, retaining the same links on every viewport. */
+.animewp-footer-official .animewp-footer-official__sitemap {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  gap: clamp(0.75rem, 2vw, 2rem);
+}
+.animewp-footer-official .animewp-footer-official__nav-item {
+  flex: 0 0 auto;
+  min-width: 0;
+  margin: 0;
+}
+.animewp-footer-official .animewp-footer-official__nav-item a {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  min-height: 44px;
+  font-size: clamp(0.9rem, 1.3vw, 1.125rem);
+  font-weight: 600;
+  line-height: 1.6;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.4em;
+}
+.animewp-footer-official .animewp-footer-official__nav-item a:is(:hover, :focus-visible) {
+  text-decoration: underline;
+}
+.animewp-footer-official__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem 2rem;
+  flex-wrap: wrap;
+  padding-block-start: 1.5rem;
+  margin-block-start: clamp(2.5rem, 5vw, 4rem);
+  border-top: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+  font-size: 0.8125rem;
+}
+.animewp-footer-official__bottom :is(.wp-block-paragraph, p) { margin: 0; }
+.animewp-footer-official__bottom :is(.wp-block-group, .animewp-footer-official__credit, .animewp-footer-official__legal) { gap: 0.5rem 1.25rem; }
+.animewp-footer-official__bottom a { color: inherit; text-underline-offset: 0.25em; }
+.animewp-footer-official__to-top { margin-inline-start: auto; }
+.animewp-footer-official__to-top a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+}
+@media (min-width: 961px) {
+  .animewp-footer-official .animewp-footer-official__sitemap {
+    flex-direction: row-reverse;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+  }
+  .animewp-footer-official .animewp-footer-official__nav-item a {
+    display: inline-block;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    /* system-ui on Linux can fall back per glyph to a font without usable
+     * vertical CJK advances, stacking kanji at one point. Prefer native
+     * Japanese fonts for this vertical-only label; no web font is fetched. */
+    font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans CJK JP", sans-serif;
+    white-space: nowrap;
+    word-break: keep-all;
+    overflow-wrap: normal;
+    /* Physical max-content sizing avoids CJK text being split into several
+     * one-glyph columns by vertical intrinsic sizing in browser engines. */
+    width: max-content;
+    height: max-content;
+    inline-size: max-content;
+    block-size: max-content;
+    letter-spacing: 0.09em;
+  }
+}
+@media (max-width: 960px) {
+  .animewp-footer-official__top { flex-direction: column; }
+  .animewp-footer-official__top > .wp-block-column {
+    flex-basis: auto !important;
+    width: 100%;
+  }
+  .animewp-footer-official .animewp-footer-official__sitemap {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 0.5rem 1.5rem;
+  }
+  .animewp-footer-official .animewp-footer-official__nav-item a {
+    writing-mode: horizontal-tb;
+    white-space: normal;
+    inline-size: auto;
+    block-size: auto;
+    letter-spacing: normal;
+  }
+}
+@media (max-width: 600px) {
+  .animewp-footer-official { padding-inline: 20px; }
+  .animewp-footer-official__bottom { align-items: flex-start; flex-direction: column; }
+  .animewp-footer-official__to-top { margin-inline-start: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .animewp-footer-official__icons .wp-social-link-anchor {
+    transition: none;
+    transform: none;
+  }
+}
+
 .animewp-news-row .wp-block-post-terms { font-size: 0.875rem; }
 .is-style-animewp-reveal { transition: opacity 0.45s ease; }
 .is-style-animewp-reveal[data-animewp-reveal-pending] { opacity: 0; }
