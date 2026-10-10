@@ -74,3 +74,29 @@ test.describe( 'official footer without JavaScript', () => {
 		await expect( footer.locator( '.wp-block-social-links .wp-social-link' ) ).toHaveCount( 4 );
 	} );
 } );
+
+// Regression: individually inserted pieces must paint without the original
+// parent Cover. These pages contain the real registered pattern content.
+test( 'footer parts keep their appearance without the official footer parent', async ( { page } ) => {
+	await page.goto( fixtures().part_footer_vertical_links.path );
+	const sitemap = page.locator( 'nav.animewp-footer-official__sitemap' );
+	const links = sitemap.locator( '.animewp-footer-official__nav-item a' );
+	await expect( sitemap ).toBeVisible();
+	await expect( page.locator( '.animewp-footer-official' ) ).toHaveCount( 0 );
+	await expect( links ).toHaveCount( 7 );
+	await expect( sitemap ).toHaveCSS( 'flex-direction', 'row-reverse' );
+	await expect( links.first() ).toHaveCSS( 'writing-mode', 'vertical-rl' );
+	await page.setViewportSize( { width: 375, height: 900 } );
+	await expect( sitemap ).toHaveCSS( 'flex-direction', 'row' );
+	await expect( links.first() ).toHaveCSS( 'writing-mode', 'horizontal-tb' );
+	expect( await page.evaluate( () => document.documentElement.scrollWidth ) ).toBeLessThanOrEqual( 376 );
+
+	await page.goto( fixtures().part_footer_social_icons.path );
+	const icons = page.locator( '.animewp-footer-official__icons' );
+	await expect( icons.locator( '.wp-social-link' ) ).toHaveCount( 4 );
+	await expect( icons ).toHaveCSS( 'display', 'flex' );
+
+	await page.goto( fixtures().part_footer_policy_links.path );
+	await expect( page.getByRole( 'link', { name: 'プライバシーポリシー' } ) ).toBeVisible();
+	await expect( page.getByRole( 'link', { name: 'お問い合わせ' } ) ).toBeVisible();
+} );
