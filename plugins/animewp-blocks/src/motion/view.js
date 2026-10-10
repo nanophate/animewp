@@ -163,18 +163,22 @@ function firstHero( element ) {
 	const start = content.getBoundingClientRect().top + window.scrollY;
 	const nearStart = ( candidate ) =>
 		candidate.getBoundingClientRect().top + window.scrollY - start <= 96;
-	const candidates = [
-		...content.querySelectorAll( '.wp-block-animewp-carousel, .wp-block-cover' ),
-	];
-	const marked = candidates.find(
-		( candidate ) => candidate.classList.contains( 'animewp-hero-trigger' ) && usable( candidate )
+	const marked = content.querySelectorAll(
+		'.animewp-hero-trigger.wp-block-cover, .animewp-hero-trigger.wp-block-animewp-carousel'
 	);
-	const previous = heroCache.get( element );
-	const hero = marked || (
-		previous && content.contains( previous ) && usable( previous ) && nearStart( previous )
-			? previous
-			: candidates.find( ( candidate ) => usable( candidate ) && nearStart( candidate ) )
-	) || null;
+	let hero = [ ...marked ].find( usable );
+	if ( ! hero ) {
+		const previous = heroCache.get( element );
+		const eligible = ( candidate ) => usable( candidate ) && nearStart( candidate );
+		if ( previous && content.contains( previous ) && eligible( previous ) ) {
+			hero = previous;
+		} else {
+			const candidates = content.querySelectorAll(
+				'.wp-block-animewp-carousel, .wp-block-cover'
+			);
+			hero = [ ...candidates ].find( eligible ) || null;
+		}
+	}
 	if ( hero ) {
 		heroCache.set( element, hero );
 	} else {
