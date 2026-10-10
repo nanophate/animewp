@@ -1,6 +1,19 @@
 {
   "schema_version": 1,
-  "status": "unpublished",
+  "status": "published",
   "type": "theme",
-  "slug": "animewp"
+  "slug": "animewp",
+  "version": "2.0.3",
+  "name": "animewp",
+  "requires": "6.6",
+  "requires_php": "8.0",
+  "tested": "7.1",
+  "homepage": "https://github.com/nanophate/animewp",
+  "download_url": "https://github.com/nanophate/animewp/releases/download/v2.0.3/animewp-2.0.3.zip",
+  "sha256": "5793984861e13e1905af2779adcdccf8d3273b3dd8188d4f1b7af2ac374989cb",
+  "sections": {
+    "description": "<p>作品の世界観を、標準ブロックで自由に組み立てるテーマ。</p>",
+    "changelog": "<p>* 標準ブロックの組み合わせから個別に挿入できる40種類のパーツと、公式SNS・縦書きサイトマップ・制作／権利表記を編集できるフッターを追加。<br>\n* キービジュアル用ヘッダーの表示・スクロール時の切り替えとモバイル表示を改善。任意プラグインAnimeWP Blocksと組み合わせて背景の透明度・ぼかし・高さを調整できます。<br>\n* 単体フッターの縦書き・SNSアイコンの配色を修正し、既存の共通フッターのCSS優先順位と保存済みテンプレートの表示挙動を維持。<br>\n* WordPress 6.6／7.1、Chromium／Firefox／WebKitでパーツ・ヘッダー・更新ZIPの回帰試験を強化。</p>"
+  },
+  "last_updated": "2026-10-10T19:58:54Z"
 }
