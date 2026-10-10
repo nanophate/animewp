@@ -1,4 +1,4 @@
-animewp 2.0.2
+animewp 2.0.3
 WordPress 6.6 以上 / PHP 8.0 以上
 ライセンス: GPL-2.0-or-later
 
@@ -26,6 +26,12 @@ Original placeholder artwork and the theme preview are included under the same l
 
 
 == Changelog ==
+
+= 2.0.3 =
+* 標準ブロックの組み合わせから個別に挿入できる40種類のパーツと、公式SNS・縦書きサイトマップ・制作／権利表記を編集できるフッターを追加。
+* キービジュアル用ヘッダーの表示・スクロール時の切り替えとモバイル表示を改善。任意プラグインAnimeWP Blocksと組み合わせて背景の透明度・ぼかし・高さを調整できます。
+* 単体フッターの縦書き・SNSアイコンの配色を修正し、既存の共通フッターのCSS優先順位と保存済みテンプレートの表示挙動を維持。
+* WordPress 6.6／7.1、Chromium／Firefox／WebKitでパーツ・ヘッダー・更新ZIPの回帰試験を強化。
 
 = 2.0.2 =
 * スマートフォンでの見出し・短い表示文の折り返しと、画面幅に応じた余白を調整。

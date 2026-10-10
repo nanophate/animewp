@@ -4,7 +4,7 @@ Tags: blocks, carousel, video, animation, anime
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.0.2
+Stable tag: 2.0.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,11 @@ Also includes Decorated Panel, Rotated Text, Image & Text and Video Button from 
 The plugin does not track visitors. YouTube and Vimeo are contacted only when a visitor presses play, unless a Backdrop is set to play the current video muted. Editors can import a YouTube thumbnail into the Media Library; the server downloads it once from i.ytimg.com.
 
 == Changelog ==
+
+= 2.0.3 =
+* Add Japanese Motion controls for hero-aware navigation, scroll distance, and header opacity, blur and height.
+* Keep existing Cover/Carousel hero detection for saved templates; add opt-in explicit hero selection and ignore hidden artwork.
+* Improve keyboard-friendly header state changes and strengthen cross-browser, saved-markup and real ZIP upgrade regression coverage.
 
 = 2.0.2 =
 * Avoid repeating letter-motion text in carousel dot labels and keep titles composed of multiple elements readable.
