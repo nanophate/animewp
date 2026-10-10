@@ -491,11 +491,15 @@ html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-
     height: auto;
     gap: clamp(0.75rem, 2vw, 2rem);
   }
+  /* Keep the WordPress Navigation flex row horizontal. Only the visible
+   * label uses a vertical writing context. Nesting vertical modes on both
+   * the anchor and its label collapsed the label to ~6px in Firefox/Chromium
+   * even though WebKit rendered it successfully. */
   .animewp-footer-official__sitemap .wp-block-navigation-item {
     display: block;
     writing-mode: horizontal-tb;
     flex: 0 0 auto;
-    width: auto;
+    width: max-content;
     min-width: 0;
     max-width: none;
     height: auto;
@@ -503,24 +507,25 @@ html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-
   }
   .animewp-footer-official__sitemap .wp-block-navigation-item__content {
     display: block;
-    width: auto;
+    width: max-content;
     min-width: 0;
-    height: 14em;
-    min-height: 14em;
+    height: auto;
+    min-height: 44px;
     max-height: none;
     overflow: visible;
-    white-space: nowrap;
-    writing-mode: vertical-rl;
-    text-orientation: upright;
+    white-space: normal;
+    writing-mode: horizontal-tb;
+    text-orientation: mixed;
     line-height: 1.6;
   }
   .animewp-footer-official__sitemap .wp-block-navigation-item__label {
     display: block;
-    width: auto;
+    width: max-content;
     min-width: 0;
-    height: auto;
+    height: max-content;
     min-height: 0;
     max-height: none;
+    overflow: visible;
     white-space: nowrap;
     writing-mode: vertical-rl;
     text-orientation: upright;

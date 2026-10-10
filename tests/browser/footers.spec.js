@@ -15,7 +15,7 @@ test( 'official footer uses the Core social icons, editable branding and vertica
 	const nav = footer.locator( '.animewp-footer-official__sitemap .wp-block-navigation__container' ).first();
 	await expect( nav ).toHaveCSS( 'flex-direction', 'row-reverse' );
 	await expect( nav ).toHaveCSS( 'writing-mode', 'horizontal-tb' );
-	await expect( firstLink ).toHaveCSS( 'writing-mode', 'vertical-rl' );
+	await expect( firstLink ).toHaveCSS( 'writing-mode', 'horizontal-tb' );
 	await expect( firstLink.locator( '.wp-block-navigation-item__label' ) ).toHaveCSS( 'writing-mode', 'vertical-rl' );
 	// A single vertical writing axis for Core navigation and its links
 	// preserves every Japanese glyph in Chromium, Firefox and WebKit.
@@ -51,6 +51,9 @@ test( 'official footer uses the Core social icons, editable branding and vertica
 				parent: node.parentElement?.outerHTML.slice( 0, 800 ),
 			};
 		} );
+		if ( size.height < size.characters * 11 || size.glyphHeight <= size.characters * 8 || ! size.visibleWithinColumn ) {
+			console.log( 'Footer vertical label geometry:', JSON.stringify( size ) );
+		}
 		expect( size.height ).toBeGreaterThanOrEqual( size.characters * 11 );
 		// All text must retain its intrinsic glyph height, not just the CSS box.
 		expect( size.glyphHeight ).toBeGreaterThan( size.characters * 8 );
