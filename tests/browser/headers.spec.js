@@ -240,3 +240,24 @@ test.describe( 'header navigation without JavaScript', () => {
 		await expect( page.locator( '#news' ) ).toBeInViewport();
 	} );
 } );
+
+// A cover deep in an article cannot change the hero-header mode implicitly.
+test( 'late cover does not become a hero unless explicitly marked', async ( { page } ) => {
+	await page.goto( fixtures().header_after_hero_late.path );
+	const header = page.locator( '.animewp-header--hero' );
+	const part = page.locator( 'header.wp-block-template-part' );
+	await expect( page.locator( 'html' ) ).toHaveClass( /animewp-motion-ready/ );
+	await expect( part ).not.toHaveCSS( 'position', 'fixed' );
+	await expect( header ).not.toHaveClass( /animewp-scroll-ready/ );
+	await expect( header.getByRole( 'link' ).first() ).toBeVisible();
+	await page.evaluate( () => window.scrollTo( { top: 1100, behavior: 'instant' } ) );
+	await expect( header ).not.toHaveClass( /is-scrolled-active/ );
+
+	await page.goto( fixtures().header_after_hero_marked.path );
+	await expect( part ).toHaveCSS( 'position', 'fixed' );
+	await expect( header ).toHaveClass( /animewp-scroll-ready/ );
+	const cover = page.locator( '#qa-header-cover' );
+	const boundary = await cover.evaluate( ( element ) => element.getBoundingClientRect().bottom + window.scrollY );
+	await scrollTo( page, boundary + 20 );
+	await expect( header ).toHaveClass( /is-scrolled-active/ );
+} );
