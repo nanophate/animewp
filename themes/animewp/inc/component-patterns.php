@@ -323,6 +323,46 @@ function animewp_component_node( array $blocks, array $path ): ?array {
 	return $current;
 }
 
+/**
+ * Return blocks from the registered source. If an example was not registered
+ * solely because its container requires AnimeWP Blocks, the theme-owned
+ * generated markup can still provide a pure Core fragment (e.g. one Cover or
+ * character profile). Never read paths outside the bundled examples folder.
+ *
+ * @return array<int, array<string, mixed>>
+ */
+function animewp_component_source_blocks( string $source, $registry ): array {
+	$registered = $registry->get_registered( $source );
+	if ( is_array( $registered ) && ! empty( $registered['content'] ) ) {
+		return parse_blocks( $registered['content'] );
+	}
+	if ( ! preg_match( '/^animewp\\/(example-[a-z0-9-]+|page-[a-z0-9-]+)$/', $source, $match ) ) {
+		return array();
+	}
+	$file = get_theme_file_path( 'examples/' . $match[1] . '.php' );
+	if ( ! is_readable( $file ) ) {
+		return array();
+	}
+	ob_start();
+	include $file;
+	$markup = ob_get_clean();
+	return is_string( $markup ) ? parse_blocks( $markup ) : array();
+}
+
+/** A root can use only Core blocks even when its source page uses extras. */
+function animewp_component_blocks_available( array $node, $registry ): bool {
+	$type = $node['blockName'] ?? null;
+	if ( ! is_string( $type ) || ! $registry->is_registered( $type ) ) {
+		return false;
+	}
+	foreach ( $node['innerBlocks'] ?? array() as $child ) {
+		if ( ! is_array( $child ) || ! animewp_component_blocks_available( $child, $registry ) ) {
+			return false;
+		}
+	}
+	return true;
+}
+
 /** Register fragments after generated sections (init 20) and theme patterns. */
 function animewp_register_component_patterns(): void {
 	$registry = WP_Block_Patterns_Registry::get_instance();
@@ -335,16 +375,11 @@ function animewp_register_component_patterns(): void {
 		}
 		$source = $component['source'];
 		if ( ! array_key_exists( $source, $parsed_sources ) ) {
-			$pattern = $registry->get_registered( $source );
-			// Plugin-only sources are hidden automatically when the optional
-			// plugin is disabled; Core-only components remain available.
-			$parsed_sources[ $source ] = is_array( $pattern ) && ! empty( $pattern['content'] )
-				? parse_blocks( $pattern['content'] )
-				: array();
+			$parsed_sources[ $source ] = animewp_component_source_blocks( $source, $registry );
 		}
 		$node = animewp_component_node( $parsed_sources[ $source ], $component['path'] );
 		if ( ! $node || ( $node['blockName'] ?? null ) !== $component['block']
-			|| ! $blocks->is_registered( $component['block'] ) ) {
+			|| ! animewp_component_blocks_available( $node, $blocks ) ) {
 			continue;
 		}
 		// serialize_block preserves the original generated HTML and nested

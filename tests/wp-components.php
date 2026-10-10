@@ -31,14 +31,12 @@ foreach ( $catalog as $slug => $definition ) {
 	$registered_name = 'animewp/' . $slug;
 	$source_name = $definition['source'];
 	if ( ! array_key_exists( $source_name, $source_cache ) ) {
-		$source = $registry->get_registered( $source_name );
-		$source_cache[ $source_name ] = is_array( $source ) && isset( $source['content'] )
-			? parse_blocks( $source['content'] ) : array();
+		$source_cache[ $source_name ] = animewp_component_source_blocks( $source_name, $registry );
 	}
 	$node = animewp_component_node( $source_cache[ $source_name ], $definition['path'] );
 	$available = is_array( $node )
 		&& ( $node['blockName'] ?? null ) === $definition['block']
-		&& $blocks->is_registered( $definition['block'] );
+		&& animewp_component_blocks_available( $node, $blocks );
 	$pattern = $registry->get_registered( $registered_name );
 	$check( 'source availability matches inserter ' . $slug, $available === is_array( $pattern ) );
 	if ( ! $available ) {
@@ -57,6 +55,24 @@ foreach ( $catalog as $slug => $definition ) {
 	);
 }
 $check( 'at least the Core-only reusable parts remain available', $expected_count >= 20 );
+$check( 'Core-only content remains valid without optional blocks', animewp_component_blocks_available(
+	array( 'blockName' => 'core/group', 'innerBlocks' => array(
+		array( 'blockName' => 'core/paragraph', 'innerBlocks' => array() ),
+	) ),
+	$blocks
+) );
+$check( 'missing plugin dependencies are not offered in the inserter', ! animewp_component_blocks_available(
+	array( 'blockName' => 'core/group', 'innerBlocks' => array(
+		array( 'blockName' => 'animewp/not-installed', 'innerBlocks' => array() ),
+	) ),
+	$blocks
+) );
+$check( 'Core cover can be sourced from a generated plugin-container example',
+	is_array( animewp_component_node(
+		animewp_component_source_blocks( 'animewp/example-key-visual', $registry ),
+		array( 0, 0, 0 )
+	) )
+);
 $check( 'invalid nested path fails closed', null === animewp_component_node(
 	array( array( 'blockName' => 'core/group', 'innerBlocks' => array() ) ),
 	array( 0, 55 )
