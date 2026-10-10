@@ -67,6 +67,15 @@ jobs:
           python3 tests/browser/verify-baseline.py
       - name: Install the browser engine and system dependencies
         run: npx --no-install playwright install --with-deps "$ANIMEWP_BROWSER"
+      - name: Install a vertical Japanese font for cross-browser glyph coverage
+        run: |
+          # Playwright's base dependencies install IPA Gothic and Unicode
+          # fallback fonts, but vertical kanji glyph metrics differ between
+          # Chromium, Firefox and WebKit without the full Noto CJK family.
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends fonts-noto-cjk
+          fc-cache -f
+          fc-match -f '%{family}\\n' 'Noto Sans CJK JP'
       - name: Prefetch Docker Official Images for isolated WordPress
         run: sh scripts/ci/prefetch-images.sh mariadb:lts phpmyadmin:latest "wordpress:php${ANIMEWP_PHP_VERSION}" "wordpress:cli-php${ANIMEWP_PHP_VERSION}"
       - name: Start an isolated WordPress site
