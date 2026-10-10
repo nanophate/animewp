@@ -137,12 +137,12 @@ const scrolled = [
 	};
 } );
 
-// Reusing the first rendered hero avoids scanning every Cover on each scroll
-// frame. Recheck visibility: a carousel or responsive layout can hide/remove it.
+// A named hero wins. Otherwise only a Cover/Carousel near the beginning of
+// the post content is a hero; an illustration deep in an article is not.
 const heroCache = new WeakMap();
 function firstHero( element ) {
 	const content = document.querySelector(
-		'main, [role="main"], .wp-block-post-content'
+		'main .wp-block-post-content, [role="main"] .wp-block-post-content, .wp-block-post-content, main, [role="main"]'
 	);
 	if ( ! content ) {
 		return null;
@@ -160,16 +160,21 @@ function firstHero( element ) {
 			rect.height > 0
 		);
 	};
-	const previous = heroCache.get( element );
-	if ( previous && content.contains( previous ) && usable( previous ) ) {
-		return previous;
-	}
-	// The carousel wrapper comes before its nested Covers and remains stable
-	// while slides change. If the cached one disappears, use the next hero.
-	const candidates = content.querySelectorAll(
-		'.wp-block-animewp-carousel, .wp-block-cover'
+	const start = content.getBoundingClientRect().top + window.scrollY;
+	const nearStart = ( candidate ) =>
+		candidate.getBoundingClientRect().top + window.scrollY - start <= 96;
+	const candidates = [
+		...content.querySelectorAll( '.wp-block-animewp-carousel, .wp-block-cover' ),
+	];
+	const marked = candidates.find(
+		( candidate ) => candidate.classList.contains( 'animewp-hero-trigger' ) && usable( candidate )
 	);
-	const hero = [ ...candidates ].find( usable ) || null;
+	const previous = heroCache.get( element );
+	const hero = marked || (
+		previous && content.contains( previous ) && usable( previous ) && nearStart( previous )
+			? previous
+			: candidates.find( ( candidate ) => usable( candidate ) && nearStart( candidate ) )
+	) || null;
 	if ( hero ) {
 		heroCache.set( element, hero );
 	} else {
