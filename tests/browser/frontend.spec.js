@@ -2,13 +2,15 @@ const { test, expect, wp, fixtures, capture } = require( './helpers' );
 
 async function expectOpaque( locator ) {
 	// A visible box can still have a transparent entrance-animated ancestor.
+	// WebKit can stop a compositor animation a few ten-thousandths below 1;
+	// that is visually opaque, while a genuinely pending reveal remains far lower.
 	await expect.poll( () => locator.evaluate( ( element ) => {
 		let opacity = 1;
 		for ( let node = element; node; node = node.parentElement ) {
 			opacity *= Number( getComputedStyle( node ).opacity );
 		}
 		return opacity;
-	} ) ).toBe( 1 );
+	} ) ).toBeGreaterThan( 0.999 );
 }
 
 test( 'core-only basic is readable at desktop and 375px', async ( { page } ) => {

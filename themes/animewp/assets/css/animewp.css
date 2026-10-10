@@ -498,9 +498,16 @@ html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-
     justify-content: flex-start;
   }
   .animewp-footer-official .animewp-footer-official__nav-item a {
+    display: inline-block;
     writing-mode: vertical-rl;
     text-orientation: upright;
     white-space: nowrap;
+    word-break: keep-all;
+    overflow-wrap: normal;
+    /* Physical max-content sizing avoids CJK text being split into several
+     * one-glyph columns by vertical intrinsic sizing in browser engines. */
+    width: max-content;
+    height: max-content;
     inline-size: max-content;
     block-size: max-content;
     letter-spacing: 0.09em;

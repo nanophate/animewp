@@ -20,22 +20,35 @@ test( 'official footer uses the Core social icons, editable branding and vertica
 	for ( const link of await links.all() ) {
 		const size = await link.evaluate( ( node ) => {
 			const bounds = node.getBoundingClientRect();
-			const glyphRange = document.createRange();
-			glyphRange.selectNodeContents( node );
-			const glyphs = glyphRange.getBoundingClientRect();
+			const textNode = node.firstChild;
+			const characters = [ ...( textNode?.textContent || '' ).trim() ];
+			const rects = [];
+			let offset = 0;
+			for ( const character of characters ) {
+				const range = document.createRange();
+				range.setStart( textNode, offset );
+				offset += character.length; // Handles surrogate pairs.
+				range.setEnd( textNode, offset );
+				const rect = range.getBoundingClientRect();
+				rects.push( { top: rect.top, bottom: rect.bottom } );
+			}
+			const top = Math.min( ...rects.map( ( rect ) => rect.top ) );
+			const bottom = Math.max( ...rects.map( ( rect ) => rect.bottom ) );
 			return {
-				characters: [ ...node.textContent.trim() ].length,
+				characters: characters.length,
 				height: bounds.height,
-				glyphHeight: glyphs.height,
-				visibleWithinColumn: glyphs.top >= bounds.top - 1 && glyphs.bottom <= bounds.bottom + 1,
+				glyphSpan: bottom - top,
+				visibleWithinColumn: rects.every( ( rect ) => rect.top >= bounds.top - 1 && rect.bottom <= bounds.bottom + 1 ),
 				text: node.textContent.trim(),
 			};
 		} );
-		if ( size.height < size.characters * 11 || size.glyphHeight <= size.characters * 8 || ! size.visibleWithinColumn ) {
+		if ( size.height < size.characters * 11 || size.glyphSpan <= size.characters * 8 || ! size.visibleWithinColumn ) {
 			console.log( 'Footer vertical link geometry:', JSON.stringify( size ) );
 		}
 		expect( size.height ).toBeGreaterThanOrEqual( size.characters * 11 );
-		expect( size.glyphHeight ).toBeGreaterThan( size.characters * 8 );
+		// Measure each rendered character. A single Range over vertical text has
+		// inconsistent bounds across engines and can report only one glyph.
+		expect( size.glyphSpan ).toBeGreaterThan( size.characters * 8 );
 		expect( size.visibleWithinColumn ).toBe( true );
 	}
 	const initial = await page.evaluate( () => document.documentElement.scrollWidth );
