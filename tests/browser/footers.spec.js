@@ -12,13 +12,16 @@ test( 'official footer uses the Core social icons, editable branding and vertica
 	await expect( footer.getByRole( 'link', { name: 'プライバシーポリシー' } ) ).toBeVisible();
 	const firstLink = footer.locator( '.animewp-footer-official__sitemap .wp-block-navigation-item__content' ).first();
 	await expect( firstLink ).toBeVisible();
-	await expect( firstLink ).toHaveCSS( 'writing-mode', 'vertical-rl' );
-	// A vertical link must consume a full column of glyphs, not collapse
-	// multi-character Japanese text into a one-character-high flex box.
-	const verticalLinks = footer.locator( '.animewp-footer-official__sitemap .wp-block-navigation-item__content' );
-	await expect( verticalLinks ).toHaveCount( 7 );
-	for ( const link of await verticalLinks.all() ) {
-		const size = await link.evaluate( ( node ) => ( {
+	const nav = footer.locator( '.animewp-footer-official__sitemap .wp-block-navigation__container' ).first();
+	await expect( nav ).toHaveCSS( 'flex-direction', 'row-reverse' );
+	await expect( firstLink ).toHaveCSS( 'writing-mode', 'horizontal-tb' );
+	await expect( firstLink.locator( '.wp-block-navigation-item__label' ) ).toHaveCSS( 'writing-mode', 'vertical-rl' );
+	// Vertical text belongs to the label, never to the Core clickable link's
+	// flex box. Every Japanese character must have room to render in a column.
+	const labels = footer.locator( '.animewp-footer-official__sitemap .wp-block-navigation-item__label' );
+	await expect( labels ).toHaveCount( 7 );
+	for ( const label of await labels.all() ) {
+		const size = await label.evaluate( ( node ) => ( {
 			characters: [ ...node.textContent.trim() ].length,
 			height: node.getBoundingClientRect().height,
 		} ) );

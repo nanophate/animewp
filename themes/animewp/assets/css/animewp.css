@@ -477,36 +477,43 @@ html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-
 @media (min-width: 961px) {
   .animewp-footer-official__sitemap .wp-block-navigation__container {
     display: flex;
-    justify-content: flex-end;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
     flex-wrap: nowrap;
     align-items: flex-start;
     gap: clamp(0.75rem, 2vw, 2rem);
   }
   .animewp-footer-official__sitemap .wp-block-navigation-item {
     flex: 0 0 auto;
-    width: max-content;
+    width: auto;
     max-width: none;
     align-self: flex-start;
   }
+  /* Keep Core's clickable link in a horizontal flex formatting context.
+   * Only its Japanese label is vertical. Applying writing-mode to the link
+   * itself collapses the link box to a few pixels on Firefox/WebKit. */
   .animewp-footer-official__sitemap .wp-block-navigation-item__content {
-    display: block;
-    width: max-content;
-    height: max-content;
-    min-height: 0;
+    display: inline-flex;
+    width: auto;
+    height: auto;
+    min-height: 44px;
     max-height: none;
     overflow: visible;
+    white-space: normal;
+    writing-mode: horizontal-tb;
+    text-orientation: mixed;
+    align-items: flex-start;
+    line-height: 1.6;
+  }
+  .animewp-footer-official__sitemap .wp-block-navigation-item__label {
+    display: inline-block;
+    width: auto;
+    height: max-content;
     white-space: nowrap;
     writing-mode: vertical-rl;
     text-orientation: upright;
     line-height: 1.6;
     letter-spacing: 0.09em;
-  }
-  .animewp-footer-official__sitemap .wp-block-navigation-item__label {
-    display: block;
-    width: auto;
-    height: auto;
-    white-space: nowrap;
-    writing-mode: inherit;
   }
 }
 @media (max-width: 960px) {
