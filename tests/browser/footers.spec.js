@@ -8,6 +8,9 @@ test( 'official footer uses the Core social icons, editable branding and vertica
 	await expect( footer.locator( '.wp-block-site-title' ) ).toHaveCount( 1 );
 	const socials = footer.locator( '.wp-block-social-links .wp-social-link' );
 	await expect( socials ).toHaveCount( 4 );
+	// The complete Cover must keep white icons with no extra dark chips.
+	const fullIcon = socials.first().locator( '.wp-block-social-link-anchor' );
+	await expect( fullIcon ).toHaveCSS( 'background-color', 'rgba(0, 0, 0, 0)' );
 	await expect( footer.getByText( '制作：制作会社名を入力' ) ).toBeVisible();
 	await expect( footer.getByRole( 'link', { name: 'プライバシーポリシー' } ) ).toBeVisible();
 	const sitemap = footer.locator( 'nav.animewp-footer-official__sitemap' );
@@ -73,4 +76,37 @@ test.describe( 'official footer without JavaScript', () => {
 		await expect( footer.locator( 'nav.animewp-footer-official__sitemap .animewp-footer-official__nav-item a' ).first() ).toBeVisible();
 		await expect( footer.locator( '.wp-block-social-links .wp-social-link' ) ).toHaveCount( 4 );
 	} );
+} );
+
+// Regression: individually inserted pieces must paint without the original
+// parent Cover. These pages contain the real registered pattern content.
+test( 'footer parts keep their appearance without the official footer parent', async ( { page } ) => {
+	await page.goto( fixtures().part_footer_vertical_links.path );
+	const sitemap = page.locator( 'nav.animewp-footer-official__sitemap' );
+	const links = sitemap.locator( '.animewp-footer-official__nav-item a' );
+	await expect( sitemap ).toBeVisible();
+	await expect( page.locator( '.animewp-footer-official' ) ).toHaveCount( 0 );
+	await expect( links ).toHaveCount( 7 );
+	await expect( sitemap ).toHaveCSS( 'flex-direction', 'row-reverse' );
+	await expect( links.first() ).toHaveCSS( 'writing-mode', 'vertical-rl' );
+	await page.setViewportSize( { width: 375, height: 900 } );
+	await expect( sitemap ).toHaveCSS( 'flex-direction', 'row' );
+	await expect( links.first() ).toHaveCSS( 'writing-mode', 'horizontal-tb' );
+	expect( await page.evaluate( () => document.documentElement.scrollWidth ) ).toBeLessThanOrEqual( 376 );
+
+	await page.goto( fixtures().part_footer_social_icons.path );
+	const icons = page.locator( '.animewp-footer-official__icons' );
+	await expect( icons.locator( '.wp-social-link' ) ).toHaveCount( 4 );
+	await expect( icons ).toHaveCSS( 'display', 'flex' );
+	const presetIcons = icons.locator( '.wp-social-link.has-on-contrast-color .wp-block-social-link-anchor' );
+	await expect( presetIcons ).toHaveCount( 4 );
+	// Default white icons remain editable, but receive a dark token surface on
+	// a normal light page. This is not applied inside the complete dark footer.
+	await expect( presetIcons.first() ).toHaveCSS( 'background-color', 'rgb(32, 32, 32)' );
+	await expect( presetIcons.first().locator( 'svg' ) ).toHaveCSS( 'fill', 'rgb(255, 255, 255)' );
+	await capture( page, 'standalone-official-social-icons', { fullPage: false } );
+
+	await page.goto( fixtures().part_footer_policy_links.path );
+	await expect( page.getByRole( 'link', { name: 'プライバシーポリシー' } ) ).toBeVisible();
+	await expect( page.getByRole( 'link', { name: 'お問い合わせ' } ) ).toBeVisible();
 } );

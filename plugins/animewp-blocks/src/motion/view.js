@@ -137,8 +137,10 @@ const scrolled = [
 	};
 } );
 
-// Reusing the first rendered hero avoids scanning every Cover on each scroll
-// frame. Recheck visibility: a carousel or responsive layout can hide/remove it.
+// Existing hero headers keep the historical first-visible Cover/Carousel
+// behavior, including nested and later artwork. Explicit-only is opt-in via
+// animewp-header--explicit-hero on the header and animewp-hero-trigger on the
+// chosen Cover/Carousel. Both modes have matching first-paint CSS selectors.
 const heroCache = new WeakMap();
 function firstHero( element ) {
 	const content = document.querySelector(
@@ -160,12 +162,23 @@ function firstHero( element ) {
 			rect.height > 0
 		);
 	};
+	const marked = content.querySelectorAll(
+		'.animewp-hero-trigger.wp-block-cover, .animewp-hero-trigger.wp-block-animewp-carousel'
+	);
+	const chosen = [ ...marked ].find( usable );
+	if ( chosen ) {
+		heroCache.set( element, chosen );
+		return chosen;
+	}
+	if ( element.classList.contains( 'animewp-header--explicit-hero' ) ) {
+		heroCache.delete( element );
+		return null;
+	}
 	const previous = heroCache.get( element );
 	if ( previous && content.contains( previous ) && usable( previous ) ) {
 		return previous;
 	}
-	// The carousel wrapper comes before its nested Covers and remains stable
-	// while slides change. If the cached one disappears, use the next hero.
+	// The first rendered carousel wrapper remains stable across slide changes.
 	const candidates = content.querySelectorAll(
 		'.wp-block-animewp-carousel, .wp-block-cover'
 	);

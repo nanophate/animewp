@@ -78,7 +78,33 @@ foreach ( array( 'introduction', 'story', 'staff', 'onair' ) as $anchor ) {
 }
 $pages['header_after_hero'] = animewp_browser_header_page( 'header_after_hero', $hero_header, $cover . $hero_body );
 $pages['header_after_hero_missing'] = animewp_browser_header_page( 'header_after_hero_missing', $hero_header, $hero_body );
+// Legacy headers still use the first Cover, even when it is nested or late.
+// The opt-in mode requires a marked Cover and never silently changes old sites.
+$late_intro = '<!-- wp:spacer {"height":"440px"} --><div style="height:440px" aria-hidden="true" class="wp-block-spacer"></div><!-- /wp:spacer -->';
+$pages['header_after_hero_late'] = animewp_browser_header_page( 'header_after_hero_late', $hero_header, $late_intro . $cover . $hero_body );
+$nested_cover = '<!-- wp:group --><div class="wp-block-group">' . $late_intro . $cover . '</div><!-- /wp:group -->';
+$pages['header_after_hero_nested_late'] = animewp_browser_header_page( 'header_after_hero_nested_late', $hero_header, $nested_cover . $hero_body );
+$explicit_header = str_replace(
+	array( 'animewp-header\\u002d\\u002dpetal', 'animewp-header--petal' ),
+	array(
+		'animewp-header\\u002d\\u002dpetal animewp-header\\u002d\\u002dexplicit\\u002d\\u002dhero',
+		'animewp-header--petal animewp-header--explicit-hero',
+	),
+	$hero_header
+);
+if ( $explicit_header === $hero_header || false === strpos( $explicit_header, 'animewp-header--explicit-hero' ) ) {
+	WP_CLI::error( 'Cannot build the explicit-hero header fixture.' );
+}
+$marked_cover = str_replace( '"anchor":"qa-header-cover"', '"anchor":"qa-header-cover","className":"animewp-hero-trigger"', $cover );
+$marked_cover = str_replace( 'class="wp-block-cover alignfull"', 'class="wp-block-cover alignfull animewp-hero-trigger"', $marked_cover );
+$pages['header_explicit_missing'] = animewp_browser_header_page( 'header_explicit_missing', $explicit_header, $nested_cover . $hero_body );
+$pages['header_explicit_marked'] = animewp_browser_header_page( 'header_explicit_marked', $explicit_header, $late_intro . $marked_cover . $hero_body );
 $pages['footer_official'] = animewp_browser_page( 'footer_official', animewp_pattern_content( 'animewp/footer-official' ) );
+// Render real standalone Inserter fragments outside the source footer.
+foreach ( array( 'part-footer-vertical-links', 'part-footer-social-icons', 'part-footer-policy-links' ) as $slug ) {
+	$key = str_replace( '-', '_', $slug );
+	$pages[ $key ] = animewp_browser_page( $key, animewp_pattern_content( 'animewp/' . $slug ) );
+}
 foreach ( array( 'left', 'right' ) as $side ) {
 	$pages[ 'header_' . $side ] = animewp_browser_page( 'header_' . $side, $header_body, 'animewp-' . $side );
 }
