@@ -482,10 +482,31 @@ html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-
     align-items: flex-start;
     gap: clamp(0.75rem, 2vw, 2rem);
   }
+  .animewp-footer-official__sitemap .wp-block-navigation-item {
+    flex: 0 0 auto;
+    width: max-content;
+    max-width: none;
+    align-self: flex-start;
+  }
   .animewp-footer-official__sitemap .wp-block-navigation-item__content {
+    display: block;
+    width: max-content;
+    height: max-content;
+    min-height: 0;
+    max-height: none;
+    overflow: visible;
+    white-space: nowrap;
     writing-mode: vertical-rl;
-    text-orientation: mixed;
+    text-orientation: upright;
+    line-height: 1.6;
     letter-spacing: 0.09em;
+  }
+  .animewp-footer-official__sitemap .wp-block-navigation-item__label {
+    display: block;
+    width: auto;
+    height: auto;
+    white-space: nowrap;
+    writing-mode: inherit;
   }
 }
 @media (max-width: 960px) {
