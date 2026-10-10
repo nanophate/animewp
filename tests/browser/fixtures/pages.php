@@ -78,6 +78,7 @@ foreach ( array( 'introduction', 'story', 'staff', 'onair' ) as $anchor ) {
 }
 $pages['header_after_hero'] = animewp_browser_header_page( 'header_after_hero', $hero_header, $cover . $hero_body );
 $pages['header_after_hero_missing'] = animewp_browser_header_page( 'header_after_hero_missing', $hero_header, $hero_body );
+$pages['footer_official'] = animewp_browser_page( 'footer_official', animewp_pattern_content( 'animewp/footer-official' ) );
 foreach ( array( 'left', 'right' ) as $side ) {
 	$pages[ 'header_' . $side ] = animewp_browser_page( 'header_' . $side, $header_body, 'animewp-' . $side );
 }

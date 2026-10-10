@@ -493,6 +493,11 @@
       "name": "footer-visual",
       "title": "画像とサイトマップのフッター",
       "area": "footer"
+    },
+    {
+      "name": "footer-official",
+      "title": "公式SNSと制作・権利情報のフッター",
+      "area": "footer"
     }
   ]
 }

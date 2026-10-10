@@ -14,7 +14,7 @@ $check = static function ( string $label, bool $condition ) use ( &$results ): v
 $registry = WP_Block_Patterns_Registry::get_instance();
 $blocks = WP_Block_Type_Registry::get_instance();
 $catalog = animewp_component_catalog();
-$check( '31 reusable parts are defined', 31 === count( $catalog ) );
+$check( '40 reusable parts are defined', 40 === count( $catalog ) );
 $check( 'component categories are registered', array_reduce(
 	array( 'animewp-components', 'animewp-layout-parts', 'animewp-scene-parts' ),
 	static fn ( $pass, $slug ) => $pass && WP_Block_Pattern_Categories_Registry::get_instance()->is_registered( $slug ),
@@ -22,7 +22,7 @@ $check( 'component categories are registered', array_reduce(
 ) );
 $standalone_roots = array(
 	'core/group', 'core/columns', 'core/cover', 'core/details',
-	'core/table', 'core/buttons', 'core/navigation',
+	'core/table', 'core/buttons', 'core/navigation', 'core/paragraph', 'core/social-links',
 	'animewp/carousel', 'animewp/video-card'
 );
 $source_cache = array();
@@ -73,6 +73,24 @@ $check( 'Core cover can be sourced from a generated plugin-container example',
 		array( 0, 0, 0 )
 	) )
 );
+$official = $registry->get_registered( 'animewp/footer-official' );
+$check( 'complete footer pattern is registered for editors', is_array( $official ) && ! empty( $official['content'] ) );
+$footer_tree = is_array( $official ) ? parse_blocks( $official['content'] ) : array();
+$check( 'official footer uses an editable Cover background', 1 === count( $footer_tree )
+	&& 'core/cover' === ( $footer_tree[0]['blockName'] ?? '' )
+	&& 'contrast' === ( $footer_tree[0]['attrs']['overlayColor'] ?? '' )
+	&& ! isset( $footer_tree[0]['attrs']['url'] ) );
+$check( 'official footer includes Site Logo and Core Social Icons',
+	is_array( $official )
+	&& false !== strpos( $official['content'], '<!-- wp:site-logo ' )
+	&& false !== strpos( $official['content'], '<!-- wp:social-links ' )
+	&& 4 === substr_count( $official['content'], '<!-- wp:social-link ' ) );
+$check( 'official footer includes legal and production placeholders',
+	is_array( $official )
+	&& false !== strpos( $official['content'], '制作会社名' )
+	&& false !== strpos( $official['content'], 'プライバシーポリシー' ) );
+$check( 'official footer remains a single reusable parsed block', 1 === count( $footer_tree )
+	&& '' !== trim( serialize_block( $footer_tree[0] ) ) );
 $check( 'invalid nested path fails closed', null === animewp_component_node(
 	array( array( 'blockName' => 'core/group', 'innerBlocks' => array() ) ),
 	array( 0, 55 )
