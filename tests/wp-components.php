@@ -75,7 +75,9 @@ $check( 'Core cover can be sourced from a generated plugin-container example',
 );
 $official = $registry->get_registered( 'animewp/footer-official' );
 $check( 'complete footer pattern is registered for editors', is_array( $official ) && ! empty( $official['content'] ) );
-$footer_tree = is_array( $official ) ? parse_blocks( $official['content'] ) : array();
+// Theme pattern files can contain leading/trailing formatting whitespace.
+// Only actual blocks count toward the independent, editable Cover root.
+$footer_tree = is_array( $official ) ? parse_blocks( trim( $official['content'] ) ) : array();
 $check( 'official footer uses an editable Cover background', 1 === count( $footer_tree )
 	&& 'core/cover' === ( $footer_tree[0]['blockName'] ?? '' )
 	&& 'contrast' === ( $footer_tree[0]['attrs']['overlayColor'] ?? '' )
