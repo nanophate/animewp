@@ -169,8 +169,13 @@ function firstHero( element ) {
 	let hero = [ ...marked ].find( usable );
 	if ( ! hero ) {
 		const previous = heroCache.get( element );
-		const eligible = ( candidate ) => usable( candidate ) && nearStart( candidate );
-		if ( previous && content.contains( previous ) && eligible( previous ) ) {
+		const eligible = ( candidate ) =>
+			usable( candidate ) && nearStart( candidate );
+		if (
+			previous &&
+			content.contains( previous ) &&
+			eligible( previous )
+		) {
 			hero = previous;
 		} else {
 			const candidates = content.querySelectorAll(
