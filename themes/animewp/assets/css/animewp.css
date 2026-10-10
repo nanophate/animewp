@@ -475,49 +475,54 @@ html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-
   text-decoration: none;
 }
 @media (min-width: 961px) {
-  /* Put the whole Navigation list on one vertical writing axis. Keeping
-   * horizontal flex links with vertical-only labels caused short Japanese
-   * labels to collapse into a 6px glyph rect in Chromium and Firefox. */
+  /* WordPress Navigation uses flex children with 44px touch targets. If its
+   * flex axis is ALSO vertical, the labels can inherit a 44px inline size:
+   * Chromium and Firefox then compress Japanese glyphs into a 6px row.
+   * Keep the list horizontal, give each link an explicit vertical inline
+   * dimension, and reverse the columns so the first item is at the right. */
   .animewp-footer-official__sitemap .wp-block-navigation__container {
     display: flex;
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    flex-direction: column;
+    writing-mode: horizontal-tb;
+    flex-direction: row-reverse;
     justify-content: flex-start;
     flex-wrap: nowrap;
     align-items: flex-start;
-    width: max-content;
-    height: max-content;
+    width: 100%;
+    height: auto;
     gap: clamp(0.75rem, 2vw, 2rem);
   }
   .animewp-footer-official__sitemap .wp-block-navigation-item {
     display: block;
-    writing-mode: inherit;
+    writing-mode: horizontal-tb;
     flex: 0 0 auto;
-    width: max-content;
+    width: auto;
+    min-width: 0;
     max-width: none;
+    height: auto;
     align-self: flex-start;
   }
   .animewp-footer-official__sitemap .wp-block-navigation-item__content {
     display: block;
     width: auto;
-    height: auto;
-    min-height: 44px;
+    min-width: 0;
+    height: 14em;
+    min-height: 14em;
     max-height: none;
     overflow: visible;
     white-space: nowrap;
-    writing-mode: inherit;
-    text-orientation: inherit;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
     line-height: 1.6;
   }
   .animewp-footer-official__sitemap .wp-block-navigation-item__label {
     display: block;
     width: auto;
+    min-width: 0;
     height: auto;
     min-height: 0;
     max-height: none;
     white-space: nowrap;
-    writing-mode: inherit;
+    writing-mode: vertical-rl;
     text-orientation: upright;
     line-height: 1.6;
     letter-spacing: 0.09em;

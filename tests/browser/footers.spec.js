@@ -13,8 +13,8 @@ test( 'official footer uses the Core social icons, editable branding and vertica
 	const firstLink = footer.locator( '.animewp-footer-official__sitemap .wp-block-navigation-item__content' ).first();
 	await expect( firstLink ).toBeVisible();
 	const nav = footer.locator( '.animewp-footer-official__sitemap .wp-block-navigation__container' ).first();
-	await expect( nav ).toHaveCSS( 'flex-direction', 'column' );
-	await expect( nav ).toHaveCSS( 'writing-mode', 'vertical-rl' );
+	await expect( nav ).toHaveCSS( 'flex-direction', 'row-reverse' );
+	await expect( nav ).toHaveCSS( 'writing-mode', 'horizontal-tb' );
 	await expect( firstLink ).toHaveCSS( 'writing-mode', 'vertical-rl' );
 	await expect( firstLink.locator( '.wp-block-navigation-item__label' ) ).toHaveCSS( 'writing-mode', 'vertical-rl' );
 	// A single vertical writing axis for Core navigation and its links
@@ -52,9 +52,7 @@ test( 'official footer uses the Core social icons, editable branding and vertica
 			};
 		} );
 		expect( size.height ).toBeGreaterThanOrEqual( size.characters * 11 );
-		if ( size.glyphHeight <= size.characters * 8 ) {
-			console.log( 'FOOTER_GLYPH_GEOMETRY:', JSON.stringify( size ) );
-		}
+		// All text must retain its intrinsic glyph height, not just the CSS box.
 		expect( size.glyphHeight ).toBeGreaterThan( size.characters * 8 );
 		expect( size.visibleWithinColumn ).toBe( true );
 	}
