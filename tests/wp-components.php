@@ -1,0 +1,72 @@
+<?php
+/**
+ * The component inserter is powered by fragments of already registered
+ * WordPress patterns, not duplicate templates or separately maintained HTML.
+ * This suite runs inside isolated wp-env (never on the production website).
+ */
+if ( ! defined( 'WP_CLI' ) || ! WP_CLI ) {
+	exit( 1 );
+}
+$results = array();
+$check = static function ( string $label, bool $condition ) use ( &$results ): void {
+	$results[] = array( 'test' => $label, 'pass' => $condition );
+};
+$registry = WP_Block_Patterns_Registry::get_instance();
+$blocks = WP_Block_Type_Registry::get_instance();
+$catalog = animewp_component_catalog();
+$check( '31 reusable parts are defined', 31 === count( $catalog ) );
+$check( 'component categories are registered', array_reduce(
+	array( 'animewp-components', 'animewp-layout-parts', 'animewp-scene-parts' ),
+	static fn ( $pass, $slug ) => $pass && WP_Block_Pattern_Categories_Registry::get_instance()->is_registered( $slug ),
+	true
+) );
+$standalone_roots = array(
+	'core/group', 'core/columns', 'core/cover', 'core/details',
+	'core/table', 'core/buttons', 'core/navigation',
+	'animewp/carousel', 'animewp/video-card'
+);
+$source_cache = array();
+$expected_count = 0;
+foreach ( $catalog as $slug => $definition ) {
+	$registered_name = 'animewp/' . $slug;
+	$source_name = $definition['source'];
+	if ( ! array_key_exists( $source_name, $source_cache ) ) {
+		$source = $registry->get_registered( $source_name );
+		$source_cache[ $source_name ] = is_array( $source ) && isset( $source['content'] )
+			? parse_blocks( $source['content'] ) : array();
+	}
+	$node = animewp_component_node( $source_cache[ $source_name ], $definition['path'] );
+	$available = is_array( $node )
+		&& ( $node['blockName'] ?? null ) === $definition['block']
+		&& $blocks->is_registered( $definition['block'] );
+	$pattern = $registry->get_registered( $registered_name );
+	$check( 'source availability matches inserter ' . $slug, $available === is_array( $pattern ) );
+	if ( ! $available ) {
+		continue; // Optional AnimeWP Blocks sources are omitted when disabled.
+	}
+	++$expected_count;
+	$check( 'part remains individually insertable ' . $slug, in_array( $definition['block'], $standalone_roots, true )
+		&& ! empty( $pattern['inserterEnabled'] )
+		&& in_array( $definition['category'], $pattern['categories'] ?? array(), true ) );
+	$check( 'part is byte-identical to shared source ' . $slug, $pattern['content'] === serialize_block( $node ) );
+	$roundtrip = parse_blocks( $pattern['content'] );
+	$check( 'part is a valid self-contained block ' . $slug,
+		1 === count( $roundtrip )
+		&& $roundtrip[0]['blockName'] === $definition['block']
+		&& '' !== trim( serialize_block( $roundtrip[0] ) )
+	);
+}
+$check( 'at least the Core-only reusable parts remain available', $expected_count >= 20 );
+$check( 'invalid nested path fails closed', null === animewp_component_node(
+	array( array( 'blockName' => 'core/group', 'innerBlocks' => array() ) ),
+	array( 0, 55 )
+) );
+$home = $registry->get_registered( 'animewp/home-intro' );
+$check( 'home introduction is available in the inserter', is_array( $home )
+	&& ( ! isset( $home['inserterEnabled'] ) || true === $home['inserterEnabled'] ) );
+WP_CLI::line( wp_json_encode( array( 'registered' => $expected_count, 'results' => $results ), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE ) );
+foreach ( $results as $result ) {
+	if ( ! $result['pass'] ) {
+		WP_CLI::halt( 1 );
+	}
+}

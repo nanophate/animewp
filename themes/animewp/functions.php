@@ -47,6 +47,9 @@ add_filter( 'body_class', 'animewp_body_classes' );
 function animewp_register_designs() {
 	register_block_pattern_category( 'animewp-examples', array( 'label' => __( 'animewp：区画の見本', 'animewp' ) ) );
 	register_block_pattern_category( 'animewp-example-pages', array( 'label' => __( 'animewp：ページの見本', 'animewp' ) ) );
+	register_block_pattern_category( 'animewp-components', array( 'label' => __( 'animewp：個別のパーツ', 'animewp' ) ) );
+	register_block_pattern_category( 'animewp-layout-parts', array( 'label' => __( 'animewp：組み合わせパーツ', 'animewp' ) ) );
+	register_block_pattern_category( 'animewp-scene-parts', array( 'label' => __( 'animewp：装飾付きの演出', 'animewp' ) ) );
 	register_block_pattern_category( 'animewp-headers', array( 'label' => __( 'animewp：ヘッダー', 'animewp' ) ) );
 	register_block_pattern_category( 'animewp-footers', array( 'label' => __( 'animewp：フッター', 'animewp' ) ) );
 	// Text and section styles with editable typography/colors live in styles/*.json
