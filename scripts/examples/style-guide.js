@@ -41,7 +41,8 @@ module.exports = ( helpers ) => {
 	const rows = ( items, size ) => {
 		const result = [];
 		for ( let i = 0; i < items.length; i += size ) {
-			result.push( b( 'core/columns', {}, items.slice( i, i + size ) ) );
+			// Wide rows: in the readable text width, four framed samples left too little room for their labels.
+			result.push( b( 'core/columns', { align: 'wide' }, items.slice( i, i + size ) ) );
 		}
 		return result;
 	};
