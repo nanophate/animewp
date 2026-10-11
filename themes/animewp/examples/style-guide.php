@@ -121,8 +121,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <p class="is-style-animewp-caption">スタイル → ブロック → グループ で一括変更</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:columns -->
-<div class="wp-block-columns"><!-- wp:column -->
+<!-- wp:columns {"align":"wide"} -->
+<div class="wp-block-columns alignwide"><!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-surface","layout":{"type":"default"}} -->
 <div class="wp-block-group is-style-animewp-surface"><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading">淡い色面</h3>
@@ -171,8 +171,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:column --></div>
 <!-- /wp:columns -->
 
-<!-- wp:columns -->
-<div class="wp-block-columns"><!-- wp:column -->
+<!-- wp:columns {"align":"wide"} -->
+<div class="wp-block-columns alignwide"><!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-accent","layout":{"type":"default"}} -->
 <div class="wp-block-group is-style-animewp-accent"><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading">強調色の面</h3>
@@ -239,8 +239,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <p class="is-style-animewp-caption">各カルーセルの「操作」設定で切り替え</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:columns -->
-<div class="wp-block-columns"><!-- wp:column -->
+<!-- wp:columns {"align":"wide"} -->
+<div class="wp-block-columns alignwide"><!-- wp:column -->
 <div class="wp-block-column"><!-- wp:paragraph {"className":"is-style-animewp-caption"} -->
 <p class="is-style-animewp-caption">navStyle: icon / dotStyle: dots</p>
 <!-- /wp:paragraph -->
@@ -311,8 +311,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <p class="is-style-animewp-caption">各ブロックの「モーション → 登場」</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:columns -->
-<div class="wp-block-columns"><!-- wp:column -->
+<!-- wp:columns {"align":"wide"} -->
+<div class="wp-block-columns alignwide"><!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"},"animewpMotion":{"entrance":"fade"}} -->
 <div class="wp-block-group is-style-animewp-card"><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading">フェードイン</h3>
@@ -361,8 +361,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:column --></div>
 <!-- /wp:columns -->
 
-<!-- wp:columns -->
-<div class="wp-block-columns"><!-- wp:column -->
+<!-- wp:columns {"align":"wide"} -->
+<div class="wp-block-columns alignwide"><!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"},"animewpMotion":{"entrance":"zoom"}} -->
 <div class="wp-block-group is-style-animewp-card"><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading">ズームイン</h3>
@@ -421,8 +421,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <p class="is-style-animewp-caption">各ブロックの「モーション → ポインターを合わせたとき」</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:columns -->
-<div class="wp-block-columns"><!-- wp:column -->
+<!-- wp:columns {"align":"wide"} -->
+<div class="wp-block-columns alignwide"><!-- wp:column -->
 <div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"},"animewpMotion":{"hover":"lift"}} -->
 <div class="wp-block-group is-style-animewp-card"><!-- wp:image -->
 <figure class="wp-block-image"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/' ) ); ?>animewp-key-visual-b.svg" alt=""/></figure>
