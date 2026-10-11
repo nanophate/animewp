@@ -396,6 +396,8 @@ html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-
   background-color: var(--wp--preset--color--contrast, #242424);
   min-height: 440px;
 }
+/* Footers with their own background start right after the page; the site's block gap would show as a strip of page background. */
+footer.wp-block-template-part:has(> :is(.animewp-footer-official, .animewp-footer-visual)) { margin-block-start: 0; }
 .animewp-footer-official > .wp-block-cover__inner-container {
   width: 100%;
   max-width: var(--wp--style--global--wide-size, 1180px);
