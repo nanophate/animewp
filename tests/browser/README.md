@@ -43,9 +43,8 @@ npm ci
 npm run build
 python3 scripts/package.py
 python3 tests/browser/prepare.py
-baseline=$(gh release list --repo nanophate/animewp --exclude-drafts --exclude-pre-releases --json tagName --jq '.[].tagName' | python3 tests/browser/verify-baseline.py select)
-gh release download "v$baseline" --repo nanophate/animewp --dir artifacts/browser-fixtures --pattern "animewp-$baseline.zip" --pattern "animewp-blocks-$baseline.zip" --pattern SHA256SUMS
-python3 tests/browser/verify-baseline.py verify "$baseline"
+# Then run the commands of the workflow step "Download and verify the published
+# release to upgrade from" (.github/workflows/browser.yml), with GITHUB_REPOSITORY=nanophate/animewp.
 npx --no-install playwright install --with-deps chromium
 npx --no-install wp-env start
 sh tests/browser/setup.sh
