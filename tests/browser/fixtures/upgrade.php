@@ -5,10 +5,12 @@ wp_set_current_user( 1 );
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 $file = WP_CONTENT_DIR . '/animewp-qa/upgrade-snapshot.json';
 $action = getenv( 'ANIMEWP_QA_ACTION' );
+// The published release chosen by verify-baseline.py (the one before a version bump).
+$baseline = trim( (string) file_get_contents( WP_CONTENT_DIR . '/animewp-qa/baseline-version.txt' ) );
 if ( 'seed' === $action ) {
-	if ( '1.3.0' !== wp_get_theme( 'animewp' )->get( 'Version' ) ) { WP_CLI::error( 'The baseline theme ZIP must be 1.3.0.' ); }
+	if ( '' === $baseline || $baseline !== wp_get_theme( 'animewp' )->get( 'Version' ) ) { WP_CLI::error( 'The baseline theme ZIP must match the selected release.' ); }
 	$plugin = get_plugin_data( WP_PLUGIN_DIR . '/animewp-blocks/animewp-blocks.php' );
-	if ( '1.3.0' !== $plugin['Version'] ) { WP_CLI::error( 'The baseline plugin ZIP must be 1.3.0.' ); }
+	if ( $baseline !== $plugin['Version'] ) { WP_CLI::error( 'The baseline plugin ZIP must match the selected release.' ); }
 	$page = wp_insert_post( wp_slash( array( 'post_type' => 'page', 'post_status' => 'publish', 'post_title' => 'Upgrade preservation fixture', 'post_content' => '<!-- wp:paragraph --><p>Saved before the real ZIP replacement.</p><!-- /wp:paragraph -->' ) ), true );
 	$template = wp_insert_post( wp_slash( array( 'post_type' => 'wp_template', 'post_status' => 'publish', 'post_name' => 'page', 'post_title' => 'Saved page template', 'post_content' => '<!-- wp:group {"tagName":"main"} --><main class="wp-block-group"><!-- wp:post-title {"level":1} /--><!-- wp:post-content /--></main><!-- /wp:group -->' ) ), true );
 	if ( is_wp_error( $page ) || is_wp_error( $template ) ) { WP_CLI::error( 'Unable to seed upgrade fixtures.' ); }
@@ -38,6 +40,6 @@ if ( 'seed' === $action ) {
 	if ( $snapshot !== $before ) { WP_CLI::error( 'The real ZIP upgrade changed saved content or settings.' ); }
 	$expected = trim( file_get_contents( WP_CONTENT_DIR . '/animewp-qa/current-version.txt' ) );
 	if ( $expected !== wp_get_theme( 'animewp' )->get( 'Version' ) || $expected !== get_plugin_data( WP_PLUGIN_DIR . '/animewp-blocks/animewp-blocks.php' )['Version'] ) { WP_CLI::error( 'The replacement did not install both current ZIP versions.' ); }
-	file_put_contents( WP_CONTENT_DIR . '/animewp-qa/upgrade-result.json', wp_json_encode( array( 'baseline' => '1.3.0', 'theme_after' => wp_get_theme( 'animewp' )->get( 'Version' ), 'plugin_after' => get_plugin_data( WP_PLUGIN_DIR . '/animewp-blocks/animewp-blocks.php' )['Version'], 'saved_posts_and_settings_identical' => true ) ) );
+	file_put_contents( WP_CONTENT_DIR . '/animewp-qa/upgrade-result.json', wp_json_encode( array( 'baseline' => $baseline, 'theme_after' => wp_get_theme( 'animewp' )->get( 'Version' ), 'plugin_after' => get_plugin_data( WP_PLUGIN_DIR . '/animewp-blocks/animewp-blocks.php' )['Version'], 'saved_posts_and_settings_identical' => true ) ) );
 }
 WP_CLI::success( 'Upgrade preservation ' . $action . ' completed.' );
