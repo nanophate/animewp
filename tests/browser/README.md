@@ -5,12 +5,15 @@ WebKit engine. WebKit coverage is not a real Safari device test. Every job has
 one Playwright worker and its own WordPress database. Chromium also runs against
 the minimum supported WordPress/PHP pair.
 
-The workflow first verifies the two existing 1.3.0 release ZIPs against that
-release's SHA256SUMS. It installs them, seeds saved content and settings, then
-uses WP-CLI `install --force` with the current build's real ZIPs. It verifies
-versions and exact preservation of the page, saved template, Global Styles,
-font settings and front-page options. This initial step is a manual ZIP
-replacement: 1.3.0 has no self-hosted update client.
+The workflow first picks the published release to upgrade from: the newest
+stable release (no drafts or pre-releases) that is not newer than the source.
+For a version bump that is the previous release; otherwise it is the current
+release, whose ZIPs are replaced by the new build. It verifies that release's
+two installation ZIPs against its SHA256SUMS, installs them, seeds saved
+content and settings, then uses WP-CLI `install --force` with the current
+build's real ZIPs. It verifies versions and exact preservation of the page,
+saved template, Global Styles, font settings and front-page options. Saved
+1.x content and settings are covered separately by the PHP regression suites.
 
 The browser tests then cover core-only and plugin pages at desktop and 375px,
 heading/anchor visibility, carousel input and keyboard behavior, dialog focus,
@@ -40,8 +43,8 @@ npm ci
 npm run build
 python3 scripts/package.py
 python3 tests/browser/prepare.py
-gh release download v1.3.0 --repo nanophate/animewp --dir artifacts/browser-fixtures --pattern animewp-1.3.0.zip --pattern animewp-blocks-1.3.0.zip --pattern SHA256SUMS
-python3 tests/browser/verify-baseline.py
+# Then run the commands of the workflow step "Download and verify the published
+# release to upgrade from" (.github/workflows/browser.yml), with GITHUB_REPOSITORY=nanophate/animewp.
 npx --no-install playwright install --with-deps chromium
 npx --no-install wp-env start
 sh tests/browser/setup.sh
