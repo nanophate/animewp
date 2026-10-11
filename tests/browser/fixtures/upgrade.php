@@ -5,7 +5,7 @@ wp_set_current_user( 1 );
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 $file = WP_CONTENT_DIR . '/animewp-qa/upgrade-snapshot.json';
 $action = getenv( 'ANIMEWP_QA_ACTION' );
-// The published release chosen by verify-baseline.py (the one before a version bump).
+// The published release chosen by the browser workflow (the one before a version bump).
 $baseline = trim( (string) file_get_contents( WP_CONTENT_DIR . '/animewp-qa/baseline-version.txt' ) );
 if ( 'seed' === $action ) {
 	if ( '' === $baseline || $baseline !== wp_get_theme( 'animewp' )->get( 'Version' ) ) { WP_CLI::error( 'The baseline theme ZIP must match the selected release.' ); }
