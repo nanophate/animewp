@@ -1,6 +1,19 @@
 {
   "schema_version": 1,
-  "status": "unpublished",
+  "status": "published",
   "type": "plugin",
-  "slug": "animewp-blocks"
+  "slug": "animewp-blocks",
+  "version": "2.0.3",
+  "name": "AnimeWP Blocks",
+  "requires": "6.6",
+  "requires_php": "8.0",
+  "tested": "7.1",
+  "homepage": "https://github.com/nanophate/animewp",
+  "download_url": "https://github.com/nanophate/animewp/releases/download/v2.0.3/animewp-blocks-2.0.3.zip",
+  "sha256": "c63b5ad243c2bc81987bc38f24a15eb7dd0dbf8f15fabd055aafc17fbbe2767e",
+  "sections": {
+    "description": "<p>Decorated panels, rotated text, image and text layouts, and video buttons for anime and film sites. Saved content stays readable if the plugin is turned off.</p>",
+    "changelog": "<p>* Add Japanese Motion controls for hero-aware navigation, scroll distance, and header opacity, blur and height.<br>\n* Keep existing Cover/Carousel hero detection for saved templates; add opt-in explicit hero selection and ignore hidden artwork.<br>\n* Improve keyboard-friendly header state changes and strengthen cross-browser, saved-markup and real ZIP upgrade regression coverage.</p>"
+  },
+  "last_updated": "2026-10-10T19:58:54Z"
 }
