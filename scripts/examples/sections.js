@@ -9,7 +9,7 @@ module.exports = ( helpers ) => {
 	return [
 		item( 'example-key-visual', 'キービジュアル：切り替わる画像とコピー', 'カバー画像をフェードで切り替えるカルーセル。番号で画像を選べます。', s.keyVisual() ),
 		item( 'example-introduction', '作品紹介：画像と見出し', '画像とリード文を左右に並べる紹介の区画。', s.introduction() ),
-		item( 'example-story', 'ストーリー：縦書きの言葉と本文', '短い縦書き見出し、あらすじ、開閉できる各話の紹介。', s.story() ),
+		item( 'example-story', 'ストーリー：短い見出しと本文', '短い見出し（縦書き・横書きを選べます）、あらすじ、開閉できる各話の紹介。', s.story() ),
 		item( 'example-movie', '映像：背景が切り替わる動画一覧', '動画カードのカルーセル。背景レイヤーが表示中の映像に合わせて切り替わります。', s.movie() ),
 		item( 'example-characters', 'キャラクター：サムネイルで切り替え', 'イラストと紹介文。下のサムネイルで人物を切り替えます。', s.characters() ),
 		item( 'example-credits', 'スタッフ・キャスト：2列の一覧', '役職と名前を表で並べる区画。', s.credits() ),

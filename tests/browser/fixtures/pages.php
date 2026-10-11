@@ -100,6 +100,11 @@ $marked_cover = str_replace( 'class="wp-block-cover alignfull"', 'class="wp-bloc
 $pages['header_explicit_missing'] = animewp_browser_header_page( 'header_explicit_missing', $explicit_header, $nested_cover . $hero_body );
 $pages['header_explicit_marked'] = animewp_browser_header_page( 'header_explicit_marked', $explicit_header, $late_intro . $marked_cover . $hero_body );
 $pages['footer_official'] = animewp_browser_page( 'footer_official', animewp_pattern_content( 'animewp/footer-official' ) );
+// The same footer with every sitemap link set to horizontal (Typography → 方向),
+// and as saved in 2.0.3, before the links carried any writing-mode setting.
+$official = animewp_pattern_content( 'animewp/footer-official' );
+$pages['footer_official_horizontal'] = animewp_browser_page( 'footer_official_horizontal', str_replace( array( '"writingMode":"vertical-rl"', 'writing-mode:vertical-rl' ), array( '"writingMode":"horizontal-tb"', 'writing-mode:horizontal-tb' ), $official ) );
+$pages['footer_official_unset'] = animewp_browser_page( 'footer_official_unset', str_replace( array( ',"style":{"typography":{"writingMode":"vertical-rl"}}', ' style="writing-mode:vertical-rl"' ), '', $official ) );
 // Render real standalone Inserter fragments outside the source footer.
 foreach ( array( 'part-footer-vertical-links', 'part-footer-social-icons', 'part-footer-policy-links' ) as $slug ) {
 	$key = str_replace( '-', '_', $slug );
