@@ -62,12 +62,27 @@ jobs:
           npm run build
           python3 scripts/package.py
           python3 tests/browser/prepare.py
-      - name: Download and verify the existing 1.3.0 release
+      - name: Download and verify the published release to upgrade from
         env:
           GH_TOKEN: ${{ github.token }}
+        # Runs no repository code: the version is read from style.css as text,
+        # and the ZIPs are checked with coreutils against the release's SHA256SUMS.
         run: |
-          gh release download v1.3.0 --repo "$GITHUB_REPOSITORY" --dir artifacts/browser-fixtures --pattern animewp-1.3.0.zip --pattern animewp-blocks-1.3.0.zip --pattern SHA256SUMS
-          python3 tests/browser/verify-baseline.py
+          # The newest stable release not newer than this source: the previous
+          # release for a version bump, otherwise the current one's ZIPs.
+          current=$(sed -n 's/^Version: \([0-9][0-9.]*\)$/\1/p' themes/animewp/style.css)
+          baseline=$(gh release list --repo "$GITHUB_REPOSITORY" --exclude-drafts --exclude-pre-releases --limit 100 --json tagName --jq '.[].tagName' \
+            | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sed 's/^v//' \
+            | while read -r v; do [ "$(printf '%s\n%s\n' "$v" "$current" | sort -V | tail -n 1)" = "$current" ] && echo "$v"; done \
+            | sort -V | tail -n 1)
+          if [ -z "$baseline" ]; then echo "No published release at or below $current to upgrade from" >&2; exit 1; fi
+          echo "Upgrading from $baseline"
+          gh release download "v$baseline" --repo "$GITHUB_REPOSITORY" --dir artifacts/browser-fixtures --pattern "animewp-$baseline.zip" --pattern "animewp-blocks-$baseline.zip" --pattern SHA256SUMS
+          cd artifacts/browser-fixtures
+          grep -E "^[0-9a-f]{64}  (animewp|animewp-blocks)-$baseline\.zip$" SHA256SUMS > baseline.sha256
+          test "$(wc -l < baseline.sha256)" -eq 2
+          sha256sum --check --strict baseline.sha256
+          echo "$baseline" > baseline-version.txt
       - name: Install the browser engine and system dependencies
         run: npx --no-install playwright install --with-deps "$ANIMEWP_BROWSER"
       - name: Install a vertical Japanese font for cross-browser glyph coverage
