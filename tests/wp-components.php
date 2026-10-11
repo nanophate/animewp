@@ -14,7 +14,8 @@ $check = static function ( string $label, bool $condition ) use ( &$results ): v
 $registry = WP_Block_Patterns_Registry::get_instance();
 $blocks = WP_Block_Type_Registry::get_instance();
 $catalog = animewp_component_catalog();
-$check( '40 reusable parts are defined', 40 === count( $catalog ) );
+// The complete official footer is the footers-category pattern itself, not a second copy.
+$check( '39 reusable parts are defined', 39 === count( $catalog ) );
 $check( 'component categories are registered', array_reduce(
 	array( 'animewp-components', 'animewp-layout-parts', 'animewp-scene-parts' ),
 	static fn ( $pass, $slug ) => $pass && WP_Block_Pattern_Categories_Registry::get_instance()->is_registered( $slug ),

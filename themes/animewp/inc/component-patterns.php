@@ -272,7 +272,7 @@ function animewp_component_catalog(): array {
 			'width' => 1120,
 		),
 		'part-footer-navigation' => array(
-			'title' => __( 'フッター用サイトマップ', 'animewp' ),
+			'title' => __( '簡潔なフッターのメニュー', 'animewp' ),
 			'description' => __( '主要ページへのリンクをまとめたナビゲーション。', 'animewp' ),
 			'source' => 'animewp/footer-minimal',
 			'path' => array( 0, 1, 0 ),
@@ -281,7 +281,7 @@ function animewp_component_catalog(): array {
 			'width' => 1120,
 		),
 		'part-footer-details' => array(
-			'title' => __( 'フッターの案内・権利表記', 'animewp' ),
+			'title' => __( '簡潔なフッターの案内・権利表記', 'animewp' ),
 			'description' => __( '問い合わせ・権利表記・ページ先頭へのリンクをまとめたグループ。', 'animewp' ),
 			'source' => 'animewp/footer-minimal',
 			'path' => array( 0, 1, 1 ),
@@ -290,7 +290,7 @@ function animewp_component_catalog(): array {
 			'width' => 880,
 		),
 		'part-footer-social' => array(
-			'title' => __( '公式SNSへの案内', 'animewp' ),
+			'title' => __( '画像フッターの公式SNS案内', 'animewp' ),
 			'description' => __( 'フッターや本文に置ける公式リンクの見出しと案内ボタン。', 'animewp' ),
 			'source' => 'animewp/footer-visual',
 			'path' => array( 0, 0, 1, 0 ),
@@ -298,17 +298,8 @@ function animewp_component_catalog(): array {
 			'category' => 'animewp-components',
 			'width' => 700,
 		),
-		'part-footer-official-cover' => array(
-			'title' => __( '背景画像にできる公式フッター', 'animewp' ),
-			'description' => __( 'ロゴ・SNS・サイトマップ・権利表記を1つの背景つきフッターとして追加。', 'animewp' ),
-			'source' => 'animewp/footer-official',
-			'path' => array( 0 ),
-			'block' => 'core/cover',
-			'category' => 'animewp-layout-parts',
-			'width' => 1180,
-		),
 		'part-footer-brand-line' => array(
-			'title' => __( 'ロゴとサイト名の行', 'animewp' ),
+			'title' => __( '公式フッターのロゴとサイト名', 'animewp' ),
 			'description' => __( 'サイトアイコンにも使えるロゴとサイト名を横に並べる行。', 'animewp' ),
 			'source' => 'animewp/footer-official',
 			'path' => array( 0, 0, 0, 0, 0 ),
@@ -335,7 +326,7 @@ function animewp_component_catalog(): array {
 			'width' => 640,
 		),
 		'part-footer-vertical-links' => array(
-			'title' => __( 'サイトマップ（縦書き・横書き）', 'animewp' ),
+			'title' => __( '公式フッターのサイトマップ（縦書き・横書き）', 'animewp' ),
 			'description' => __( '編集できるリンク集。最初は横書きで、各リンクの「タイポグラフィ → 方向」で「縦」にすると大画面では縦書きになります。小画面では横並びです。', 'animewp' ),
 			'source' => 'animewp/footer-official',
 			'path' => array( 0, 0, 0, 1, 0 ),
@@ -344,7 +335,7 @@ function animewp_component_catalog(): array {
 			'width' => 920,
 		),
 		'part-footer-bottom-bar' => array(
-			'title' => __( '権利・制作・各種リンクの行', 'animewp' ),
+			'title' => __( '公式フッターの権利・制作・リンクの行', 'animewp' ),
 			'description' => __( 'コピーライト・制作会社・プライバシーポリシー・ページ先頭リンクの1行。', 'animewp' ),
 			'source' => 'animewp/footer-official',
 			'path' => array( 0, 0, 1 ),
