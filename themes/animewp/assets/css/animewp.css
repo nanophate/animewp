@@ -500,6 +500,15 @@ footer.wp-block-template-part:has(> :is(.animewp-footer-official, .animewp-foote
   border-top: 1px solid color-mix(in srgb, currentColor 30%, transparent);
   font-size: 0.8125rem;
 }
+/* The bottom row spans the same wide width as the logo and sitemap row above it
+ * (it is not aligned wide in the pattern, so the parent's text width applied). */
+.animewp-footer-official__content > .animewp-footer-official__bottom { max-width: var(--wp--style--global--wide-size); }
+/* Horizontal links match the header menu's weight; vertical links stay larger as an accent. */
+.animewp-footer-official__nav-item[style*="horizontal-tb"] a {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
 .animewp-footer-official__bottom :is(.wp-block-paragraph, p) { margin: 0; }
 .animewp-footer-official__bottom :is(.wp-block-group, .animewp-footer-official__credit, .animewp-footer-official__legal) { gap: 0.5rem 1.25rem; }
 .animewp-footer-official__bottom a { color: inherit; text-underline-offset: 0.25em; }
