@@ -4,8 +4,9 @@ set -eu
 wp() { npx --no-install wp-env run tests-cli -- wp "$@"; }
 qa=wp-content/animewp-qa
 wp option update blog_public 0
-wp theme install "$qa/animewp-1.3.0.zip" --force --activate
-wp plugin install "$qa/animewp-blocks-1.3.0.zip" --force --activate
+baseline=$(cat artifacts/browser-fixtures/baseline-version.txt)
+wp theme install "$qa/animewp-$baseline.zip" --force --activate
+wp plugin install "$qa/animewp-blocks-$baseline.zip" --force --activate
 npx --no-install wp-env run tests-cli -- env ANIMEWP_QA_ACTION=seed wp eval-file wp-content/animewp-tests/browser/fixtures/upgrade.php
 wp theme install "$qa/current-theme.zip" --force
 wp plugin install "$qa/current-plugin.zip" --force
