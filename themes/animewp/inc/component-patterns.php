@@ -336,7 +336,7 @@ function animewp_component_catalog(): array {
 		),
 		'part-footer-vertical-links' => array(
 			'title' => __( 'サイトマップ（縦書き・横書き）', 'animewp' ),
-			'description' => __( '編集できるリンク集。大画面では縦書きで、各リンクの「タイポグラフィ → 方向」で「横」にもできます。小画面では横並びです。', 'animewp' ),
+			'description' => __( '編集できるリンク集。最初は横書きで、各リンクの「タイポグラフィ → 方向」で「縦」にすると大画面では縦書きになります。小画面では横並びです。', 'animewp' ),
 			'source' => 'animewp/footer-official',
 			'path' => array( 0, 0, 0, 1, 0 ),
 			'block' => 'core/group',

@@ -42,26 +42,26 @@
 <div class="wp-block-column" style="flex-basis:62%">
 <!-- wp:group {"tagName":"nav","className":"animewp-footer-official__sitemap","layout":{"type":"flex","justifyContent":"right","flexWrap":"nowrap"}} -->
 <nav class="wp-block-group animewp-footer-official__sitemap">
-<!-- wp:paragraph {"className":"animewp-footer-official__nav-item","style":{"typography":{"writingMode":"vertical-rl"}}} -->
-<p class="animewp-footer-official__nav-item" style="writing-mode:vertical-rl"><a href="#news">最新情報</a></p>
+<!-- wp:paragraph {"className":"animewp-footer-official__nav-item","style":{"typography":{"writingMode":"horizontal-tb"}}} -->
+<p class="animewp-footer-official__nav-item" style="writing-mode:horizontal-tb"><a href="#news">最新情報</a></p>
 <!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"animewp-footer-official__nav-item","style":{"typography":{"writingMode":"vertical-rl"}}} -->
-<p class="animewp-footer-official__nav-item" style="writing-mode:vertical-rl"><a href="#movie">映像</a></p>
+<!-- wp:paragraph {"className":"animewp-footer-official__nav-item","style":{"typography":{"writingMode":"horizontal-tb"}}} -->
+<p class="animewp-footer-official__nav-item" style="writing-mode:horizontal-tb"><a href="#movie">映像</a></p>
 <!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"animewp-footer-official__nav-item","style":{"typography":{"writingMode":"vertical-rl"}}} -->
-<p class="animewp-footer-official__nav-item" style="writing-mode:vertical-rl"><a href="#introduction">作品紹介</a></p>
+<!-- wp:paragraph {"className":"animewp-footer-official__nav-item","style":{"typography":{"writingMode":"horizontal-tb"}}} -->
+<p class="animewp-footer-official__nav-item" style="writing-mode:horizontal-tb"><a href="#introduction">作品紹介</a></p>
 <!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"animewp-footer-official__nav-item","style":{"typography":{"writingMode":"vertical-rl"}}} -->
-<p class="animewp-footer-official__nav-item" style="writing-mode:vertical-rl"><a href="#story">ストーリー</a></p>
+<!-- wp:paragraph {"className":"animewp-footer-official__nav-item","style":{"typography":{"writingMode":"horizontal-tb"}}} -->
+<p class="animewp-footer-official__nav-item" style="writing-mode:horizontal-tb"><a href="#story">ストーリー</a></p>
 <!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"animewp-footer-official__nav-item","style":{"typography":{"writingMode":"vertical-rl"}}} -->
-<p class="animewp-footer-official__nav-item" style="writing-mode:vertical-rl"><a href="#staff">スタッフ・キャスト</a></p>
+<!-- wp:paragraph {"className":"animewp-footer-official__nav-item","style":{"typography":{"writingMode":"horizontal-tb"}}} -->
+<p class="animewp-footer-official__nav-item" style="writing-mode:horizontal-tb"><a href="#staff">スタッフ・キャスト</a></p>
 <!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"animewp-footer-official__nav-item","style":{"typography":{"writingMode":"vertical-rl"}}} -->
-<p class="animewp-footer-official__nav-item" style="writing-mode:vertical-rl"><a href="#music">音楽</a></p>
+<!-- wp:paragraph {"className":"animewp-footer-official__nav-item","style":{"typography":{"writingMode":"horizontal-tb"}}} -->
+<p class="animewp-footer-official__nav-item" style="writing-mode:horizontal-tb"><a href="#music">音楽</a></p>
 <!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"animewp-footer-official__nav-item","style":{"typography":{"writingMode":"vertical-rl"}}} -->
-<p class="animewp-footer-official__nav-item" style="writing-mode:vertical-rl"><a href="#onair">放送・配信</a></p>
+<!-- wp:paragraph {"className":"animewp-footer-official__nav-item","style":{"typography":{"writingMode":"horizontal-tb"}}} -->
+<p class="animewp-footer-official__nav-item" style="writing-mode:horizontal-tb"><a href="#onair">放送・配信</a></p>
 <!-- /wp:paragraph -->
 </nav>
 <!-- /wp:group -->

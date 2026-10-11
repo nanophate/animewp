@@ -512,7 +512,7 @@ footer.wp-block-template-part:has(> :is(.animewp-footer-official, .animewp-foote
   text-decoration: none;
 }
 /* Sitemap orientation follows each item's Typography → Orientation (Core writing mode).
- * Items without a setting (footers saved in 2.0.3) stay vertical, as before. */
+ * New footers start horizontal; items without a setting (footers saved in 2.0.3) stay vertical, as before. */
 @media (min-width: 961px) {
   .animewp-footer-official__sitemap:not(:has(.animewp-footer-official__nav-item[style*="horizontal-tb"])) {
     /* Vertical columns read right to left. */
@@ -520,8 +520,12 @@ footer.wp-block-template-part:has(> :is(.animewp-footer-official, .animewp-foote
     flex-wrap: nowrap;
     justify-content: flex-start;
   }
+  /* Horizontal links sit in even rows of four (4 + 3 for the default seven),
+   * so a wrapped last line never holds a single link. */
   .animewp-footer-official__sitemap:has(.animewp-footer-official__nav-item[style*="horizontal-tb"]) {
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, max-content);
+    justify-content: end;
     gap: 0.75rem 2rem;
   }
   .animewp-footer-official__nav-item:is(:not([style*="writing-mode"]), [style*="vertical"]) a {

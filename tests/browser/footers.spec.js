@@ -1,6 +1,6 @@
 const { test, expect, fixtures, capture } = require( './helpers' );
 
-test( 'official footer uses the Core social icons, editable branding and vertical sitemap without overflow', async ( { page } ) => {
+test( 'official footer uses the Core social icons, editable branding, a horizontal sitemap by default and intact vertical links', async ( { page } ) => {
 	await page.goto( fixtures().footer_official.path );
 	const footer = page.locator( '.animewp-footer-official' );
 	await expect( footer ).toBeVisible();
@@ -19,9 +19,20 @@ test( 'official footer uses the Core social icons, editable branding and vertica
 	const links = sitemap.locator( '.animewp-footer-official__nav-item a' );
 	await expect( sitemap ).toBeVisible();
 	await expect( links ).toHaveCount( 7 );
+	// New footers start horizontal and read left to right.
+	await expect( sitemap ).toHaveCSS( 'flex-direction', 'row' );
+	await expect( links.first() ).toHaveCSS( 'writing-mode', 'horizontal-tb' );
+	const [ first, second ] = await Promise.all( [ links.nth( 0 ).boundingBox(), links.nth( 1 ).boundingBox() ] );
+	expect( second.x ).toBeGreaterThan( first.x );
+	expect( await page.evaluate( () => document.documentElement.scrollWidth ) ).toBeLessThanOrEqual( 1281 );
+	await capture( page, 'official-footer-desktop', { fullPage: false } );
+
+	// Typography → 方向 → 縦: vertical columns, right to left, every glyph visible.
+	await page.goto( fixtures().footer_official_vertical.path );
+	await expect( links ).toHaveCount( 7 );
 	await expect( sitemap ).toHaveCSS( 'flex-direction', 'row-reverse' );
 	await expect( links.first() ).toHaveCSS( 'writing-mode', 'vertical-rl' );
-	await capture( page, 'official-footer-desktop-before-glyph-check', { fullPage: false } );
+	await capture( page, 'official-footer-vertical-before-glyph-check', { fullPage: false } );
 	for ( const link of await links.all() ) {
 		const size = await link.evaluate( ( node ) => {
 			const bounds = node.getBoundingClientRect();
@@ -58,7 +69,7 @@ test( 'official footer uses the Core social icons, editable branding and vertica
 	}
 	const initial = await page.evaluate( () => document.documentElement.scrollWidth );
 	expect( initial ).toBeLessThanOrEqual( 1281 );
-	await capture( page, 'official-footer-desktop', { fullPage: false } );
+	await capture( page, 'official-footer-vertical', { fullPage: false } );
 
 	await page.setViewportSize( { width: 375, height: 900 } );
 	await expect( sitemap ).toHaveCSS( 'flex-direction', 'row' );
@@ -89,8 +100,8 @@ test( 'footer parts keep their appearance without the official footer parent', a
 	await expect( sitemap ).toBeVisible();
 	await expect( page.locator( '.animewp-footer-official' ) ).toHaveCount( 0 );
 	await expect( links ).toHaveCount( 7 );
-	await expect( sitemap ).toHaveCSS( 'flex-direction', 'row-reverse' );
-	await expect( links.first() ).toHaveCSS( 'writing-mode', 'vertical-rl' );
+	await expect( sitemap ).toHaveCSS( 'flex-direction', 'row' );
+	await expect( links.first() ).toHaveCSS( 'writing-mode', 'horizontal-tb' );
 	await page.setViewportSize( { width: 375, height: 900 } );
 	await expect( sitemap ).toHaveCSS( 'flex-direction', 'row' );
 	await expect( links.first() ).toHaveCSS( 'writing-mode', 'horizontal-tb' );
@@ -112,28 +123,18 @@ test( 'footer parts keep their appearance without the official footer parent', a
 	await expect( page.getByRole( 'link', { name: 'お問い合わせ' } ) ).toBeVisible();
 } );
 
-test( 'sitemap links follow Typography → 方向, and 2.0.3 footers without a setting stay vertical', async ( { page } ) => {
+test( '2.0.3 footers without a 方向 setting stay vertical, and phones are horizontal over a vertical setting', async ( { page } ) => {
 	await page.setViewportSize( { width: 1280, height: 900 } );
-	await page.goto( fixtures().footer_official_horizontal.path );
+	await page.goto( fixtures().footer_official_unset.path );
 	let sitemap = page.locator( 'nav.animewp-footer-official__sitemap' );
 	let links = sitemap.locator( '.animewp-footer-official__nav-item a' );
-	await expect( links ).toHaveCount( 7 );
-	await expect( links.first() ).toHaveCSS( 'writing-mode', 'horizontal-tb' );
-	await expect( sitemap ).toHaveCSS( 'flex-direction', 'row' );
-	// Horizontal links read left to right on their first line.
-	const [ first, second ] = await Promise.all( [ links.nth( 0 ).boundingBox(), links.nth( 1 ).boundingBox() ] );
-	expect( second.x ).toBeGreaterThan( first.x );
-	expect( await page.evaluate( () => document.documentElement.scrollWidth ) ).toBeLessThanOrEqual( 1281 );
-	await capture( page, 'official-footer-horizontal', { fullPage: false } );
-
-	await page.goto( fixtures().footer_official_unset.path );
 	sitemap = page.locator( 'nav.animewp-footer-official__sitemap' );
 	links = sitemap.locator( '.animewp-footer-official__nav-item a' );
 	await expect( links.first() ).toHaveCSS( 'writing-mode', 'vertical-rl' );
 	await expect( sitemap ).toHaveCSS( 'flex-direction', 'row-reverse' );
 
 	// Phones are horizontal even over an item's own vertical setting.
-	await page.goto( fixtures().footer_official.path );
+	await page.goto( fixtures().footer_official_vertical.path );
 	await page.setViewportSize( { width: 375, height: 900 } );
 	links = page.locator( 'nav.animewp-footer-official__sitemap .animewp-footer-official__nav-item' );
 	await expect( links.first() ).toHaveCSS( 'writing-mode', 'horizontal-tb' );

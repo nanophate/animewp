@@ -95,10 +95,10 @@ $check( 'official footer uses an editable Cover background', 1 === count( $foote
 	&& 'base' === ( $footer_tree[0]['attrs']['overlayColor'] ?? '' )
 	&& 'contrast' === ( $footer_tree[0]['attrs']['textColor'] ?? '' )
 	&& ! isset( $footer_tree[0]['attrs']['url'] ) );
-$check( 'official footer sitemap uses seven editable Core Paragraph links in a nav landmark, vertical through Typography → 方向',
+$check( 'official footer sitemap uses seven editable Core Paragraph links in a nav landmark, horizontal by default through Typography → 方向',
 	is_array( $official )
 	&& false !== strpos( $official['content'], '<!-- wp:group {"tagName":"nav"' )
-	&& 7 === substr_count( $official['content'], '<!-- wp:paragraph {"className":"animewp-footer-official__nav-item","style":{"typography":{"writingMode":"vertical-rl"}}}' ) );
+	&& 7 === substr_count( $official['content'], '<!-- wp:paragraph {"className":"animewp-footer-official__nav-item","style":{"typography":{"writingMode":"horizontal-tb"}}}' ) );
 $check( 'official footer includes Site Logo and Core Social Icons',
 	is_array( $official )
 	&& false !== strpos( $official['content'], '<!-- wp:site-logo ' )
