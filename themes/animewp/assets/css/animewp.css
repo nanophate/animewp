@@ -393,7 +393,7 @@ html:has(header.wp-block-template-part :is(.animewp-header--glass, .is-position-
 .animewp-footer-official {
   margin-block: 0;
   padding: clamp(3rem, 6vw, 5.5rem) clamp(16px, 4vw, 48px) clamp(2rem, 4vw, 3rem);
-  background-color: var(--wp--preset--color--contrast, #242424);
+  background-color: var(--wp--preset--color--base, #fff);
   min-height: 440px;
 }
 /* Footers with their own background start right after the page; the site's block gap would show as a strip of page background. */
@@ -511,15 +511,20 @@ footer.wp-block-template-part:has(> :is(.animewp-footer-official, .animewp-foote
   letter-spacing: 0.12em;
   text-decoration: none;
 }
+/* Sitemap orientation follows each item's Typography → Orientation (Core writing mode).
+ * Items without a setting (footers saved in 2.0.3) stay vertical, as before. */
 @media (min-width: 961px) {
-  .animewp-footer-official .animewp-footer-official__sitemap,
-.animewp-footer-official__sitemap {
+  .animewp-footer-official__sitemap:not(:has(.animewp-footer-official__nav-item[style*="horizontal-tb"])) {
+    /* Vertical columns read right to left. */
     flex-direction: row-reverse;
     flex-wrap: nowrap;
     justify-content: flex-start;
   }
-  .animewp-footer-official .animewp-footer-official__nav-item a,
-.animewp-footer-official__nav-item a {
+  .animewp-footer-official__sitemap:has(.animewp-footer-official__nav-item[style*="horizontal-tb"]) {
+    flex-wrap: wrap;
+    gap: 0.75rem 2rem;
+  }
+  .animewp-footer-official__nav-item:is(:not([style*="writing-mode"]), [style*="vertical"]) a {
     display: inline-block;
     writing-mode: vertical-rl;
     text-orientation: upright;
@@ -552,9 +557,10 @@ footer.wp-block-template-part:has(> :is(.animewp-footer-official, .animewp-foote
     justify-content: flex-start;
     gap: 0.5rem 1.5rem;
   }
-  .animewp-footer-official .animewp-footer-official__nav-item a,
-.animewp-footer-official__nav-item a {
-    writing-mode: horizontal-tb;
+  /* Narrow screens are always horizontal, also over an item's own vertical setting. */
+  .animewp-footer-official__nav-item,
+  .animewp-footer-official__nav-item a {
+    writing-mode: horizontal-tb !important;
     white-space: normal;
     inline-size: auto;
     block-size: auto;

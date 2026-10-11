@@ -29,8 +29,8 @@ function animewp_component_catalog(): array {
 			'width' => 750,
 		),
 		'part-vertical-story-heading' => array(
-			'title' => __( '縦書きの短い見出し', 'animewp' ),
-			'description' => __( 'ストーリーやキャッチコピーに使う縦書き見出し。端末幅に追従します。', 'animewp' ),
+			'title' => __( '短い見出し（縦書き・横書き）', 'animewp' ),
+			'description' => __( 'ストーリーやキャッチコピー向け。最初は縦書きで、狭い画面では横書きになります。「タイポグラフィ → 方向」で「横」にもできます。', 'animewp' ),
 			'source' => 'animewp/example-story',
 			'path' => array( 0, 1, 0, 0 ),
 			'block' => 'core/group',
@@ -65,8 +65,8 @@ function animewp_component_catalog(): array {
 			'width' => 1180,
 		),
 		'part-story-body' => array(
-			'title' => __( 'あらすじ：縦書き見出しと本文', 'animewp' ),
-			'description' => __( '縦書きの見出し、あらすじ、各話の開閉カードを組み合わせた本文。', 'animewp' ),
+			'title' => __( 'あらすじ：短い見出しと本文', 'animewp' ),
+			'description' => __( '短い見出し（縦書き・横書きを選べます）、あらすじ、各話の開閉カードを組み合わせた本文。', 'animewp' ),
 			'source' => 'animewp/example-story',
 			'path' => array( 0, 1 ),
 			'block' => 'core/columns',
@@ -335,8 +335,8 @@ function animewp_component_catalog(): array {
 			'width' => 640,
 		),
 		'part-footer-vertical-links' => array(
-			'title' => __( '縦書きのサイトマップ', 'animewp' ),
-			'description' => __( '大画面では縦書き、小画面では横並びの編集可能なリンク集。', 'animewp' ),
+			'title' => __( 'サイトマップ（縦書き・横書き）', 'animewp' ),
+			'description' => __( '編集できるリンク集。大画面では縦書きで、各リンクの「タイポグラフィ → 方向」で「横」にもできます。小画面では横並びです。', 'animewp' ),
 			'source' => 'animewp/footer-official',
 			'path' => array( 0, 0, 0, 1, 0 ),
 			'block' => 'core/group',
