@@ -14,7 +14,8 @@ $check = static function ( string $label, bool $condition ) use ( &$results ): v
 $registry = WP_Block_Patterns_Registry::get_instance();
 $blocks = WP_Block_Type_Registry::get_instance();
 $catalog = animewp_component_catalog();
-$check( '40 reusable parts are defined', 40 === count( $catalog ) );
+// The complete official footer is the footers-category pattern itself, not a second copy.
+$check( '39 reusable parts are defined', 39 === count( $catalog ) );
 $check( 'component categories are registered', array_reduce(
 	array( 'animewp-components', 'animewp-layout-parts', 'animewp-scene-parts' ),
 	static fn ( $pass, $slug ) => $pass && WP_Block_Pattern_Categories_Registry::get_instance()->is_registered( $slug ),
@@ -89,14 +90,16 @@ $check( 'complete footer pattern is registered for editors', is_array( $official
 // Theme pattern files can contain leading/trailing formatting whitespace.
 // Only actual blocks count toward the independent, editable Cover root.
 $footer_tree = is_array( $official ) ? parse_blocks( trim( $official['content'] ) ) : array();
+// Light by default like the other parts; palette roles, so color schemes apply.
 $check( 'official footer uses an editable Cover background', 1 === count( $footer_tree )
 	&& 'core/cover' === ( $footer_tree[0]['blockName'] ?? '' )
-	&& 'contrast' === ( $footer_tree[0]['attrs']['overlayColor'] ?? '' )
+	&& 'base' === ( $footer_tree[0]['attrs']['overlayColor'] ?? '' )
+	&& 'contrast' === ( $footer_tree[0]['attrs']['textColor'] ?? '' )
 	&& ! isset( $footer_tree[0]['attrs']['url'] ) );
-$check( 'official footer sitemap uses seven editable Core Paragraph links in a nav landmark',
+$check( 'official footer sitemap uses seven editable Core Paragraph links in a nav landmark, horizontal by default through Typography → 方向',
 	is_array( $official )
 	&& false !== strpos( $official['content'], '<!-- wp:group {"tagName":"nav"' )
-	&& 7 === substr_count( $official['content'], '<!-- wp:paragraph {"className":"animewp-footer-official__nav-item"}' ) );
+	&& 7 === substr_count( $official['content'], '<!-- wp:paragraph {"className":"animewp-footer-official__nav-item","style":{"typography":{"writingMode":"horizontal-tb"}}}' ) );
 $check( 'official footer includes Site Logo and Core Social Icons',
 	is_array( $official )
 	&& false !== strpos( $official['content'], '<!-- wp:site-logo ' )
