@@ -533,14 +533,16 @@ footer.wp-block-template-part:has(> :is(.animewp-footer-official, .animewp-foote
     flex-wrap: nowrap;
     justify-content: flex-start;
   }
-  /* Horizontal links sit in even rows of four (4 + 3 for the default seven),
-   * so a wrapped last line never holds a single link. */
+  /* Horizontal links sit in one evenly spaced row, like the header menu,
+   * aligned to the end of the column; they wrap only where the row does not fit. */
   .animewp-footer-official__sitemap:has(.animewp-footer-official__nav-item[style*="horizontal-tb"]) {
-    display: grid;
-    grid-template-columns: repeat(4, max-content);
-    justify-content: end;
-    gap: 0.75rem 2rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.5rem 1.75rem;
   }
+  /* Give a horizontal row the width the brand column does not need. */
+  .animewp-footer-official__top:has(.animewp-footer-official__nav-item[style*="horizontal-tb"]) > .wp-block-column:first-child { flex: 0 1 auto !important; }
+  .animewp-footer-official__top:has(.animewp-footer-official__nav-item[style*="horizontal-tb"]) > .wp-block-column:last-child { flex: 1 1 0 !important; }
   .animewp-footer-official__nav-item:is(:not([style*="writing-mode"]), [style*="vertical"]) a {
     display: inline-block;
     writing-mode: vertical-rl;
