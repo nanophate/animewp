@@ -140,3 +140,11 @@ test( '2.0.3 footers without a 方向 setting stay vertical, and phones are hori
 	await expect( links.first() ).toHaveCSS( 'writing-mode', 'horizontal-tb' );
 	await expect( links.first().locator( 'a' ) ).toHaveCSS( 'writing-mode', 'horizontal-tb' );
 } );
+
+test( 'a footer saved with a dark 80% overlay and no image stays the same solid color', async ( { page } ) => {
+	await page.goto( fixtures().footer_official_dark.path );
+	const overlay = page.locator( '.animewp-footer-official > .wp-block-cover__background' );
+	// Without an image the overlay is the footer color; the base color underneath must not mix in.
+	await expect( overlay ).toHaveCSS( 'opacity', '1' );
+	await expect( overlay ).toHaveCSS( 'background-color', 'rgb(32, 32, 32)' );
+} );

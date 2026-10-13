@@ -105,6 +105,8 @@ $pages['footer_official'] = animewp_browser_page( 'footer_official', animewp_pat
 $official = animewp_pattern_content( 'animewp/footer-official' );
 $pages['footer_official_vertical'] = animewp_browser_page( 'footer_official_vertical', str_replace( array( '"writingMode":"horizontal-tb"', 'writing-mode:horizontal-tb' ), array( '"writingMode":"vertical-rl"', 'writing-mode:vertical-rl' ), $official ) );
 $pages['footer_official_unset'] = animewp_browser_page( 'footer_official_unset', str_replace( array( ',"style":{"typography":{"writingMode":"horizontal-tb"}}', ' style="writing-mode:horizontal-tb"' ), '', $official ) );
+// A footer saved with the 2.0.3 dark overlay (contrast at 80%, no image).
+$pages['footer_official_dark'] = animewp_browser_page( 'footer_official_dark', str_replace( array( '"overlayColor":"base"', 'has-base-background-color', '"textColor":"contrast"', '"iconColor":"contrast"', 'has-contrast-color' ), array( '"overlayColor":"contrast"', 'has-contrast-background-color', '"textColor":"on-contrast"', '"iconColor":"on-contrast"', 'has-on-contrast-color' ), $official ) );
 // Render real standalone Inserter fragments outside the source footer.
 foreach ( array( 'part-footer-vertical-links', 'part-footer-social-icons', 'part-footer-policy-links' ) as $slug ) {
 	$key = str_replace( '-', '_', $slug );
