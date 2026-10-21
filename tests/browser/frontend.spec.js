@@ -58,6 +58,16 @@ for ( const key of [ 'simple', 'blur', 'drift' ] ) {
 		test( `plugin ${key} at ${width}px shows posts, fits and keeps anchor headings visible`, async ( { page } ) => {
 			await page.setViewportSize( { width, height: 900 } );
 			await page.goto( fixtures()[ key ].path );
+			// The example hero auto-advances every 7s. Freeze it through the
+			// entrance-opacity checks so a slow browser cannot cross-fade to a
+			// different slide while those assertions are polling.
+			const heroCarousel = page.getByRole( 'region', { name: 'キービジュアル', exact: true } );
+			await expect( heroCarousel ).toHaveClass( /is-enhanced/ );
+			const pauseAutoplay = heroCarousel.locator( '.animewp-carousel__pause' );
+			if ( await pauseAutoplay.count() ) {
+				await pauseAutoplay.click();
+				await expect( pauseAutoplay ).toHaveAttribute( 'aria-pressed', 'true' );
+			}
 			await expect( page.locator( 'main h1' ).first() ).toBeVisible();
 			expect( await page.evaluate( () => document.documentElement.scrollWidth ) ).toBeLessThanOrEqual( width + 1 );
 			const hero = page.locator( '.animewp-carousel__track > .is-active' ).first();
