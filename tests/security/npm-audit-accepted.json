@@ -38,15 +38,6 @@
       "via_package": "@wordpress/env"
     },
     {
-      "id": "GHSA-vfj7-8cjw-p6xm",
-      "package": "braces",
-      "via": "@wordpress/scripts (file watching and globbing)",
-      "reason": "Denial of service from crafted glob patterns. Patterns come only from this repository's build configuration. No patched version is listed.",
-      "review_by": "2027-01-08",
-      "directory": ".",
-      "via_package": "@wordpress/scripts"
-    },
-    {
       "id": "GHSA-5c6j-r48x-rmvq",
       "package": "serialize-javascript",
       "via": "@wordpress/scripts (copy-webpack-plugin, minifier)",

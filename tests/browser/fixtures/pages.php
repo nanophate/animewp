@@ -99,6 +99,16 @@ $marked_cover = str_replace( '"anchor":"qa-header-cover"', '"anchor":"qa-header-
 $marked_cover = str_replace( 'class="wp-block-cover alignfull"', 'class="wp-block-cover alignfull animewp-hero-trigger"', $marked_cover );
 $pages['header_explicit_missing'] = animewp_browser_header_page( 'header_explicit_missing', $explicit_header, $nested_cover . $hero_body );
 $pages['header_explicit_marked'] = animewp_browser_header_page( 'header_explicit_marked', $explicit_header, $late_intro . $marked_cover . $hero_body );
+/* Real saved Core blocks, with author-edited typography and column widths.
+ * Keep both block attributes and static HTML in step; no generated template
+ * or production database is modified for these disposable browser pages. */
+function animewp_browser_replace_first( string $content, string $before, string $after ): string {
+	$offset = strpos( $content, $before );
+	if ( false === $offset ) {
+		WP_CLI::error( 'Design QA fixture drift: expected saved markup was not found.' );
+	}
+	return substr_replace( $content, $after, $offset, strlen( $before ) );
+}
 $pages['footer_official'] = animewp_browser_page( 'footer_official', animewp_pattern_content( 'animewp/footer-official' ) );
 // The same footer with every sitemap link set to vertical (Typography → 方向),
 // and as saved in 2.0.3, before the links carried any writing-mode setting.
@@ -106,9 +116,40 @@ $official = animewp_pattern_content( 'animewp/footer-official' );
 $pages['footer_official_vertical'] = animewp_browser_page( 'footer_official_vertical', str_replace( array( '"writingMode":"horizontal-tb"', 'writing-mode:horizontal-tb' ), array( '"writingMode":"vertical-rl"', 'writing-mode:vertical-rl' ), $official ) );
 $pages['footer_official_unset'] = animewp_browser_page( 'footer_official_unset', str_replace( array( ',"style":{"typography":{"writingMode":"horizontal-tb"}}', ' style="writing-mode:horizontal-tb"' ), '', $official ) );
 // A footer saved with the 2.0.3 dark overlay (contrast at 80%, no image).
-$pages['footer_official_dark'] = animewp_browser_page( 'footer_official_dark', str_replace( array( '"overlayColor":"base"', 'has-base-background-color', '"textColor":"contrast"', '"iconColor":"contrast"', 'has-contrast-color' ), array( '"overlayColor":"contrast"', 'has-contrast-background-color', '"textColor":"on-contrast"', '"iconColor":"on-contrast"', 'has-on-contrast-color' ), $official ) );
+$pages['footer_official_dark'] = animewp_browser_page( 'footer_official_dark', str_replace( array( '"overlayColor":"base"', 'has-base-background-color', '"textColor":"contrast"', '"iconColor":"contrast"', 'has-contrast-color' ), array( '"overlayColor":"contrast"', 'has-contrast-background-color', '"textColor":"on-contrast"', 'has-on-contrast-color' ), $official ) );
+// The Paragraph owns its typography even though the visible words sit in <a>.
+// Font Library / Global Styles classes remain available on the Paragraph.
+$custom_footer = animewp_browser_replace_first(
+	$official,
+	'<!-- wp:paragraph {"className":"animewp-footer-official__nav-item","style":{"typography":{"writingMode":"horizontal-tb"}}} -->',
+	'<!-- wp:paragraph {"className":"animewp-footer-official__nav-item","fontFamily":"animewp-serif","style":{"typography":{"writingMode":"horizontal-tb","fontSize":"32px","fontWeight":"800","lineHeight":"2","letterSpacing":"0.3em"}}} -->'
+);
+$custom_footer = animewp_browser_replace_first(
+	$custom_footer,
+	'<p class="animewp-footer-official__nav-item" style="writing-mode:horizontal-tb">',
+	'<p class="animewp-footer-official__nav-item has-animewp-serif-font-family" style="writing-mode:horizontal-tb;font-size:32px;font-weight:800;line-height:2;letter-spacing:0.3em">'
+);
+foreach ( array( '38' => '70', '62' => '30' ) as $old_width => $new_width ) {
+	$custom_footer = animewp_browser_replace_first(
+		$custom_footer,
+		'<!-- wp:column {"width":"' . $old_width . '%"} -->',
+		'<!-- wp:column {"width":"' . $new_width . '%"} -->'
+	);
+	$custom_footer = animewp_browser_replace_first(
+		$custom_footer,
+		'<div class="wp-block-column" style="flex-basis:' . $old_width . '%">',
+		'<div class="wp-block-column" style="flex-basis:' . $new_width . '%">'
+	);
+}
+$pages['footer_official_customized'] = animewp_browser_page( 'footer_official_customized', $custom_footer );
+$pages['story_vertical'] = animewp_browser_page( 'story_vertical', animewp_pattern_content( 'animewp/example-story' ) );
+$pages['video_card_customized'] = animewp_browser_page( 'video_card_customized', <<<'HTML'
+<!-- wp:animewp/video-card {"title":"Custom video card","fontFamily":"animewp-serif","style":{"typography":{"lineHeight":"3","fontSize":"24px","fontWeight":"700","letterSpacing":"0.15em"}}} -->
+<figure class="wp-block-animewp-video-card has-animewp-serif-font-family" style="--animewp-video-card-ratio:16/9;line-height:3;font-size:24px;font-weight:700;letter-spacing:0.15em"><span class="animewp-video-card__frame"></span><figcaption class="animewp-video-card__caption"><span class="animewp-video-card__label">LABEL</span><span class="animewp-video-card__title">Custom video card</span></figcaption></figure>
+<!-- /wp:animewp/video-card -->
+HTML );
 // Render real standalone Inserter fragments outside the source footer.
-foreach ( array( 'part-footer-vertical-links', 'part-footer-social-icons', 'part-footer-policy-links' ) as $slug ) {
+foreach ( array( 'part-footer-vertical-links', 'part-footer-social-icons', 'part-footer-policy-links', 'part-footer-copyright-company', 'part-vertical-story-heading' ) as $slug ) {
 	$key = str_replace( '-', '_', $slug );
 	$pages[ $key ] = animewp_browser_page( $key, animewp_pattern_content( 'animewp/' . $slug ) );
 }

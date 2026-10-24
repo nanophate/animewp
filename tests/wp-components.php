@@ -14,6 +14,91 @@ $check = static function ( string $label, bool $condition ) use ( &$results ): v
 $registry = WP_Block_Patterns_Registry::get_instance();
 $blocks = WP_Block_Type_Registry::get_instance();
 $catalog = animewp_component_catalog();
+// Snapshot the intended component API independently of production's path
+// calculations. Previously a missing source path could be skipped both in
+// registration AND in this test, so deleting one component still passed CI.
+$expected_slug_set = array(
+	'part-heading-pair',
+	'part-vertical-story-heading',
+	'part-hero-title-card',
+	'part-single-cover',
+	'part-intro-image-text',
+	'part-story-body',
+	'part-episode-details',
+	'part-episode-details-next',
+	'part-movie-card',
+	'part-movie-carousel',
+	'part-character-profile',
+	'part-character-carousel',
+	'part-staff-credits',
+	'part-cast-credits',
+	'part-credits-columns',
+	'part-music-opening',
+	'part-music-ending',
+	'part-onair-table',
+	'part-onair-details',
+	'part-onair-buttons',
+	'part-news-button',
+	'part-closing-buttons',
+	'part-closing-message',
+	'part-petal-hero',
+	'part-petal-movie',
+	'part-petal-closing',
+	'part-header-brand',
+	'part-header-navigation',
+	'part-footer-navigation',
+	'part-footer-details',
+	'part-footer-social',
+	'part-footer-brand-line',
+	'part-footer-social-row',
+	'part-footer-social-icons',
+	'part-footer-vertical-links',
+	'part-footer-bottom-bar',
+	'part-footer-copyright-company',
+	'part-footer-policy-links',
+	'part-footer-top-link',
+);
+$plugin_required = array(
+	'part-movie-card',
+	'part-movie-carousel',
+	'part-character-carousel',
+	'part-petal-hero',
+	'part-petal-movie',
+	'part-petal-closing',
+);
+$available_all = $blocks->is_registered( 'animewp/carousel' )
+	&& $blocks->is_registered( 'animewp/video-card' )
+	&& $blocks->is_registered( 'animewp/decoration' )
+	&& $blocks->is_registered( 'animewp/backdrop' );
+$expected_registered = $available_all ? $expected_slug_set : array_values( array_diff( $expected_slug_set, $plugin_required ) );
+$actual_defined = array_keys( $catalog );
+$registered = array_values( array_filter( $expected_slug_set, static function ( $slug ) use ( $registry ) {
+	return is_array( $registry->get_registered( 'animewp/' . $slug ) );
+} ) );
+$check( 'the 39 public component slugs remain stable', $actual_defined === $expected_slug_set );
+$check( 'every expected component is actually insertable (' . ( $available_all ? 'with' : 'without' ) . ' optional blocks), missing=' . implode( ',', array_diff( $expected_registered, $registered ) ), $registered === $expected_registered );
+// Check the source path of the original missing piece: a nested fragment can
+// silently be skipped when the pattern source is not a block tree root.
+if ( $available_all ) {
+	$movie_def = $catalog['part-petal-movie'];
+	$movie_source = animewp_component_source_blocks( $movie_def['source'], $registry );
+	$movie_root = animewp_component_node( $movie_source, $movie_def['path'] );
+	$movie_kinds = array();
+	if ( is_array( $movie_root ) ) {
+		$waiting = array( $movie_root );
+		while ( $waiting ) {
+			$element = array_pop( $waiting );
+			$kind = $element['blockName'] ?? '(freeform)';
+			if ( ! $blocks->is_registered( $kind ) ) {
+				$movie_kinds[] = $kind;
+			}
+			foreach ( $element['innerBlocks'] ?? array() as $child ) {
+				$waiting[] = $child;
+			}
+		}
+	}
+	$check( 'movie part root=' . ( $movie_root['blockName'] ?? 'missing' ) . '; unregistered=' . implode( ',', array_unique( $movie_kinds ) ), 'core/group' === ( $movie_root['blockName'] ?? null ) && ! $movie_kinds );
+}
 // The complete official footer is the footers-category pattern itself, not a second copy.
 $check( '39 reusable parts are defined', 39 === count( $catalog ) );
 $check( 'component categories are registered', array_reduce(

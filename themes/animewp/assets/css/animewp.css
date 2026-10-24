@@ -100,7 +100,25 @@
 .is-style-animewp-details[open] > summary { margin-bottom: 16px; }
 /* Typography, colors, spacing and borders of text/section styles: styles/text, styles/sections. */
 .is-style-animewp-highlight { box-decoration-break: clone; -webkit-box-decoration-break: clone; display: inline; }
-.is-style-animewp-short-vertical { writing-mode: vertical-rl; text-orientation: mixed; max-inline-size: 18em; }
+/* Writing-mode is the visual switch; the font remains owned by Global Styles
+ * or the selected Heading. Disable balanced wrapping and arbitrary breakpoints
+ * for short vertical captions: glyphs must advance in distinct columns.
+ * Existing slug and saved heading markup are unchanged. */
+.is-style-animewp-short-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  white-space: nowrap;
+  text-wrap: nowrap;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  inline-size: max-content;
+  block-size: max-content;
+  max-inline-size: 18em;
+  /* A CJK font with vertical metrics is required on Linux/Chromium to avoid
+   * collapsed glyph advances. A Core font preset or explicit block style may
+   * override this default; no font is downloaded. */
+  font-family: var(--animewp-vertical-font, "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans CJK JP", sans-serif);
+}
 .is-style-animewp-glass { -webkit-backdrop-filter: blur(var(--wp--custom--animewp--motion--blur, 8px)); backdrop-filter: blur(var(--wp--custom--animewp--motion--blur, 8px)); }
 .animewp-video-placeholder { border: 1px solid var(--animewp-line); }
 .animewp-video-placeholder > .wp-block-image { margin: 0; }
@@ -163,7 +181,17 @@
   .animewp-hero { min-height: 620px !important; }
   .animewp-hero .wp-block-cover__image-background { object-position: 65% 50%; }
   .animewp-hero .animewp-hero-info { max-width: 100%; }
-  .is-style-animewp-short-vertical { writing-mode: horizontal-tb; max-inline-size: none; }
+  .is-style-animewp-short-vertical {
+    writing-mode: horizontal-tb;
+    white-space: normal;
+    text-wrap: balance;
+    word-break: auto-phrase;
+    overflow-wrap: anywhere;
+    inline-size: auto;
+    block-size: auto;
+    max-inline-size: none;
+    font-family: inherit;
+  }
   .animewp-footer-inner { display: block; }
   .animewp-footer-inner .wp-block-navigation { margin-block-start: 24px; }
 }
@@ -477,15 +505,22 @@ footer.wp-block-template-part:has(> :is(.animewp-footer-official, .animewp-foote
   min-width: 0;
   margin: 0;
 }
+/* Type belongs to the editable Core Paragraph, not its descendant <a>.
+ * Defaults have zero specificity; site typography, preset classes, a custom
+ * Font Library family, and per-block inline choices win without !important. */
+:where(.animewp-footer-official__nav-item) {
+  font-size: clamp(0.9rem, 1.3vw, 1.125rem);
+  font-weight: 600;
+  line-height: 1.6;
+}
 .animewp-footer-official .animewp-footer-official__nav-item a,
 .animewp-footer-official__nav-item a {
   display: block;
   color: inherit;
   text-decoration: none;
   min-height: 44px;
-  font-size: clamp(0.9rem, 1.3vw, 1.125rem);
-  font-weight: 600;
-  line-height: 1.6;
+  font: inherit;
+  letter-spacing: inherit;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.4em;
 }
@@ -507,14 +542,34 @@ footer.wp-block-template-part:has(> :is(.animewp-footer-official, .animewp-foote
 /* The bottom row spans the same wide width as the logo and sitemap row above it
  * (it is not aligned wide in the pattern, so the parent's text width applied). */
 .animewp-footer-official__content > .animewp-footer-official__bottom { max-width: var(--wp--style--global--wide-size); }
-/* Horizontal links match the header menu's weight; vertical links stay larger as an accent. */
-.animewp-footer-official__nav-item[style*="horizontal-tb"] a {
+/* Horizontal menu: the default sits on the Paragraph so author typography
+ * survives unchanged inside its link. Legacy vertical links retain their
+ * no-orientation behavior, without imposing a font family on custom choices. */
+:where(.animewp-footer-official__nav-item[style*="horizontal-tb"]) {
   font-size: 0.9375rem;
   font-weight: 500;
   letter-spacing: 0.04em;
 }
+:where(.animewp-footer-official__nav-item:is(:not([style*="writing-mode"]), [style*="vertical"])) {
+  letter-spacing: 0.09em;
+}
+/* These are independent parts too: defaults belong to the extracted root,
+ * not to the parent footer. A saved Core blockGap (inline CSS variable) wins. */
+:where(.animewp-footer-official__credit, .animewp-footer-official__legal) {
+  --wp--style--block-gap: 0.5rem 1.25rem;
+}
+/* Core can render a fixed .is-layout-flex gap instead of referring to the
+ * --wp--style--block-gap custom property. Bind it explicitly here, while a
+ * user-defined inline gap or an inline custom variable still takes priority. */
+.animewp-footer-official__credit.is-layout-flex,
+.animewp-footer-official__legal.is-layout-flex {
+  gap: var(--wp--style--block-gap, 0.5rem 1.25rem);
+}
+:where(.animewp-footer-official__credit, .animewp-footer-official__legal):where(:not(.animewp-footer-official__bottom *)) {
+  font-size: 0.8125rem;
+}
+:where(.animewp-footer-official__credit, .animewp-footer-official__legal) :where(p) { margin: 0; }
 .animewp-footer-official__bottom :is(.wp-block-paragraph, p) { margin: 0; }
-.animewp-footer-official__bottom :is(.wp-block-group, .animewp-footer-official__credit, .animewp-footer-official__legal) { gap: 0.5rem 1.25rem; }
 .animewp-footer-official__bottom a { color: inherit; text-underline-offset: 0.25em; }
 .animewp-footer-official__to-top { margin-inline-start: auto; }
 .animewp-footer-official__to-top a {
@@ -540,9 +595,9 @@ footer.wp-block-template-part:has(> :is(.animewp-footer-official, .animewp-foote
     justify-content: flex-end;
     gap: 0.5rem 1.75rem;
   }
-  /* Give a horizontal row the width the brand column does not need. */
-  .animewp-footer-official__top:has(.animewp-footer-official__nav-item[style*="horizontal-tb"]) > .wp-block-column:first-child { flex: 0 1 auto !important; }
-  .animewp-footer-official__top:has(.animewp-footer-official__nav-item[style*="horizontal-tb"]) > .wp-block-column:last-child { flex: 1 1 0 !important; }
+  /* The saved Core Columns widths (38/62 by default, any author ratio later)
+   * are authoritative; never override their flex-basis with an !important
+   * shorthand merely to make the default sitemap appear at the right. */
   .animewp-footer-official__nav-item:is(:not([style*="writing-mode"]), [style*="vertical"]) a {
     display: inline-block;
     writing-mode: vertical-rl;
@@ -550,7 +605,9 @@ footer.wp-block-template-part:has(> :is(.animewp-footer-official, .animewp-foote
     /* system-ui on Linux can fall back per glyph to a font without usable
      * vertical CJK advances, stacking kanji at one point. Prefer native
      * Japanese fonts for this vertical-only label; no web font is fetched. */
-    font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans CJK JP", sans-serif;
+    /* The chosen site/paragraph font must survive vertical composition too.
+     * Authors can choose a CJK font in Font Library; CSS supplies geometry. */
+    font-family: var(--animewp-vertical-font, "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans CJK JP", sans-serif);
     white-space: nowrap;
     word-break: keep-all;
     overflow-wrap: normal;
@@ -561,6 +618,12 @@ footer.wp-block-template-part:has(> :is(.animewp-footer-official, .animewp-foote
     inline-size: max-content;
     block-size: max-content;
     letter-spacing: 0.09em;
+  }
+  /* Keep a user-selected Core font on its Paragraph authoritative. The
+   * CJK stack above applies only when no per-block font was selected. */
+  .animewp-footer-official__nav-item[class*="-font-family"] a,
+  .animewp-footer-official__nav-item[style*="font-family"] a {
+    font-family: inherit;
   }
 }
 @media (max-width: 960px) {
@@ -580,6 +643,7 @@ footer.wp-block-template-part:has(> :is(.animewp-footer-official, .animewp-foote
   .animewp-footer-official__nav-item,
   .animewp-footer-official__nav-item a {
     writing-mode: horizontal-tb !important;
+    font-family: inherit;
     white-space: normal;
     inline-size: auto;
     block-size: auto;
