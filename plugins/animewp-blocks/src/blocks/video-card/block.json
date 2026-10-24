@@ -91,7 +91,10 @@
       "padding": true
     },
     "typography": {
+      "fontFamily": true,
       "fontSize": true,
+      "fontWeight": true,
+      "letterSpacing": true,
       "lineHeight": true,
       "textAlign": true
     },
