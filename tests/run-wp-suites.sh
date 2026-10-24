@@ -9,11 +9,20 @@ origin=http://tests-wordpress   # the tests WordPress container as seen from tes
 # The tests site starts with a default theme; the suites expect this one.
 npx wp-env run tests-cli -- wp theme activate animewp
 status=0
-for suite in wp-smoke wp-fixtures wp-regressions-v12 wp-components wp-motion wp-i18n wp-render wp-http wp-updates; do
+for suite in wp-smoke wp-fixtures wp-regressions-v12 wp-components wp-motion wp-i18n wp-render wp-http wp-updates wp-components-core; do
+	# Verify the same component inventory with the optional companion plugin off.
+	# A separate WP-CLI process prevents disabled block registration leaking into
+	# subsequent suites, while the test keeps read-only inventory assertions.
+	file=$suite
+	set --
+	if [ "$suite" = "wp-components-core" ]; then
+		file=wp-components
+		set -- --skip-plugins=animewp-blocks
+	fi
 	# wp-env occasionally fails its own Docker request ("lookup:" timing dump); retry once.
 	for attempt in 1 2; do
 		suite_status=0
-		output=$(npx wp-env run tests-cli -- env ANIMEWP_HTTP_ORIGIN="$origin" wp eval-file "$dir/$suite.php" 2>&1) || suite_status=$?
+		output=$(npx wp-env run tests-cli -- env ANIMEWP_HTTP_ORIGIN="$origin" wp "$@" eval-file "$dir/$file.php" 2>&1) || suite_status=$?
 		if [ "$suite_status" != 0 ] && [ "$attempt" = 1 ]; then
 			case "$output" in *"lookup:"*) sleep 3; continue ;; esac
 		fi
