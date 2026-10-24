@@ -114,6 +114,10 @@
   inline-size: max-content;
   block-size: max-content;
   max-inline-size: 18em;
+  /* A CJK font with vertical metrics is required on Linux/Chromium to avoid
+   * collapsed glyph advances. A Core font preset or explicit block style may
+   * override this default; no font is downloaded. */
+  font-family: var(--animewp-vertical-font, "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans CJK JP", sans-serif);
 }
 .is-style-animewp-glass { -webkit-backdrop-filter: blur(var(--wp--custom--animewp--motion--blur, 8px)); backdrop-filter: blur(var(--wp--custom--animewp--motion--blur, 8px)); }
 .animewp-video-placeholder { border: 1px solid var(--animewp-line); }
@@ -186,6 +190,7 @@
     inline-size: auto;
     block-size: auto;
     max-inline-size: none;
+    font-family: inherit;
   }
   .animewp-footer-inner { display: block; }
   .animewp-footer-inner .wp-block-navigation { margin-block-start: 24px; }
@@ -553,6 +558,13 @@ footer.wp-block-template-part:has(> :is(.animewp-footer-official, .animewp-foote
 :where(.animewp-footer-official__credit, .animewp-footer-official__legal) {
   --wp--style--block-gap: 0.5rem 1.25rem;
 }
+/* Core can render a fixed .is-layout-flex gap instead of referring to the
+ * --wp--style--block-gap custom property. Bind it explicitly here, while a
+ * user-defined inline gap or an inline custom variable still takes priority. */
+.animewp-footer-official__credit.is-layout-flex,
+.animewp-footer-official__legal.is-layout-flex {
+  gap: var(--wp--style--block-gap, 0.5rem 1.25rem);
+}
 :where(.animewp-footer-official__credit, .animewp-footer-official__legal):where(:not(.animewp-footer-official__bottom *)) {
   font-size: 0.8125rem;
 }
@@ -595,7 +607,7 @@ footer.wp-block-template-part:has(> :is(.animewp-footer-official, .animewp-foote
      * Japanese fonts for this vertical-only label; no web font is fetched. */
     /* The chosen site/paragraph font must survive vertical composition too.
      * Authors can choose a CJK font in Font Library; CSS supplies geometry. */
-    font-family: inherit;
+    font-family: var(--animewp-vertical-font, "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans CJK JP", sans-serif);
     white-space: nowrap;
     word-break: keep-all;
     overflow-wrap: normal;
@@ -606,6 +618,12 @@ footer.wp-block-template-part:has(> :is(.animewp-footer-official, .animewp-foote
     inline-size: max-content;
     block-size: max-content;
     letter-spacing: 0.09em;
+  }
+  /* Keep a user-selected Core font on its Paragraph authoritative. The
+   * CJK stack above applies only when no per-block font was selected. */
+  .animewp-footer-official__nav-item[class*="-font-family"] a,
+  .animewp-footer-official__nav-item[style*="font-family"] a {
+    font-family: inherit;
   }
 }
 @media (max-width: 960px) {
@@ -625,6 +643,7 @@ footer.wp-block-template-part:has(> :is(.animewp-footer-official, .animewp-foote
   .animewp-footer-official__nav-item,
   .animewp-footer-official__nav-item a {
     writing-mode: horizontal-tb !important;
+    font-family: inherit;
     white-space: normal;
     inline-size: auto;
     block-size: auto;
