@@ -29,7 +29,9 @@ The plugin does not track visitors. YouTube and Vimeo are contacted only when a 
 == Changelog ==
 
 = 2.0.4 =
-* Version aligned with the animewp theme. No plugin code changes.
+* Add Core font family, weight and letter spacing controls to Video Card.
+* Preserve per-card title line height and improve metadata contrast.
+* Preserve existing saved HTML and video links; version aligned with animewp theme.
 
 = 2.0.3 =
 * Add Japanese Motion controls for hero-aware navigation, scroll distance, and header opacity, blur and height.
