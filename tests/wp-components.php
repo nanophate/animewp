@@ -77,28 +77,40 @@ $registered = array_values( array_filter( $expected_slug_set, static function ( 
 } ) );
 $check( 'the 39 public component slugs remain stable', $actual_defined === $expected_slug_set );
 $check( 'every expected component is actually insertable (' . ( $available_all ? 'with' : 'without' ) . ' optional blocks), missing=' . implode( ',', array_diff( $expected_registered, $registered ) ), $registered === $expected_registered );
-// Check the source path of the original missing piece: a nested fragment can
-// silently be skipped when the pattern source is not a block tree root.
-if ( $available_all ) {
-	$movie_def = $catalog['part-petal-movie'];
-	$movie_source = animewp_component_source_blocks( $movie_def['source'], $registry );
-	$movie_root = animewp_component_node( $movie_source, $movie_def['path'] );
-	$movie_kinds = array();
-	if ( is_array( $movie_root ) ) {
-		$waiting = array( $movie_root );
-		while ( $waiting ) {
-			$element = array_pop( $waiting );
-			$kind = $element['blockName'] ?? '(freeform)';
-			if ( ! $blocks->is_registered( $kind ) ) {
-				$movie_kinds[] = $kind;
-			}
-			foreach ( $element['innerBlocks'] ?? array() as $child ) {
-				$waiting[] = $child;
-			}
-		}
-	}
-	$check( 'movie part root=' . ( $movie_root['blockName'] ?? 'missing' ) . '; unregistered=' . implode( ',', array_unique( $movie_kinds ) ), 'core/group' === ( $movie_root['blockName'] ?? null ) && ! $movie_kinds );
-}
+// Stable source positions: blank lines between full-page sections are *not*
+// standalone components. Test semantic targets too: prior to normalization,
+// the missing Movie index targeted freeform whitespace while Closing [8]
+// silently targeted the Characters section.
+$petal_markup = animewp_component_source_blocks( 'animewp/page-drift', $registry );
+$movie_root = animewp_component_node( $petal_markup, $catalog['part-petal-movie']['path'] );
+$closing_root = animewp_component_node( $petal_markup, $catalog['part-petal-closing']['path'] );
+$check( 'page drift has nine real top-level sections', 9 === count( $petal_markup ) );
+$check( 'movie fragment extracts the Movie section, not formatting whitespace',
+	'core/group' === ( $movie_root['blockName'] ?? null )
+	&& false !== strpos( serialize_block( $movie_root ), 'id="movie"' )
+);
+$check( 'closing fragment extracts the actual Coming Soon section',
+	'core/group' === ( $closing_root['blockName'] ?? null )
+	&& false !== strpos( serialize_block( $closing_root ), 'COMING SOON' )
+);
+
+// The normalizer must preserve real content; it removes only whitespace-only
+// freeform nodes between root blocks, and does not modify nested block trees.
+$sample_start = '<!-- wp:paragraph --><p>First</p><!-- /wp:paragraph -->';
+$sample_end   = '<!-- wp:paragraph --><p>Second</p><!-- /wp:paragraph -->';
+$with_blanks  = animewp_component_root_blocks( $sample_start . "\n\n" . $sample_end );
+$with_content = animewp_component_root_blocks( $sample_start . 'VISIBLE FREEFORM TEXT' . $sample_end );
+$check( 'root whitespace-only separators do not change component indices',
+	2 === count( $with_blanks )
+	&& 'core/paragraph' === ( $with_blanks[0]['blockName'] ?? null )
+	&& 'core/paragraph' === ( $with_blanks[1]['blockName'] ?? null )
+);
+$check( 'meaningful freeform content is not removed from imported sources',
+	3 === count( $with_content )
+	&& null === ( $with_content[1]['blockName'] ?? null )
+	&& false !== strpos( $with_content[1]['innerHTML'] ?? '', 'VISIBLE FREEFORM TEXT' )
+);
+
 // The complete official footer is the footers-category pattern itself, not a second copy.
 $check( '39 reusable parts are defined', 39 === count( $catalog ) );
 $check( 'component categories are registered', array_reduce(
