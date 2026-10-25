@@ -149,7 +149,7 @@ $pages['video_card_customized'] = animewp_browser_page( 'video_card_customized',
 <!-- /wp:animewp/video-card -->
 HTML );
 // Render real standalone Inserter fragments outside the source footer.
-foreach ( array( 'part-footer-vertical-links', 'part-footer-social-icons', 'part-footer-policy-links', 'part-footer-copyright-company', 'part-vertical-story-heading' ) as $slug ) {
+foreach ( array( 'part-footer-vertical-links', 'part-footer-social-icons', 'part-footer-policy-links', 'part-footer-copyright-company', 'part-vertical-story-heading', 'part-petal-movie', 'part-petal-closing' ) as $slug ) {
 	$key = str_replace( '-', '_', $slug );
 	$pages[ $key ] = animewp_browser_page( $key, animewp_pattern_content( 'animewp/' . $slug ) );
 }
