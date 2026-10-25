@@ -114,9 +114,11 @@
   inline-size: max-content;
   block-size: max-content;
   max-inline-size: 18em;
-  /* A CJK font with vertical metrics is required on Linux/Chromium to avoid
-   * collapsed glyph advances. A Core font preset or explicit block style may
-   * override this default; no font is downloaded. */
+}
+ /* Keep the vertical CJK metrics fallback at zero specificity. Otherwise this
+  * component's class can beat an editor-selected Core/Font Library family with
+  * the same specificity and later stylesheet ordering. */
+:where(.is-style-animewp-short-vertical) {
   font-family: var(--animewp-vertical-font, "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans CJK JP", sans-serif);
 }
 .is-style-animewp-glass { -webkit-backdrop-filter: blur(var(--wp--custom--animewp--motion--blur, 8px)); backdrop-filter: blur(var(--wp--custom--animewp--motion--blur, 8px)); }
