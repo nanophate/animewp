@@ -33,6 +33,10 @@ jobs:
           - browser: chromium
             wordpress: "7.1-branch"
             php: "8.3"
+          # Test the modern PHP runtime against editor and native ZIP upgrades.
+          - browser: chromium
+            wordpress: "7.1-branch"
+            php: "8.5"
           - browser: firefox
             wordpress: "7.1-branch"
             php: "8.3"

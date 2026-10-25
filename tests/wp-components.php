@@ -14,6 +14,103 @@ $check = static function ( string $label, bool $condition ) use ( &$results ): v
 $registry = WP_Block_Patterns_Registry::get_instance();
 $blocks = WP_Block_Type_Registry::get_instance();
 $catalog = animewp_component_catalog();
+// Snapshot the intended component API independently of production's path
+// calculations. Previously a missing source path could be skipped both in
+// registration AND in this test, so deleting one component still passed CI.
+$expected_slug_set = array(
+	'part-heading-pair',
+	'part-vertical-story-heading',
+	'part-hero-title-card',
+	'part-single-cover',
+	'part-intro-image-text',
+	'part-story-body',
+	'part-episode-details',
+	'part-episode-details-next',
+	'part-movie-card',
+	'part-movie-carousel',
+	'part-character-profile',
+	'part-character-carousel',
+	'part-staff-credits',
+	'part-cast-credits',
+	'part-credits-columns',
+	'part-music-opening',
+	'part-music-ending',
+	'part-onair-table',
+	'part-onair-details',
+	'part-onair-buttons',
+	'part-news-button',
+	'part-closing-buttons',
+	'part-closing-message',
+	'part-petal-hero',
+	'part-petal-movie',
+	'part-petal-closing',
+	'part-header-brand',
+	'part-header-navigation',
+	'part-footer-navigation',
+	'part-footer-details',
+	'part-footer-social',
+	'part-footer-brand-line',
+	'part-footer-social-row',
+	'part-footer-social-icons',
+	'part-footer-vertical-links',
+	'part-footer-bottom-bar',
+	'part-footer-copyright-company',
+	'part-footer-policy-links',
+	'part-footer-top-link',
+);
+$plugin_required = array(
+	'part-movie-card',
+	'part-movie-carousel',
+	'part-character-carousel',
+	'part-petal-hero',
+	'part-petal-movie',
+	'part-petal-closing',
+);
+$available_all = $blocks->is_registered( 'animewp/carousel' )
+	&& $blocks->is_registered( 'animewp/video-card' )
+	&& $blocks->is_registered( 'animewp/decoration' )
+	&& $blocks->is_registered( 'animewp/backdrop' );
+$expected_registered = $available_all ? $expected_slug_set : array_values( array_diff( $expected_slug_set, $plugin_required ) );
+$actual_defined = array_keys( $catalog );
+$registered = array_values( array_filter( $expected_slug_set, static function ( $slug ) use ( $registry ) {
+	return is_array( $registry->get_registered( 'animewp/' . $slug ) );
+} ) );
+$check( 'the 39 public component slugs remain stable', $actual_defined === $expected_slug_set );
+$check( 'every expected component is actually insertable (' . ( $available_all ? 'with' : 'without' ) . ' optional blocks), missing=' . implode( ',', array_diff( $expected_registered, $registered ) ), $registered === $expected_registered );
+// Stable source positions: blank lines between full-page sections are *not*
+// standalone components. Test semantic targets too: prior to normalization,
+// the missing Movie index targeted freeform whitespace while Closing [8]
+// silently targeted the Characters section.
+$petal_markup = animewp_component_source_blocks( 'animewp/page-drift', $registry );
+$movie_root = animewp_component_node( $petal_markup, $catalog['part-petal-movie']['path'] );
+$closing_root = animewp_component_node( $petal_markup, $catalog['part-petal-closing']['path'] );
+$check( 'page drift has nine real top-level sections', 9 === count( $petal_markup ) );
+$check( 'movie fragment extracts the Movie section, not formatting whitespace',
+	'core/group' === ( $movie_root['blockName'] ?? null )
+	&& false !== strpos( serialize_block( $movie_root ), 'id="movie"' )
+);
+$check( 'closing fragment extracts the actual Coming Soon section',
+	'core/group' === ( $closing_root['blockName'] ?? null )
+	&& false !== strpos( serialize_block( $closing_root ), 'COMING SOON' )
+);
+
+// The normalizer must preserve real content; it removes only whitespace-only
+// freeform nodes between root blocks, and does not modify nested block trees.
+$sample_start = '<!-- wp:paragraph --><p>First</p><!-- /wp:paragraph -->';
+$sample_end   = '<!-- wp:paragraph --><p>Second</p><!-- /wp:paragraph -->';
+$with_blanks  = animewp_component_root_blocks( $sample_start . "\n\n" . $sample_end );
+$with_content = animewp_component_root_blocks( $sample_start . 'VISIBLE FREEFORM TEXT' . $sample_end );
+$check( 'root whitespace-only separators do not change component indices',
+	2 === count( $with_blanks )
+	&& 'core/paragraph' === ( $with_blanks[0]['blockName'] ?? null )
+	&& 'core/paragraph' === ( $with_blanks[1]['blockName'] ?? null )
+);
+$check( 'meaningful freeform content is not removed from imported sources',
+	3 === count( $with_content )
+	&& null === ( $with_content[1]['blockName'] ?? null )
+	&& false !== strpos( $with_content[1]['innerHTML'] ?? '', 'VISIBLE FREEFORM TEXT' )
+);
+
 // The complete official footer is the footers-category pattern itself, not a second copy.
 $check( '39 reusable parts are defined', 39 === count( $catalog ) );
 $check( 'component categories are registered', array_reduce(
