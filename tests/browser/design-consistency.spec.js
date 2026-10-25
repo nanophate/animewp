@@ -135,6 +135,18 @@ for ( const key of [ 'story_vertical', 'part_vertical_story_heading' ] ) {
 	} );
 }
 
+test( 'vertical heading preserves an explicitly selected Font Library family', async ( { page } ) => {
+	await page.goto( fixtures().story_vertical_custom_font.path );
+	const heading = page.locator( '.is-style-animewp-short-vertical' ).first();
+	await expect( heading ).toBeVisible();
+	await expect( heading ).toHaveClass( /has-animewp-serif-font-family/ );
+	await expect( heading ).toHaveCSS( 'font-family', /Yu Mincho|Hiragino Mincho|Georgia/i );
+	await expect( heading ).toHaveCSS( 'writing-mode', 'vertical-rl' );
+	await page.setViewportSize( { width: 375, height: 900 } );
+	await expect( heading ).toHaveCSS( 'writing-mode', 'horizontal-tb' );
+	await expect( heading ).toHaveCSS( 'font-family', /Yu Mincho|Hiragino Mincho|Georgia/i );
+} );
+
 test( 'standalone petal patterns retain their intended source sections', async ( { page } ) => {
 	// These two were the silent contract regression: page-drift root whitespace
 	// shifted numeric indices so Movie disappeared and Closing became Characters.
