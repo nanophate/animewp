@@ -143,6 +143,20 @@ foreach ( array( '38' => '70', '62' => '30' ) as $old_width => $new_width ) {
 }
 $pages['footer_official_customized'] = animewp_browser_page( 'footer_official_customized', $custom_footer );
 $pages['story_vertical'] = animewp_browser_page( 'story_vertical', animewp_pattern_content( 'animewp/example-story' ) );
+// A user may choose a different Font Library family for this exact heading.
+// Preserve both the Core comment attribute and the saved utility class.
+$story_custom_font = animewp_pattern_content( 'animewp/example-story' );
+$story_custom_font = animewp_browser_replace_first(
+	$story_custom_font,
+	'<!-- wp:heading {"level":3,"className":"is-style-animewp-short-vertical"} -->',
+	'<!-- wp:heading {"level":3,"className":"is-style-animewp-short-vertical","fontFamily":"animewp-serif"} -->'
+);
+$story_custom_font = animewp_browser_replace_first(
+	$story_custom_font,
+	'<h3 class="wp-block-heading is-style-animewp-short-vertical">',
+	'<h3 class="wp-block-heading is-style-animewp-short-vertical has-animewp-serif-font-family">'
+);
+$pages['story_vertical_custom_font'] = animewp_browser_page( 'story_vertical_custom_font', $story_custom_font );
 $pages['video_card_customized'] = animewp_browser_page( 'video_card_customized', <<<'HTML'
 <!-- wp:animewp/video-card {"title":"Custom video card","fontFamily":"animewp-serif","style":{"typography":{"lineHeight":"3","fontSize":"24px","fontWeight":"700","letterSpacing":"0.15em"}}} -->
 <figure class="wp-block-animewp-video-card has-animewp-serif-font-family" style="--animewp-video-card-ratio:16/9;line-height:3;font-size:24px;font-weight:700;letter-spacing:0.15em"><span class="animewp-video-card__frame"></span><figcaption class="animewp-video-card__caption"><span class="animewp-video-card__label">LABEL</span><span class="animewp-video-card__title">Custom video card</span></figcaption></figure>
