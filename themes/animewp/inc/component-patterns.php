@@ -396,6 +396,34 @@ function animewp_component_node( array $blocks, array $path ): ?array {
 }
 
 /**
+ * Parse the source as an ordered list of actual top-level blocks.
+ *
+ * WordPress's parse_blocks() preserves whitespace between neighboring root
+ * blocks as freeform (blockName === null) entries. That is valid for rendering,
+ * but makes numeric component paths count invisible separators as if they
+ * were sections: page-drift's fourth section (Movie) had path [3] pointing
+ * at whitespace, and [8] pointed at Characters rather than Closing.
+ *
+ * Strip only whitespace-only freeform separators, leaving meaningful freeform
+ * content and every nested InnerBlocks tree untouched.
+ *
+ * @param string $markup Serialized WordPress block markup.
+ * @return array<int, array<string, mixed>>
+ */
+function animewp_component_root_blocks( string $markup ): array {
+	return array_values(
+		array_filter(
+			parse_blocks( $markup ),
+			static function ( $block ): bool {
+				return is_array( $block )
+					&& ( null !== ( $block['blockName'] ?? null )
+						|| '' !== trim( (string) ( $block['innerHTML'] ?? '' ) ) );
+			}
+		)
+	);
+}
+
+/**
  * Return blocks from the registered source. If an example was not registered
  * solely because its container requires AnimeWP Blocks, the theme-owned
  * generated markup can still provide a pure Core fragment (e.g. one Cover or
@@ -406,7 +434,7 @@ function animewp_component_node( array $blocks, array $path ): ?array {
 function animewp_component_source_blocks( string $source, $registry ): array {
 	$registered = $registry->get_registered( $source );
 	if ( is_array( $registered ) && ! empty( $registered['content'] ) ) {
-		return parse_blocks( $registered['content'] );
+		return animewp_component_root_blocks( $registered['content'] );
 	}
 	if ( ! preg_match( '/^animewp\\/(example-[a-z0-9-]+|page-[a-z0-9-]+)$/', $source, $match ) ) {
 		return array();
@@ -418,7 +446,7 @@ function animewp_component_source_blocks( string $source, $registry ): array {
 	ob_start();
 	include $file;
 	$markup = ob_get_clean();
-	return is_string( $markup ) ? parse_blocks( $markup ) : array();
+	return is_string( $markup ) ? animewp_component_root_blocks( $markup ) : array();
 }
 
 /** A root can use only Core blocks even when its source page uses extras. */

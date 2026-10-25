@@ -5,7 +5,7 @@
 - `themes/animewp/`：通常の投稿・固定ページ・検索・アーカイブと、再利用できる3構成のLP、ヘッダー、セクションのパターン。
 - `plugins/animewp-blocks/`：任意の8ブロック（装飾パネル、回転テキスト、画像と本文、動画ボタン、カルーセル、動画カード、背景レイヤー、装飾）とモーション。テーマだけでも利用できます。
 - [INSTALL-ja.txt](INSTALL-ja.txt)：ZIP導入、初期編集、更新、停止時の手順。
-- [v2の設計](docs/architecture-v2.md)、[任意ブロックの仕様](plugins/animewp-blocks/README.md)、[全体レビューと残作業](docs/review-2026-10.md)。
+- [v2の設計](docs/architecture-v2.md)、[CSSと個別カスタマイズの設計契約](docs/design-css-contract.md)、[任意ブロックの仕様](plugins/animewp-blocks/README.md)、[全体レビューと残作業](docs/review-2026-10.md)。
 
 有効化時にページ、メニュー、公開状態、ホーム設定を変更しません。見本は管理画面でプレビューした後、必要なものだけ新規下書きに取り込みます。同じ見本を再実行すると作成済みページを開きます。本文・画像は見本なので、公開前に自分の内容へ差し替えてください。
 

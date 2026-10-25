@@ -13,7 +13,7 @@ from unittest.mock import patch
 SPEC = importlib.util.spec_from_file_location("npm_audit", Path(__file__).with_name("npm_audit.py"))
 AUDIT = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(AUDIT)
-KNOWN = "GHSA-vfj7-8cjw-p6xm"
+KNOWN = "GHSA-5c6j-r48x-rmvq"
 
 
 def report(findings=()):
@@ -116,9 +116,8 @@ class AcceptanceScopeTests(unittest.TestCase):
             "node_modules/simple-git": {"dev": True, "dependencies": {"@simple-git/argv-parser": "1"}},
             "node_modules/@simple-git/argv-parser": {"dev": True},
             "node_modules/@wordpress/scripts": {"dev": True, "dependencies": {
-                "braces": "1", "serialize-javascript": "1", "@wordpress/env": "1",
+                "serialize-javascript": "1", "@wordpress/env": "1",
             }},
-            "node_modules/braces": {"dev": True},
             "node_modules/serialize-javascript": {"dev": True},
         }
 
@@ -137,14 +136,14 @@ class AcceptanceScopeTests(unittest.TestCase):
                 return error.code, output.getvalue()
         return 0, output.getvalue()
 
-    def test_all_six_current_exceptions_keep_working(self):
+    def test_all_five_current_exceptions_keep_working(self):
         data = report([(entry["package"], entry["id"], "high") for entry in self.accepted])
         status, output = self.run_main(data)
         self.assertEqual(status, 0, output)
-        self.assertEqual(output.count("accepted until"), 6)
+        self.assertEqual(output.count("accepted until"), 5)
 
     def test_runtime_finding_fails_even_when_accepted_and_low(self):
-        data = report([("braces", KNOWN, "low")])
+        data = report([("serialize-javascript", KNOWN, "low")])
         status, output = self.run_main(data, runtime=data)
         self.assertEqual(status, 1, output)
         self.assertIn("runtime dependency", output)
@@ -159,7 +158,7 @@ class AcceptanceScopeTests(unittest.TestCase):
         self.assertEqual(status, 0, output)
 
     def test_exception_does_not_apply_in_another_directory(self):
-        status, output = self.run_main(report([("braces", KNOWN, "high")]), directory="tests/serialization")
+        status, output = self.run_main(report([("serialize-javascript", KNOWN, "high")]), directory="tests/serialization")
         self.assertEqual(status, 1, output)
         self.assertIn("outside its reviewed dependency scope", output)
 
@@ -171,33 +170,33 @@ class AcceptanceScopeTests(unittest.TestCase):
 
     def test_new_path_to_hoisted_package_is_not_accepted(self):
         self.packages[""]["devDependencies"]["other-tool"] = "1"
-        self.packages["node_modules/other-tool"] = {"dev": True, "dependencies": {"braces": "1"}}
-        status, output = self.run_main(report([("braces", KNOWN, "high")]))
+        self.packages["node_modules/other-tool"] = {"dev": True, "dependencies": {"serialize-javascript": "1"}}
+        status, output = self.run_main(report([("serialize-javascript", KNOWN, "high")]))
         self.assertEqual(status, 1, output)
 
     def test_peer_dependency_path_also_needs_review(self):
-        self.packages["node_modules/@wordpress/env"]["peerDependencies"] = {"braces": "1"}
-        status, output = self.run_main(report([("braces", KNOWN, "high")]))
+        self.packages["node_modules/@wordpress/env"]["peerDependencies"] = {"serialize-javascript": "1"}
+        status, output = self.run_main(report([("serialize-javascript", KNOWN, "high")]))
         self.assertEqual(status, 1, output)
 
     def test_nested_hoisted_resolution_and_optional_paths(self):
         self.packages["node_modules/@wordpress/scripts"]["dependencies"] = {"watcher": "1"}
         self.packages["node_modules/@wordpress/scripts/node_modules/watcher"] = {
-            "dev": True, "optionalDependencies": {"braces": "1"},
+            "dev": True, "optionalDependencies": {"serialize-javascript": "1"},
         }
-        status, output = self.run_main(report([("braces", KNOWN, "high")]))
+        status, output = self.run_main(report([("serialize-javascript", KNOWN, "high")]))
         self.assertEqual(status, 0, output)
 
     def test_report_node_must_exist_in_the_reviewed_graph(self):
-        data = report([("braces", KNOWN, "high")])
-        data["vulnerabilities"]["braces"]["nodes"] = ["node_modules/unexpected/node_modules/braces"]
+        data = report([("serialize-javascript", KNOWN, "high")])
+        data["vulnerabilities"]["serialize-javascript"]["nodes"] = ["node_modules/unexpected/node_modules/serialize-javascript"]
         status, output = self.run_main(data)
         self.assertEqual(status, 1, output)
 
     def test_expired_exception_fails(self):
         for entry in self.accepted:
             entry["review_by"] = "2000-01-01"
-        status, output = self.run_main(report([("braces", KNOWN, "high")]))
+        status, output = self.run_main(report([("serialize-javascript", KNOWN, "high")]))
         self.assertEqual(status, 1, output)
         self.assertIn("passed its review date", output)
         self.assertNotIn(f"No longer reported, remove from npm-audit-accepted.json: {KNOWN}", output)

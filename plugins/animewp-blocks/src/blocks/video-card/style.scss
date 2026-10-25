@@ -13,6 +13,9 @@
 
 :where(.wp-block-animewp-video-card) {
 	margin-block: 0;
+	// Default caption rhythm belongs to the editable card root. Core typography
+	// support writes the author's line-height and font choice on that root.
+	line-height: 1.6;
 }
 
 .animewp-video-card__link {
@@ -88,12 +91,15 @@
 
 .animewp-video-card__label {
 	font-size: var(--wp--preset--font-size--x-small, 0.75rem);
+	line-height: 1.6;
 	letter-spacing: 0.08em;
-	opacity: 0.7;
+	// Metadata remains smaller by design, but inherits semantic text colors
+	// without opacity compositing that may fail contrast on dark surfaces.
+	color: inherit;
 }
 
 .animewp-video-card__title {
-	line-height: 1.6;
+	line-height: inherit;
 }
 
 @media (prefers-reduced-motion: reduce) {
