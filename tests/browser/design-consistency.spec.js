@@ -134,3 +134,21 @@ for ( const key of [ 'story_vertical', 'part_vertical_story_heading' ] ) {
 		await capture( page, 'design-' + key + '-mobile', { fullPage: false } );
 	} );
 }
+
+test( 'standalone petal patterns retain their intended source sections', async ( { page } ) => {
+	// These two were the silent contract regression: page-drift root whitespace
+	// shifted numeric indices so Movie disappeared and Closing became Characters.
+	await page.goto( fixtures().part_petal_movie.path );
+	const movie = page.locator( 'section#movie' );
+	await expect( movie ).toBeVisible();
+	await expect( movie.locator( '.wp-block-animewp-video-card' ) ).toHaveCount( 3 );
+	await expect( movie ).toContainText( 'Movie' );
+	await capture( page, 'design-standalone-petal-movie', { fullPage: false } );
+
+	await page.goto( fixtures().part_petal_closing.path );
+	const closing = page.locator( 'section.is-style-animewp-contrast' );
+	await expect( closing ).toBeVisible();
+	await expect( closing ).toContainText( 'COMING SOON' );
+	await expect( closing ).not.toContainText( 'Characters' );
+	await capture( page, 'design-standalone-petal-closing', { fullPage: false } );
+} );
