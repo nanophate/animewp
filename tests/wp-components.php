@@ -98,20 +98,27 @@ $check( 'closing fragment extracts the actual Coming Soon section',
 	&& false !== strpos( serialize_block( $closing_root ), 'COMING SOON' )
 );
 
-// Both alternatives must be insertable with only Core blocks, without the
-// carousel plugin. Cast cards intentionally have exactly image, name and CV.
+// Both alternatives must use editable, responsive Core Grid containers, so a
+// single Group card can be duplicated directly without adding a new Column.
+// Cast cards intentionally start with exactly image, name and CV.
 $static_source = animewp_component_source_blocks( 'animewp/example-characters-static', $registry );
 $cast_source = animewp_component_source_blocks( 'animewp/example-cast-simple', $registry );
 $static_list = animewp_component_node( $static_source, array( 0, 1 ) );
 $cast_list = animewp_component_node( $cast_source, array( 0, 1 ) );
-$cast_card = $cast_list['innerBlocks'][0]['innerBlocks'][0] ?? array();
-$check( 'static characters contain three Core-only visible cards',
-	'core/columns' === ( $static_list['blockName'] ?? null )
+$static_card = $static_list['innerBlocks'][0] ?? array();
+$cast_card = $cast_list['innerBlocks'][0] ?? array();
+$check( 'static characters contain three directly editable Core Grid cards',
+	'core/group' === ( $static_list['blockName'] ?? null )
+	&& 'grid' === ( $static_list['attrs']['layout']['type'] ?? null )
+	&& '280px' === ( $static_list['attrs']['layout']['minimumColumnWidth'] ?? null )
 	&& 3 === count( $static_list['innerBlocks'] ?? array() )
+	&& 'core/group' === ( $static_card['blockName'] ?? null )
 	&& false === strpos( serialize_block( $static_list ), '<!-- wp:animewp/' )
 );
-$check( 'simple cast contains three Core-only cards',
-	'core/columns' === ( $cast_list['blockName'] ?? null )
+$check( 'simple cast contains three directly editable Core Grid cards',
+	'core/group' === ( $cast_list['blockName'] ?? null )
+	&& 'grid' === ( $cast_list['attrs']['layout']['type'] ?? null )
+	&& '280px' === ( $cast_list['attrs']['layout']['minimumColumnWidth'] ?? null )
 	&& 3 === count( $cast_list['innerBlocks'] ?? array() )
 	&& false === strpos( serialize_block( $cast_list ), '<!-- wp:animewp/' )
 );
@@ -119,6 +126,27 @@ $check( 'simple cast card is only an image, heading and CV',
 	'core/group' === ( $cast_card['blockName'] ?? null )
 	&& array( 'core/image', 'core/heading', 'core/paragraph' ) === array_column( $cast_card['innerBlocks'] ?? array(), 'blockName' )
 	&& false !== strpos( serialize_block( $cast_card ), 'CV：声優名' )
+);
+$check( 'both kinds of cards can gain optional blocks after insertion',
+	'core/group' === ( $static_card['blockName'] ?? null )
+	&& 'core/group' === ( $cast_card['blockName'] ?? null )
+	&& ! isset( $static_card['attrs']['templateLock'] )
+	&& ! isset( $cast_card['attrs']['templateLock'] )
+);
+
+// Five siblings must survive save and re-parse; the auto-filled Grid handles
+// visual line breaks regardless of this count or whether cards have extra text.
+$five_cards = $static_list;
+$closing_markup = array_pop( $five_cards['innerContent'] );
+$five_cards['innerBlocks'][] = $static_list['innerBlocks'][0];
+$five_cards['innerBlocks'][] = $static_list['innerBlocks'][1];
+$five_cards['innerContent'][] = null;
+$five_cards['innerContent'][] = null;
+$five_cards['innerContent'][] = $closing_markup;
+$five_saved = parse_blocks( serialize_block( $five_cards ) );
+$check( 'five character cards survive serialization inside the responsive grid',
+	'grid' === ( $five_saved[0]['attrs']['layout']['type'] ?? null )
+	&& 5 === count( $five_saved[0]['innerBlocks'] ?? array() )
 );
 
 // The normalizer must preserve real content; it removes only whitespace-only

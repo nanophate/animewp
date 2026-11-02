@@ -8,6 +8,9 @@
 'use strict';
 
 const SECTION_PADDING = { top: 'var:preset|spacing|60', bottom: 'var:preset|spacing|60' };
+// Auto-filled Core Grid keeps three readable cards per 1180px-wide row,
+// while wrapping 4+ people onto new rows and stacking on narrow screens.
+const PROFILE_GRID_MIN_WIDTH = '280px';
 const CHARACTER_SAMPLES = [
 	[ 'animewp-character-a.svg', '01', '主人公の名前' ],
 	[ 'animewp-character-b.svg', '02', '相棒の名前' ],
@@ -132,6 +135,13 @@ module.exports = ( { b, image, poster } ) => {
 		b( 'core/heading', { content: name, level: 3, className: 'is-style-animewp-display', fontSize } );
 	const characterImage = ( file, name ) =>
 		b( 'core/image', { url: image( file ), alt: name + 'のイラスト（差し替えてください）', className: 'is-style-animewp-portrait' } );
+	const profileGrid = ( cards, look ) =>
+		b( 'core/group', {
+			align: 'wide',
+			layout: { type: 'grid', minimumColumnWidth: PROFILE_GRID_MIN_WIDTH },
+			style: { spacing: { blockGap: 'var:preset|spacing|40' } },
+			...motion( LOOKS[ look ].section ),
+		}, cards );
 	const characterProfile = ( [ file, number, name ], look ) =>
 		b( 'core/columns', { verticalAlignment: 'center', style: { spacing: { blockGap: { left: 'var:preset|spacing|50' } } } }, [
 			b( 'core/column', { width: '42%' }, [ characterImage( file, name ) ] ),
@@ -151,39 +161,34 @@ module.exports = ( { b, image, poster } ) => {
 		], look, { anchor: 'characters' } );
 
 	// A no-JavaScript alternative: all character profiles remain visible and
-	// editable, with native Core Columns stacking on narrow screens.
+	// editable. Each directly nested Group card can be duplicated or extended
+	// with optional headings/paragraphs, and Core Grid wraps it automatically.
 	const charactersStatic = ( look = 'plain' ) => {
 		const card = ( [ file, number, name ] ) =>
-			b( 'core/column', {}, [
-				b( 'core/group', { className: 'is-style-animewp-card', layout: { type: 'default' } }, [
-					characterImage( file, name ),
-					label( 'CHARACTER ' + number ),
-					characterName( name, 'large' ),
-					caption( 'CV：声優名' ),
-					paragraph( '人物の紹介文を入力します。性格や物語での役割を短く伝えます。' ),
-				] ),
+			b( 'core/group', { className: 'is-style-animewp-card', layout: { type: 'default' } }, [
+				characterImage( file, name ),
+				label( 'CHARACTER ' + number ),
+				characterName( name, 'large' ),
+				caption( 'CV：声優名' ),
+				paragraph( '人物の紹介文を入力します。性格や物語での役割を短く伝えます。' ),
 			] );
 		return section( [
 			sectionTitle( 'Characters', 'キャラクター', look ),
-			b( 'core/columns', { align: 'wide', style: { spacing: { blockGap: { left: 'var:preset|spacing|40' } } }, ...motion( LOOKS[ look ].section ) },
-				CHARACTER_SAMPLES.map( card ) ),
+			profileGrid( CHARACTER_SAMPLES.map( card ), look ),
 		], look, { anchor: 'characters' } );
 	};
 
 	// Deliberately minimal: character artwork, name, and voice actor only.
 	const castSimple = ( look = 'plain' ) => {
 		const card = ( [ file, , name ] ) =>
-			b( 'core/column', {}, [
-				b( 'core/group', { layout: { type: 'default' }, style: { spacing: { blockGap: '0.75rem' } } }, [
-					b( 'core/image', { url: image( file ), alt: name + 'のイラスト（差し替えてください）', aspectRatio: '3/4', scale: 'cover' } ),
-					b( 'core/heading', { content: name, level: 3, fontSize: 'large' } ),
-					caption( 'CV：声優名' ),
-				] ),
+			b( 'core/group', { layout: { type: 'default' }, style: { spacing: { blockGap: '0.75rem' } } }, [
+				b( 'core/image', { url: image( file ), alt: name + 'のイラスト（差し替えてください）', aspectRatio: '3/4', scale: 'cover' } ),
+				b( 'core/heading', { content: name, level: 3, fontSize: 'large' } ),
+				caption( 'CV：声優名' ),
 			] );
 		return section( [
 			sectionTitle( 'Cast', 'キャスト', look ),
-			b( 'core/columns', { align: 'wide', style: { spacing: { blockGap: { left: 'var:preset|spacing|40' } } }, ...motion( LOOKS[ look ].section ) },
-				CHARACTER_SAMPLES.map( card ) ),
+			profileGrid( CHARACTER_SAMPLES.map( card ), look ),
 		], look, { anchor: 'cast' } );
 	};
 
