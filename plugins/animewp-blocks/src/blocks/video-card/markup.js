@@ -5,6 +5,7 @@ import {
 	localPosterUrl,
 	safeText,
 	safeUrl,
+	stripHtmlTags,
 } from '../../shared/sanitize';
 
 export const RATIOS = [ '16/9', '21/9', '4/3', '1/1', '3/4', '9/16' ];
@@ -34,7 +35,7 @@ export function playTarget( a ) {
 }
 
 export function plainText( html ) {
-	return decodeEntities( ( html || '' ).replace( /<[^>]*>/g, '' ) ).trim();
+	return decodeEntities( stripHtmlTags( html || '' ) ).trim();
 }
 
 export function cardStyle( a ) {

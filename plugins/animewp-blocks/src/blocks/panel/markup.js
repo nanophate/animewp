@@ -7,6 +7,7 @@ import {
 	numberValue,
 	safeColor,
 	spacingValue,
+	stripHtmlTags,
 } from '../../shared/sanitize';
 
 export const ROLES = [ 'surface', 'accent', 'contrast' ];
@@ -41,7 +42,7 @@ export function headingTag( a ) {
 }
 
 export function panelClass( a ) {
-	const headingLength = ( a.heading || '' ).replace( /<[^>]*>/g, '' ).length;
+	const headingLength = stripHtmlTags( a.heading || '' ).length;
 	const vertical =
 		a.verticalHeading === true && headingLength > 0 && headingLength <= 40;
 	return [
