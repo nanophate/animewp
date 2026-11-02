@@ -129,11 +129,29 @@ test( 'carousel respects inputs and video connects only on explicit keyboard act
 	expect( await dialog.evaluate( ( element ) => element.contains( document.activeElement ) ) ).toBe( true );
 	await page.keyboard.press( 'Shift+Tab' );
 	expect( await dialog.evaluate( ( element ) => element.contains( document.activeElement ) ) ).toBe( true );
-	await page.keyboard.press( 'Escape' );
+	// Firefox/Playwright can leave keyboard focus in the third-party iframe
+	// after Shift+Tab. Escape sent *inside that browsing context* does not
+	// reliably reach the parent document's native <dialog>. Verify native
+	// Escape from the owning document, without faking a dialog.close() call.
+	const close = dialog.getByRole( 'button', { name: 'Close', exact: true } );
+	await expect( close ).toBeVisible();
+	await close.press( 'Escape' );
 	await expect( dialog ).not.toBeVisible();
 	await expect( open ).toBeFocused();
 	await expect( page.locator( 'iframe' ) ).toHaveCount( 0 );
 	await capture( page, 'keyboard-dialog-return' );
+
+	// The cross-origin player may receive focus, but an accessible keyboard
+	// close control must always remain available as a fallback. This is an
+	// independent behavior from the browser's native Escape-to-cancel path.
+	await open.press( 'Enter' );
+	await expect( dialog ).toBeVisible();
+	await dialog.locator( 'iframe' ).focus();
+	await expect( dialog.locator( 'iframe' ) ).toBeFocused();
+	await close.press( 'Enter' );
+	await expect( dialog ).not.toBeVisible();
+	await expect( open ).toBeFocused();
+	await expect( page.locator( 'iframe' ) ).toHaveCount( 0 );
 } );
 
 test( 'combined motion stops when reduced motion changes during the visit', async ( { page } ) => {
