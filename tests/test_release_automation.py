@@ -379,6 +379,18 @@ class SameRunPublicationTests(unittest.TestCase):
 
 
 class WorkflowWiringTests(unittest.TestCase):
+    def test_dependency_audit_verifies_historical_release_source_before_checkout(self):
+        text = (ROOT / ".github/workflows/dependency-audit.yml").read_text()
+        # Both jobs begin with the trusted event commit. A release recovery may
+        # select an older SHA only after proving it belongs to main's history.
+        self.assertEqual(text.count("ref: ${{ github.sha }}"), 2)
+        self.assertNotIn("ref: ${{ inputs.ref }}", text)
+        self.assertEqual(text.count("if: ${{ inputs.ref != '' }}"), 2)
+        self.assertEqual(text.count('[[ ! "$AUDIT_SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]'), 2)
+        self.assertEqual(text.count("git fetch --no-tags origin +refs/heads/main:refs/remotes/origin/main"), 2)
+        self.assertEqual(text.count("git merge-base --is-ancestor"), 2)
+        self.assertEqual(text.count('git checkout --detach "$AUDIT_SOURCE_SHA"'), 2)
+
     def test_auto_policy_output_drives_final_job_and_manual_recovery_stays_opt_in(self):
         text = (ROOT / ".github/workflows/release.yml").read_text()
         self.assertIn("branches: [main]", text)

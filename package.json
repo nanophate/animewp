@@ -23,7 +23,8 @@
     "test:security": "sh tests/security/run.sh"
   },
   "devDependencies": {
+    "@playwright/test": "1.63.0",
     "@wordpress/env": "12.0.0",
-    "@wordpress/scripts": "36.1.0"
+    "@wordpress/scripts": "37.0.0"
   }
 }

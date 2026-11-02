@@ -32,7 +32,25 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
           ref: ${{ github.sha }}
+      # Release recovery can verify an older main-derived tag. Never pass the
+      # workflow_call input to actions/checkout or fetch an input-controlled ref.
+      - name: Select verified release source
+        if: ${{ inputs.ref != '' }}
+        env:
+          AUDIT_SOURCE_SHA: ${{ inputs.ref }}
+        run: |
+          if [[ ! "$AUDIT_SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]; then
+            echo '::error::Audit source must be a full commit SHA'
+            exit 1
+          fi
+          git fetch --no-tags origin +refs/heads/main:refs/remotes/origin/main
+          if ! git merge-base --is-ancestor "$AUDIT_SOURCE_SHA" refs/remotes/origin/main; then
+            echo '::error::Audit source must be an ancestor of main'
+            exit 1
+          fi
+          git checkout --detach "$AUDIT_SOURCE_SHA"
       - name: Set up Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
@@ -56,7 +74,23 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
           ref: ${{ github.sha }}
+      - name: Select verified release source
+        if: ${{ inputs.ref != '' }}
+        env:
+          AUDIT_SOURCE_SHA: ${{ inputs.ref }}
+        run: |
+          if [[ ! "$AUDIT_SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]; then
+            echo '::error::Audit source must be a full commit SHA'
+            exit 1
+          fi
+          git fetch --no-tags origin +refs/heads/main:refs/remotes/origin/main
+          if ! git merge-base --is-ancestor "$AUDIT_SOURCE_SHA" refs/remotes/origin/main; then
+            echo '::error::Audit source must be an ancestor of main'
+            exit 1
+          fi
+          git checkout --detach "$AUDIT_SOURCE_SHA"
       - name: Set up PHP and Composer
         uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2
         with:
