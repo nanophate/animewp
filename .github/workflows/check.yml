@@ -37,7 +37,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v4; verified commit
         with:
           persist-credentials: false
-          ref: ${{ inputs.ref }}
+          ref: ${{ github.event_name == 'workflow_call' && inputs.ref || github.sha }}
           # The serialization check compares against main.
           fetch-depth: 0
       - name: Set up Node.js
