@@ -42,17 +42,27 @@ function spacingValue( value ) {
 		? 'var(--wp--preset--spacing--' + value.split( '|' )[ 2 ] + ')'
 		: value;
 }
-function stripHtmlTagsRepeatedly( value ) {
-	let previous;
-	let current = typeof value === 'string' ? value : '';
-	do {
-		previous = current;
-		current = current.replace( /<[^>]*>/g, '' );
-	} while ( current !== previous );
-	return current;
+// Frozen alongside the v1 save function: never depend on current helpers.
+function stripHtmlTags( value ) {
+	const input = typeof value === 'string' ? value : '';
+	let result = '';
+	let cursor = 0;
+	while ( cursor < input.length ) {
+		const opening = input.indexOf( '<', cursor );
+		if ( opening === -1 ) {
+			return result + input.slice( cursor );
+		}
+		const closing = input.indexOf( '>', opening + 1 );
+		if ( closing === -1 ) {
+			return result + input.slice( cursor );
+		}
+		result += input.slice( cursor, opening );
+		cursor = closing + 1;
+	}
+	return result;
 }
 function panelClass( a ) {
-	const headingLength = stripHtmlTagsRepeatedly( a.heading || '' ).length;
+	const headingLength = stripHtmlTags( a.heading || '' ).length;
 	const vertical =
 		a.verticalHeading === true && headingLength > 0 && headingLength <= 40;
 	return [

@@ -22,6 +22,33 @@ export function safeText( value, fallback, max ) {
 }
 
 /**
+ * Remove literal HTML tags in one left-to-right pass. Leave entities encoded:
+ * callers that need readable text can decode after removing the markup, so
+ * escaped tag-shaped text is not mistaken for real markup.
+ *
+ * @param {string} value RichText markup.
+ * @return {string} Text with literal tags removed.
+ */
+export function stripHtmlTags( value ) {
+	const input = typeof value === 'string' ? value : '';
+	let result = '';
+	let cursor = 0;
+	while ( cursor < input.length ) {
+		const opening = input.indexOf( '<', cursor );
+		if ( opening === -1 ) {
+			return result + input.slice( cursor );
+		}
+		const closing = input.indexOf( '>', opening + 1 );
+		if ( closing === -1 ) {
+			return result + input.slice( cursor );
+		}
+		result += input.slice( cursor, opening );
+		cursor = closing + 1;
+	}
+	return result;
+}
+
+/**
  * A color only: no URL, variable expansion, declarations or nested functions.
  *
  * @param {*}      value    Candidate color.
