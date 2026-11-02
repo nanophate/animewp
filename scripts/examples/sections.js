@@ -12,6 +12,8 @@ module.exports = ( helpers ) => {
 		item( 'example-story', 'ストーリー：短い見出しと本文', '短い見出し（縦書き・横書きを選べます）、あらすじ、開閉できる各話の紹介。', s.story() ),
 		item( 'example-movie', '映像：背景が切り替わる動画一覧', '動画カードのカルーセル。背景レイヤーが表示中の映像に合わせて切り替わります。', s.movie() ),
 		item( 'example-characters', 'キャラクター：サムネイルで切り替え', 'イラストと紹介文。下のサムネイルで人物を切り替えます。', s.characters() ),
+		item( 'example-characters-static', 'キャラクター：切り替えなしの一覧', 'イラスト・名前・CV・紹介文をカードで表示。人数を増やすと自動で折り返します。', s.charactersStatic() ),
+		item( 'example-cast-simple', 'キャスト：画像・名前・CVだけ', '画像・キャラクター名・声優名だけのカード。人数を増やすと自動で折り返します。', s.castSimple() ),
 		item( 'example-credits', 'スタッフ・キャスト：2列の一覧', '役職と名前を表で並べる区画。', s.credits() ),
 		item( 'example-music', '音楽：ジャケットと配信リンク', 'カード2枚。ポインターを合わせると浮き上がります。', s.music() ),
 		item( 'example-on-air', '放送・配信：日時の表', '放送局・配信サービスと日時の表、注意書き、ボタン。', s.onAir() ),

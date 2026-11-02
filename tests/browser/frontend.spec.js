@@ -50,6 +50,44 @@ test( 'core-only basic is readable at desktop and 375px', async ( { page } ) => 
 	} finally { wp( 'plugin', 'activate', 'animewp-blocks' ); }
 } );
 
+test( 'Core Grid wraps five character cards and allows optional profile text', async ( { page } ) => {
+	await page.setViewportSize( { width: 1280, height: 900 } );
+	await page.goto( fixtures().basic.path );
+	const grid = page.locator( '#characters .is-layout-grid' ).first();
+	const cards = grid.locator( ':scope > .wp-block-group' );
+	await expect( cards ).toHaveCount( 3 );
+	await grid.evaluate( ( element ) => {
+		const existing = [ ...element.children ].filter( ( child ) => child.classList.contains( 'wp-block-group' ) );
+		element.append( existing[ 0 ].cloneNode( true ), existing[ 1 ].cloneNode( true ) );
+		const phrase = document.createElement( 'p' );
+		phrase.textContent = 'あとから追加するキャッチフレーズ';
+		existing[ 0 ].appendChild( phrase );
+	} );
+	await expect( cards ).toHaveCount( 5 );
+	await expect( cards.first().getByText( 'あとから追加するキャッチフレーズ' ) ).toBeVisible();
+
+	for ( const width of [ 1280, 375 ] ) {
+		await page.setViewportSize( { width, height: 900 } );
+		const positions = await cards.evaluateAll( ( nodes ) => nodes.map( ( node ) => {
+			const box = node.getBoundingClientRect();
+			return { x: box.x, y: box.y, width: box.width };
+		} ) );
+		if ( width === 1280 ) {
+			for ( const index of [ 1, 2 ] ) expect( Math.abs( positions[ index ].y - positions[ 0 ].y ) ).toBeLessThan( 2 );
+			expect( positions[ 0 ].width ).toBeGreaterThan( 280 );
+			expect( positions[ 3 ].y ).toBeGreaterThan( positions[ 0 ].y + 100 );
+			expect( Math.abs( positions[ 4 ].y - positions[ 3 ].y ) ).toBeLessThan( 2 );
+		} else {
+			for ( let index = 1; index < positions.length; index++ ) {
+				expect( Math.abs( positions[ index ].x - positions[ 0 ].x ) ).toBeLessThan( 2 );
+				expect( positions[ index ].y ).toBeGreaterThan( positions[ index - 1 ].y );
+			}
+		}
+		expect( await page.evaluate( () => document.documentElement.scrollWidth ) ).toBeLessThanOrEqual( width + 1 );
+		await grid.screenshot( { path: `artifacts/browser-results/characters-five-${ width }.png` } );
+	}
+} );
+
 // Each width/example gets an isolated Playwright page and context. Reusing
 // one page through six animated pages could intermittently close WebKit and
 // made it impossible to tell which case failed.

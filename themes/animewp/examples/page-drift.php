@@ -215,8 +215,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <p class="is-style-animewp-label">CHARACTER 01</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"level":3,"className":"is-style-animewp-display"} -->
-<h3 class="wp-block-heading is-style-animewp-display">主人公の名前</h3>
+<!-- wp:heading {"level":3,"className":"is-style-animewp-display","fontSize":"x-large"} -->
+<h3 class="wp-block-heading is-style-animewp-display has-x-large-font-size">主人公の名前</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"is-style-animewp-caption"} -->
@@ -241,8 +241,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <p class="is-style-animewp-label">CHARACTER 02</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"level":3,"className":"is-style-animewp-display"} -->
-<h3 class="wp-block-heading is-style-animewp-display">相棒の名前</h3>
+<!-- wp:heading {"level":3,"className":"is-style-animewp-display","fontSize":"x-large"} -->
+<h3 class="wp-block-heading is-style-animewp-display has-x-large-font-size">相棒の名前</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"is-style-animewp-caption"} -->
@@ -267,8 +267,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <p class="is-style-animewp-label">CHARACTER 03</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"level":3,"className":"is-style-animewp-display"} -->
-<h3 class="wp-block-heading is-style-animewp-display">ライバルの名前</h3>
+<!-- wp:heading {"level":3,"className":"is-style-animewp-display","fontSize":"x-large"} -->
+<h3 class="wp-block-heading is-style-animewp-display has-x-large-font-size">ライバルの名前</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"is-style-animewp-caption"} -->
@@ -383,8 +383,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <p class="has-text-align-center is-style-animewp-label">COMING SOON</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"textAlign":"center","className":"is-style-animewp-display"} -->
-<h2 class="wp-block-heading has-text-align-center is-style-animewp-display">物語のつづきは、<br>放送で。</h2>
+<!-- wp:heading {"textAlign":"center","className":"is-style-animewp-display","fontSize":"xx-large"} -->
+<h2 class="wp-block-heading has-text-align-center is-style-animewp-display has-xx-large-font-size">物語のつづきは、<br>放送で。</h2>
 <!-- /wp:heading -->
 
 <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->

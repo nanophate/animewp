@@ -30,6 +30,10 @@ $expected_slug_set = array(
 	'part-movie-carousel',
 	'part-character-profile',
 	'part-character-carousel',
+	'part-character-static-card',
+	'part-character-static-list',
+	'part-cast-simple-card',
+	'part-cast-simple-list',
 	'part-staff-credits',
 	'part-cast-credits',
 	'part-credits-columns',
@@ -75,7 +79,7 @@ $actual_defined = array_keys( $catalog );
 $registered = array_values( array_filter( $expected_slug_set, static function ( $slug ) use ( $registry ) {
 	return is_array( $registry->get_registered( 'animewp/' . $slug ) );
 } ) );
-$check( 'the 39 public component slugs remain stable', $actual_defined === $expected_slug_set );
+$check( 'the 43 public component slugs remain stable', $actual_defined === $expected_slug_set );
 $check( 'every expected component is actually insertable (' . ( $available_all ? 'with' : 'without' ) . ' optional blocks), missing=' . implode( ',', array_diff( $expected_registered, $registered ) ), $registered === $expected_registered );
 // Stable source positions: blank lines between full-page sections are *not*
 // standalone components. Test semantic targets too: prior to normalization,
@@ -92,6 +96,57 @@ $check( 'movie fragment extracts the Movie section, not formatting whitespace',
 $check( 'closing fragment extracts the actual Coming Soon section',
 	'core/group' === ( $closing_root['blockName'] ?? null )
 	&& false !== strpos( serialize_block( $closing_root ), 'COMING SOON' )
+);
+
+// Both alternatives must use editable, responsive Core Grid containers, so a
+// single Group card can be duplicated directly without adding a new Column.
+// Cast cards intentionally start with exactly image, name and CV.
+$static_source = animewp_component_source_blocks( 'animewp/example-characters-static', $registry );
+$cast_source = animewp_component_source_blocks( 'animewp/example-cast-simple', $registry );
+$static_list = animewp_component_node( $static_source, array( 0, 1 ) );
+$cast_list = animewp_component_node( $cast_source, array( 0, 1 ) );
+$static_card = $static_list['innerBlocks'][0] ?? array();
+$cast_card = $cast_list['innerBlocks'][0] ?? array();
+$check( 'static characters contain three directly editable Core Grid cards',
+	'core/group' === ( $static_list['blockName'] ?? null )
+	&& 'grid' === ( $static_list['attrs']['layout']['type'] ?? null )
+	&& '280px' === ( $static_list['attrs']['layout']['minimumColumnWidth'] ?? null )
+	&& 3 === count( $static_list['innerBlocks'] ?? array() )
+	&& 'core/group' === ( $static_card['blockName'] ?? null )
+	&& false === strpos( serialize_block( $static_list ), '<!-- wp:animewp/' )
+);
+$check( 'simple cast contains three directly editable Core Grid cards',
+	'core/group' === ( $cast_list['blockName'] ?? null )
+	&& 'grid' === ( $cast_list['attrs']['layout']['type'] ?? null )
+	&& '280px' === ( $cast_list['attrs']['layout']['minimumColumnWidth'] ?? null )
+	&& 3 === count( $cast_list['innerBlocks'] ?? array() )
+	&& false === strpos( serialize_block( $cast_list ), '<!-- wp:animewp/' )
+);
+$check( 'simple cast card is only an image, heading and CV',
+	'core/group' === ( $cast_card['blockName'] ?? null )
+	&& array( 'core/image', 'core/heading', 'core/paragraph' ) === array_column( $cast_card['innerBlocks'] ?? array(), 'blockName' )
+	&& false !== strpos( serialize_block( $cast_card ), 'CV：声優名' )
+);
+$check( 'both kinds of cards can gain optional blocks after insertion',
+	'core/group' === ( $static_card['blockName'] ?? null )
+	&& 'core/group' === ( $cast_card['blockName'] ?? null )
+	&& ! isset( $static_card['attrs']['templateLock'] )
+	&& ! isset( $cast_card['attrs']['templateLock'] )
+);
+
+// Five siblings must survive save and re-parse; the auto-filled Grid handles
+// visual line breaks regardless of this count or whether cards have extra text.
+$five_cards = $static_list;
+$closing_markup = array_pop( $five_cards['innerContent'] );
+$five_cards['innerBlocks'][] = $static_list['innerBlocks'][0];
+$five_cards['innerBlocks'][] = $static_list['innerBlocks'][1];
+$five_cards['innerContent'][] = null;
+$five_cards['innerContent'][] = null;
+$five_cards['innerContent'][] = $closing_markup;
+$five_saved = parse_blocks( serialize_block( $five_cards ) );
+$check( 'five character cards survive serialization inside the responsive grid',
+	'grid' === ( $five_saved[0]['attrs']['layout']['type'] ?? null )
+	&& 5 === count( $five_saved[0]['innerBlocks'] ?? array() )
 );
 
 // The normalizer must preserve real content; it removes only whitespace-only
@@ -112,7 +167,7 @@ $check( 'meaningful freeform content is not removed from imported sources',
 );
 
 // The complete official footer is the footers-category pattern itself, not a second copy.
-$check( '39 reusable parts are defined', 39 === count( $catalog ) );
+$check( '43 reusable parts are defined', 43 === count( $catalog ) );
 $check( 'component categories are registered', array_reduce(
 	array( 'animewp-components', 'animewp-layout-parts', 'animewp-scene-parts' ),
 	static fn ( $pass, $slug ) => $pass && WP_Block_Pattern_Categories_Registry::get_instance()->is_registered( $slug ),
