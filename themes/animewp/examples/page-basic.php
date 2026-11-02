@@ -93,6 +93,92 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:group -->
 
 <!-- wp:group {"tagName":"section","align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained","contentSize":"var(\u002d\u002dwp\u002d\u002dstyle\u002d\u002dglobal\u002d\u002dwide-size)"}} -->
+<section class="wp-block-group alignfull" id="characters" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:group {"style":{"spacing":{"blockGap":"0.25rem","margin":{"bottom":"var:preset|spacing|40"}}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"left"}} -->
+<div class="wp-block-group" style="margin-bottom:var(--wp--preset--spacing--40)"><!-- wp:heading {"className":"is-style-animewp-latin"} -->
+<h2 class="wp-block-heading is-style-animewp-latin">Characters</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"className":"is-style-animewp-label"} -->
+<p class="is-style-animewp-label">キャラクター</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:columns {"align":"wide","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|40"}}}} -->
+<div class="wp-block-columns alignwide"><!-- wp:column -->
+<div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"}} -->
+<div class="wp-block-group is-style-animewp-card"><!-- wp:image {"className":"is-style-animewp-portrait"} -->
+<figure class="wp-block-image is-style-animewp-portrait"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/' ) ); ?>animewp-character-a.svg" alt="主人公の名前のイラスト（差し替えてください）"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"className":"is-style-animewp-label"} -->
+<p class="is-style-animewp-label">CHARACTER 01</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3,"className":"is-style-animewp-display","fontSize":"large"} -->
+<h3 class="wp-block-heading is-style-animewp-display has-large-font-size">主人公の名前</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"className":"is-style-animewp-caption"} -->
+<p class="is-style-animewp-caption">CV：声優名</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>人物の紹介文を入力します。性格や物語での役割を短く伝えます。</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group --></div>
+<!-- /wp:column -->
+
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"}} -->
+<div class="wp-block-group is-style-animewp-card"><!-- wp:image {"className":"is-style-animewp-portrait"} -->
+<figure class="wp-block-image is-style-animewp-portrait"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/' ) ); ?>animewp-character-b.svg" alt="相棒の名前のイラスト（差し替えてください）"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"className":"is-style-animewp-label"} -->
+<p class="is-style-animewp-label">CHARACTER 02</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3,"className":"is-style-animewp-display","fontSize":"large"} -->
+<h3 class="wp-block-heading is-style-animewp-display has-large-font-size">相棒の名前</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"className":"is-style-animewp-caption"} -->
+<p class="is-style-animewp-caption">CV：声優名</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>人物の紹介文を入力します。性格や物語での役割を短く伝えます。</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group --></div>
+<!-- /wp:column -->
+
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"}} -->
+<div class="wp-block-group is-style-animewp-card"><!-- wp:image {"className":"is-style-animewp-portrait"} -->
+<figure class="wp-block-image is-style-animewp-portrait"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/' ) ); ?>animewp-character-c.svg" alt="ライバルの名前のイラスト（差し替えてください）"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"className":"is-style-animewp-label"} -->
+<p class="is-style-animewp-label">CHARACTER 03</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3,"className":"is-style-animewp-display","fontSize":"large"} -->
+<h3 class="wp-block-heading is-style-animewp-display has-large-font-size">ライバルの名前</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"className":"is-style-animewp-caption"} -->
+<p class="is-style-animewp-caption">CV：声優名</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>人物の紹介文を入力します。性格や物語での役割を短く伝えます。</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns --></section>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"section","align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained","contentSize":"var(\u002d\u002dwp\u002d\u002dstyle\u002d\u002dglobal\u002d\u002dwide-size)"}} -->
 <section class="wp-block-group alignfull" id="staff" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)"><!-- wp:group {"style":{"spacing":{"blockGap":"0.25rem","margin":{"bottom":"var:preset|spacing|40"}}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"left"}} -->
 <div class="wp-block-group" style="margin-bottom:var(--wp--preset--spacing--40)"><!-- wp:heading {"className":"is-style-animewp-latin"} -->
 <h2 class="wp-block-heading is-style-animewp-latin">Staff &amp; Cast</h2>
@@ -246,8 +332,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <p class="has-text-align-center is-style-animewp-label">COMING SOON</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"textAlign":"center","className":"is-style-animewp-display"} -->
-<h2 class="wp-block-heading has-text-align-center is-style-animewp-display">物語のつづきは、<br>放送で。</h2>
+<!-- wp:heading {"textAlign":"center","className":"is-style-animewp-display","fontSize":"xx-large"} -->
+<h2 class="wp-block-heading has-text-align-center is-style-animewp-display has-xx-large-font-size">物語のつづきは、<br>放送で。</h2>
 <!-- /wp:heading -->
 
 <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->

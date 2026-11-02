@@ -1,7 +1,7 @@
 {
   "$schema": "https://schemas.wp.org/wp/6.6/theme.json",
   "version": 3,
-  "title": "大見出し（明朝・広い字間）",
+  "title": "明朝・広い字間（見出し階層に従う）",
   "slug": "animewp-display",
   "blockTypes": [
     "core/heading"
@@ -9,10 +9,9 @@
   "styles": {
     "typography": {
       "fontFamily": "var:preset|font-family|animewp-serif",
-      "fontSize": "var:preset|font-size|xx-large",
       "fontWeight": "400",
-      "letterSpacing": "0.08em",
-      "lineHeight": "1.65"
+      "letterSpacing": "0.04em",
+      "lineHeight": "1.4"
     }
   }
 }

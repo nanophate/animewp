@@ -24,7 +24,7 @@ module.exports = ( helpers ) => {
 		[ 'core/paragraph', 'animewp-catchphrase', 'キャッチコピー：物語が、そっと動き出す。' ],
 		[ 'core/paragraph', 'animewp-caption', 'キャプション：画像や表の補足に使います。' ],
 		[ 'core/paragraph', 'animewp-highlight', '文字の背景ハイライト' ],
-		[ 'core/heading', 'animewp-display', '大見出し（明朝・広い字間）' ],
+		[ 'core/heading', 'animewp-display', '明朝・広い字間（見出し階層に従う）' ],
 		[ 'core/heading', 'animewp-latin', 'Latin Heading' ],
 	].map( ( [ name, style, text ] ) =>
 		b( 'core/group', { layout: { type: 'flex', flexWrap: 'wrap', verticalAlignment: 'center' }, style: { spacing: { blockGap: 'var:preset|spacing|30' } } }, [

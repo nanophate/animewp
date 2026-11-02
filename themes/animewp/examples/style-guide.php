@@ -97,7 +97,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":3,"className":"is-style-animewp-display"} -->
-<h3 class="wp-block-heading is-style-animewp-display">大見出し（明朝・広い字間）</h3>
+<h3 class="wp-block-heading is-style-animewp-display">明朝・広い字間（見出し階層に従う）</h3>
 <!-- /wp:heading --></div>
 <!-- /wp:group -->
 

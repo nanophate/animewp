@@ -35,8 +35,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <p class="is-style-animewp-label">CHARACTER 01</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"level":3,"className":"is-style-animewp-display"} -->
-<h3 class="wp-block-heading is-style-animewp-display">主人公の名前</h3>
+<!-- wp:heading {"level":3,"className":"is-style-animewp-display","fontSize":"x-large"} -->
+<h3 class="wp-block-heading is-style-animewp-display has-x-large-font-size">主人公の名前</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"is-style-animewp-caption"} -->
@@ -61,8 +61,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <p class="is-style-animewp-label">CHARACTER 02</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"level":3,"className":"is-style-animewp-display"} -->
-<h3 class="wp-block-heading is-style-animewp-display">相棒の名前</h3>
+<!-- wp:heading {"level":3,"className":"is-style-animewp-display","fontSize":"x-large"} -->
+<h3 class="wp-block-heading is-style-animewp-display has-x-large-font-size">相棒の名前</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"is-style-animewp-caption"} -->
@@ -87,8 +87,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <p class="is-style-animewp-label">CHARACTER 03</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"level":3,"className":"is-style-animewp-display"} -->
-<h3 class="wp-block-heading is-style-animewp-display">ライバルの名前</h3>
+<!-- wp:heading {"level":3,"className":"is-style-animewp-display","fontSize":"x-large"} -->
+<h3 class="wp-block-heading is-style-animewp-display has-x-large-font-size">ライバルの名前</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"is-style-animewp-caption"} -->

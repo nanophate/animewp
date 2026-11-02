@@ -16,8 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <p class="has-text-align-center is-style-animewp-label">COMING SOON</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"textAlign":"center","className":"is-style-animewp-display"} -->
-<h2 class="wp-block-heading has-text-align-center is-style-animewp-display">物語のつづきは、<br>放送で。</h2>
+<!-- wp:heading {"textAlign":"center","className":"is-style-animewp-display","fontSize":"xx-large"} -->
+<h2 class="wp-block-heading has-text-align-center is-style-animewp-display has-xx-large-font-size">物語のつづきは、<br>放送で。</h2>
 <!-- /wp:heading -->
 
 <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
