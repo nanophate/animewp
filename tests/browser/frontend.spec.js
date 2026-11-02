@@ -148,7 +148,9 @@ test( 'carousel respects inputs and video connects only on explicit keyboard act
 	await expect( dialog ).toBeVisible();
 	await dialog.locator( 'iframe' ).focus();
 	await expect( dialog.locator( 'iframe' ) ).toBeFocused();
-	await close.press( 'Enter' );
+	await page.keyboard.press( 'Shift+Tab' );
+	await expect( close ).toBeFocused();
+	await page.keyboard.press( 'Enter' );
 	await expect( dialog ).not.toBeVisible();
 	await expect( open ).toBeFocused();
 	await expect( page.locator( 'iframe' ) ).toHaveCount( 0 );
