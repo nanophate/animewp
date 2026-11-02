@@ -34,7 +34,7 @@ export function playTarget( a ) {
 }
 
 export function plainText( html ) {
-	return decodeEntities( ( html || '' ).replace( /<[^>]*>/g, '' ) ).trim();
+	return decodeEntities( html || '' ).replace( /[<>]/g, '' ).trim();
 }
 
 export function cardStyle( a ) {
