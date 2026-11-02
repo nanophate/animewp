@@ -41,7 +41,7 @@ export function headingTag( a ) {
 }
 
 export function panelClass( a ) {
-	const headingLength = ( a.heading || '' ).replace( /<[^>]*>/g, '' ).length;
+	const headingLength = ( a.heading || '' ).replace( /[<>]/g, '' ).length;
 	const vertical =
 		a.verticalHeading === true && headingLength > 0 && headingLength <= 40;
 	return [
