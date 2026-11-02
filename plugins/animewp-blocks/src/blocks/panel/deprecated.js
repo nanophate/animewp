@@ -42,8 +42,17 @@ function spacingValue( value ) {
 		? 'var(--wp--preset--spacing--' + value.split( '|' )[ 2 ] + ')'
 		: value;
 }
+function stripHtmlTagsRepeatedly( value ) {
+	let previous;
+	let current = typeof value === 'string' ? value : '';
+	do {
+		previous = current;
+		current = current.replace( /<[^>]*>/g, '' );
+	} while ( current !== previous );
+	return current;
+}
 function panelClass( a ) {
-	const headingLength = ( a.heading || '' ).replace( /<[^>]*>/g, '' ).length;
+	const headingLength = stripHtmlTagsRepeatedly( a.heading || '' ).length;
 	const vertical =
 		a.verticalHeading === true && headingLength > 0 && headingLength <= 40;
 	return [
