@@ -78,6 +78,9 @@ jobs:
     needs: [resolve, source-checks, dependency-audit, browser-checks]
     runs-on: ubuntu-24.04
     timeout-minutes: 15
+    env:
+      ACTIONS_CACHE_URL: ''
+      ACTIONS_RESULTS_URL: ''
     steps:
       - name: Check out the verified source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
