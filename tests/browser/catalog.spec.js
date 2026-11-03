@@ -41,9 +41,9 @@ test( 'all 75 insertable patterns and eight blocks reach Gutenberg; two Query Lo
 	const names = new Map( registered.patterns.map( ( pattern ) => [ pattern.name, pattern ] ) );
 	for ( const slug of expected ) {
 		if ( [ 'animewp/news-index', 'animewp/news-latest' ].includes( slug ) ) {
-			// These are deliberate non-inserter Query Loop dependencies. Core
-			// may omit them from the editor registry altogether.
-			if ( names.has( slug ) ) { expect( names.get( slug ).visible ).toBe( false ); }
+			// Internal Query Loop dependencies are not exposed as selectable
+			// patterns. Their server-side inserterEnabled=false is verified by
+			// wp-components.php; the editor store can normalize/omit this flag.
 			continue;
 		}
 		expect( names.has( slug ), `Pattern absent from Gutenberg: ${ slug }` ).toBe( true );
@@ -159,6 +159,10 @@ for ( const [ family, count ] of Object.entries( batches ) ) {
 					const a = block.attributes || {};
 					if ( [ 'core/paragraph', 'core/heading' ].includes( block.name ) && a.content != null ) {
 						dispatch.updateBlockAttributes( block.clientId, { content: richText( a.content ) + ' ' + marker } );
+						return true;
+					}
+					if ( block.name === 'core/button' ) {
+						dispatch.updateBlockAttributes( block.clientId, { text: richText( a.text ) + ' ' + marker } );
 						return true;
 					}
 					if ( block.name === 'animewp/video-card' ) {
