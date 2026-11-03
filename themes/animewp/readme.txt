@@ -1,4 +1,4 @@
-animewp 2.0.4
+animewp 2.0.5
 WordPress 6.6 以上 / PHP 8.0 以上
 ライセンス: GPL-2.0-or-later
 
@@ -26,6 +26,11 @@ Original placeholder artwork and the theme preview are included under the same l
 
 
 == Changelog ==
+
+= 2.0.5 =
+* キャラクターを切り替えなしで並べる一覧と、画像・名前・CVだけのシンプルなキャスト一覧を追加。
+* 一覧のカードはWordPress標準ブロックで自由に複製・並べ替えができ、5人以上でも画面幅に応じて自動配置。紹介文やキャッチフレーズなども後から追加できます。
+* キャラクター名と「作品について」の見出しサイズを調整。明朝見出しスタイルが見出し階層や個別の文字サイズ設定に従うよう改善。
 
 = 2.0.4 =
 * 見出し・段落などの縦書き／横書きを、WordPress標準の「タイポグラフィ → 方向」で選べるように。
