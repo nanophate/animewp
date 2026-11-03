@@ -122,7 +122,7 @@ for ( const kind of [ 'characters', 'cast' ] ) {
 		await ready( page, editor, 'core/edit-post' );
 		const phrase = '自由に追加したキャッチフレーズ — ' + kind;
 		const typedPhrase = phrase + '（編集済み）';
-		const edited = await page.evaluate( ( text ) => {
+		const gridId = await page.evaluate( () => {
 			const store = window.wp.data.select( 'core/block-editor' );
 			const find = ( blocks ) => {
 				for ( const block of blocks ) {
@@ -133,14 +133,34 @@ for ( const kind of [ 'characters', 'cast' ] ) {
 				return null;
 			};
 			const grid = find( store.getBlocks() );
-			if ( ! grid || grid.innerBlocks.length !== 3 ) { return false; }
-			const dispatch = window.wp.data.dispatch( 'core/block-editor' );
-			const cards = grid.innerBlocks;
-			dispatch.insertBlocks( [ window.wp.blocks.cloneBlock( cards[ 0 ] ), window.wp.blocks.cloneBlock( cards[ 1 ] ) ], 3, grid.clientId, false );
-			dispatch.insertBlocks( [ window.wp.blocks.createBlock( 'core/paragraph', { content: text } ) ], cards[ 0 ].innerBlocks.length, cards[ 0 ].clientId, false );
-			return true;
-		}, phrase );
-		expect( edited ).toBe( true );
+			if ( ! grid || grid.innerBlocks.length !== 3 ) { return null; }
+			return grid.clientId;
+		} );
+		expect( gridId ).toBeTruthy();
+		const originalIds = await page.evaluate( ( id ) =>
+			window.wp.data.select( 'core/block-editor' ).getBlocks( id ).map( ( block ) => block.clientId ),
+			gridId
+		);
+		expect( originalIds ).toHaveLength( 3 );
+		// Duplicate two actual cards through Gutenberg's block toolbar. Direct
+		// same-tick store insertions were silently ignored in Firefox/WebKit,
+		// even when the original three cards had finished loading.
+		for ( const id of originalIds.slice( 0, 2 ) ) {
+			const card = editor.canvas.locator( `[data-block="${ id }"]` );
+			await expect( card ).toBeVisible();
+			await editor.selectBlocks( card );
+			await editor.clickBlockOptionsMenuItem( 'Duplicate' );
+		}
+		await expect.poll( () => page.evaluate( ( id ) =>
+			window.wp.data.select( 'core/block-editor' ).getBlocks( id ).length,
+			gridId
+		) ).toBe( 5 );
+		await editor.insertBlock( { name: 'core/paragraph', attributes: { content: phrase } }, { clientId: originalIds[ 0 ] } );
+		await expect.poll( () => page.evaluate( ( { id, text } ) =>
+			window.wp.data.select( 'core/block-editor' ).getBlocks( id )[ 0 ].innerBlocks.some( ( block ) =>
+				block.name === 'core/paragraph' && String( block.attributes.content ).includes( text )
+			), { id: gridId, text: phrase }
+		) ).toBe( true );
 		// Verify the newly inserted phrase is a real editable field. Typing
 		// through Gutenberg also produces a persistent editor transaction on
 		// Firefox and WebKit, unlike a burst of same-tick store dispatches.
