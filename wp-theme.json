@@ -3,17 +3,17 @@
   "status": "published",
   "type": "theme",
   "slug": "animewp",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "name": "animewp",
   "requires": "6.6",
   "requires_php": "8.0",
   "tested": "7.1",
   "homepage": "https://github.com/nanophate/animewp",
-  "download_url": "https://github.com/nanophate/animewp/releases/download/v2.0.3/animewp-2.0.3.zip",
-  "sha256": "5793984861e13e1905af2779adcdccf8d3273b3dd8188d4f1b7af2ac374989cb",
+  "download_url": "https://github.com/nanophate/animewp/releases/download/v2.0.4/animewp-2.0.4.zip",
+  "sha256": "662507e1d7edb1ae9b13675abf198f9e69f98138565e33633053b191b9bbd99a",
   "sections": {
     "description": "<p>作品の世界観を、標準ブロックで自由に組み立てるテーマ。</p>",
-    "changelog": "<p>* 標準ブロックの組み合わせから個別に挿入できる40種類のパーツと、公式SNS・縦書きサイトマップ・制作／権利表記を編集できるフッターを追加。<br>\n* キービジュアル用ヘッダーの表示・スクロール時の切り替えとモバイル表示を改善。任意プラグインAnimeWP Blocksと組み合わせて背景の透明度・ぼかし・高さを調整できます。<br>\n* 単体フッターの縦書き・SNSアイコンの配色を修正し、既存の共通フッターのCSS優先順位と保存済みテンプレートの表示挙動を維持。<br>\n* WordPress 6.6／7.1、Chromium／Firefox／WebKitでパーツ・ヘッダー・更新ZIPの回帰試験を強化。</p>"
+    "changelog": "<p>* 見出し・段落などの縦書き／横書きを、WordPress標準の「タイポグラフィ → 方向」で選べるように。<br>\n* 公式フッターの初期表示を、白い背景と横書きのサイトマップに変更。各リンクの「方向」で縦書きにもできます。サイトエディターで編集していない公式フッターは、更新後にこの表示になります。2.0.3で保存したフッターの色と縦書きはそのまま表示します。<br>\n* 公式フッターの下段の幅を上段とそろえ、横書きのサイトマップを均等な間隔の1行に。背景色のあるフッターの上に出ていた白い隙間を解消。<br>\n* スタイル見本のカードが詰まって見える問題を修正。内容が重複していた「背景画像にできる公式フッター」のパーツを整理（パーツは39種類）。<br>\n* 39部品の登録・個別挿入を検査。映像区画が欠落し締めくくりが別区画を参照する問題を修正。<br>\n* 公式フッターの文字・フォント・字間・カラム幅・単独部品の余白が個別編集に従うよう修正。縦書きの字送りとフォント指定の優先度を改善。</p>"
   },
-  "last_updated": "2026-10-10T19:58:54Z"
+  "last_updated": "2026-10-26T02:25:47Z"
 }
