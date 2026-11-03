@@ -107,9 +107,19 @@ function enhance( root ) {
 				const image = slide.querySelector( 'img' );
 				if ( image ) {
 					const thumb = document.createElement( 'img' );
-					thumb.src = image.currentSrc || image.src;
 					thumb.alt = '';
-					thumb.loading = 'lazy';
+					// The picker must remain visible even while inactive slides
+					// contain lazy-loaded images (particularly in fade mode).
+					thumb.loading = 'eager';
+					thumb.decoding = 'async';
+					thumb.addEventListener( 'error', () => {
+						thumb.remove();
+						dot.textContent = String( index + 1 ).padStart(
+							2,
+							'0'
+						);
+					} );
+					thumb.src = image.currentSrc || image.src;
 					dot.append( thumb );
 				} else {
 					dot.textContent = String( index + 1 ).padStart( 2, '0' );

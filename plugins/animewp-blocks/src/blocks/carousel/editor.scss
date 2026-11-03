@@ -11,8 +11,16 @@
 }
 
 .wp-block-animewp-carousel .animewp-carousel__nav {
-	pointer-events: none;
-	opacity: 0.6;
+	/* Real buttons scroll to the selected slide in the editor. */
+	button:focus-visible {
+		outline: 2px solid currentcolor;
+		outline-offset: 3px;
+	}
+
+	button:disabled {
+		cursor: not-allowed;
+		opacity: 0.3;
+	}
 }
 
 /* Fade slides would stack on top of each other; edit them side by side instead. */

@@ -29,6 +29,8 @@ The plugin does not track visitors. YouTube and Vimeo are contacted only when a 
 == Changelog ==
 
 = 2.0.5 =
+* Show actual slide thumbnails and working previous/next controls in the block editor; keep navigation in sync when slides are added or removed.
+* Load front-end thumbnails reliably and show numbered fallbacks for missing images, without changing saved markup.
 * Strip literal HTML tags safely when deriving Panel headings and Video Card plain text, while preserving escaped text.
 * Keep existing saved block markup, video links and legacy block compatibility unchanged.
 
