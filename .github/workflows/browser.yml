@@ -8,7 +8,7 @@ on:
   workflow_call:
     inputs:
       ref:
-        description: Source ref for release verification
+        description: Full main-derived commit SHA for release verification
         type: string
         required: false
         default: ""
@@ -52,7 +52,13 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v4; verified commit
         with:
           persist-credentials: false
-          ref: ${{ github.event_name == 'workflow_call' && inputs.ref || github.sha }}
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - name: Select verified release source
+        if: ${{ inputs.ref != '' }}
+        env:
+          ANIMEWP_RELEASE_SOURCE_SHA: ${{ inputs.ref }}
+        run: bash scripts/ci/select-verified-source.sh
       - name: Set up Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
