@@ -121,6 +121,7 @@ for ( const kind of [ 'characters', 'cast' ] ) {
 		await page.goto( '/wp-admin/post.php?post=' + fixture.id + '&action=edit' );
 		await ready( page, editor, 'core/edit-post' );
 		const phrase = '自由に追加したキャッチフレーズ — ' + kind;
+		const typedPhrase = phrase + '（編集済み）';
 		const edited = await page.evaluate( ( text ) => {
 			const store = window.wp.data.select( 'core/block-editor' );
 			const find = ( blocks ) => {
@@ -140,6 +141,12 @@ for ( const kind of [ 'characters', 'cast' ] ) {
 			return true;
 		}, phrase );
 		expect( edited ).toBe( true );
+		// Verify the newly inserted phrase is a real editable field. Typing
+		// through Gutenberg also produces a persistent editor transaction on
+		// Firefox and WebKit, unlike a burst of same-tick store dispatches.
+		const phraseParagraph = editor.canvas.locator( '[data-type="core/paragraph"][contenteditable="true"]' ).filter( { hasText: phrase } ).first();
+		await expect( phraseParagraph ).toBeVisible();
+		await phraseParagraph.fill( typedPhrase );
 		await expect.poll( () => page.evaluate( () => window.wp.data.select( 'core/editor' ).isEditedPostDirty() ) ).toBe( true );
 		await page.locator( '.editor-post-publish-button' ).first().click();
 		await page.waitForFunction( () => ! window.wp.data.select( 'core/editor' ).isSavingPost() && ! window.wp.data.select( 'core/editor' ).isEditedPostDirty() );
@@ -156,14 +163,14 @@ for ( const kind of [ 'characters', 'cast' ] ) {
 			};
 			const grid = find( window.wp.data.select( 'core/block-editor' ).getBlocks() );
 			return { count: grid?.innerBlocks.length, phrase: JSON.stringify( grid?.innerBlocks[ 0 ] ).includes( text ), valid: grid?.innerBlocks.every( ( block ) => block.isValid !== false ) };
-		}, phrase );
+		}, typedPhrase );
 		expect( saved ).toEqual( { count: 5, phrase: true, valid: true } );
 		await capture( page, `${ kind }-grid-editor-five`, { fullPage: false } );
 		await page.goto( fixture.path );
 		const grid = page.locator( '.is-layout-grid' ).first();
 		const cards = grid.locator( ':scope > .wp-block-group' );
 		await expect( cards ).toHaveCount( 5 );
-		await expect( cards.first() ).toContainText( phrase );
+		await expect( cards.first() ).toContainText( typedPhrase );
 		for ( const width of [ 1280, 375 ] ) {
 			await page.setViewportSize( { width, height: 900 } );
 			const rects = await cards.evaluateAll( ( nodes ) => nodes.map( ( node ) => {
