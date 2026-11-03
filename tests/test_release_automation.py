@@ -410,6 +410,19 @@ class WorkflowWiringTests(unittest.TestCase):
         self.assertNotIn("secrets.", text)
         self.assertNotIn("pull_request_target", text)
 
+    def test_release_package_selects_main_derived_sha_before_running_build_code(self):
+        text = (ROOT / ".github/workflows/release.yml").read_text()
+        package = text.split("\n  package:\n", 1)[1].split("\n  publish:\n", 1)[0]
+        trusted_checkout = "ref: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && github.sha || 'main' }}"
+        self.assertIn(trusted_checkout, package)
+        self.assertIn("ANIMEWP_RELEASE_SOURCE_SHA: ${{ needs.resolve.outputs.sha }}", package)
+        self.assertIn("run: bash scripts/ci/select-verified-source.sh", package)
+        self.assertNotIn("ref: ${{ needs.resolve.outputs.sha }}", package)
+        self.assertLess(
+            package.index("run: bash scripts/ci/select-verified-source.sh"),
+            package.index("npm ci"),
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
