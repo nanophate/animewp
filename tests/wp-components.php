@@ -81,6 +81,64 @@ $registered = array_values( array_filter( $expected_slug_set, static function ( 
 } ) );
 $check( 'the 43 public component slugs remain stable', $actual_defined === $expected_slug_set );
 $check( 'every expected component is actually insertable (' . ( $available_all ? 'with' : 'without' ) . ' optional blocks), missing=' . implode( ',', array_diff( $expected_registered, $registered ) ), $registered === $expected_registered );
+// Public examples, theme layouts and companion-plugin patterns have a separate
+// inventory. Checking only derived component slugs missed examples disappearing
+// from the inserter after a generator or dependency change.
+$expected_examples = array(
+	'contact-page', 'example-cast-simple', 'example-characters-static',
+	'example-characters', 'example-closing', 'example-credits',
+	'example-introduction', 'example-key-visual', 'example-movie',
+	'example-music', 'example-news', 'example-on-air', 'example-story',
+	'legal-page', 'page-basic', 'page-blur', 'page-drift', 'page-simple',
+	'style-guide',
+);
+$examples_requiring_plugin = array(
+	'example-characters', 'example-key-visual', 'example-movie',
+	'page-blur', 'page-drift', 'page-simple', 'style-guide',
+);
+$expected_theme_patterns = array(
+	'footer-minimal', 'footer-official', 'footer-visual', 'header-glass',
+	'header-hero', 'header-landing', 'header-left', 'header-overlay',
+	'header-right', 'header', 'home-intro', 'news-index', 'news-latest',
+);
+$internal_theme_patterns = array( 'news-index', 'news-latest' );
+$expected_plugin_patterns = array(
+	'animewp-blocks/independent-text-groups',
+	'animewp-blocks/tilted-heading-upright-body',
+);
+$expected_plugin_blocks = array(
+	'animewp/backdrop', 'animewp/carousel', 'animewp/decoration',
+	'animewp/media', 'animewp/panel', 'animewp/text-group',
+	'animewp/video', 'animewp/video-card',
+);
+$actual_plugin_blocks = array_values( array_filter( $expected_plugin_blocks, static fn( $name ) => $blocks->is_registered( $name ) ) );
+$check( 'all eight optional block types are registered together',
+	$available_all ? $actual_plugin_blocks === $expected_plugin_blocks : array() === $actual_plugin_blocks
+);
+$expected_available_examples = $available_all ? $expected_examples : array_values( array_diff( $expected_examples, $examples_requiring_plugin ) );
+$actual_available_examples = array_values( array_filter( $expected_examples, static fn( $slug ) => $registry->is_registered( 'animewp/' . $slug ) ) );
+$check( 'all 19 example patterns register with correct optional dependencies',
+	$expected_available_examples === $actual_available_examples
+);
+$actual_theme_patterns = array_values( array_filter( $expected_theme_patterns, static fn( $slug ) => $registry->is_registered( 'animewp/' . $slug ) ) );
+$check( 'all 13 stock theme patterns remain registered', $actual_theme_patterns === $expected_theme_patterns );
+$actual_plugin_patterns = array_values( array_filter( $expected_plugin_patterns, static fn( $name ) => $registry->is_registered( $name ) ) );
+$check( 'both optional plugin starter patterns remain registered',
+	$available_all ? $actual_plugin_patterns === $expected_plugin_patterns : array() === $actual_plugin_patterns
+);
+foreach ( array_merge(
+	array_map( static fn( $slug ) => 'animewp/' . $slug, $expected_available_examples ),
+	array_map( static fn( $slug ) => 'animewp/' . $slug, $expected_theme_patterns ),
+	$available_all ? $expected_plugin_patterns : array()
+) as $pattern_name ) {
+	$definition = $registry->get_registered( $pattern_name );
+	$intentionally_hidden = in_array( substr( $pattern_name, strlen( 'animewp/' ) ), $internal_theme_patterns, true );
+	$check( 'registered pattern is nonempty and visible as intended ' . $pattern_name,
+		is_array( $definition )
+		&& '' !== trim( $definition['content'] ?? '' )
+		&& ( $intentionally_hidden ? empty( $definition['inserterEnabled'] ) : ! isset( $definition['inserterEnabled'] ) || true === $definition['inserterEnabled'] )
+	);
+}
 // Stable source positions: blank lines between full-page sections are *not*
 // standalone components. Test semantic targets too: prior to normalization,
 // the missing Movie index targeted freeform whitespace while Closing [8]

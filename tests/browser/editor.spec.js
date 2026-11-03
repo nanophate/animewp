@@ -95,6 +95,78 @@ test( 'character carousel editor shows thumbnails and navigates five editable sl
 	await capture( page, 'character-editor-five-thumbnails', { fullPage: false } );
 } );
 
+for ( const kind of [ 'characters', 'cast' ] ) {
+	test( `${ kind } Core Grid: duplicate five cards, add a phrase, save, reload and display 3+2`, async ( { page } ) => {
+		await login( page );
+		const editor = new Editor( { page } );
+		const fixture = fixtures()[ 'grid_edit_' + kind ];
+		await page.goto( '/wp-admin/post.php?post=' + fixture.id + '&action=edit' );
+		await ready( page, editor, 'core/edit-post' );
+		const phrase = '自由に追加したキャッチフレーズ — ' + kind;
+		const edited = await page.evaluate( ( text ) => {
+			const store = window.wp.data.select( 'core/block-editor' );
+			const find = ( blocks ) => {
+				for ( const block of blocks ) {
+					if ( block.name === 'core/group' && block.attributes.layout?.type === 'grid' ) { return block; }
+					const nested = find( block.innerBlocks || [] );
+					if ( nested ) { return nested; }
+				}
+				return null;
+			};
+			const grid = find( store.getBlocks() );
+			if ( ! grid || grid.innerBlocks.length !== 3 ) { return false; }
+			const dispatch = window.wp.data.dispatch( 'core/block-editor' );
+			const cards = grid.innerBlocks;
+			dispatch.insertBlocks( [ window.wp.blocks.cloneBlock( cards[ 0 ] ), window.wp.blocks.cloneBlock( cards[ 1 ] ) ], 3, grid.clientId, false );
+			dispatch.insertBlocks( [ window.wp.blocks.createBlock( 'core/paragraph', { content: text } ) ], cards[ 0 ].innerBlocks.length, cards[ 0 ].clientId, false );
+			return true;
+		}, phrase );
+		expect( edited ).toBe( true );
+		await expect.poll( () => page.evaluate( () => window.wp.data.select( 'core/editor' ).isEditedPostDirty() ) ).toBe( true );
+		await page.locator( '.editor-post-publish-button' ).first().click();
+		await page.waitForFunction( () => ! window.wp.data.select( 'core/editor' ).isSavingPost() && ! window.wp.data.select( 'core/editor' ).isEditedPostDirty() );
+		await page.reload();
+		await ready( page, editor, 'core/edit-post' );
+		const saved = await page.evaluate( ( text ) => {
+			const find = ( blocks ) => {
+				for ( const block of blocks ) {
+					if ( block.name === 'core/group' && block.attributes.layout?.type === 'grid' ) { return block; }
+					const nested = find( block.innerBlocks || [] );
+					if ( nested ) { return nested; }
+				}
+				return null;
+			};
+			const grid = find( window.wp.data.select( 'core/block-editor' ).getBlocks() );
+			return { count: grid?.innerBlocks.length, phrase: JSON.stringify( grid?.innerBlocks[ 0 ] ).includes( text ), valid: grid?.innerBlocks.every( ( block ) => block.isValid !== false ) };
+		}, phrase );
+		expect( saved ).toEqual( { count: 5, phrase: true, valid: true } );
+		await capture( page, `${ kind }-grid-editor-five`, { fullPage: false } );
+		await page.goto( fixture.path );
+		const cards = page.locator( '.is-layout-grid' ).first().locator( ':scope > .wp-block-group' );
+		await expect( cards ).toHaveCount( 5 );
+		await expect( cards.first() ).toContainText( phrase );
+		for ( const width of [ 1280, 375 ] ) {
+			await page.setViewportSize( { width, height: 900 } );
+			const rects = await cards.evaluateAll( ( nodes ) => nodes.map( ( node ) => {
+				const box = node.getBoundingClientRect();
+				return { x: box.x, y: box.y };
+			} ) );
+			if ( width === 1280 ) {
+				expect( Math.abs( rects[ 0 ].y - rects[ 1 ].y ) ).toBeLessThan( 2 );
+				expect( Math.abs( rects[ 0 ].y - rects[ 2 ].y ) ).toBeLessThan( 2 );
+				expect( rects[ 3 ].y ).toBeGreaterThan( rects[ 0 ].y + 100 );
+				expect( Math.abs( rects[ 3 ].y - rects[ 4 ].y ) ).toBeLessThan( 2 );
+			} else {
+				for ( let i = 1; i < rects.length; i++ ) {
+					expect( Math.abs( rects[ i ].x - rects[ 0 ].x ) ).toBeLessThan( 2 );
+					expect( rects[ i ].y ).toBeGreaterThan( rects[ i - 1 ].y );
+				}
+			}
+			await cards.first().screenshot( { path: `artifacts/browser-results/${ kind }-grid-five-${ width }.png` } );
+		}
+	} );
+}
+
 test( 'Site Editor iframe keeps edited template content after save and reload', async ( { page } ) => {
 	await login( page );
 	const editor = new Editor( { page } );

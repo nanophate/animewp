@@ -167,6 +167,57 @@ foreach ( array( 'part-footer-vertical-links', 'part-footer-social-icons', 'part
 	$key = str_replace( '-', '_', $slug );
 	$pages[ $key ] = animewp_browser_page( $key, animewp_pattern_content( 'animewp/' . $slug ) );
 }
+// The product is more than the starter pages: every individually insertable
+// part, every example, stock layout and plugin pattern must open in Gutenberg,
+// survive an actual edit/save/reload, and render with its own content. These
+// disposable pages preserve independent wrappers so each pattern is targetable.
+$catalog_registry = WP_Block_Patterns_Registry::get_instance();
+$catalog_families = array(
+	'parts' => array_map( static fn( $name ) => 'animewp/' . $name, array_keys( animewp_component_catalog() ) ),
+	'examples' => array(),
+	'layouts' => array(),
+	'plugin' => array(
+		'animewp-blocks/independent-text-groups',
+		'animewp-blocks/tilted-heading-upright-body',
+	),
+);
+foreach ( array( 'examples' => 'examples', 'layouts' => 'patterns' ) as $family => $directory ) {
+	foreach ( glob( get_theme_file_path( $directory . '/*.php' ) ) as $source ) {
+		$data = get_file_data( $source, array( 'slug' => 'Slug' ) );
+		if ( ! preg_match( '#^animewp/[a-z0-9-]+$#', $data['slug'] ) ) {
+			WP_CLI::error( 'Invalid catalog pattern header: ' . basename( $source ) );
+		}
+		$catalog_families[ $family ][] = $data['slug'];
+	}
+}
+$catalog_batch_sizes = array( 'parts' => 6, 'examples' => 3, 'layouts' => 4, 'plugin' => 2 );
+$pages['catalog'] = array();
+foreach ( $catalog_families as $family => $names ) {
+	$pages['catalog'][ $family ] = array();
+	foreach ( array_chunk( $names, $catalog_batch_sizes[ $family ] ) as $index => $batch ) {
+		$contents = '';
+		foreach ( $batch as $name ) {
+			$definition = $catalog_registry->get_registered( $name );
+			if ( ! is_array( $definition ) || empty( $definition['content'] ) ) {
+				WP_CLI::error( 'Expected registered catalog pattern missing: ' . $name );
+			}
+			$fragment = str_starts_with( $name, 'animewp/' ) ? animewp_pattern_content( $name ) : $definition['content'];
+			if ( '' === trim( $fragment ) ) {
+				WP_CLI::error( 'Empty catalog pattern: ' . $name );
+			}
+			$label = esc_html( $name );
+			$contents .= '<!-- wp:group {"className":"qa-catalog-sample","layout":{"type":"default"}} --><div class="wp-block-group qa-catalog-sample">'
+				. '<!-- wp:paragraph {"className":"qa-catalog-label"} --><p class="qa-catalog-label">' . $label . '</p><!-- /wp:paragraph -->'
+				. $fragment . '</div><!-- /wp:group -->';
+		}
+		$key = sprintf( 'catalog_%s_%02d', $family, $index + 1 );
+		$pages['catalog'][ $family ][] = array_merge( animewp_browser_page( $key, $contents ), array( 'names' => $batch ) );
+	}
+}
+foreach ( array( 'characters' => 'part-character-static-list', 'cast' => 'part-cast-simple-list' ) as $key => $pattern ) {
+	$pages[ 'grid_edit_' . $key ] = animewp_browser_page( 'grid_edit_' . $key, animewp_pattern_content( 'animewp/' . $pattern ) );
+}
+$pages['block_edit_gallery'] = animewp_browser_page( 'block_edit_gallery', '<!-- wp:paragraph --><p>Insert all eight AnimeWP Blocks after this line.</p><!-- /wp:paragraph -->' );
 foreach ( array( 'left', 'right' ) as $side ) {
 	$pages[ 'header_' . $side ] = animewp_browser_page( 'header_' . $side, $header_body, 'animewp-' . $side );
 }
