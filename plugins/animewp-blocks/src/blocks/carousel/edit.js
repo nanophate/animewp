@@ -4,8 +4,11 @@ import {
 	InspectorControls,
 	useBlockProps,
 	useInnerBlocksProps,
+	store as blockEditorStore,
 } from '@wordpress/block-editor';
 import { PanelBody, TextControl } from '@wordpress/components';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { useEffect, useRef, useState } from '@wordpress/element';
 import { Range, Select, Toggle } from '../../shared/controls';
 import { carouselProps } from './markup';
 import { NavPreview } from './nav';
@@ -16,12 +19,69 @@ const TEMPLATE = [
 	[ 'animewp/video-card', {} ],
 ];
 
-export default function Edit( { attributes: a, setAttributes } ) {
+function includesBlock( block, clientId ) {
+	return (
+		block.clientId === clientId ||
+		( block.innerBlocks || [] ).some( ( child ) =>
+			includesBlock( child, clientId )
+		)
+	);
+}
+
+export default function Edit( { attributes: a, setAttributes, clientId } ) {
 	const shared = { attributes: a, setAttributes };
+	const trackRef = useRef( null );
+	const [ activeIndex, setActiveIndex ] = useState( 0 );
+	const { slides, selectedClientId } = useSelect(
+		( select ) => {
+			const editor = select( blockEditorStore );
+			return {
+				slides: editor.getBlocks( clientId ),
+				selectedClientId: editor.getSelectedBlockClientId(),
+			};
+		},
+		[ clientId ]
+	);
+	const { selectBlock } = useDispatch( blockEditorStore );
+
+	// Clicking directly into a slide should also update the picker below it.
+	useEffect( () => {
+		if ( ! selectedClientId ) {
+			return;
+		}
+		const index = slides.findIndex( ( slide ) =>
+			includesBlock( slide, selectedClientId )
+		);
+		if ( index >= 0 ) {
+			setActiveIndex( index );
+		}
+	}, [ slides, selectedClientId ] );
+
+	function navigate( index ) {
+		if ( ! slides.length ) {
+			return;
+		}
+		const next =
+			a.loop === false
+				? Math.max( 0, Math.min( slides.length - 1, index ) )
+				: ( index + slides.length ) % slides.length;
+		const slide = slides[ next ];
+		setActiveIndex( next );
+		selectBlock( slide.clientId );
+		// The edit canvas keeps every slide editable in a horizontal track.
+		// Bring the chosen slide into view instead of hiding the other blocks.
+		trackRef.current
+			?.querySelector( `[data-block="${ slide.clientId }"]` )
+			?.scrollIntoView( {
+				behavior: 'smooth',
+				block: 'nearest',
+				inline: 'center',
+			} );
+	}
 	const { className, style } = carouselProps( a );
 	const blockProps = useBlockProps( { className, style } );
 	const innerBlocksProps = useInnerBlocksProps(
-		{ className: 'animewp-carousel__track' },
+		{ className: 'animewp-carousel__track', ref: trackRef },
 		{
 			template: TEMPLATE,
 			orientation: 'horizontal',
@@ -248,7 +308,12 @@ export default function Edit( { attributes: a, setAttributes } ) {
 			</InspectorControls>
 			<div { ...blockProps }>
 				<div { ...innerBlocksProps } />
-				<NavPreview attributes={ a } />
+				<NavPreview
+					attributes={ a }
+					slides={ slides }
+					activeIndex={ activeIndex }
+					onNavigate={ navigate }
+				/>
 			</div>
 		</>
 	);

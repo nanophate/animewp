@@ -81,6 +81,97 @@ $registered = array_values( array_filter( $expected_slug_set, static function ( 
 } ) );
 $check( 'the 43 public component slugs remain stable', $actual_defined === $expected_slug_set );
 $check( 'every expected component is actually insertable (' . ( $available_all ? 'with' : 'without' ) . ' optional blocks), missing=' . implode( ',', array_diff( $expected_registered, $registered ) ), $registered === $expected_registered );
+// Public examples, theme layouts and companion-plugin patterns have a separate
+// inventory. Checking only derived component slugs missed examples disappearing
+// from the inserter after a generator or dependency change.
+$expected_examples = array(
+	'contact-page', 'example-cast-simple', 'example-characters-static',
+	'example-characters', 'example-closing', 'example-credits',
+	'example-introduction', 'example-key-visual', 'example-movie',
+	'example-music', 'example-news', 'example-on-air', 'example-story',
+	'legal-page', 'page-basic', 'page-blur', 'page-drift', 'page-simple',
+	'style-guide',
+);
+$examples_requiring_plugin = array(
+	'example-characters', 'example-key-visual', 'example-movie',
+	'page-blur', 'page-drift', 'page-simple', 'style-guide',
+);
+$expected_theme_patterns = array(
+	'footer-minimal', 'footer-official', 'footer-visual', 'header-glass',
+	'header-hero', 'header-landing', 'header-left', 'header-overlay',
+	'header-right', 'header', 'home-intro', 'news-index', 'news-latest',
+);
+$internal_theme_patterns = array( 'news-index', 'news-latest' );
+$expected_plugin_patterns = array(
+	'animewp-blocks/independent-text-groups',
+	'animewp-blocks/tilted-heading-upright-body',
+);
+$expected_plugin_blocks = array(
+	'animewp/backdrop', 'animewp/carousel', 'animewp/decoration',
+	'animewp/media', 'animewp/panel', 'animewp/text-group',
+	'animewp/video', 'animewp/video-card',
+);
+$actual_plugin_blocks = array_values( array_filter( $expected_plugin_blocks, static fn( $name ) => $blocks->is_registered( $name ) ) );
+$check( 'all eight optional block types are registered together',
+	$available_all ? $actual_plugin_blocks === $expected_plugin_blocks : array() === $actual_plugin_blocks
+);
+$expected_available_examples = $available_all ? $expected_examples : array_values( array_diff( $expected_examples, $examples_requiring_plugin ) );
+$actual_available_examples = array_values( array_filter( $expected_examples, static fn( $slug ) => $registry->is_registered( 'animewp/' . $slug ) ) );
+$check( 'all 19 example patterns register with correct optional dependencies',
+	$expected_available_examples === $actual_available_examples
+);
+$actual_theme_patterns = array_values( array_filter( $expected_theme_patterns, static fn( $slug ) => $registry->is_registered( 'animewp/' . $slug ) ) );
+$check( 'all 13 stock theme patterns remain registered', $actual_theme_patterns === $expected_theme_patterns );
+$actual_plugin_patterns = array_values( array_filter( $expected_plugin_patterns, static fn( $name ) => $registry->is_registered( $name ) ) );
+$check( 'both optional plugin starter patterns remain registered',
+	$available_all ? $actual_plugin_patterns === $expected_plugin_patterns : array() === $actual_plugin_patterns
+);
+foreach ( array_merge(
+	array_map( static fn( $slug ) => 'animewp/' . $slug, $expected_available_examples ),
+	array_map( static fn( $slug ) => 'animewp/' . $slug, $expected_theme_patterns ),
+	$available_all ? $expected_plugin_patterns : array()
+) as $pattern_name ) {
+	$definition = $registry->get_registered( $pattern_name );
+	$intentionally_hidden = in_array( substr( $pattern_name, strlen( 'animewp/' ) ), $internal_theme_patterns, true );
+	$check( 'registered pattern is nonempty and visible as intended ' . $pattern_name,
+		is_array( $definition )
+		&& '' !== trim( $definition['content'] ?? '' )
+		&& ( $intentionally_hidden ? empty( $definition['inserterEnabled'] ) : ! isset( $definition['inserterEnabled'] ) || true === $definition['inserterEnabled'] )
+	);
+}
+// Block-theme templates and template parts are a different editing surface:
+// they appear in the Site Editor, not the page Pattern inserter. Keep their
+// complete published inventory and referenced pattern dependencies intact.
+$expected_theme_templates = array(
+	'404', 'animewp-canvas', 'animewp-landing', 'animewp-left',
+	'animewp-overlay', 'animewp-right', 'animewp-showcase', 'archive',
+	'home', 'index', 'page', 'search', 'single', 'singular',
+);
+$expected_template_parts = array(
+	'comments', 'footer-official', 'footer-visual', 'footer',
+	'header-glass', 'header-hero', 'header-landing', 'header-left',
+	'header-overlay', 'header-right', 'header',
+);
+foreach ( array( 'templates' => $expected_theme_templates, 'parts' => $expected_template_parts ) as $directory => $expected_files ) {
+	$paths = glob( get_theme_file_path( $directory . '/*.html' ) );
+	$actual_files = array_map( static fn( $path ) => basename( $path, '.html' ), $paths );
+	$check( 'all ' . count( $expected_files ) . ' Site Editor ' . $directory . ' remain available', $actual_files === $expected_files );
+	foreach ( $paths as $path ) {
+		$markup = file_get_contents( $path );
+		$parsed = is_string( $markup ) ? animewp_component_root_blocks( $markup ) : array();
+		$check( 'Site Editor source parses into real blocks ' . $directory . '/' . basename( $path ),
+			! empty( $parsed ) && ! in_array( null, array_column( $parsed, 'blockName' ), true )
+		);
+		preg_match_all( '/<!--\s+wp:pattern\s+(\{[^}]+\})\s+\/-->/', $markup, $matches );
+		foreach ( $matches[1] as $raw_attributes ) {
+			$attributes = json_decode( $raw_attributes, true );
+			$slug = $attributes['slug'] ?? '';
+			$check( 'Site Editor pattern reference resolves ' . $directory . '/' . basename( $path ) . ' ' . $slug,
+				is_string( $slug ) && $registry->is_registered( $slug )
+			);
+		}
+	}
+}
 // Stable source positions: blank lines between full-page sections are *not*
 // standalone components. Test semantic targets too: prior to normalization,
 // the missing Movie index targeted freeform whitespace while Closing [8]

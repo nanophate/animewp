@@ -22,6 +22,22 @@ Post/Site Editor iframe editing and saving. The last three tests use the standar
 WordPress Updates screen to install a test-only 99.0.0 ZIP with the optional
 plugin inactive or another theme active, and to reject a mismatched checksum.
 
+The **catalog acceptance gate** verifies all 43 separately insertable parts,
+19 example/page patterns, 13 stock theme patterns and two plugin starter
+patterns in the real Gutenberg editor. Each source pattern is opened as a
+separate editable fragment, an actual inner block attribute is changed, the
+post is saved, and every fragment is checked again after reloading. Frontend
+checks at 1280px and 375px catch broken images and horizontal overflow in the
+standalone parts. The eight companion custom block types also receive their
+own insert/edit/save/reload smoke test. Five-card character and cast Core Grids
+are saved and checked at both screen widths, including additional free text.
+Inventory checks run again with the optional plugin disabled so absent block
+dependencies never silently remove Core-only parts from the inserter. This
+coverage protects the editing contract as well as serialization and rendering;
+it does not replace manual review of each designed visual variant.
+The PHP integration suite separately inventories all 14 Site Editor templates
+and 11 template parts, including their referenced pattern dependencies.
+
 Header regressions also cover saved per-block scroll distances, keyboard focus
 across a threshold, Cover resizing, the small-menu-to-navigation layout without
 a content jump, full-screen menus at desktop and phone widths, missing-cover

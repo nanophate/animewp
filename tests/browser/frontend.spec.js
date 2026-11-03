@@ -88,6 +88,27 @@ test( 'Core Grid wraps five character cards and allows optional profile text', a
 	}
 } );
 
+test( 'character carousel renders thumbnail images and can switch to every profile', async ( { page } ) => {
+	await page.goto( fixtures().simple.path );
+	const carousel = page.getByRole( 'region', { name: 'キャラクター', exact: true } );
+	await expect( carousel ).toHaveClass( /is-enhanced/ );
+	const thumbs = carousel.locator( '.animewp-carousel__dots .animewp-carousel__dot' );
+	await expect( thumbs ).toHaveCount( 3 );
+	await expect( thumbs.locator( 'img' ) ).toHaveCount( 3 );
+	await expect.poll( () => thumbs.locator( 'img' ).evaluateAll( ( images ) =>
+		images.every( ( image ) => image.complete && image.naturalWidth > 0 )
+	) ).toBe( true );
+	const active = carousel.locator( '.animewp-carousel__track > .is-active' );
+	await expect( active ).toContainText( '主人公の名前' );
+	await carousel.getByRole( 'button', { name: '次へ' } ).click();
+	await expect( active ).toContainText( '相棒の名前' );
+	await expect( thumbs.nth( 1 ) ).toHaveAttribute( 'aria-current', 'true' );
+	await thumbs.nth( 2 ).click();
+	await expect( active ).toContainText( 'ライバルの名前' );
+	await expect( thumbs.nth( 2 ) ).toHaveAttribute( 'aria-current', 'true' );
+	await capture( page, 'character-carousel-thumbnails', { fullPage: false } );
+} );
+
 // Each width/example gets an isolated Playwright page and context. Reusing
 // one page through six animated pages could intermittently close WebKit and
 // made it impossible to tell which case failed.
