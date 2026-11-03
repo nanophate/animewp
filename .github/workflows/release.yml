@@ -4,17 +4,6 @@ on:
   push:
     branches: [main]
     tags: ['v*']
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: Existing main-derived tag to verify or resume (vX.Y.Z)
-        type: string
-        required: true
-      publish:
-        description: Recovery only - publish the Release and propose the feed PR
-        type: boolean
-        required: false
-        default: false
 
 permissions:
   contents: read
