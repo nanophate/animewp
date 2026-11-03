@@ -217,6 +217,7 @@ foreach ( $catalog_families as $family => $names ) {
 foreach ( array( 'characters' => 'part-character-static-list', 'cast' => 'part-cast-simple-list' ) as $key => $pattern ) {
 	$pages[ 'grid_edit_' . $key ] = animewp_browser_page( 'grid_edit_' . $key, animewp_pattern_content( 'animewp/' . $pattern ) );
 }
+$pages['carousel_edit_five'] = animewp_browser_page( 'carousel_edit_five', animewp_pattern_content( 'animewp/part-character-carousel' ) );
 $pages['block_edit_gallery'] = animewp_browser_page( 'block_edit_gallery', '<!-- wp:paragraph --><p>Insert all eight AnimeWP Blocks after this line.</p><!-- /wp:paragraph -->' );
 foreach ( array( 'left', 'right' ) as $side ) {
 	$pages[ 'header_' . $side ] = animewp_browser_page( 'header_' . $side, $header_body, 'animewp-' . $side );

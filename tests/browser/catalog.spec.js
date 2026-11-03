@@ -19,7 +19,7 @@ async function ready( page, editor ) {
 	await page.waitForFunction( () => window.wp?.data?.select( 'core/block-editor' )?.getBlockCount() > 0 );
 }
 
-test( 'all 77 patterns and eight blocks are available to the actual editor', async ( { page } ) => {
+test( 'all 75 insertable patterns and eight blocks reach Gutenberg; two Query Loops stay internal', async ( { page } ) => {
 	const catalog = fixtures().catalog;
 	const expected = Object.values( catalog ).flatMap( ( groups ) => groups.flatMap( ( group ) => group.names ) );
 	expect( expected ).toHaveLength( 43 + 19 + 13 + 2 );
@@ -40,10 +40,14 @@ test( 'all 77 patterns and eight blocks are available to the actual editor', asy
 	} ) );
 	const names = new Map( registered.patterns.map( ( pattern ) => [ pattern.name, pattern ] ) );
 	for ( const slug of expected ) {
-		expect( names.has( slug ), `Pattern absent from Gutenberg: ${ slug }` ).toBe( true );
-		if ( ! [ 'animewp/news-index', 'animewp/news-latest' ].includes( slug ) ) {
-			expect( names.get( slug ).visible, `Not offered in inserter: ${ slug }` ).toBe( true );
+		if ( [ 'animewp/news-index', 'animewp/news-latest' ].includes( slug ) ) {
+			// These are deliberate non-inserter Query Loop dependencies. Core
+			// may omit them from the editor registry altogether.
+			if ( names.has( slug ) ) { expect( names.get( slug ).visible ).toBe( false ); }
+			continue;
 		}
+		expect( names.has( slug ), `Pattern absent from Gutenberg: ${ slug }` ).toBe( true );
+		expect( names.get( slug ).visible, `Not offered in inserter: ${ slug }` ).toBe( true );
 	}
 	for ( const category of [ 'animewp-components', 'animewp-layout-parts', 'animewp-scene-parts' ] ) {
 		expect( registered.categories ).toContain( category );
@@ -116,6 +120,14 @@ test( 'each of the eight custom blocks can be inserted, edited, saved and reopen
 	];
 	saved.forEach( ( block, index ) => expect( block.attributes[ expectedAttrs[ index ][ 0 ] ] ).toBe( expectedAttrs[ index ][ 1 ] ) );
 	await capture( page, 'all-eight-blocks-in-editor', { fullPage: false } );
+	await page.goto( fixtures().block_edit_gallery.path );
+	for ( const name of blockTypes ) {
+		await expect( page.locator( '.wp-block-' + name.replace( '/', '-' ) ) ).toHaveCount( 1 );
+	}
+	await expect.poll( () => page.locator( '.wp-block-animewp-media img' ).evaluateAll( ( images ) =>
+		images.length > 0 && images.every( ( img ) => img.complete && img.naturalWidth > 0 )
+	) ).toBe( true );
+	await capture( page, 'all-eight-blocks-published', { fullPage: false } );
 } );
 
 for ( const [ family, count ] of Object.entries( batches ) ) {
@@ -129,6 +141,10 @@ for ( const [ family, count ] of Object.entries( batches ) ) {
 			await page.goto( '/wp-admin/post.php?post=' + fixture.id + '&action=edit' );
 			await ready( page, editor );
 			const result = await page.evaluate( ( names ) => {
+				// Core 6.6+ can expose rich-text attributes as RichTextData
+				// objects, not primitive strings. Their string value is the
+				// editable markup, and updateBlockAttributes accepts a string.
+				const richText = ( value ) => value == null ? '' : String( value );
 				const inspect = ( blocks ) => {
 					const invalid = [];
 					const visit = ( block ) => {
@@ -141,8 +157,8 @@ for ( const [ family, count ] of Object.entries( batches ) ) {
 				// Mutate the pattern itself, rather than the surrounding QA marker.
 				const editLeaf = ( block, marker, dispatch ) => {
 					const a = block.attributes || {};
-					if ( [ 'core/paragraph', 'core/heading' ].includes( block.name ) && typeof a.content === 'string' ) {
-						dispatch.updateBlockAttributes( block.clientId, { content: a.content + ' ' + marker } );
+					if ( [ 'core/paragraph', 'core/heading' ].includes( block.name ) && a.content != null ) {
+						dispatch.updateBlockAttributes( block.clientId, { content: richText( a.content ) + ' ' + marker } );
 						return true;
 					}
 					if ( block.name === 'animewp/video-card' ) {
@@ -170,15 +186,15 @@ for ( const [ family, count ] of Object.entries( batches ) ) {
 						return true;
 					}
 					if ( block.name === 'core/site-title' ) {
-						dispatch.updateBlockAttributes( block.clientId, { level: 3 } );
+						dispatch.updateBlockAttributes( block.clientId, { level: 3, className: [ a.className, marker ].filter( Boolean ).join( ' ' ) } );
 						return true;
 					}
 					if ( block.name === 'core/site-logo' ) {
-						dispatch.updateBlockAttributes( block.clientId, { width: ( a.width || 100 ) + 1 } );
+						dispatch.updateBlockAttributes( block.clientId, { width: ( a.width || 100 ) + 1, className: [ a.className, marker ].filter( Boolean ).join( ' ' ) } );
 						return true;
 					}
 					if ( block.name === 'core/query' && a.query ) {
-						dispatch.updateBlockAttributes( block.clientId, { query: { ...a.query, perPage: ( a.query.perPage || 3 ) + 1 } } );
+						dispatch.updateBlockAttributes( block.clientId, { query: { ...a.query, perPage: ( a.query.perPage || 3 ) + 1 }, className: [ a.className, marker ].filter( Boolean ).join( ' ' ) } );
 						return true;
 					}
 					for ( const nested of block.innerBlocks || [] ) {
@@ -196,7 +212,7 @@ for ( const [ family, count ] of Object.entries( batches ) ) {
 				names.forEach( ( name, i ) => {
 					const wrapper = samples[ i ];
 					const label = wrapper?.innerBlocks?.[ 0 ];
-					if ( wrapper?.name !== 'core/group' || label?.attributes?.content !== name ) {
+					if ( wrapper?.name !== 'core/group' || richText( label?.attributes?.content ) !== name ) {
 						errors.push( `Wrong root/label for ${ name }: ${ wrapper?.name }, ${ label?.attributes?.content }` );
 						return;
 					}
@@ -245,19 +261,20 @@ for ( const [ family, count ] of Object.entries( batches ) ) {
 				await page.goto( fixture.path );
 				await expect( page.locator( '.qa-catalog-sample' ) ).toHaveCount( fixture.names.length );
 				const broken = await page.locator( '.qa-catalog-sample img[src]' ).evaluateAll( async ( images ) => {
-					await Promise.all( images.map( async ( img ) => {
-						img.loading = 'eager';
-						if ( ! img.complete ) {
-							await Promise.race( [
-								new Promise( ( resolve ) => {
-									img.addEventListener( 'load', resolve, { once: true } );
-									img.addEventListener( 'error', resolve, { once: true } );
-								} ),
-								new Promise( ( resolve ) => setTimeout( resolve, 5000 ) ),
-							] );
-						}
+					// Decode independently: off-screen images may still be lazily
+					// deferred by Core, even though their URLs are perfectly valid.
+					const checks = await Promise.all( images.map( async ( img ) => {
+						const src = img.currentSrc || img.src;
+						if ( ! src ) { return img.getAttribute( 'src' ) || '(empty src)'; }
+						const probe = new Image();
+						probe.src = src;
+						const valid = await Promise.race( [
+							probe.decode().then( () => probe.naturalWidth > 0, () => false ),
+							new Promise( ( resolve ) => setTimeout( () => resolve( false ), 8000 ) ),
+						] );
+						return valid ? null : src;
 					} ) );
-					return images.filter( ( img ) => ! img.complete || img.naturalWidth === 0 ).map( ( img ) => img.getAttribute( 'src' ) );
+					return checks.filter( Boolean );
 				} );
 				expect( broken, `Broken images in ${ family } ${ index + 1 } at ${ width }px` ).toEqual( [] );
 				const overflow = await page.evaluate( () => document.documentElement.scrollWidth - document.documentElement.clientWidth );

@@ -139,6 +139,39 @@ foreach ( array_merge(
 		&& ( $intentionally_hidden ? empty( $definition['inserterEnabled'] ) : ! isset( $definition['inserterEnabled'] ) || true === $definition['inserterEnabled'] )
 	);
 }
+// Block-theme templates and template parts are a different editing surface:
+// they appear in the Site Editor, not the page Pattern inserter. Keep their
+// complete published inventory and referenced pattern dependencies intact.
+$expected_theme_templates = array(
+	'404', 'animewp-canvas', 'animewp-landing', 'animewp-left',
+	'animewp-overlay', 'animewp-right', 'animewp-showcase', 'archive',
+	'home', 'index', 'page', 'search', 'single', 'singular',
+);
+$expected_template_parts = array(
+	'comments', 'footer-official', 'footer-visual', 'footer',
+	'header-glass', 'header-hero', 'header-landing', 'header-left',
+	'header-overlay', 'header-right', 'header',
+);
+foreach ( array( 'templates' => $expected_theme_templates, 'parts' => $expected_template_parts ) as $directory => $expected_files ) {
+	$paths = glob( get_theme_file_path( $directory . '/*.html' ) );
+	$actual_files = array_map( static fn( $path ) => basename( $path, '.html' ), $paths );
+	$check( 'all ' . count( $expected_files ) . ' Site Editor ' . $directory . ' remain available', $actual_files === $expected_files );
+	foreach ( $paths as $path ) {
+		$markup = file_get_contents( $path );
+		$parsed = is_string( $markup ) ? animewp_component_root_blocks( $markup ) : array();
+		$check( 'Site Editor source parses into real blocks ' . $directory . '/' . basename( $path ),
+			! empty( $parsed ) && ! in_array( null, array_column( $parsed, 'blockName' ), true )
+		);
+		preg_match_all( '/<!--\s+wp:pattern\s+(\{[^}]+\})\s+\/-->/', $markup, $matches );
+		foreach ( $matches[1] as $raw_attributes ) {
+			$attributes = json_decode( $raw_attributes, true );
+			$slug = $attributes['slug'] ?? '';
+			$check( 'Site Editor pattern reference resolves ' . $directory . '/' . basename( $path ) . ' ' . $slug,
+				is_string( $slug ) && $registry->is_registered( $slug )
+			);
+		}
+	}
+}
 // Stable source positions: blank lines between full-page sections are *not*
 // standalone components. Test semantic targets too: prior to normalization,
 // the missing Movie index targeted freeform whitespace while Closing [8]

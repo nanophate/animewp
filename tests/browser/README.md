@@ -35,6 +35,8 @@ Inventory checks run again with the optional plugin disabled so absent block
 dependencies never silently remove Core-only parts from the inserter. This
 coverage protects the editing contract as well as serialization and rendering;
 it does not replace manual review of each designed visual variant.
+The PHP integration suite separately inventories all 14 Site Editor templates
+and 11 template parts, including their referenced pattern dependencies.
 
 Header regressions also cover saved per-block scroll distances, keyboard focus
 across a threshold, Cover resizing, the small-menu-to-navigation layout without

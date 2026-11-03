@@ -37,7 +37,7 @@ test( 'Post Editor iframe validates, edits, saves and reloads core and plugin ex
 test( 'character carousel editor shows thumbnails and navigates five editable slides', async ( { page } ) => {
 	await login( page );
 	const editor = new Editor( { page } );
-	await page.goto( '/wp-admin/post.php?post=' + fixtures().simple.id + '&action=edit' );
+	await page.goto( '/wp-admin/post.php?post=' + fixtures().carousel_edit_five.id + '&action=edit' );
 	await ready( page, editor, 'core/edit-post' );
 	const carouselId = await page.evaluate( () => {
 		const find = ( blocks ) => {
@@ -93,6 +93,24 @@ test( 'character carousel editor shows thumbnails and navigates five editable sl
 		window.wp.data.select( 'core/block-editor' ).getSelectedBlockClientId()
 	) ).toBe( lastSlideId );
 	await capture( page, 'character-editor-five-thumbnails', { fullPage: false } );
+	await page.locator( '.editor-post-publish-button' ).first().click();
+	await page.waitForFunction( () => ! window.wp.data.select( 'core/editor' ).isSavingPost() && ! window.wp.data.select( 'core/editor' ).isEditedPostDirty() );
+	await page.reload();
+	await ready( page, editor, 'core/edit-post' );
+	const savedCount = await page.evaluate( () => window.wp.data.select( 'core/block-editor' ).getBlocks().find( ( block ) => block.name === 'animewp/carousel' )?.innerBlocks.length );
+	expect( savedCount ).toBe( 5 );
+	await expect( editor.canvas.locator( '.animewp-carousel__nav .animewp-carousel__dot img' ) ).toHaveCount( 5 );
+	await page.goto( fixtures().carousel_edit_five.path );
+	const publicCarousel = page.getByRole( 'region', { name: 'キャラクター', exact: true } );
+	const publicThumbs = publicCarousel.locator( '.animewp-carousel__dots .animewp-carousel__dot' );
+	await expect( publicThumbs ).toHaveCount( 5 );
+	await expect( publicThumbs.locator( 'img' ) ).toHaveCount( 5 );
+	await expect.poll( () => publicThumbs.locator( 'img' ).evaluateAll( ( images ) => images.every( ( image ) => image.complete && image.naturalWidth > 0 ) ) ).toBe( true );
+	await publicThumbs.nth( 4 ).click();
+	await expect( publicThumbs.nth( 4 ) ).toHaveAttribute( 'aria-current', 'true' );
+	await publicCarousel.getByRole( 'button', { name: '次へ' } ).click();
+	await expect( publicThumbs.first() ).toHaveAttribute( 'aria-current', 'true' );
+	await capture( page, 'character-five-saved-public', { fullPage: false } );
 } );
 
 for ( const kind of [ 'characters', 'cast' ] ) {
@@ -142,7 +160,8 @@ for ( const kind of [ 'characters', 'cast' ] ) {
 		expect( saved ).toEqual( { count: 5, phrase: true, valid: true } );
 		await capture( page, `${ kind }-grid-editor-five`, { fullPage: false } );
 		await page.goto( fixture.path );
-		const cards = page.locator( '.is-layout-grid' ).first().locator( ':scope > .wp-block-group' );
+		const grid = page.locator( '.is-layout-grid' ).first();
+		const cards = grid.locator( ':scope > .wp-block-group' );
 		await expect( cards ).toHaveCount( 5 );
 		await expect( cards.first() ).toContainText( phrase );
 		for ( const width of [ 1280, 375 ] ) {
@@ -162,7 +181,7 @@ for ( const kind of [ 'characters', 'cast' ] ) {
 					expect( rects[ i ].y ).toBeGreaterThan( rects[ i - 1 ].y );
 				}
 			}
-			await cards.first().screenshot( { path: `artifacts/browser-results/${ kind }-grid-five-${ width }.png` } );
+			await grid.screenshot( { path: `artifacts/browser-results/${ kind }-grid-five-${ width }.png` } );
 		}
 	} );
 }
