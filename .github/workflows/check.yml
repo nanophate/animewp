@@ -97,11 +97,21 @@ jobs:
           - wordpress: "7.1-branch"
             php: "8.5"
     steps:
+      - name: Determine trusted checkout ref
+        id: trusted_ref
+        env:
+          INPUT_REF: ${{ inputs.ref }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_call" ] && [ -n "$INPUT_REF" ]; then
+            echo "ref=$INPUT_REF" >> "$GITHUB_OUTPUT"
+          else
+            echo "ref=${{ github.sha }}" >> "$GITHUB_OUTPUT"
+          fi
       - name: Check out source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v4; verified commit
         with:
           persist-credentials: false
-          ref: ${{ inputs.ref }}
+          ref: ${{ steps.trusted_ref.outputs.ref }}
       - name: Set up Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
