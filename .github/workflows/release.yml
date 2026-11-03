@@ -79,12 +79,17 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
-      - name: Check out the verified source
+      - name: Check out the reviewed main source selector
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: ${{ needs.resolve.outputs.sha }}
+          # Use reviewed main tooling even for a tag push or manual recovery.
+          ref: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && github.sha || 'main' }}
           fetch-depth: 0
           persist-credentials: false
+      - name: Select the verified main-derived release candidate
+        env:
+          ANIMEWP_RELEASE_SOURCE_SHA: ${{ needs.resolve.outputs.sha }}
+        run: bash scripts/ci/select-verified-source.sh
       - name: Set up Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
