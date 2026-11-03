@@ -3,17 +3,17 @@
   "status": "published",
   "type": "plugin",
   "slug": "animewp-blocks",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "name": "AnimeWP Blocks",
   "requires": "6.6",
   "requires_php": "8.0",
   "tested": "7.1",
   "homepage": "https://github.com/nanophate/animewp",
-  "download_url": "https://github.com/nanophate/animewp/releases/download/v2.0.4/animewp-blocks-2.0.4.zip",
-  "sha256": "a2a4ab8a197f2e305bf10c98178b1baebc0a3d61f58b367791bb3da58668b579",
+  "download_url": "https://github.com/nanophate/animewp/releases/download/v2.0.5/animewp-blocks-2.0.5.zip",
+  "sha256": "200baee3af876f19d23ac14b8219bd54b86742e872f6a95ce5da2c03c586058e",
   "sections": {
     "description": "<p>Decorated panels, rotated text, image and text layouts, and video buttons for anime and film sites. Saved content stays readable if the plugin is turned off.</p>",
-    "changelog": "<p>* Add Core font family, weight and letter spacing controls to Video Card.<br>\n* Preserve per-card title line height and improve metadata contrast.<br>\n* Preserve existing saved HTML and video links; version aligned with animewp theme.</p>"
+    "changelog": "<p>* Show actual slide thumbnails and working previous/next controls in the block editor; keep navigation in sync when slides are added or removed.<br>\n* Load front-end thumbnails reliably and show numbered fallbacks for missing images, without changing saved markup.<br>\n* Strip literal HTML tags safely when deriving Panel headings and Video Card plain text, while preserving escaped text.<br>\n* Keep existing saved block markup, video links and legacy block compatibility unchanged.</p>"
   },
-  "last_updated": "2026-10-26T02:25:47Z"
+  "last_updated": "2026-11-03T14:59:24Z"
 }
