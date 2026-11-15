@@ -136,11 +136,11 @@ class AcceptanceScopeTests(unittest.TestCase):
                 return error.code, output.getvalue()
         return 0, output.getvalue()
 
-    def test_all_five_current_exceptions_keep_working(self):
+    def test_current_exceptions_keep_working(self):
         data = report([(entry["package"], entry["id"], "high") for entry in self.accepted])
         status, output = self.run_main(data)
         self.assertEqual(status, 0, output)
-        self.assertEqual(output.count("accepted until"), 5)
+        self.assertEqual(output.count("accepted until"), len(self.accepted))
 
     def test_runtime_finding_fails_even_when_accepted_and_low(self):
         data = report([("serialize-javascript", KNOWN, "low")])
