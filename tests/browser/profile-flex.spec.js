@@ -48,7 +48,7 @@ for ( const [ kind, split, counts ] of [
 		test.setTimeout( 240_000 );
 		await login( page );
 		const editor = new Editor( { page } );
-		const fixture = fixtures()[ 'grid_edit_' + kind ];
+		const fixture = fixtures()[ 'profile_flex_' + kind ];
 		await page.goto( '/wp-admin/post.php?post=' + fixture.id + '&action=edit' );
 		await editor.setPreferences( 'core/edit-post', { welcomeGuide: false, welcomeGuidePage: false } );
 		await expect( page.locator( 'iframe[name="editor-canvas"]' ) ).toBeVisible();
