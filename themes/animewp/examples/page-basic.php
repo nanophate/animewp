@@ -103,9 +103,9 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
-<!-- wp:group {"align":"wide","style":{"spacing":{"blockGap":"var:preset|spacing|40"}},"layout":{"type":"grid","minimumColumnWidth":"280px"}} -->
-<div class="wp-block-group alignwide"><!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"}} -->
-<div class="wp-block-group is-style-animewp-card"><!-- wp:image {"className":"is-style-animewp-portrait"} -->
+<!-- wp:group {"align":"wide","className":"animewp-profile-grid","style":{"spacing":{"blockGap":"var:preset|spacing|40"}},"layout":{"type":"grid","minimumColumnWidth":"280px"}} -->
+<div class="wp-block-group alignwide animewp-profile-grid"><!-- wp:group {"className":"is-style-animewp-card animewp-profile-card","layout":{"type":"default"}} -->
+<div class="wp-block-group is-style-animewp-card animewp-profile-card"><!-- wp:image {"className":"is-style-animewp-portrait"} -->
 <figure class="wp-block-image is-style-animewp-portrait"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/' ) ); ?>animewp-character-a.svg" alt="主人公の名前のイラスト（差し替えてください）"/></figure>
 <!-- /wp:image -->
 
@@ -126,8 +126,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
-<!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"}} -->
-<div class="wp-block-group is-style-animewp-card"><!-- wp:image {"className":"is-style-animewp-portrait"} -->
+<!-- wp:group {"className":"is-style-animewp-card animewp-profile-card","layout":{"type":"default"}} -->
+<div class="wp-block-group is-style-animewp-card animewp-profile-card"><!-- wp:image {"className":"is-style-animewp-portrait"} -->
 <figure class="wp-block-image is-style-animewp-portrait"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/' ) ); ?>animewp-character-b.svg" alt="相棒の名前のイラスト（差し替えてください）"/></figure>
 <!-- /wp:image -->
 
@@ -148,8 +148,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
-<!-- wp:group {"className":"is-style-animewp-card","layout":{"type":"default"}} -->
-<div class="wp-block-group is-style-animewp-card"><!-- wp:image {"className":"is-style-animewp-portrait"} -->
+<!-- wp:group {"className":"is-style-animewp-card animewp-profile-card","layout":{"type":"default"}} -->
+<div class="wp-block-group is-style-animewp-card animewp-profile-card"><!-- wp:image {"className":"is-style-animewp-portrait"} -->
 <figure class="wp-block-image is-style-animewp-portrait"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/' ) ); ?>animewp-character-c.svg" alt="ライバルの名前のイラスト（差し替えてください）"/></figure>
 <!-- /wp:image -->
 
