@@ -102,3 +102,15 @@ function animewp_register_examples() {
 }
 // After plugins register their blocks on init.
 add_action( 'init', 'animewp_register_examples', 20 );
+
+/** Keep character/cast patterns freely composable in the editor (core blocks only). */
+function animewp_profile_editor_controls() {
+	wp_enqueue_script(
+		'animewp-profile-editor-controls',
+		get_theme_file_uri( 'assets/js/profile-editor-controls.js' ),
+		array( 'wp-hooks', 'wp-element', 'wp-blocks', 'wp-block-editor', 'wp-components', 'wp-data', 'wp-i18n' ),
+		wp_get_theme()->get( 'Version' ),
+		true
+	);
+}
+add_action( 'enqueue_block_editor_assets', 'animewp_profile_editor_controls' );

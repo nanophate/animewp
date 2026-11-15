@@ -8,8 +8,9 @@
 'use strict';
 
 const SECTION_PADDING = { top: 'var:preset|spacing|60', bottom: 'var:preset|spacing|60' };
-// Auto-filled Core Grid keeps three readable cards per 1180px-wide row,
-// while wrapping 4+ people onto new rows and stacking on narrow screens.
+// The initial three people are example content, not a locked column count.
+// Gutenberg's Grid controls and the optional editor layout helper allow
+// arbitrary card counts, mixed blocks, or separate 2+3 / 3+2 rows.
 const PROFILE_GRID_MIN_WIDTH = '280px';
 const CHARACTER_SAMPLES = [
 	[ 'animewp-character-a.svg', '01', '主人公の名前' ],
@@ -138,6 +139,7 @@ module.exports = ( { b, image, poster } ) => {
 	const profileGrid = ( cards, look ) =>
 		b( 'core/group', {
 			align: 'wide',
+			className: 'animewp-profile-grid',
 			layout: { type: 'grid', minimumColumnWidth: PROFILE_GRID_MIN_WIDTH },
 			style: { spacing: { blockGap: 'var:preset|spacing|40' } },
 			...motion( LOOKS[ look ].section ),
@@ -165,7 +167,7 @@ module.exports = ( { b, image, poster } ) => {
 	// with optional headings/paragraphs, and Core Grid wraps it automatically.
 	const charactersStatic = ( look = 'plain' ) => {
 		const card = ( [ file, number, name ] ) =>
-			b( 'core/group', { className: 'is-style-animewp-card', layout: { type: 'default' } }, [
+			b( 'core/group', { className: 'is-style-animewp-card animewp-profile-card', layout: { type: 'default' } }, [
 				characterImage( file, name ),
 				label( 'CHARACTER ' + number ),
 				characterName( name, 'large' ),
@@ -181,7 +183,7 @@ module.exports = ( { b, image, poster } ) => {
 	// Deliberately minimal: character artwork, name, and voice actor only.
 	const castSimple = ( look = 'plain' ) => {
 		const card = ( [ file, , name ] ) =>
-			b( 'core/group', { layout: { type: 'default' }, style: { spacing: { blockGap: '0.75rem' } } }, [
+			b( 'core/group', { className: 'animewp-profile-card', layout: { type: 'default' }, style: { spacing: { blockGap: '0.75rem' } } }, [
 				b( 'core/image', { url: image( file ), alt: name + 'のイラスト（差し替えてください）', aspectRatio: '3/4', scale: 'cover' } ),
 				b( 'core/heading', { content: name, level: 3, fontSize: 'large' } ),
 				caption( 'CV：声優名' ),
