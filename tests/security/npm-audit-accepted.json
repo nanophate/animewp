@@ -2,42 +2,6 @@
   "comment": "High/critical advisories in development tools, reviewed and accepted until review_by. They are not in either installation ZIP. Remove an entry when the upstream WordPress tool ships a fix; re-review it by review_by at the latest.",
   "accepted": [
     {
-      "id": "GHSA-v5rq-49vh-5v5c",
-      "package": "@simple-git/argv-parser",
-      "via": "@wordpress/env",
-      "reason": "wp-env runs git only against the WordPress source repository named in .wp-env.json. Fixed in simple-git 4, which wp-env 11.17.0 does not support yet.",
-      "review_by": "2027-01-08",
-      "directory": ".",
-      "via_package": "@wordpress/env"
-    },
-    {
-      "id": "GHSA-x6jw-m9v5-85vh",
-      "package": "simple-git",
-      "via": "@wordpress/env",
-      "reason": "Same as above: needs simple-git 4 in wp-env.",
-      "review_by": "2027-01-08",
-      "directory": ".",
-      "via_package": "@wordpress/env"
-    },
-    {
-      "id": "GHSA-g4wm-2vf7-vfgr",
-      "package": "simple-git",
-      "via": "@wordpress/env",
-      "reason": "Same as above: needs simple-git 4 in wp-env.",
-      "review_by": "2027-01-08",
-      "directory": ".",
-      "via_package": "@wordpress/env"
-    },
-    {
-      "id": "GHSA-858h-whjf-mvg5",
-      "package": "simple-git",
-      "via": "@wordpress/env",
-      "reason": "Same as above: needs simple-git 4 in wp-env.",
-      "review_by": "2027-01-08",
-      "directory": ".",
-      "via_package": "@wordpress/env"
-    },
-    {
       "id": "GHSA-5c6j-r48x-rmvq",
       "package": "serialize-javascript",
       "via": "@wordpress/scripts (copy-webpack-plugin, minifier)",
