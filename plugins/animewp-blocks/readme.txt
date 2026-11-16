@@ -4,7 +4,7 @@ Tags: blocks, carousel, video, animation, anime
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.0.5
+Stable tag: 2.0.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,11 @@ Also includes Decorated Panel, Rotated Text, Image & Text and Video Button from 
 The plugin does not track visitors. YouTube and Vimeo are contacted only when a visitor presses play, unless a Backdrop is set to play the current video muted. Editors can import a YouTube thumbnail into the Media Library; the server downloads it once from i.ytimg.com.
 
 == Changelog ==
+
+= 2.0.6 =
+* Coordinate the release version with the theme's flexible character and cast layout editing.
+* Preserve all existing custom-block saved HTML, carousel navigation, and video links.
+* Update development-only dependency security fixes and editor regression tests; no new runtime dependency is shipped.
 
 = 2.0.5 =
 * Show actual slide thumbnails and working previous/next controls in the block editor; keep navigation in sync when slides are added or removed.
