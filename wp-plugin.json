@@ -3,17 +3,17 @@
   "status": "published",
   "type": "plugin",
   "slug": "animewp-blocks",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "name": "AnimeWP Blocks",
   "requires": "6.6",
   "requires_php": "8.0",
   "tested": "7.1",
   "homepage": "https://github.com/nanophate/animewp",
-  "download_url": "https://github.com/nanophate/animewp/releases/download/v2.0.5/animewp-blocks-2.0.5.zip",
-  "sha256": "200baee3af876f19d23ac14b8219bd54b86742e872f6a95ce5da2c03c586058e",
+  "download_url": "https://github.com/nanophate/animewp/releases/download/v2.0.6/animewp-blocks-2.0.6.zip",
+  "sha256": "ce786981efe4b5659924afb639229d7ad5d0961d25b7b408bee76214ee4fcdab",
   "sections": {
     "description": "<p>Decorated panels, rotated text, image and text layouts, and video buttons for anime and film sites. Saved content stays readable if the plugin is turned off.</p>",
-    "changelog": "<p>* Show actual slide thumbnails and working previous/next controls in the block editor; keep navigation in sync when slides are added or removed.<br>\n* Load front-end thumbnails reliably and show numbered fallbacks for missing images, without changing saved markup.<br>\n* Strip literal HTML tags safely when deriving Panel headings and Video Card plain text, while preserving escaped text.<br>\n* Keep existing saved block markup, video links and legacy block compatibility unchanged.</p>"
+    "changelog": "<p>* Coordinate the release version with the theme&#x27;s flexible character and cast layout editing.<br>\n* Preserve all existing custom-block saved HTML, carousel navigation, and video links.<br>\n* Update development-only dependency security fixes and editor regression tests; no new runtime dependency is shipped.</p>"
   },
-  "last_updated": "2026-11-03T14:59:24Z"
+  "last_updated": "2026-11-16T10:33:50Z"
 }

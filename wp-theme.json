@@ -3,17 +3,17 @@
   "status": "published",
   "type": "theme",
   "slug": "animewp",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "name": "animewp",
   "requires": "6.6",
   "requires_php": "8.0",
   "tested": "7.1",
   "homepage": "https://github.com/nanophate/animewp",
-  "download_url": "https://github.com/nanophate/animewp/releases/download/v2.0.5/animewp-2.0.5.zip",
-  "sha256": "250d95ea7893999d7ac7c0b90dfb3d098e30fa83024c95d2555e9de70f90a815",
+  "download_url": "https://github.com/nanophate/animewp/releases/download/v2.0.6/animewp-2.0.6.zip",
+  "sha256": "6ca39dd0b05d7121c5e6371a6b3241fa9a4b762b71a2f2379157b20018e8bb0a",
   "sections": {
     "description": "<p>作品の世界観を、標準ブロックで自由に組み立てるテーマ。</p>",
-    "changelog": "<p>* キャラクターを切り替えなしで並べる一覧と、画像・名前・CVだけのシンプルなキャスト一覧を追加。<br>\n* 一覧のカードはWordPress標準ブロックで自由に複製・並べ替えができ、5人以上でも画面幅に応じて自動配置。紹介文やキャッチフレーズなども後から追加できます。<br>\n* キャラクター名と「作品について」の見出しサイズを調整。明朝見出しスタイルが見出し階層や個別の文字サイズ設定に従うよう改善。</p>"
+    "changelog": "<p>* キャラクター・キャストの一覧でカードを追加し、2＋3／3＋2の自由な行構成に変更できる編集操作を追加。行の追加や自動折り返しへの復帰にも対応。<br>\n* 各人物カードにキャッチフレーズ・紹介文・2カラムの追加操作を用意。既存のグリッドも引き続き編集でき、標準ブロックの挿入・移動・削除・複製が可能。<br>\n* Gutenbergでの保存・再読込・公開画面・モバイル表示の回帰テストを強化。開発用依存関係をセキュリティ修正版へ更新（配布ZIPには含まず）。</p>"
   },
-  "last_updated": "2026-11-03T14:59:24Z"
+  "last_updated": "2026-11-16T10:33:50Z"
 }
